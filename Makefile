@@ -50,16 +50,18 @@ OBJS    = 	main.o \
 		content/epStudent.o \
 		\
 		handler/HandleMessage.o \
-		handler/HandleLogin.o
+		handler/HandleLogin.o \
+		\
+		message/proto/protocol.pb.o
 
 # binary
 BIN	    = epServer
 
 # where are include files kept
-INC	    = -I. -I./includes -I./handler -I./content
+INC	    = -I. -I./includes -I./handler -I./content -I./message
 
 # for Linker
-LINK        = libs/libev.a libs/libglog.a libs/liblua52.so libs/libmysqlcppconn.so
+LINK        = libs/libev.a libs/libglog.a libs/liblua52.so libs/libmysqlcppconn.so -lprotobuf
 #LINK        = -lev -lglog -lmysqlcppconn -llua5.2
 # rock..
 all	: clean precompile_protobuf $(BIN)
