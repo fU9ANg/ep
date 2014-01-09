@@ -10,7 +10,7 @@
 /*!40014 SET FOREIGN_KEY_CHECKS=0 */;
 
 
-# Host: 192.168.0.254    Database: teaching_db
+# Host: 192.168.0.254    Database: epdb 
 # ------------------------------------------------------
 # Server version 5.5.29-0ubuntu0.12.04.1
 
