@@ -105,6 +105,37 @@ epManager::getUserByFd(const int fd) {
         return NULL;
 }
 
+bool
+epManager::sendtoAllClassroom(Buf* pBuf) {
+        EPCLASSROOM_MAP::iterator it = classroomMap_.begin();
+        EPCLASSROOM_MAP::const_iterator cie = classroomMap_.end();
+        Buf* p = NULL;
+        for (; cie!=it; ++it) {
+                p = pBuf;
+                (it->second).sendtoAllClass(p);
+        }
+        SINGLE->bufpool.free(pBuf);
+
+        return true;
+}
+
+bool
+epManager::sendtoAllUser(Buf* pBuf) {
+        EPUSER_MAP::iterator it = userMap_.begin();
+        EPUSER_MAP::const_iterator cie = userMap_.end();
+        Buf* p = NULL;
+        for (; cie!=it; ++it) {
+                if (pBuf->getfd() == it->first) { // not to send self.
+                        continue;
+                }
+                p = pBuf;
+                p->setfd(it->first);
+                SINGLE->sendqueue.enqueue(p);
+        }
+
+        SINGLE->bufpool.free(pBuf);
+}
+
 void
 epManager::dumpClassroom(void) const {
         EPCLASSROOM_MAP::iterator it = classroomMap_.begin();

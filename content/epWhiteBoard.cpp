@@ -7,14 +7,12 @@ epWhiteBoard::epWhiteBoard (void)
 epWhiteBoard::~epWhiteBoard(void) {
 }
 
-bool epWhiteBoard::setId(const int id) 
-{
+bool epWhiteBoard::setId(const int id) {
 	id_ = id;
 	return true;
 }
 
-int epWhiteBoard::getId(void) const
-{
+int epWhiteBoard::getId(void) const {
 		return id_;
 }
 

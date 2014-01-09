@@ -15,27 +15,27 @@ epGroup::setId(const int id) {
 }
 
 bool
-epGroup::insertStudent(const epStudent& student) {
+epGroup::insertStudent(int fd, const epStudent& student) {
         STUDENT_MAP::iterator it = studentMap_.begin();
         STUDENT_MAP::const_iterator cie = studentMap_.end();
 
         for (; cie!=it; ++it) {
-                if (student.getId() == it->first) {
+                if (fd == it->first) {
                         return false;
                 }
         }
 
-        studentMap_.insert(std::make_pair<int, epStudent>(student.getId(), student));
+        studentMap_.insert(std::make_pair<int, epStudent>(fd, student));
         return true;
 }
 
 bool
-epGroup::deleteStudentById(const int id) {
+epGroup::removeStudentByFd(const int fd) {
         STUDENT_MAP::iterator it = studentMap_.begin();
         STUDENT_MAP::const_iterator cie = studentMap_.end();
 
         for (; cie!=it; ++it) {
-                if (id == it->first) {
+                if (fd == it->first) {
                         studentMap_.erase(it);
                         return true;
                 }
@@ -49,12 +49,12 @@ epGroup::getId(void) const {
 }
 
 const epStudent*
-epGroup::getStudentById(const int id) {
+epGroup::getStudentByFd(const int fd) {
         STUDENT_MAP::iterator it = studentMap_.begin();
         STUDENT_MAP::const_iterator cie = studentMap_.end();
 
         for (; cie!=it; ++it) {
-                if (id == it->first) {
+                if (fd == it->first) {
                         return &(it->second);
                 }
         }
@@ -73,4 +73,15 @@ epGroup::sendtoGroup(Buf* pBuf) {
         }
 
         return true;
+}
+
+void
+epGroup::dump(void) {
+        printf("group id = %d\n", id_);
+        printf("for student :\n");
+        STUDENT_MAP::iterator it = studentMap_.begin();
+        STUDENT_MAP::const_iterator cie = studentMap_.end();
+        for (; cie!=it; ++it) {
+                (it->second).dump();
+        }
 }

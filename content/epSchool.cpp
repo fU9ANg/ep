@@ -40,3 +40,9 @@ epSchool::setSchoolNative(const std::string& native) {
 		  return true;
 }
 
+void
+epSchool::dump(void) {
+        printf("school id     = %d\n", id_);
+        printf("school name   = %s\n", schoolName_.c_str());
+        printf("school native = %s\n", native_.c_str());
+}

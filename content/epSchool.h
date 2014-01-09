@@ -16,28 +16,70 @@
  */
 class epSchool {
 public :
-        epSchool(void) : id_(EPSCHOOL_INVALIED_SCHOOL_ID) {}
+        epSchool(void);
         ~epSchool(void);
 
         /**
          * @name get
          * @{ */
-        int                getSchoolId   (void) const;
-        const std::string& getSchoolName (void) const;
-        const std::string& getNative     (void) const;
+        /**
+         * @brief 获取学校ID。
+         *
+         * @return 学校ID。
+         */
+        int getSchoolId(void) const;
+        /**
+         * @brief 获取学校名字。
+         *
+         * @return 学校名字。
+         */
+        const std::string& getSchoolName(void) const;
+        /**
+         * @brief 获取学校所属地区。
+         *
+         * @return 学校所属地区。
+         */
+        const std::string& getNative(void) const;
         /**  @} */
 
         /**
          * @name set
          * @{ */
-        bool setSchoolId     (const int);
-        bool setSchoolName   (const std::string&);
-        bool setSchoolNative (const std::string&);
+        /**
+         * @brief 设置学校ID。
+         *
+         * @param int[in] 学校ID。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool setSchoolId(const int);
+        /**
+         * @brief 设置学校名字。
+         *
+         * @param std::string 学校名字。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool setSchoolName(const std::string&);
+        /**
+         * @brief 设置学校所属地区。
+         *
+         * @param std::string[in] 学校所属地区。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool setSchoolNative(const std::string&);
         /**  @} */
 
         /**
          * @name get by ???
          * @{ */
+        /**  @} */
+
+        /**
+         * @name Just for debug
+         * @{ */
+        virtual void dump(void);
         /**  @} */
 
 

@@ -15,8 +15,14 @@ epTeacher::setId(const int id) {
 }
 
 bool
-epTeacher::setschoolName (const std::string& schoolName) {
+epTeacher::setSchoolName (const std::string& schoolName) {
         schoolName_ = schoolName;
+        return true;
+}
+
+bool
+epTeacher::setSchoolId(const int schoolId) {
+        schoolId_ = schoolId;
         return true;
 }
 
@@ -26,13 +32,20 @@ epTeacher::getId(void) const {
 }
 
 const std::string&
-epTeacher::getschoolName (void) const {
+epTeacher::getSchoolName (void) const {
         return schoolName_;
+}
+
+int
+epTeacher::getSchoolId(void) const {
+        return schoolId_;
 }
 
 void
 epTeacher::dump(void) {
+        printf("for user :\n");
         epUser::dump();
+        printf("for person :\n");
         epPerson::dump();
         printf("teacher id  = %d\n", id_);
         printf("school name = %s\n", schoolName_.c_str());

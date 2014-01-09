@@ -31,21 +31,28 @@ public :
          *
          * @return 插入成功返回true，否则返回false。
          */
-        bool               insertClassroom     (const epClassroom&);
+        bool insertClassroom(const epClassroom&);
         /**
          * @brief 移除指定ID的教室，并不删除教室类。
          *
-         * @param int 
+         * @param int 指定教室ID。
          *
-         * @return 
+         * @return 移除成功返回true，否则返回false。
          */
-        bool               deleteClassroomById (int);
-        const epClassroom* getClassroomById    (int);
+        bool deleteClassroomById(int);
+        /**
+         * @brief 从教室列表中获取指定ID的教室对象指针。
+         *
+         * @param int[in] 指定教室ID。
+         *
+         * @return 成功返回指定教室ID所对应的教室对象指针，否则返回NULL。
+         */
+        const epClassroom* getClassroomById(int);
 
         /**
          * @brief 将指定FD的对象插入到游离列表中。
          *
-         * @param int 指定FD。
+         * @param int[in] 指定FD。
          * @param epUser 指定对象。
          *
          * @return 插入成功返回true，否则返回false。
@@ -67,6 +74,22 @@ public :
          * @return 成功返回指向相应对象的指针，失败返回NULL。
          */
         const epUser* getUserByFd(const int);
+        /**
+         * @brief 将指定消息内容发送给当前上课的班级。
+         *
+         * @param Buf[in] 指定消息内容。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool sendtoAllClassroom(Buf*);
+        /**
+         * @brief 将指定消息内容发送给所有游离用户。
+         *
+         * @param Buf[in] 指定消息。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool sendtoAllUser(Buf*);
 
         /**
          * @name Just for debug
@@ -74,7 +97,7 @@ public :
         /**
          * @brief 打印教室列表。
          */
-        virtual void dumpClassroom(void) const;
+        virtual void dumpClassroom(void) const;
         /**
          * @brief 打印游离状态的 client。
          */

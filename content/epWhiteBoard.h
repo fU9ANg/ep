@@ -22,19 +22,32 @@ public :
         /**
          * @name set
          * @{ */
+        /**
+         * @brief 设置白板ID。
+         *
+         * @param int[in] 白板ID。
+         *
+         * @return 成功返回true，否则返回false。
+         */
         bool setId(const int);
         /**  @} */
 
         /**
          * @name get
          * @{ */
+        /**
+         * @brief 获取白板ID。
+         *
+         * @return 白板ID。
+         */
         int getId(void) const;
         /**  @} */
 
         /**
-         * @brief 打印该对象的属性。
-         */
+         * @name Just for debug
+         * @{ */
         virtual void dump(void);
+        /**  @} */
 
 private :
         /**
