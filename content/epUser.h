@@ -17,7 +17,7 @@
 class epUser {
 public :
         epUser(void);
-        ~epUser(void);
+        virtual ~epUser(void);
 
         /**
          * @name set
@@ -32,6 +32,11 @@ public :
         const std::string& getAccount(void) const;
         const std::string& getPasswd (void) const;
         /**  @} */
+
+        /**
+         * @brief 打印该对象的属性。
+         */
+        virtual void dump(void);
 
 private :
         /**

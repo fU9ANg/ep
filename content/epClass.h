@@ -12,7 +12,6 @@
 #include <map>
 
 #include "epStudent.h"
-#include "../netdef.h" // for EPCLASS_INVALIED_CLASS_ID
 
 typedef std::map<int, epStudent> EPSTUDENT_MAP;
 
@@ -21,7 +20,7 @@ typedef std::map<int, epStudent> EPSTUDENT_MAP;
  */
 class epClass {
 public :
-        epClass(void) : id_(EPCLASS_INVALIED_CLASS_ID) {}
+        epClass(void);
         ~epClass(void);
 
         /**
@@ -40,7 +39,7 @@ public :
         /**
          * @name get by ???
          * @{ */
-        const epStudent& getStudentById(const int);
+        const epStudent* getStudentById(const int);
         /**  @} */
 
 private :

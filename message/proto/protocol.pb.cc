@@ -586,7 +586,7 @@ void protobuf_AddDesc_proto_2fprotocol_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\024proto/protocol.proto\"7\n\006cLogin\022\014\n\004type"
     "\030\001 \002(\005\022\017\n\007account\030\002 \002(\t\022\016\n\006passwd\030\003 \002(\t\""
-    "\030\n\006sLogin\022\016\n\006result\030\001 \002(\005\"\031\n\007cLogout\022\016\n\006"
+    "\030\n\006sLogin\022\016\n\006result\030\001 \002(\010\"\031\n\007cLogout\022\016\n\006"
     "common\030\001 \002(\005\"\031\n\007sLogout\022\016\n\006common\030\001 \002(\005\""
     "\036\n\014cGetFuncList\022\016\n\006common\030\001 \002(\005\"\037\n\014sGetF"
     "uncList\022\017\n\007content\030\001 \002(\t\"\033\n\010cSetFunc\022\017\n\007"
@@ -1016,7 +1016,7 @@ sLogin::sLogin(const sLogin& from)
 
 void sLogin::SharedCtor() {
   _cached_size_ = 0;
-  result_ = 0;
+  result_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1052,7 +1052,7 @@ sLogin* sLogin::New() const {
 
 void sLogin::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    result_ = 0;
+    result_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1064,12 +1064,12 @@ bool sLogin::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 result = 1;
+      // required bool result = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &result_)));
           set_has_result();
         } else {
@@ -1097,9 +1097,9 @@ bool sLogin::MergePartialFromCodedStream(
 
 void sLogin::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 result = 1;
+  // required bool result = 1;
   if (has_result()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->result(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->result(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1110,9 +1110,9 @@ void sLogin::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* sLogin::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 result = 1;
+  // required bool result = 1;
   if (has_result()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->result(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->result(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1126,11 +1126,9 @@ int sLogin::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 result = 1;
+    // required bool result = 1;
     if (has_result()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->result());
+      total_size += 1 + 1;
     }
 
   }

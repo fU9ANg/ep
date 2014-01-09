@@ -1,2 +1,20 @@
     MSGNAME (CT_Test, handleTest);
-    MSGNAME (CT_Login, handleLogin);
+    MSGNAME(CT_Heart,handleHeart);
+    MSGNAME(CT_Auth,handleAuth);
+
+    // 登录
+    MSGNAME(CT_Login, handleLogin);
+    MSGNAME(CT_Logout, handleLogout);
+    MSGNAME(CT_GetFuncList, handleGetFuncList);
+    MSGNAME(CT_SetFunc, handleSetFunc);
+    MSGNAME(CT_GetGradeList, handleGetGradeList);
+    MSGNAME(CT_GetCourseList, handleGetCourseList);
+    MSGNAME(CT_GetClassList, handleGetClassList);
+    MSGNAME(CT_GetClassRoomList, handleGetClassRoomList);
+    MSGNAME(CT_SetContent,handleSetContent);
+
+// 上课。
+    MSGNAME(CT_StartClass, handleStartClass);
+    MSGNAME(CT_GetStudentList, handleGetStudentList);
+    MSGNAME(CT_GetStudentInfo, handleGetStudentInfo);
+    MSGNAME(CT_GetTeacherInfo, handleGetTeacherInfo);

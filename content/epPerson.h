@@ -16,13 +16,14 @@
  */
 class epPerson {
 public :
-        epPerson (void) : age_() {}
-        ~epPerson(void) {}
+        epPerson (void);
+        virtual ~epPerson(void);
 
         /**
          * @name set
          * @{ */
         bool setName     (const std::string&);
+        bool setName     (const std::string&, const std::string&);
         bool setSex      (const std::string&);
         bool setAge      (const int);
         bool setRace     (const std::string&);
@@ -33,7 +34,8 @@ public :
         /**
          * @name get
          * @{ */
-        const std::string& getName     (void) const;
+        const std::string getName     (void) const;
+        const std::string& getFirstname(void) const;
         const std::string& getSex      (void) const;
         int                getAge      (void) const;
         const std::string& getRace     (void) const;
@@ -46,6 +48,10 @@ public :
          * @{ */
         /**  @} */
 
+        /**
+         * @brief 打印该对象的属性。
+         */
+        virtual void dump(void);
 
 private :
         /**

@@ -45,12 +45,28 @@ OBJS    = 	main.o \
 		content/epManager.o \
 		content/epClass.o \
 		content/epClassroom.o \
+		content/epGroup.o \
 		content/epPerson.o \
+		content/epUser.o \
 		content/epTeacher.o \
 		content/epStudent.o \
+		content/epWhiteBoard.o \
 		\
 		handler/HandleMessage.o \
+		handler/HandleSystem.o \
 		handler/HandleLogin.o \
+		handler/HandleLogout.o \
+		handler/HandleSetFunc.o \
+		handler/HandleSetContent.o \
+		handler/HandleGetClassList.o \
+		handler/HandleGetGradeList.o \
+		handler/HandleGetCourseList.o \
+		handler/HandleGetStudentList.o \
+		handler/HandleGetClassRoomList.o \
+		handler/HandleGetStudentInfo.o \
+		handler/HandleGetFuncList.o \
+		handler/HandleGetTeacherInfo.o \
+		handler/HandleStartClass.o \
 		\
 		message/proto/protocol.pb.o
 
@@ -66,7 +82,7 @@ LINK        = libs/libev.a libs/libglog.a libs/liblua52.so libs/libmysqlcppconn.
 # rock..
 all	: clean precompile_protobuf $(BIN)
 
-precompile_protobuf:
+precompile_protobuf	:
 	$(PROTOC) $(PBFLAGS)=$(PBDST) $(PBSRC)/*
 
 # how to compiling programs

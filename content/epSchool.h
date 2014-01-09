@@ -11,8 +11,6 @@
 
 #include <iostream>
 
-#include "../netdef.h" // for EPSCHOOL_INVALIED_SCHOOL_ID
-
 /**
  * @brief 学校类。
  */
@@ -52,7 +50,7 @@ private :
         /**
          * @brief 学校名称。
          */
-        std::string name_;
+        std::string schoolName_;
 
         /**
          * @brief 学校所属地区。

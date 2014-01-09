@@ -12,25 +12,25 @@
 #include "epPerson.h"
 #include "epUser.h"
 
-#include "../netdef.h" // for EPTEACHER_INVALID_TEACHER_ID
-
 /**
  * @brief 教室类。
  */
 class epTeacher : public epPerson, public epUser {
 public :
-        epTeacher(void) : id_(EPTEACHER_INVALID_TEACHER_ID) {}
+        epTeacher(void);
         ~epTeacher(void);
 
         /**
          * @name set
          * @{ */
+        bool setId(const int);
         bool setschoolName (const std::string&);
         /**  @} */
 
         /**
          * @name get
          * @{ */
+        int getId(void) const;
         const std::string& getschoolName (void) const;
         /**  @} */
 
@@ -38,6 +38,11 @@ public :
          * @name get by ???
          * @{ */
         /**  @} */
+
+        /**
+         * @brief 打印该对象的属性。
+         */
+        virtual void dump(void);
 
 private :
         /**
@@ -50,3 +55,5 @@ private :
          */
         std::string schoolName_;
 };
+
+#endif // __EPTEACHER_H__

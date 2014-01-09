@@ -38,14 +38,14 @@
 #       define EPSCHOOL_INVALID_SCHOOL_ID      (-1)
 #endif
 
-// for epStudent.h
-#ifndef EPSTUDENT_INVALIED_ID
-#       define EPSTUDENT_INVALIED_STUDENT_ID    (-1)
-#endif
-
 // for epClassroom.h
 #ifndef EPCLASSROOM_INVALID_CLASSROOM_ID
 #       define EPCLASSROOM_INVALID_CLASSROOM_ID (-1)
+#endif
+
+// for epPerson.h
+#ifndef EPPERSON_INVALID_PERSON_AGE
+#       define EPPERSON_INVALID_PERSON_AGE      (-1)
 #endif
 
 // for epTeacher.h
@@ -53,9 +53,19 @@
 #       define EPTEACHER_INVALID_TEACHER_ID     (-1)
 #endif
 
+// for epStudent.h
+#ifndef EPSTUDENT_INVALIED_ID
+#       define EPSTUDENT_INVALIED_STUDENT_ID    (-1)
+#endif
+
 // for epWhiteBoard.h
 #ifndef EPWHITEBOARD_INVALID_WHITEBOARD_ID
 #       define EPWHITEBOARD_INVALID_WHITEBOARD_ID       (-1)
+#endif
+
+// for epGroup.h
+#ifndef EPGROUP_INVALID_GROUP_ID
+#       define EPGROUP_INVALID_GROUP_ID (-1)
 #endif
 
 #endif // __NETDEF_H__

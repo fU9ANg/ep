@@ -9,15 +9,32 @@
 #ifndef __EPWHITEBOARD_H__
 #define __EPWHITEBOARD_H__
 
-#include "../netdef.h" // for EPWHITEBOARD_INVALID_WHITEBOARD_ID
+#include "epUser.h"
 
 /**
  * @brief 白板类
  */
-class epWhiteBoard {
+class epWhiteBoard : public epUser {
 public :
-        epWhiteBoard(void) : id_(EPWHITEBOARD_INVALID_WHITEBOARD_ID) {}
+        epWhiteBoard(void);
         ~epWhiteBoard(void);
+
+        /**
+         * @name set
+         * @{ */
+        bool setId(const int);
+        /**  @} */
+
+        /**
+         * @name get
+         * @{ */
+        int getId(void) const;
+        /**  @} */
+
+        /**
+         * @brief 打印该对象的属性。
+         */
+        virtual void dump(void);
 
 private :
         /**

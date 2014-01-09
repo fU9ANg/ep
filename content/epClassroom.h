@@ -13,21 +13,34 @@
 
 #include "epClass.h"
 #include "epTeacher.h"
-#include "../netdef.h" // for EPCLASSROOM_INVALID_CLASSROOM_ID
+#include "epWhiteBoard.h"
+#include "epGroup.h"
 
-typedef std::map<int, epClass> EPCLASS_MAP;
+typedef std::map<int, epGroup> GROUP_MAP;
 
 /**
  * @brief 教室类。
  */
 class epClassroom {
 public :
-        epClassroom(void) : id_(EPCLASSROOM_INVALID_CLASSROOM_ID) {}
+        epClassroom(void);
         ~epClassroom(void);
 
-        bool           insertClass     (const epClass&);
-        bool           deleteClassById (int);
-        const epClass& getClassById    (int);
+        /**
+         * @name get
+         * @{ */
+        const int getId(void) const;
+        const epTeacher getTeacher(void) const;
+        const epWhiteBoard getWhiteBoard(void) const;
+        /**  @} */
+
+        /**
+         * @name set
+         * @{ */
+        bool setId(const int);
+        bool setTeacher(const epTeacher&);
+        bool setWhiteBoard(const epWhiteBoard&);
+        /**  @} */
 
 private :
         /**
@@ -37,7 +50,11 @@ private :
         /**
          * @brief 班列表。
          */
-        EPCLASS_MAP classMap_;
+        epClass   class_;
+        /**
+         * @brief 组列表。
+         */
+        GROUP_MAP groupMap_;
         /**
          * @brief 教师。
          */

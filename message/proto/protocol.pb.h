@@ -223,12 +223,12 @@ class sLogin : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 result = 1;
+  // required bool result = 1;
   inline bool has_result() const;
   inline void clear_result();
   static const int kResultFieldNumber = 1;
-  inline ::google::protobuf::int32 result() const;
-  inline void set_result(::google::protobuf::int32 value);
+  inline bool result() const;
+  inline void set_result(bool value);
 
   // @@protoc_insertion_point(class_scope:sLogin)
  private:
@@ -237,7 +237,7 @@ class sLogin : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 result_;
+  bool result_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -2474,7 +2474,7 @@ inline void cLogin::set_allocated_passwd(::std::string* passwd) {
 
 // sLogin
 
-// required int32 result = 1;
+// required bool result = 1;
 inline bool sLogin::has_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2485,13 +2485,13 @@ inline void sLogin::clear_has_result() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void sLogin::clear_result() {
-  result_ = 0;
+  result_ = false;
   clear_has_result();
 }
-inline ::google::protobuf::int32 sLogin::result() const {
+inline bool sLogin::result() const {
   return result_;
 }
-inline void sLogin::set_result(::google::protobuf::int32 value) {
+inline void sLogin::set_result(bool value) {
   set_has_result();
   result_ = value;
 }

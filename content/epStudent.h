@@ -11,26 +11,29 @@
 
 #include "epPerson.h"
 #include "epUser.h"
-#include "../netdef.h" // for EPSTUDENT_INVALIED_ID
 
 /**
  * @brief 学生类。
  */
 class epStudent : public epPerson, public epUser {
 public :
-        epStudent(void) : id_(EPSTUDENT_INVALIED_STUDENT_ID) {}
+        epStudent(void);
         ~epStudent(void);
 
         /**
          * @name set
          * @{ */
+        bool setId(const int);
+        bool setClassId(const int);
         bool setClassName (const std::string&);
         /**  @} */
 
         /**
          * @name get
          * @{ */
-        const std::string& getClassName (void) const;
+        int getId(void) const;
+        int getClassId(void) const;
+        const std::string getClassName (void) const;
         /**  @} */
 
         /**
@@ -38,16 +41,21 @@ public :
          * @{ */
         /**  @} */
 
+        virtual void dump(void);
+
 private :
         /**
          * @brief 学号。
          */
         int        id_;
-
         /**
          * @brief 存放所属班。
          */
         std::string className_;
+        /**
+         * @brief 所属班级ID。
+         */
+        int classId_;
 };
 
 #endif // __EPSTUDENT_H__
