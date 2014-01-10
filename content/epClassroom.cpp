@@ -2,7 +2,7 @@
 #include "../Single.h"
 #include "../netdef.h" // for EPCLASSROOM_INVALID_CLASSROOM_ID
 
-epClassroom::epClassroom(void) : id_(EPCLASSROOM_INVALID_CLASSROOM_ID) {
+epClassroom::epClassroom(const int classroom_id=EPCLASSROOM_INVALID_CLASSROOM_ID) : id_(classroom_id) {
 }
 
 epClassroom::~epClassroom(void) {
@@ -165,7 +165,7 @@ epClassroom::removeClassById(const int id) {
         return false;
 }
 
-const epClass*
+epClass*
 epClassroom::getClassById(const int id) {
         EPCLASS_MAP::iterator it = classMap_.begin();
         EPCLASS_MAP::const_iterator cie = classMap_.end();
@@ -204,7 +204,7 @@ epClassroom::removeGroupById(const int id) {
         return false;
 }
 
-const epGroup*
+epGroup*
 epClassroom::getGroupById(const int id) {
         EPGROUP_MAP::iterator it = groupMap_.begin();
         EPGROUP_MAP::const_iterator cie = groupMap_.end();

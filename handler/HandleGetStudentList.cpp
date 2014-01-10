@@ -3,6 +3,8 @@
 #include "protocol.h"
 #include "Buf.h"
 #include "Single.h"
+#include "../database.h"
+#include "../global_functions.h"
 #include "../message/proto/protocol.pb.h"
 
 void CHandleMessage::handleGetStudentList (Buf* p)
@@ -12,11 +14,11 @@ void CHandleMessage::handleGetStudentList (Buf* p)
 #endif
         // TODO:
 
-        cGetFuncList gfl;
+        cGetStudentList gfl;
         unpacket(p, gfl);
 
-        sGetFuncList tmp;
-        std::vector<sGetFuncList> vc;
+        sGetStudentList tmp;
+        std::vector<sGetStudentList> vc;
         string strpwd;
         string Account;
         try {
@@ -25,8 +27,8 @@ void CHandleMessage::handleGetStudentList (Buf* p)
                 pstmt->setInt (1, gfl.class_id());
                 ResultSet* prst = pstmt->executeQuery ();
                 while (prst->next ()) {
-                        tmp.set_id(prst->getInt("id"));
-                        tmp.set_name(prst->getString("name"));
+                        tmp.set_id      (prst->getInt   ("id"));
+                        tmp.set_name    (prst->getString("name"));
                         tmp.set_res_path(prst->getString("res_path"));
                         vc.push_back(tmp);
                 }

@@ -36,12 +36,12 @@ message sGetFuncList {
 
 // CT_SetFunc
 message cSetFunc {
-        required int32 funcId   = 1;
+        required int32 func_type = 1; // 选择功能类型。
 }
 
 // ST_SetFunc
 message sSetFunc {
-        required int32 status   = 1; // 选择是否成功。
+        required bool   result   = 1; // 返回服务器是否设置成功。
 }
 /*}}}*/
 
@@ -75,14 +75,24 @@ message cGetCourseList { // 请求年级对应的课程表。
 
 // ST_GetCourseList
 message sGetCourseList { // 返回学校对应的课程表。
-        required int32  course_id       = 1;
-        required string course_name      = 2;
-        required int32  language        = 3;
-        required int32  art             = 4;
-        required int32  community       = 5;
-        required int32  health          = 6;
-        required int32  science         = 7;
-        required string res_path         = 8;
+        required int32  course_id   = 1;
+        required string course_name = 2;
+        required int32  language    = 3;
+        required int32  art         = 4;
+        required int32  community   = 5;
+        required int32  health      = 6;
+        required int32  science     = 7;
+        required string res_path    = 8;
+}
+
+// CT_GetContent,
+message cGetContent {
+        required int32 common   = 1;
+}
+
+// ST_GetContent,
+message sGetContent {
+        required string course_list = 1;
 }
 
 // CT_GetClassList,
@@ -131,6 +141,21 @@ message sGetStudentList { // 单个学生简要信息。
         required int32  id              = 1;
         required string name            = 2;
         required string res_path        = 3;
+}
+
+// CT_GetActiveStudentList,
+message cGetActiveStudentList {
+        required int32  id      = 1;
+}
+
+// ST_GetActiveStudentList,
+message sGetActiveStudentList {
+        required int32  id      = 1;
+}
+
+// ST_UpdateStudentStatus,
+message sUpdateStudentStatus {
+        required int32 id       = 1;
 }
 
 // CT_GetStudentInfo

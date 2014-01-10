@@ -48,7 +48,7 @@ public :
          *
          * @return 成功返回指定教室ID所对应的教室对象指针，否则返回NULL。
          */
-        const epClassroom* getClassroomById(int);
+        epClassroom* getClassroomById(int);
         /**
          * @brief 根据班级ID查找当前上课的班级对象。
          *
@@ -56,7 +56,7 @@ public :
          *
          * @return 成功返回班级对象指针，否则返回NULL。
          */
-        const epClass* getClassById(int);
+        epClass* getClassById(int);
 
         /**
          * @brief 将指定FD的对象插入到游离列表中。
@@ -131,6 +131,15 @@ public :
          * @return 成功返回教师对象指针，否则返回NULL。
          */
         epTeacher* getTeacherByIdFromClassroom(const int);
+        /**
+         * @brief 将处于游离状态，并选择了学校功能，
+         *        且在指定班级ID的学生加入到指定班级。
+         *
+         * @param int[in] 班级ID。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool insertStudentFromUserIntoClassroom(const int);
         /**
          * @brief 将指定消息内容发送给当前上课的班级。
          *

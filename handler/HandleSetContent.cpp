@@ -3,6 +3,7 @@
 #include "protocol.h"
 #include "Buf.h"
 #include "Single.h"
+#include "../global_functions.h"
 #include "../message/proto/protocol.pb.h"
 
 #include "../content/epClassroom.h"
@@ -17,7 +18,6 @@ void CHandleMessage::handleSetContent (Buf* p)
 
         cSetContent sc;
         unpacket(p, sc);
-        int class_id = sc.class_id();
         int classroom_id = sc.classroom_id();
 
         sSetContent tmp;
@@ -52,4 +52,5 @@ void CHandleMessage::handleSetContent (Buf* p)
         pClassroom->setTeacher(*pTeacher);
         pClassroom->insertClass(*pClass);
         EPMANAGER->insertClassroom(*pClassroom);
+        EPMANAGER->insertStudentFromUserIntoClassroom(classroom_id);
 }

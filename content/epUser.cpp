@@ -33,6 +33,12 @@ epUser::setPasswd(const std::string& passwd) {
 }
 
 bool
+epUser::setFuncType(const enum FuncType funcType) {
+        funcType_ = funcType;
+        return true;
+}
+
+bool
 epUser::init(const std::string& account, const std::string& passwd) {
         // TODO :
         return true;
@@ -61,6 +67,11 @@ epUser::getId(void) const {
 int
 epUser::getFd(void) const {
         return fd_;
+}
+
+enum FuncType
+epUser::getFuncType(void) const {
+        return funcType_;
 }
 
 void

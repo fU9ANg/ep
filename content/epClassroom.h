@@ -24,7 +24,7 @@ typedef std::map<int, epClass> EPCLASS_MAP;
  */
 class epClassroom {
 public :
-        epClassroom(void);
+        epClassroom(const int);
         ~epClassroom(void);
 
         /**
@@ -103,10 +103,10 @@ public :
 
         bool insertClass(epClass&);
         bool removeClassById(const int);
-        const epClass* getClassById(const int);
+        epClass* getClassById(const int);
         bool insertGroup(const epGroup&);
         bool removeGroupById(const int);
-        const epGroup* getGroupById(const int);
+        epGroup* getGroupById(const int);
 
         /**
          * @name sendto

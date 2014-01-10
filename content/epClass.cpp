@@ -1,9 +1,9 @@
 #include "epClass.h"
 #include "../Single.h"
-#include "../netdef.h" // for EPCLASS_INVALID_CLASS_ID
+#include "../netdef.h" // EPCLASSROOM_INVALID_CLASSROOM_ID
 #include <stdio.h> // for printf
 
-epClass::epClass(void) : id_(EPCLASS_INVALID_CLASS_ID) {
+epClass::epClass(const int class_id=EPCLASSROOM_INVALID_CLASSROOM_ID) : id_(class_id) {
 }
 
 epClass::~epClass(void) {

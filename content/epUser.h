@@ -56,6 +56,14 @@ public :
          */
         bool setPasswd (const std::string&);
         /**
+         * @brief 设置该客户的功能类型。
+         *
+         * @param FuncType[in] 功能类型。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool setFuncType(const enum FuncType);
+        /**
          * @brief 使用传入的用户名和密码初始化对象。
          *
          * @param std::string[in] 用户名。
@@ -99,6 +107,12 @@ public :
          * @return 客户端FD。
          */
         int getFd(void) const;
+        /**
+         * @brief 获取该客户所选择的功能。
+         *
+         * @return 功能。
+         */
+        enum FuncType getFuncType(void) const;
         /**  @} */
 
         /**
@@ -108,6 +122,7 @@ public :
         /**  @} */
 
 private :
+        enum FuncType funcType_;
         /**
          * @brief 用户ID。
          */

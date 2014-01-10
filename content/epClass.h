@@ -21,7 +21,7 @@ typedef std::map<int, epStudent> EPSTUDENT_MAP;
  */
 class epClass {
 public :
-        epClass(void);
+        epClass(const int);
         ~epClass(void);
 
         /**
