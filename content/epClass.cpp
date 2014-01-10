@@ -1,4 +1,5 @@
 #include "epClass.h"
+#include "../Single.h"
 #include "../netdef.h" // for EPCLASS_INVALID_CLASS_ID
 #include <stdio.h> // for printf
 
@@ -9,8 +10,22 @@ epClass::~epClass(void) {
 }
 
 int
-epClass::getClassId(void) {
+epClass::getId(void) {
         return id_;
+}
+
+epStudent*
+epClass::getStudentById(const int id) {
+        EPSTUDENT_MAP::iterator it = studentMap_.begin();
+        EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
+
+        for (; cie!=it; ++it) {
+                if (id == (it->second).getId()) {
+                        return &(it->second);
+                }
+        }
+
+        return NULL;
 }
 
 bool
@@ -76,7 +91,7 @@ epClass::sendtoAllStudent(Buf* pBuf) {
 }
 
 bool
-epClass::sendtoStudent(const int fd, Buf* pBuf) {
+epClass::sendtoStudentByFd(const int fd, Buf* pBuf) {
         EPSTUDENT_MAP::iterator it = studentMap_.begin();
         EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
         for (; cie!=it; ++it) {

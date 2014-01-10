@@ -62,17 +62,33 @@ epGroup::getStudentByFd(const int fd) {
 }
 
 bool
-epGroup::sendtoGroup(Buf* pBuf) {
+epGroup::sendtoAllStudent(Buf* pBuf) {
         STUDENT_MAP::iterator it = studentMap_.begin();
         STUDENT_MAP::const_iterator cie = studentMap_.end();
-
+        Buf* p = NULL;
         for (; cie!=it; ++it) {
-                Buf* p = SINGLE->bufpool.malloc();
+                p = SINGLE->bufpool.malloc();
                 p = pBuf;
+                p->setfd(it->first);
                 SINGLE->sendqueue.enqueue(p);
         }
 
+        SINGLE->bufpool.free(pBuf);
         return true;
+}
+
+bool
+epGroup::sendtoStudentByFd(const int fd, Buf* pBuf) {
+        STUDENT_MAP::iterator it = studentMap_.begin();
+        STUDENT_MAP::const_iterator cie = studentMap_.end();
+        for (; cie!=it; ++it) {
+                if (fd == it->first) {
+                        SINGLE->sendqueue.enqueue(pBuf);
+                        return true;
+                }
+        }
+
+        return false;
 }
 
 void

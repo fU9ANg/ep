@@ -1,0 +1,328 @@
+\hypertarget{classepClassroom}{\section{ep\-Classroom \-Class \-Reference}
+\label{classepClassroom}\index{ep\-Classroom@{ep\-Classroom}}
+}
+
+
+教室类。  
+
+
+
+
+{\ttfamily \#include $<$ep\-Classroom.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classepClassroom_a6ca174262d616a591d028cff108f58d1}{bool {\bfseries insert\-Class} (\hyperlink{classepClass}{ep\-Class} \&)}\label{classepClassroom_a6ca174262d616a591d028cff108f58d1}
+
+\item 
+\hypertarget{classepClassroom_aa7c2a3d9326c34b8fbf104ceccbef8c7}{bool {\bfseries remove\-Class\-By\-Id} (const int)}\label{classepClassroom_aa7c2a3d9326c34b8fbf104ceccbef8c7}
+
+\item 
+\hypertarget{classepClassroom_a29c88f7305225fdd6bbcd62c43b41cf8}{const \hyperlink{classepClass}{ep\-Class} $\ast$ {\bfseries get\-Class\-By\-Id} (const int)}\label{classepClassroom_a29c88f7305225fdd6bbcd62c43b41cf8}
+
+\item 
+\hypertarget{classepClassroom_af33ef640f541aa4f0601aa4f014299e1}{bool {\bfseries insert\-Group} (const \hyperlink{classepGroup}{ep\-Group} \&)}\label{classepClassroom_af33ef640f541aa4f0601aa4f014299e1}
+
+\item 
+\hypertarget{classepClassroom_ae00ebe3bd7b4aa6bb685766500be14b5}{bool {\bfseries remove\-Group\-By\-Id} (const int)}\label{classepClassroom_ae00ebe3bd7b4aa6bb685766500be14b5}
+
+\item 
+\hypertarget{classepClassroom_a4212840b35f426d2ce24c8aa1e9d2ffb}{const \hyperlink{classepGroup}{ep\-Group} $\ast$ {\bfseries get\-Group\-By\-Id} (const int)}\label{classepClassroom_a4212840b35f426d2ce24c8aa1e9d2ffb}
+
+\end{DoxyCompactItemize}
+\begin{Indent}{\bf get}\par
+\begin{DoxyCompactItemize}
+\item 
+const int \hyperlink{classepClassroom_ab80acd528ac699d9e3abd6e378069f12}{get\-Id} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取教室\-I\-D。 \end{DoxyCompactList}\item 
+\hyperlink{classepStudent}{ep\-Student} $\ast$ \hyperlink{classepClassroom_aef522cb3af881dcbbb0533175f2d9797}{get\-Student\-By\-Id} (const int)
+\begin{DoxyCompactList}\small\item\em 根据学生\-I\-D获取学生对象指针。 \end{DoxyCompactList}\item 
+const \hyperlink{classepTeacher}{ep\-Teacher} \hyperlink{classepClassroom_ad75b51a8e7995ecc563c2b3c6e83463b}{get\-Teacher} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取所属该教室的老师对象。 \end{DoxyCompactList}\item 
+const \hyperlink{classepWhiteBoard}{ep\-White\-Board} \hyperlink{classepClassroom_a6beaf5ce968bc07bdbd530b46c226e9f}{get\-White\-Board} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取所属该教室的白板对象。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf set}\par
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classepClassroom_a62e05f8975b26c54137af02edc31cee1}{set\-Id} (const int)
+\begin{DoxyCompactList}\small\item\em 设置教室\-I\-D。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepClassroom_a132a424a7dda5f6b0ee5efaaf46fbe71}{set\-Teacher} (const \hyperlink{classepTeacher}{ep\-Teacher} \&)
+\begin{DoxyCompactList}\small\item\em 指定老师。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepClassroom_ae39337f3b583727b4198f1413ad25a44}{set\-White\-Board} (const \hyperlink{classepWhiteBoard}{ep\-White\-Board} \&)
+\begin{DoxyCompactList}\small\item\em 指定白板。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf sendto}\par
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classepClassroom_a79ca2de7b930a2edfe0e74ca4d6bb747}{sendto\-All\-Class} (\-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息内容发送给所有在该教室上课的班。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepClassroom_a71cea25c521ada2a477af1b4e70004a4}{sendto\-Class\-By\-Id} (const int, \-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息内容发送给在该教室上课的指定班。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepClassroom_a1ff71a89242fe0be7ed1b876abb2d1e0}{sendto\-All\-Group} (\-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息内容发送给所有在该教室上课的分组。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepClassroom_a23ccb0fbff2209acbe62b77d4f5b09f0}{sendto\-Group\-By\-Id} (const int, \-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息内容发送给在该教室上课的指定分组。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepClassroom_a87cf885ac68c8905410b422832b28e3d}{sendto\-Teacher} (\-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息内容发送给在该教室上课的老师。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepClassroom_ab12f803a2e7a1954b9198498d6dd95c8}{sendto\-White\-Board} (\-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息内容发送给所属该教室的白板。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf \-Just for debug}\par
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classepClassroom_af9e52d6f2793e718c1f4d6dd14ebb7e2}{virtual void {\bfseries dump} (void)}\label{classepClassroom_af9e52d6f2793e718c1f4d6dd14ebb7e2}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{\-Detailed \-Description}
+教室类。 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classepClassroom_ab80acd528ac699d9e3abd6e378069f12}{\index{ep\-Classroom@{ep\-Classroom}!get\-Id@{get\-Id}}
+\index{get\-Id@{get\-Id}!epClassroom@{ep\-Classroom}}
+\subsubsection[{get\-Id}]{\setlength{\rightskip}{0pt plus 5cm}const int {\bf ep\-Classroom\-::get\-Id} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{classepClassroom_ab80acd528ac699d9e3abd6e378069f12}
+
+
+获取教室\-I\-D。 
+
+\begin{DoxyReturn}{\-Returns}
+教室\-I\-D。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_aef522cb3af881dcbbb0533175f2d9797}{\index{ep\-Classroom@{ep\-Classroom}!get\-Student\-By\-Id@{get\-Student\-By\-Id}}
+\index{get\-Student\-By\-Id@{get\-Student\-By\-Id}!epClassroom@{ep\-Classroom}}
+\subsubsection[{get\-Student\-By\-Id}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ep\-Student} $\ast$ {\bf ep\-Classroom\-::get\-Student\-By\-Id} (
+\begin{DoxyParamCaption}
+\item[{const int}]{id}
+\end{DoxyParamCaption}
+)}}\label{classepClassroom_aef522cb3af881dcbbb0533175f2d9797}
+
+
+根据学生\-I\-D获取学生对象指针。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 学号\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回指向学生对象的指针，否则返回\-N\-U\-L\-L。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_ad75b51a8e7995ecc563c2b3c6e83463b}{\index{ep\-Classroom@{ep\-Classroom}!get\-Teacher@{get\-Teacher}}
+\index{get\-Teacher@{get\-Teacher}!epClassroom@{ep\-Classroom}}
+\subsubsection[{get\-Teacher}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf ep\-Teacher} {\bf ep\-Classroom\-::get\-Teacher} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{classepClassroom_ad75b51a8e7995ecc563c2b3c6e83463b}
+
+
+获取所属该教室的老师对象。 
+
+\begin{DoxyReturn}{\-Returns}
+老师对象。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_a6beaf5ce968bc07bdbd530b46c226e9f}{\index{ep\-Classroom@{ep\-Classroom}!get\-White\-Board@{get\-White\-Board}}
+\index{get\-White\-Board@{get\-White\-Board}!epClassroom@{ep\-Classroom}}
+\subsubsection[{get\-White\-Board}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf ep\-White\-Board} {\bf ep\-Classroom\-::get\-White\-Board} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{classepClassroom_a6beaf5ce968bc07bdbd530b46c226e9f}
+
+
+获取所属该教室的白板对象。 
+
+\begin{DoxyReturn}{\-Returns}
+白板对象。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_a79ca2de7b930a2edfe0e74ca4d6bb747}{\index{ep\-Classroom@{ep\-Classroom}!sendto\-All\-Class@{sendto\-All\-Class}}
+\index{sendto\-All\-Class@{sendto\-All\-Class}!epClassroom@{ep\-Classroom}}
+\subsubsection[{sendto\-All\-Class}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Classroom\-::sendto\-All\-Class} (
+\begin{DoxyParamCaption}
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepClassroom_a79ca2de7b930a2edfe0e74ca4d6bb747}
+
+
+将指定消息内容发送给所有在该教室上课的班。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_a1ff71a89242fe0be7ed1b876abb2d1e0}{\index{ep\-Classroom@{ep\-Classroom}!sendto\-All\-Group@{sendto\-All\-Group}}
+\index{sendto\-All\-Group@{sendto\-All\-Group}!epClassroom@{ep\-Classroom}}
+\subsubsection[{sendto\-All\-Group}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Classroom\-::sendto\-All\-Group} (
+\begin{DoxyParamCaption}
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepClassroom_a1ff71a89242fe0be7ed1b876abb2d1e0}
+
+
+将指定消息内容发送给所有在该教室上课的分组。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_a71cea25c521ada2a477af1b4e70004a4}{\index{ep\-Classroom@{ep\-Classroom}!sendto\-Class\-By\-Id@{sendto\-Class\-By\-Id}}
+\index{sendto\-Class\-By\-Id@{sendto\-Class\-By\-Id}!epClassroom@{ep\-Classroom}}
+\subsubsection[{sendto\-Class\-By\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Classroom\-::sendto\-Class\-By\-Id} (
+\begin{DoxyParamCaption}
+\item[{const int}]{id, }
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepClassroom_a71cea25c521ada2a477af1b4e70004a4}
+
+
+将指定消息内容发送给在该教室上课的指定班。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 班级\-I\-D。 \\
+\hline
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_a23ccb0fbff2209acbe62b77d4f5b09f0}{\index{ep\-Classroom@{ep\-Classroom}!sendto\-Group\-By\-Id@{sendto\-Group\-By\-Id}}
+\index{sendto\-Group\-By\-Id@{sendto\-Group\-By\-Id}!epClassroom@{ep\-Classroom}}
+\subsubsection[{sendto\-Group\-By\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Classroom\-::sendto\-Group\-By\-Id} (
+\begin{DoxyParamCaption}
+\item[{const int}]{id, }
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepClassroom_a23ccb0fbff2209acbe62b77d4f5b09f0}
+
+
+将指定消息内容发送给在该教室上课的指定分组。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 组\-I\-D。 \\
+\hline
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_a87cf885ac68c8905410b422832b28e3d}{\index{ep\-Classroom@{ep\-Classroom}!sendto\-Teacher@{sendto\-Teacher}}
+\index{sendto\-Teacher@{sendto\-Teacher}!epClassroom@{ep\-Classroom}}
+\subsubsection[{sendto\-Teacher}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Classroom\-::sendto\-Teacher} (
+\begin{DoxyParamCaption}
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepClassroom_a87cf885ac68c8905410b422832b28e3d}
+
+
+将指定消息内容发送给在该教室上课的老师。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_ab12f803a2e7a1954b9198498d6dd95c8}{\index{ep\-Classroom@{ep\-Classroom}!sendto\-White\-Board@{sendto\-White\-Board}}
+\index{sendto\-White\-Board@{sendto\-White\-Board}!epClassroom@{ep\-Classroom}}
+\subsubsection[{sendto\-White\-Board}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Classroom\-::sendto\-White\-Board} (
+\begin{DoxyParamCaption}
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepClassroom_ab12f803a2e7a1954b9198498d6dd95c8}
+
+
+将指定消息内容发送给所属该教室的白板。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_a62e05f8975b26c54137af02edc31cee1}{\index{ep\-Classroom@{ep\-Classroom}!set\-Id@{set\-Id}}
+\index{set\-Id@{set\-Id}!epClassroom@{ep\-Classroom}}
+\subsubsection[{set\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Classroom\-::set\-Id} (
+\begin{DoxyParamCaption}
+\item[{const int}]{id}
+\end{DoxyParamCaption}
+)}}\label{classepClassroom_a62e05f8975b26c54137af02edc31cee1}
+
+
+设置教室\-I\-D。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 教室\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_a132a424a7dda5f6b0ee5efaaf46fbe71}{\index{ep\-Classroom@{ep\-Classroom}!set\-Teacher@{set\-Teacher}}
+\index{set\-Teacher@{set\-Teacher}!epClassroom@{ep\-Classroom}}
+\subsubsection[{set\-Teacher}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Classroom\-::set\-Teacher} (
+\begin{DoxyParamCaption}
+\item[{const {\bf ep\-Teacher} \&}]{teacher}
+\end{DoxyParamCaption}
+)}}\label{classepClassroom_a132a424a7dda5f6b0ee5efaaf46fbe71}
+
+
+指定老师。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em ep\-Teacher\mbox{[}in\mbox{]}} & 老师对象。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClassroom_ae39337f3b583727b4198f1413ad25a44}{\index{ep\-Classroom@{ep\-Classroom}!set\-White\-Board@{set\-White\-Board}}
+\index{set\-White\-Board@{set\-White\-Board}!epClassroom@{ep\-Classroom}}
+\subsubsection[{set\-White\-Board}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Classroom\-::set\-White\-Board} (
+\begin{DoxyParamCaption}
+\item[{const {\bf ep\-White\-Board} \&}]{whiteboard}
+\end{DoxyParamCaption}
+)}}\label{classepClassroom_ae39337f3b583727b4198f1413ad25a44}
+
+
+指定白板。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em ep\-White\-Board\mbox{[}in\mbox{]}} & 白板对象。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{epClassroom_8h}{ep\-Classroom.\-h}\item 
+ep\-Classroom.\-cpp\end{DoxyCompactItemize}

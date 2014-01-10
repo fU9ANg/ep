@@ -43,8 +43,9 @@ OBJS    = 	main.o \
 		\
 		content/LoginCheck.o \
 		content/epManager.o \
-		content/epClass.o \
+		content/epSchool.o \
 		content/epClassroom.o \
+		content/epClass.o \
 		content/epGroup.o \
 		content/epPerson.o \
 		content/epUser.o \

@@ -61,6 +61,23 @@ enum CommandType {
         /*}}}*/
 };
 
+enum LoginType {
+        LT_USER,
+        LT_HEADMASTER,
+        LT_TEACHER,
+        LT_PARENTS,
+        LT_STUDENT,
+        LT_WHITEBOARD,
+};
+
+enum FuncType {
+        FT_PERSONAL = 1,
+        FT_SCHOOL,
+        FT_FAMILY,
+        FT_FRIEND,
+        FT_OFFICE,
+};
+
 // 下面是所有用到的数据结构体
 //
 

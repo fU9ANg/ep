@@ -1,4 +1,5 @@
 #include "epPerson.h"
+#include <stdio.h> // for printf
 #include "../netdef.h"
 
 epPerson::epPerson (void) : age_(EPPERSON_INVALID_PERSON_AGE) {

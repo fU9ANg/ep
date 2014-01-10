@@ -10,6 +10,7 @@
 #define __EPWHITEBOARD_H__
 
 #include "epUser.h"
+#include "../protocol.h"
 
 /**
  * @brief 白板类
@@ -23,24 +24,39 @@ public :
          * @name set
          * @{ */
         /**
-         * @brief 设置白板ID。
+         * @brief 设置白板编号。
          *
-         * @param int[in] 白板ID。
+         * @param int[in] 白板编号。
          *
          * @return 成功返回true，否则返回false。
          */
-        bool setId(const int);
+        virtual bool setWhiteboardNum(const std::string&);
+        /**
+         * @brief 使用用户名和密码初始化白板对象。
+         *
+         * @param std::string[in] 用户名。
+         * @param std::string[in] 密码。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        virtual bool init(const std::string&, const std::string&);
         /**  @} */
 
         /**
          * @name get
          * @{ */
         /**
-         * @brief 获取白板ID。
+         * @brief 获取白板编号。
          *
-         * @return 白板ID。
+         * @return 白板编号。
          */
-        int getId(void) const;
+        virtual std::string getWhiteboardNum(void) const;
+        /**
+         * @brief 获取客户端类型。
+         *
+         * @return 客户端类型。
+         */
+        virtual enum LoginType getType(void) const;
         /**  @} */
 
         /**
@@ -53,7 +69,7 @@ private :
         /**
          * @brief 白板编号。
          */
-        int id_;
+        std::string whiteboardNum_;
 };
 
 #endif // __EPWHITEBOARD_H__

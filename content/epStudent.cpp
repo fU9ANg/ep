@@ -1,15 +1,15 @@
 #include "epStudent.h"
-#include "../netdef.h" // for EPSTUDENT_INVALIED_ID
+#include <stdio.h> // for printf
 
-epStudent::epStudent(void) : id_(EPSTUDENT_INVALIED_STUDENT_ID) {
+epStudent::epStudent(void) {
 }
 
 epStudent::~epStudent(void) {
 }
 
 bool
-epStudent::setId(const int id) {
-        id_ = id;
+epStudent::setStudentNum(const std::string& studentNum) {
+        studentNum_ = studentNum;
         return true;
 }
 
@@ -19,14 +19,31 @@ epStudent::setClassName (const std::string& className) {
         return true;
 }
 
-int
-epStudent::getId(void) const {
-        return id_;
+bool
+epStudent::init(const std::string& account, const std::string& passwd) {
+        epUser::init(account, passwd);
+        // TODO :
+        return true;
+}
+
+std::string
+epStudent::getStudentNum(void) const {
+        return studentNum_;
 }
 
 const std::string
 epStudent::getClassName (void) const {
         return className_;
+}
+
+int
+epStudent::getClassId(void) const {
+        return classId_;
+}
+
+enum LoginType
+epStudent::getType(void) const {
+        return LT_STUDENT;
 }
 
 void
@@ -36,7 +53,7 @@ epStudent::dump(void) {
         printf("for person :\n");
         epPerson::dump();
         printf("for student :\n");
-        printf("student id = %d\n", id_);
-        printf("class id   = %d\n", classId_);
-        printf("class name = %s\n", className_.c_str());
+        printf("student number = %s\n", studentNum_.c_str());
+        printf("class id       = %d\n", classId_);
+        printf("class name     = %s\n", className_.c_str());
 }

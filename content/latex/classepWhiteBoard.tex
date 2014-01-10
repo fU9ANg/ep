@@ -1,0 +1,131 @@
+\hypertarget{classepWhiteBoard}{\section{ep\-White\-Board \-Class \-Reference}
+\label{classepWhiteBoard}\index{ep\-White\-Board@{ep\-White\-Board}}
+}
+
+
+白板类  
+
+
+
+
+{\ttfamily \#include $<$ep\-White\-Board.\-h$>$}
+
+\-Inheritance diagram for ep\-White\-Board\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classepWhiteBoard}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{Indent}{\bf set}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classepWhiteBoard_aa4f5705948c452c34dcf9594bf58b805}{set\-Whiteboard\-Num} (const std\-::string \&) = whiteboard\-Num
+\begin{DoxyCompactList}\small\item\em 设置白板编号。 \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classepWhiteBoard_a53a1e629a59eff2cf95a70cbc75b798a}{init} (const std\-::string \&, const std\-::string \&)
+\begin{DoxyCompactList}\small\item\em 使用用户名和密码初始化白板对象。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf get}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual std\-::string \hyperlink{classepWhiteBoard_ab57465f3d8e945f005ee3e487e4bac15}{get\-Whiteboard\-Num} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取白板编号。 \end{DoxyCompactList}\item 
+virtual enum \-Login\-Type \hyperlink{classepWhiteBoard_af53ead55f5630984a730edc745add5e1}{get\-Type} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取客户端类型。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf \-Just for debug}\par
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classepWhiteBoard_a619e84c470bc1639ad9fbd432b181c22}{virtual void {\bfseries dump} (void)}\label{classepWhiteBoard_a619e84c470bc1639ad9fbd432b181c22}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{\-Detailed \-Description}
+白板类 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classepWhiteBoard_af53ead55f5630984a730edc745add5e1}{\index{ep\-White\-Board@{ep\-White\-Board}!get\-Type@{get\-Type}}
+\index{get\-Type@{get\-Type}!epWhiteBoard@{ep\-White\-Board}}
+\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum \-Login\-Type {\bf ep\-White\-Board\-::get\-Type} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepWhiteBoard_af53ead55f5630984a730edc745add5e1}
+
+
+获取客户端类型。 
+
+\begin{DoxyReturn}{\-Returns}
+客户端类型。 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classepUser_aa445c0b9c0ec07d7fb32b978281402ab}{ep\-User}.
+
+\hypertarget{classepWhiteBoard_ab57465f3d8e945f005ee3e487e4bac15}{\index{ep\-White\-Board@{ep\-White\-Board}!get\-Whiteboard\-Num@{get\-Whiteboard\-Num}}
+\index{get\-Whiteboard\-Num@{get\-Whiteboard\-Num}!epWhiteBoard@{ep\-White\-Board}}
+\subsubsection[{get\-Whiteboard\-Num}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf ep\-White\-Board\-::get\-Whiteboard\-Num} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepWhiteBoard_ab57465f3d8e945f005ee3e487e4bac15}
+
+
+获取白板编号。 
+
+\begin{DoxyReturn}{\-Returns}
+白板编号。 
+\end{DoxyReturn}
+\hypertarget{classepWhiteBoard_a53a1e629a59eff2cf95a70cbc75b798a}{\index{ep\-White\-Board@{ep\-White\-Board}!init@{init}}
+\index{init@{init}!epWhiteBoard@{ep\-White\-Board}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-White\-Board\-::init} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{account, }
+\item[{const std\-::string \&}]{passwd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepWhiteBoard_a53a1e629a59eff2cf95a70cbc75b798a}
+
+
+使用用户名和密码初始化白板对象。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em std\-::string\mbox{[}in\mbox{]}} & 用户名。 \\
+\hline
+{\em std\-::string\mbox{[}in\mbox{]}} & 密码。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classepUser_a60c355f9dd74f22949f686f3d0264ac2}{ep\-User}.
+
+\hypertarget{classepWhiteBoard_aa4f5705948c452c34dcf9594bf58b805}{\index{ep\-White\-Board@{ep\-White\-Board}!set\-Whiteboard\-Num@{set\-Whiteboard\-Num}}
+\index{set\-Whiteboard\-Num@{set\-Whiteboard\-Num}!epWhiteBoard@{ep\-White\-Board}}
+\subsubsection[{set\-Whiteboard\-Num}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-White\-Board\-::set\-Whiteboard\-Num} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{}
+\end{DoxyParamCaption}
+) = whiteboard\-Num\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepWhiteBoard_aa4f5705948c452c34dcf9594bf58b805}
+
+
+设置白板编号。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 白板编号。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{epWhiteBoard_8h}{ep\-White\-Board.\-h}\item 
+ep\-White\-Board.\-cpp\end{DoxyCompactItemize}

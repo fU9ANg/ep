@@ -1,16 +1,16 @@
 #include "epTeacher.h"
+#include <stdio.h> // for printf
 #include "../netdef.h" // for EPTEACHER_INVALID_TEACHER_ID
 
-epTeacher::epTeacher(void)
-        : id_(EPTEACHER_INVALID_TEACHER_ID) {
+epTeacher::epTeacher(void) {
 }
 
 epTeacher::~epTeacher(void) {
 }
 
 bool
-epTeacher::setId(const int id) {
-        id_ = id;
+epTeacher::setTeacherNum(const std::string& teacherNum) {
+        teacherNum_ = teacherNum;
         return true;
 }
 
@@ -26,9 +26,16 @@ epTeacher::setSchoolId(const int schoolId) {
         return true;
 }
 
-int
-epTeacher::getId(void) const {
-        return id_;
+bool
+epTeacher::init(const std::string& account, const std::string& passwd) {
+        epUser::init(account, passwd);
+        // TODO :
+        return true;
+}
+
+std::string
+epTeacher::getTeacherNum(void) const {
+        return teacherNum_;
 }
 
 const std::string&
@@ -41,12 +48,17 @@ epTeacher::getSchoolId(void) const {
         return schoolId_;
 }
 
+enum LoginType
+epTeacher::getType(void) const {
+        return LT_TEACHER;
+}
+
 void
 epTeacher::dump(void) {
         printf("for user :\n");
         epUser::dump();
         printf("for person :\n");
         epPerson::dump();
-        printf("teacher id  = %d\n", id_);
-        printf("school name = %s\n", schoolName_.c_str());
+        printf("teacher number  = %s\n", teacherNum_.c_str());
+        printf("school name     = %s\n", schoolName_.c_str());
 }

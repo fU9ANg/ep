@@ -1,23 +1,37 @@
+#include <stdio.h> // for printf
 #include "epWhiteBoard.h"
-#include "../netdef.h" // for EPWHITEBOARD_INVALID_WHITEBOARD_ID
 
-epWhiteBoard::epWhiteBoard (void) 
-		: id_(EPWHITEBOARD_INVALID_WHITEBOARD_ID) {
+epWhiteBoard::epWhiteBoard (void) {
 }
+
 epWhiteBoard::~epWhiteBoard(void) {
 }
 
-bool epWhiteBoard::setId(const int id) {
-	id_ = id;
+bool
+epWhiteBoard::setWhiteboardNum(const std::string& whiteboardNum) {
+        whiteboardNum_ = whiteboardNum;
 	return true;
 }
 
-int epWhiteBoard::getId(void) const {
-		return id_;
+bool
+epWhiteBoard::init(const std::string& account, const std::string& passwd) {
+        epUser::init(account, passwd);
+        // TODO :
+        return true;
+}
+
+std::string
+epWhiteBoard::getWhiteboardNum(void) const {
+		return whiteboardNum_;
+}
+
+enum LoginType
+epWhiteBoard::getType(void) const {
+        return LT_WHITEBOARD;
 }
 
 void
 epWhiteBoard::dump(void) {
         epUser::dump();
-        printf("whileboard id = %d\n", id_);
+        printf("whileboard number = %s\n", whiteboardNum_.c_str());
 }

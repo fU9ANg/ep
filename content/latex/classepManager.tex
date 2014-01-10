@@ -1,0 +1,352 @@
+\hypertarget{classepManager}{\section{ep\-Manager \-Class \-Reference}
+\label{classepManager}\index{ep\-Manager@{ep\-Manager}}
+}
+
+
+管理类。  
+
+
+
+
+{\ttfamily \#include $<$ep\-Manager.\-h$>$}
+
+\-Inheritance diagram for ep\-Manager\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classepManager}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classepManager_acd6212dc426ebfdf0fd1e427b3dcc801}{insert\-Classroom} (const \hyperlink{classepClassroom}{ep\-Classroom} \&)
+\begin{DoxyCompactList}\small\item\em 插入指定教室到管理类。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepManager_ae093930a20d97d4b8b2cb7f644631845}{remove\-Classroom\-By\-Id} (int)
+\begin{DoxyCompactList}\small\item\em 移除指定\-I\-D的教室，并不删除教室类。 \end{DoxyCompactList}\item 
+const \hyperlink{classepClassroom}{ep\-Classroom} $\ast$ \hyperlink{classepManager_aaf31376adba61f3da5b326cb853d4af9}{get\-Classroom\-By\-Id} (int)
+\begin{DoxyCompactList}\small\item\em 从教室列表中获取指定\-I\-D的教室对象指针。 \end{DoxyCompactList}\item 
+const \hyperlink{classepClass}{ep\-Class} $\ast$ \hyperlink{classepManager_a211e4c8bea19e26967c534b4c43b2411}{get\-Class\-By\-Id} (int)
+\begin{DoxyCompactList}\small\item\em 根据班级\-I\-D查找当前上课的班级对象。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepManager_a5b9c6ca185e58a7f9fe5488e4f624447}{insert\-User} (int, \hyperlink{classepUser}{ep\-User} $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定\-F\-D的对象插入到游离列表中。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepManager_a732a9bdcc0df899a3dc279111e58f2f9}{remove\-User\-By\-Fd} (const int)
+\begin{DoxyCompactList}\small\item\em 从列表中删除指定\-F\-D的对象。并不delete对象，只是在列表中删除关系。 \end{DoxyCompactList}\item 
+\hyperlink{classepUser}{ep\-User} $\ast$ \hyperlink{classepManager_a620725a2f06859bcb63ec6d19b5609a4}{get\-User\-By\-Fd} (const int)
+\begin{DoxyCompactList}\small\item\em 获取指定\-F\-D的对象指针。 \end{DoxyCompactList}\item 
+\hyperlink{classepStudent}{ep\-Student} $\ast$ \hyperlink{classepManager_abc79a463b70c1408aca98878bb0bfd0f}{get\-Student\-By\-Id} (const int)
+\begin{DoxyCompactList}\small\item\em 根据学生\-I\-D获取学生对象指针。 \end{DoxyCompactList}\item 
+\hyperlink{classepStudent}{ep\-Student} $\ast$ \hyperlink{classepManager_ac6d39aca07cc2027d44d716f64961d41}{get\-Student\-By\-Id\-From\-User} (const int)
+\begin{DoxyCompactList}\small\item\em 根据学生\-I\-D获取学生对象指针。 \end{DoxyCompactList}\item 
+\hyperlink{classepStudent}{ep\-Student} $\ast$ \hyperlink{classepManager_a37dfbc662308ff32fbb8b25b05e5acc9}{get\-Student\-By\-Id\-From\-Classroom} (const int)
+\begin{DoxyCompactList}\small\item\em 根据学生\-I\-D获取学生对象指针。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepManager_aa6220b05aa643bdff030c1c79e90f8c8}{sendto\-All\-Classroom} (\-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息内容发送给当前上课的班级。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepManager_a02637ea3d861ac89f3983f3bcb431150}{sendto\-Classroom} (const int, \-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息内容发送给指定班级。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepManager_a048a1702141469676e28436ed37c46c3}{sendto\-All\-User} (\-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息内容发送给所有游离用户。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepManager_a49c079c7f8762319c495f44be5b0de67}{sendto\-User} (const int, \-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息内容发送给指定游离用户。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}{\bf \-Just for debug}\par
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classepManager_a3383ed963c1dfb270427d0ef65640761}{virtual void \hyperlink{classepManager_a3383ed963c1dfb270427d0ef65640761}{dump\-Classroom} (void)}\label{classepManager_a3383ed963c1dfb270427d0ef65640761}
+
+\begin{DoxyCompactList}\small\item\em 打印教室列表。 \end{DoxyCompactList}\item 
+\hypertarget{classepManager_a1158702b83223286f453d89ca0d663fa}{virtual void \hyperlink{classepManager_a1158702b83223286f453d89ca0d663fa}{dump\-User} (void)}\label{classepManager_a1158702b83223286f453d89ca0d663fa}
+
+\begin{DoxyCompactList}\small\item\em 打印游离状态的 client。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classepManager_a5a0303786c09234708654ae29e2f0153}{static \hyperlink{classepManager}{ep\-Manager} $\ast$ {\bfseries instance} (void)}\label{classepManager_a5a0303786c09234708654ae29e2f0153}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+管理类。 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classepManager_a211e4c8bea19e26967c534b4c43b2411}{\index{ep\-Manager@{ep\-Manager}!get\-Class\-By\-Id@{get\-Class\-By\-Id}}
+\index{get\-Class\-By\-Id@{get\-Class\-By\-Id}!epManager@{ep\-Manager}}
+\subsubsection[{get\-Class\-By\-Id}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf ep\-Class} $\ast$ {\bf ep\-Manager\-::get\-Class\-By\-Id} (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}}\label{classepManager_a211e4c8bea19e26967c534b4c43b2411}
+
+
+根据班级\-I\-D查找当前上课的班级对象。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 班级\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回班级对象指针，否则返回\-N\-U\-L\-L。 
+\end{DoxyReturn}
+\hypertarget{classepManager_aaf31376adba61f3da5b326cb853d4af9}{\index{ep\-Manager@{ep\-Manager}!get\-Classroom\-By\-Id@{get\-Classroom\-By\-Id}}
+\index{get\-Classroom\-By\-Id@{get\-Classroom\-By\-Id}!epManager@{ep\-Manager}}
+\subsubsection[{get\-Classroom\-By\-Id}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf ep\-Classroom} $\ast$ {\bf ep\-Manager\-::get\-Classroom\-By\-Id} (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}}\label{classepManager_aaf31376adba61f3da5b326cb853d4af9}
+
+
+从教室列表中获取指定\-I\-D的教室对象指针。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定教室\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回指定教室\-I\-D所对应的教室对象指针，否则返回\-N\-U\-L\-L。 
+\end{DoxyReturn}
+\hypertarget{classepManager_abc79a463b70c1408aca98878bb0bfd0f}{\index{ep\-Manager@{ep\-Manager}!get\-Student\-By\-Id@{get\-Student\-By\-Id}}
+\index{get\-Student\-By\-Id@{get\-Student\-By\-Id}!epManager@{ep\-Manager}}
+\subsubsection[{get\-Student\-By\-Id}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ep\-Student} $\ast$ {\bf ep\-Manager\-::get\-Student\-By\-Id} (
+\begin{DoxyParamCaption}
+\item[{const int}]{id}
+\end{DoxyParamCaption}
+)}}\label{classepManager_abc79a463b70c1408aca98878bb0bfd0f}
+
+
+根据学生\-I\-D获取学生对象指针。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 学生\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回学生对象指针，否则返回\-N\-U\-L\-L。 
+\end{DoxyReturn}
+\hypertarget{classepManager_a37dfbc662308ff32fbb8b25b05e5acc9}{\index{ep\-Manager@{ep\-Manager}!get\-Student\-By\-Id\-From\-Classroom@{get\-Student\-By\-Id\-From\-Classroom}}
+\index{get\-Student\-By\-Id\-From\-Classroom@{get\-Student\-By\-Id\-From\-Classroom}!epManager@{ep\-Manager}}
+\subsubsection[{get\-Student\-By\-Id\-From\-Classroom}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ep\-Student} $\ast$ {\bf ep\-Manager\-::get\-Student\-By\-Id\-From\-Classroom} (
+\begin{DoxyParamCaption}
+\item[{const int}]{id}
+\end{DoxyParamCaption}
+)}}\label{classepManager_a37dfbc662308ff32fbb8b25b05e5acc9}
+
+
+根据学生\-I\-D获取学生对象指针。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 学生\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回学生对象指针，否则返回\-N\-U\-L\-L。 
+\end{DoxyReturn}
+\hypertarget{classepManager_ac6d39aca07cc2027d44d716f64961d41}{\index{ep\-Manager@{ep\-Manager}!get\-Student\-By\-Id\-From\-User@{get\-Student\-By\-Id\-From\-User}}
+\index{get\-Student\-By\-Id\-From\-User@{get\-Student\-By\-Id\-From\-User}!epManager@{ep\-Manager}}
+\subsubsection[{get\-Student\-By\-Id\-From\-User}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ep\-Student} $\ast$ {\bf ep\-Manager\-::get\-Student\-By\-Id\-From\-User} (
+\begin{DoxyParamCaption}
+\item[{const int}]{id}
+\end{DoxyParamCaption}
+)}}\label{classepManager_ac6d39aca07cc2027d44d716f64961d41}
+
+
+根据学生\-I\-D获取学生对象指针。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 学生\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回学生对象指针，否则返回\-N\-U\-L\-L。 
+\end{DoxyReturn}
+\hypertarget{classepManager_a620725a2f06859bcb63ec6d19b5609a4}{\index{ep\-Manager@{ep\-Manager}!get\-User\-By\-Fd@{get\-User\-By\-Fd}}
+\index{get\-User\-By\-Fd@{get\-User\-By\-Fd}!epManager@{ep\-Manager}}
+\subsubsection[{get\-User\-By\-Fd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ep\-User} $\ast$ {\bf ep\-Manager\-::get\-User\-By\-Fd} (
+\begin{DoxyParamCaption}
+\item[{const int}]{fd}
+\end{DoxyParamCaption}
+)}}\label{classepManager_a620725a2f06859bcb63ec6d19b5609a4}
+
+
+获取指定\-F\-D的对象指针。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 需要查找对象的\-F\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回指向相应对象的指针，失败返回\-N\-U\-L\-L。 
+\end{DoxyReturn}
+\hypertarget{classepManager_acd6212dc426ebfdf0fd1e427b3dcc801}{\index{ep\-Manager@{ep\-Manager}!insert\-Classroom@{insert\-Classroom}}
+\index{insert\-Classroom@{insert\-Classroom}!epManager@{ep\-Manager}}
+\subsubsection[{insert\-Classroom}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Manager\-::insert\-Classroom} (
+\begin{DoxyParamCaption}
+\item[{const {\bf ep\-Classroom} \&}]{obj}
+\end{DoxyParamCaption}
+)}}\label{classepManager_acd6212dc426ebfdf0fd1e427b3dcc801}
+
+
+插入指定教室到管理类。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em ep\-Classroom\mbox{[}in\mbox{]}} & 指定教室。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+插入成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepManager_a5b9c6ca185e58a7f9fe5488e4f624447}{\index{ep\-Manager@{ep\-Manager}!insert\-User@{insert\-User}}
+\index{insert\-User@{insert\-User}!epManager@{ep\-Manager}}
+\subsubsection[{insert\-User}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Manager\-::insert\-User} (
+\begin{DoxyParamCaption}
+\item[{int}]{fd, }
+\item[{{\bf ep\-User} $\ast$}]{user}
+\end{DoxyParamCaption}
+)}}\label{classepManager_a5b9c6ca185e58a7f9fe5488e4f624447}
+
+
+将指定\-F\-D的对象插入到游离列表中。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定\-F\-D。 \\
+\hline
+{\em \hyperlink{classepUser}{ep\-User}} & 指定对象指针。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+插入成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepManager_ae093930a20d97d4b8b2cb7f644631845}{\index{ep\-Manager@{ep\-Manager}!remove\-Classroom\-By\-Id@{remove\-Classroom\-By\-Id}}
+\index{remove\-Classroom\-By\-Id@{remove\-Classroom\-By\-Id}!epManager@{ep\-Manager}}
+\subsubsection[{remove\-Classroom\-By\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Manager\-::remove\-Classroom\-By\-Id} (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}}\label{classepManager_ae093930a20d97d4b8b2cb7f644631845}
+
+
+移除指定\-I\-D的教室，并不删除教室类。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定教室\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+移除成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepManager_a732a9bdcc0df899a3dc279111e58f2f9}{\index{ep\-Manager@{ep\-Manager}!remove\-User\-By\-Fd@{remove\-User\-By\-Fd}}
+\index{remove\-User\-By\-Fd@{remove\-User\-By\-Fd}!epManager@{ep\-Manager}}
+\subsubsection[{remove\-User\-By\-Fd}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Manager\-::remove\-User\-By\-Fd} (
+\begin{DoxyParamCaption}
+\item[{const int}]{fd}
+\end{DoxyParamCaption}
+)}}\label{classepManager_a732a9bdcc0df899a3dc279111e58f2f9}
+
+
+从列表中删除指定\-F\-D的对象。并不delete对象，只是在列表中删除关系。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int} & 指定\-F\-D\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+移除成功返回true, 失败返回 false. 
+\end{DoxyReturn}
+\hypertarget{classepManager_aa6220b05aa643bdff030c1c79e90f8c8}{\index{ep\-Manager@{ep\-Manager}!sendto\-All\-Classroom@{sendto\-All\-Classroom}}
+\index{sendto\-All\-Classroom@{sendto\-All\-Classroom}!epManager@{ep\-Manager}}
+\subsubsection[{sendto\-All\-Classroom}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Manager\-::sendto\-All\-Classroom} (
+\begin{DoxyParamCaption}
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepManager_aa6220b05aa643bdff030c1c79e90f8c8}
+
+
+将指定消息内容发送给当前上课的班级。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepManager_a048a1702141469676e28436ed37c46c3}{\index{ep\-Manager@{ep\-Manager}!sendto\-All\-User@{sendto\-All\-User}}
+\index{sendto\-All\-User@{sendto\-All\-User}!epManager@{ep\-Manager}}
+\subsubsection[{sendto\-All\-User}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Manager\-::sendto\-All\-User} (
+\begin{DoxyParamCaption}
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepManager_a048a1702141469676e28436ed37c46c3}
+
+
+将指定消息内容发送给所有游离用户。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepManager_a02637ea3d861ac89f3983f3bcb431150}{\index{ep\-Manager@{ep\-Manager}!sendto\-Classroom@{sendto\-Classroom}}
+\index{sendto\-Classroom@{sendto\-Classroom}!epManager@{ep\-Manager}}
+\subsubsection[{sendto\-Classroom}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Manager\-::sendto\-Classroom} (
+\begin{DoxyParamCaption}
+\item[{const int}]{id, }
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepManager_a02637ea3d861ac89f3983f3bcb431150}
+
+
+将指定消息内容发送给指定班级。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定班级\-I\-D。 \\
+\hline
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepManager_a49c079c7f8762319c495f44be5b0de67}{\index{ep\-Manager@{ep\-Manager}!sendto\-User@{sendto\-User}}
+\index{sendto\-User@{sendto\-User}!epManager@{ep\-Manager}}
+\subsubsection[{sendto\-User}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Manager\-::sendto\-User} (
+\begin{DoxyParamCaption}
+\item[{const int}]{fd, }
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepManager_a49c079c7f8762319c495f44be5b0de67}
+
+
+将指定消息内容发送给指定游离用户。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定用户\-F\-D。 \\
+\hline
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{epManager_8h}{ep\-Manager.\-h}\item 
+ep\-Manager.\-cpp\end{DoxyCompactItemize}

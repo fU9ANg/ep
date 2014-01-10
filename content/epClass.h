@@ -12,6 +12,7 @@
 #include <map>
 
 #include "epStudent.h"
+#include "../Buf.h"
 
 typedef std::map<int, epStudent> EPSTUDENT_MAP;
 
@@ -31,12 +32,28 @@ public :
          *
          * @return 成功返回该班级ID，否则返回EPCLASS_INVALID_CLASS_ID
          */
-        int getClassId(void);
+        int getId(void);
+        /**
+         * @brief 根据学生ID获取学生对象指针。
+         *
+         * @param int[in] 学生ID。
+         *
+         * @return 成功返回学生对象指针，否则返回NULL。
+         */
+        epStudent* getStudentById(const int);
         /**  @} */
 
         /**
          * @name set
          * @{ */
+        /**
+         * @brief 设置班级ID。
+         *
+         * @param int[in] 班级ID。
+         *
+         * @return 设置成功返回TRUE，否则返回FALSE。
+         */
+        bool setId(const int);
         /**
          * @brief 将指定fd和学生对象插入到学生列表中。
          *
@@ -88,7 +105,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoStudent(const int, Buf*);
+        bool sendtoStudentByFd(const int, Buf*);
         /**  @} */
 
 

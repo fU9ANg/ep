@@ -1,0 +1,217 @@
+\hypertarget{classepClass}{\section{ep\-Class \-Class \-Reference}
+\label{classepClass}\index{ep\-Class@{ep\-Class}}
+}
+
+
+班级类。  
+
+
+
+
+{\ttfamily \#include $<$ep\-Class.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{Indent}{\bf get}\par
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classepClass_ad046b8da701570ac5fc6555334791479}{get\-Id} (void)
+\begin{DoxyCompactList}\small\item\em 获取该班\-I\-D。 \end{DoxyCompactList}\item 
+\hyperlink{classepStudent}{ep\-Student} $\ast$ \hyperlink{classepClass_ab660664c8325c0f4b2e76c1240cf2484}{get\-Student\-By\-Id} (const int)
+\begin{DoxyCompactList}\small\item\em 根据学生\-I\-D获取学生对象指针。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf set}\par
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classepClass_a39c8de9501208e885d16ccaf22b58832}{set\-Id} (const int)
+\begin{DoxyCompactList}\small\item\em 设置班级\-I\-D。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepClass_a63f8bb1c238b409de7e1207dcc457c31}{insert\-Student} (int, const \hyperlink{classepStudent}{ep\-Student} \&)
+\begin{DoxyCompactList}\small\item\em 将指定fd和学生对象插入到学生列表中。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepClass_a2d49b91d2c101ad8525082486842fa5f}{remove\-Student\-By\-Fd} (const int)
+\begin{DoxyCompactList}\small\item\em 从学生列表中移除指定\-F\-D的学生对象，并不delete该学生对象。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf get by ???}\par
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{classepStudent}{ep\-Student} $\ast$ \hyperlink{classepClass_ada1ed1a3e390b2c9679f2948bab103cc}{get\-Student\-By\-Fd} (const int)
+\begin{DoxyCompactList}\small\item\em 获取指定fd的学生对象指针。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf sendto}\par
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classepClass_acf204fd6db6e1ce014b8b6269456c2a4}{sendto\-All\-Student} (\-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息内容发送给该班所有学生。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepClass_ad4314568f339eafeb6e6bd27a4075a97}{sendto\-Student\-By\-Fd} (const int, \-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息发送给指定\-F\-D的学生。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf \-Just for debug}\par
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classepClass_aa0fa7a7e3c9cd9d600d418301ac1e461}{virtual void {\bfseries dump} (void)}\label{classepClass_aa0fa7a7e3c9cd9d600d418301ac1e461}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{\-Detailed \-Description}
+班级类。 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classepClass_ad046b8da701570ac5fc6555334791479}{\index{ep\-Class@{ep\-Class}!get\-Id@{get\-Id}}
+\index{get\-Id@{get\-Id}!epClass@{ep\-Class}}
+\subsubsection[{get\-Id}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf ep\-Class\-::get\-Id} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{classepClass_ad046b8da701570ac5fc6555334791479}
+
+
+获取该班\-I\-D。 
+
+\begin{DoxyReturn}{\-Returns}
+成功返回该班级\-I\-D，否则返回\-E\-P\-C\-L\-A\-S\-S\-\_\-\-I\-N\-V\-A\-L\-I\-D\-\_\-\-C\-L\-A\-S\-S\-\_\-\-I\-D 
+\end{DoxyReturn}
+\hypertarget{classepClass_ada1ed1a3e390b2c9679f2948bab103cc}{\index{ep\-Class@{ep\-Class}!get\-Student\-By\-Fd@{get\-Student\-By\-Fd}}
+\index{get\-Student\-By\-Fd@{get\-Student\-By\-Fd}!epClass@{ep\-Class}}
+\subsubsection[{get\-Student\-By\-Fd}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf ep\-Student} $\ast$ {\bf ep\-Class\-::get\-Student\-By\-Fd} (
+\begin{DoxyParamCaption}
+\item[{const int}]{fd}
+\end{DoxyParamCaption}
+)}}\label{classepClass_ada1ed1a3e390b2c9679f2948bab103cc}
+
+
+获取指定fd的学生对象指针。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定\-F\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回学生对象指针，否则返回\-N\-U\-L\-L。 
+\end{DoxyReturn}
+\hypertarget{classepClass_ab660664c8325c0f4b2e76c1240cf2484}{\index{ep\-Class@{ep\-Class}!get\-Student\-By\-Id@{get\-Student\-By\-Id}}
+\index{get\-Student\-By\-Id@{get\-Student\-By\-Id}!epClass@{ep\-Class}}
+\subsubsection[{get\-Student\-By\-Id}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ep\-Student} $\ast$ {\bf ep\-Class\-::get\-Student\-By\-Id} (
+\begin{DoxyParamCaption}
+\item[{const int}]{id}
+\end{DoxyParamCaption}
+)}}\label{classepClass_ab660664c8325c0f4b2e76c1240cf2484}
+
+
+根据学生\-I\-D获取学生对象指针。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 学生\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回学生对象指针，否则返回\-N\-U\-L\-L。 
+\end{DoxyReturn}
+\hypertarget{classepClass_a63f8bb1c238b409de7e1207dcc457c31}{\index{ep\-Class@{ep\-Class}!insert\-Student@{insert\-Student}}
+\index{insert\-Student@{insert\-Student}!epClass@{ep\-Class}}
+\subsubsection[{insert\-Student}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Class\-::insert\-Student} (
+\begin{DoxyParamCaption}
+\item[{int}]{fd, }
+\item[{const {\bf ep\-Student} \&}]{student}
+\end{DoxyParamCaption}
+)}}\label{classepClass_a63f8bb1c238b409de7e1207dcc457c31}
+
+
+将指定fd和学生对象插入到学生列表中。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定\-F\-D。 \\
+\hline
+{\em ep\-Student\mbox{[}in\mbox{]}} & 指定学生对象。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+插入成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClass_a2d49b91d2c101ad8525082486842fa5f}{\index{ep\-Class@{ep\-Class}!remove\-Student\-By\-Fd@{remove\-Student\-By\-Fd}}
+\index{remove\-Student\-By\-Fd@{remove\-Student\-By\-Fd}!epClass@{ep\-Class}}
+\subsubsection[{remove\-Student\-By\-Fd}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Class\-::remove\-Student\-By\-Fd} (
+\begin{DoxyParamCaption}
+\item[{const int}]{fd}
+\end{DoxyParamCaption}
+)}}\label{classepClass_a2d49b91d2c101ad8525082486842fa5f}
+
+
+从学生列表中移除指定\-F\-D的学生对象，并不delete该学生对象。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定\-F\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+移除成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClass_acf204fd6db6e1ce014b8b6269456c2a4}{\index{ep\-Class@{ep\-Class}!sendto\-All\-Student@{sendto\-All\-Student}}
+\index{sendto\-All\-Student@{sendto\-All\-Student}!epClass@{ep\-Class}}
+\subsubsection[{sendto\-All\-Student}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Class\-::sendto\-All\-Student} (
+\begin{DoxyParamCaption}
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepClass_acf204fd6db6e1ce014b8b6269456c2a4}
+
+
+将指定消息内容发送给该班所有学生。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClass_ad4314568f339eafeb6e6bd27a4075a97}{\index{ep\-Class@{ep\-Class}!sendto\-Student\-By\-Fd@{sendto\-Student\-By\-Fd}}
+\index{sendto\-Student\-By\-Fd@{sendto\-Student\-By\-Fd}!epClass@{ep\-Class}}
+\subsubsection[{sendto\-Student\-By\-Fd}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Class\-::sendto\-Student\-By\-Fd} (
+\begin{DoxyParamCaption}
+\item[{const int}]{fd, }
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepClass_ad4314568f339eafeb6e6bd27a4075a97}
+
+
+将指定消息发送给指定\-F\-D的学生。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定\-F\-D。 \\
+\hline
+{\em \-Buf\mbox{[}in\mbox{]}} & 指定消息内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepClass_a39c8de9501208e885d16ccaf22b58832}{\index{ep\-Class@{ep\-Class}!set\-Id@{set\-Id}}
+\index{set\-Id@{set\-Id}!epClass@{ep\-Class}}
+\subsubsection[{set\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Class\-::set\-Id} (
+\begin{DoxyParamCaption}
+\item[{const int}]{}
+\end{DoxyParamCaption}
+)}}\label{classepClass_a39c8de9501208e885d16ccaf22b58832}
+
+
+设置班级\-I\-D。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 班级\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+设置成功返回\-T\-R\-U\-E，否则返回\-F\-A\-L\-S\-E。 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{epClass_8h}{ep\-Class.\-h}\item 
+ep\-Class.\-cpp\end{DoxyCompactItemize}

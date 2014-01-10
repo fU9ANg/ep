@@ -10,6 +10,7 @@
 #define __EPUSER_H__
 
 #include <iostream>
+#include "../protocol.h"
 
 /**
  * @brief 用户类。
@@ -22,6 +23,22 @@ public :
         /**
          * @name set
          * @{ */
+        /**
+         * @brief 设置客户端ID。
+         *
+         * @param int[in] 客户端ID。
+         *
+         * @return 设置成功返回TRUE，否则返回FALSE。
+         */
+        virtual bool setId(const int);
+        /**
+         * @brief 设置客户端FD。
+         *
+         * @param int[in] 客户FD。
+         *
+         * @return 设置成功返回TRUE，否则返回FALSE。
+         */
+        bool setFd(const int);
         /**
          * @brief 设置帐号。
          *
@@ -38,6 +55,15 @@ public :
          * @return 成功返回true，否则返回false。
          */
         bool setPasswd (const std::string&);
+        /**
+         * @brief 使用传入的用户名和密码初始化对象。
+         *
+         * @param std::string[in] 用户名。
+         * @param std::string[in] 密码。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        virtual bool init(const std::string&, const std::string&);
         /**  @} */
 
         /**
@@ -55,6 +81,24 @@ public :
          * @return 成功返回密码。
          */
         const std::string& getPasswd (void) const;
+        /**
+         * @brief 获取该客户端类型。
+         *
+         * @return 相应相应客户端类型。
+         */
+        virtual enum LoginType getType(void) const;
+        /**
+         * @brief 获取该客户端ID。
+         *
+         * @return 客户端ID。
+         */
+        virtual int getId(void) const;
+        /**
+         * @brief 获取该客户端FD。
+         *
+         * @return 客户端FD。
+         */
+        int getFd(void) const;
         /**  @} */
 
         /**
@@ -64,6 +108,14 @@ public :
         /**  @} */
 
 private :
+        /**
+         * @brief 用户ID。
+         */
+        int id_;
+        /**
+         * @brief 用户FD。
+         */
+        int fd_;
         /**
          * @brief 存放账号。
          */

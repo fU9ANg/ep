@@ -1,4 +1,5 @@
 #include "epClassroom.h"
+#include "../Single.h"
 #include "../netdef.h" // for EPCLASSROOM_INVALID_CLASSROOM_ID
 
 epClassroom::epClassroom(void) : id_(EPCLASSROOM_INVALID_CLASSROOM_ID) {
@@ -12,14 +13,35 @@ epClassroom::getId(void) const {
         return id_;
 }
 
-const epTeacher
-epClassroom::getTeacher(void) const {
+epStudent*
+epClassroom::getStudentById(const int id) {
+        EPCLASS_MAP::iterator it = classMap_.begin();
+        EPCLASS_MAP::const_iterator cie = classMap_.end();
+
+        epStudent* pStudent = NULL;
+        for (; cie!=it; ++it) {
+                pStudent = (it->second).getStudentById(id);
+                if (NULL != pStudent) {
+                        return pStudent;
+                }
+        }
+
+        return NULL;
+}
+
+epTeacher&
+epClassroom::getTeacher(void) {
         return teacher_;
 }
 
 const epWhiteBoard
 epClassroom::getWhiteBoard(void) const {
         return whiteboard_;
+}
+
+std::string
+epClassroom::getCourseList(void) const {
+        return courseList_;
 }
 
 bool
@@ -41,6 +63,12 @@ epClassroom::setWhiteBoard(const epWhiteBoard& whiteboard) {
 }
 
 bool
+epClassroom::setCourseList(const std::string& courseList) {
+        courseList_ = courseList;
+        return true;
+}
+
+bool
 epClassroom::sendtoAllClass(Buf* pBuf) {
         EPCLASS_MAP::iterator it = classMap_.begin();
         EPCLASS_MAP::const_iterator cie = classMap_.end();
@@ -55,7 +83,7 @@ epClassroom::sendtoAllClass(Buf* pBuf) {
 }
 
 bool
-epClassroom::sendtoClass(const int id, Buf* pBuf) {
+epClassroom::sendtoClassById(const int id, Buf* pBuf) {
         EPCLASS_MAP::iterator it = classMap_.begin();
         EPCLASS_MAP::const_iterator cie = classMap_.end();
         for (; cie!=it; ++it) {
@@ -75,7 +103,7 @@ epClassroom::sendtoAllGroup(Buf* pBuf) {
         Buf* p = NULL;
         for (; cie!=it; ++it) {
                 p = pBuf;
-                (it->second).sendtoAllStudent(pBuf);
+                (it->second).sendtoAllStudent(p);
         }
 
         SINGLE->bufpool.free(pBuf);
@@ -83,7 +111,7 @@ epClassroom::sendtoAllGroup(Buf* pBuf) {
 }
 
 bool
-epClassroom::sendtoGroup(const int id, Buf* pBuf) {
+epClassroom::sendtoGroupById(const int id, Buf* pBuf) {
         EPGROUP_MAP::iterator it = groupMap_.begin();
         EPGROUP_MAP::const_iterator cie = groupMap_.end();
         for (; cie!=it; ++it) {
@@ -98,23 +126,111 @@ epClassroom::sendtoGroup(const int id, Buf* pBuf) {
 
 bool
 epClassroom::sendtoTeacher(Buf* pBuf) {
+        pBuf->setfd(teacher_.getFd());
+        SINGLE->sendqueue.enqueue(pBuf);
+        return true;
 }
 
 bool
 epClassroom::sendtoWhiteBoard(Buf* pBuf) {
+        pBuf->setfd(whiteboard_.getFd());
+        SINGLE->sendqueue.enqueue(pBuf);
+        return true;
+}
+
+bool
+epClassroom::insertClass(epClass& obj) {
+        EPCLASS_MAP::iterator it = classMap_.begin();
+        EPCLASS_MAP::const_iterator cie = classMap_.end();
+        for (; cie!=it; ++it) {
+                if (obj.getId() == it->first) {
+                        return false;
+                }
+        }
+
+        classMap_.insert(std::make_pair<int, epClass>(obj.getId(), obj));
+        return true;
+}
+
+bool
+epClassroom::removeClassById(const int id) {
+        EPCLASS_MAP::iterator it = classMap_.begin();
+        EPCLASS_MAP::const_iterator cie = classMap_.end();
+        for (; cie!=it; ++it) {
+                if (id == it->first) {
+                        classMap_.erase(it);
+                        return true;
+                }
+        }
+        return false;
+}
+
+const epClass*
+epClassroom::getClassById(const int id) {
+        EPCLASS_MAP::iterator it = classMap_.begin();
+        EPCLASS_MAP::const_iterator cie = classMap_.end();
+        for (; cie!=it; ++it) {
+                if (id == it->first) {
+                        return &(it->second);
+                }
+        }
+        return NULL;
+}
+
+bool
+epClassroom::insertGroup(const epGroup& obj) {
+        EPGROUP_MAP::iterator it = groupMap_.begin();
+        EPGROUP_MAP::const_iterator cie = groupMap_.end();
+        for (; cie!=it; ++it) {
+                if (obj.getId() == it->first) {
+                        return false;
+                }
+        }
+
+        groupMap_.insert(std::make_pair<int, epGroup>(obj.getId(), obj));
+        return true;
+}
+
+bool
+epClassroom::removeGroupById(const int id) {
+        EPGROUP_MAP::iterator it = groupMap_.begin();
+        EPGROUP_MAP::const_iterator cie = groupMap_.end();
+        for (; cie!=it; ++it) {
+                if (id == it->first) {
+                        groupMap_.erase(it);
+                        return true;
+                }
+        }
+        return false;
+}
+
+const epGroup*
+epClassroom::getGroupById(const int id) {
+        EPGROUP_MAP::iterator it = groupMap_.begin();
+        EPGROUP_MAP::const_iterator cie = groupMap_.end();
+        for (; cie!=it; ++it) {
+                if (id == it->first) {
+                        return &(it->second);
+                }
+        }
+        return NULL;
 }
 
 void
-epClassroom::dump(void) const {
+epClassroom::dump(void) {
         printf("class room id = %d\n", id_);
         printf("for class :\n");
-        class_.dump();
-
-        printf("for group :\n");
-        GROUP_MAP::iterator it = groupMap_.begin();
-        GROUP_MAP::const_iterator cie = groupMap_.end();
+        EPCLASS_MAP::iterator it = classMap_.begin();
+        EPCLASS_MAP::const_iterator cie = classMap_.end();
         for (; cie!=it; ++it) {
                 (it->second).dump();
+        }
+
+        printf("for group :\n");
+        EPGROUP_MAP::iterator it_g = groupMap_.begin();
+        EPGROUP_MAP::const_iterator cie_g = groupMap_.end();
+        for (; cie_g!=it_g; ++it_g) {
+                (it_g->second).dump();
         }
 
         printf("for teacher :\n");

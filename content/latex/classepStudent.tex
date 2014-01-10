@@ -1,0 +1,205 @@
+\hypertarget{classepStudent}{\section{ep\-Student \-Class \-Reference}
+\label{classepStudent}\index{ep\-Student@{ep\-Student}}
+}
+
+
+学生类。  
+
+
+
+
+{\ttfamily \#include $<$ep\-Student.\-h$>$}
+
+\-Inheritance diagram for ep\-Student\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classepStudent}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{Indent}{\bf set}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classepStudent_ac274ba42ee17d35e320781cb2e8da574}{set\-Student\-Num} (const std\-::string \&)
+\begin{DoxyCompactList}\small\item\em 设置学号。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepStudent_a3b79afc2c1ea03f850e007b3e545c8d7}{set\-Class\-Id} (const int)
+\begin{DoxyCompactList}\small\item\em 设置所属班级号。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepStudent_a49dd418249de22896397be86bc732c8d}{set\-Class\-Name} (const std\-::string \&)
+\begin{DoxyCompactList}\small\item\em 设置所属班级名称。 \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classepStudent_a687b2cea50b85886c5f520b260236dfb}{init} (const std\-::string \&, const std\-::string \&)
+\begin{DoxyCompactList}\small\item\em 使用用户名和密码初始化学生对象。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf get}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual std\-::string \hyperlink{classepStudent_ae0e95d9e1b1ff6cf62caaddf1c05b3ae}{get\-Student\-Num} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取学号。 \end{DoxyCompactList}\item 
+int \hyperlink{classepStudent_a95b80c7d6d1255e9a89f6245cf2080c5}{get\-Class\-Id} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取所属班号。 \end{DoxyCompactList}\item 
+const std\-::string \hyperlink{classepStudent_a4b6cff6cfdb361771c5fa4aaf6205aee}{get\-Class\-Name} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取所属班名称。 \end{DoxyCompactList}\item 
+virtual enum \-Login\-Type \hyperlink{classepStudent_a8e546f0eaa7eb386bacd6f9afe390d69}{get\-Type} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取客户端类型。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf \-Just for debug}\par
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classepStudent_ad0b93f4ddbd6fce37391f8eb00418c15}{virtual void {\bfseries dump} (void)}\label{classepStudent_ad0b93f4ddbd6fce37391f8eb00418c15}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{\-Detailed \-Description}
+学生类。 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classepStudent_a95b80c7d6d1255e9a89f6245cf2080c5}{\index{ep\-Student@{ep\-Student}!get\-Class\-Id@{get\-Class\-Id}}
+\index{get\-Class\-Id@{get\-Class\-Id}!epStudent@{ep\-Student}}
+\subsubsection[{get\-Class\-Id}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf ep\-Student\-::get\-Class\-Id} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{classepStudent_a95b80c7d6d1255e9a89f6245cf2080c5}
+
+
+获取所属班号。 
+
+\begin{DoxyReturn}{\-Returns}
+成功返回所属班号，否则返回\-E\-P\-C\-L\-A\-S\-S\-\_\-\-I\-N\-V\-A\-L\-I\-D\-\_\-\-C\-L\-A\-S\-S\-\_\-\-I\-D。 
+\end{DoxyReturn}
+\hypertarget{classepStudent_a4b6cff6cfdb361771c5fa4aaf6205aee}{\index{ep\-Student@{ep\-Student}!get\-Class\-Name@{get\-Class\-Name}}
+\index{get\-Class\-Name@{get\-Class\-Name}!epStudent@{ep\-Student}}
+\subsubsection[{get\-Class\-Name}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string {\bf ep\-Student\-::get\-Class\-Name} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{classepStudent_a4b6cff6cfdb361771c5fa4aaf6205aee}
+
+
+获取所属班名称。 
+
+\begin{DoxyReturn}{\-Returns}
+成功返回所属班名称，否则返回\-E\-P\-C\-L\-A\-S\-S\-\_\-\-I\-N\-V\-A\-L\-I\-D\-\_\-\-C\-L\-A\-S\-S\-\_\-\-N\-A\-M\-E。 
+\end{DoxyReturn}
+\hypertarget{classepStudent_ae0e95d9e1b1ff6cf62caaddf1c05b3ae}{\index{ep\-Student@{ep\-Student}!get\-Student\-Num@{get\-Student\-Num}}
+\index{get\-Student\-Num@{get\-Student\-Num}!epStudent@{ep\-Student}}
+\subsubsection[{get\-Student\-Num}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\-::string {\bf ep\-Student\-::get\-Student\-Num} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepStudent_ae0e95d9e1b1ff6cf62caaddf1c05b3ae}
+
+
+获取学号。 
+
+\begin{DoxyReturn}{\-Returns}
+成功返回该学生学号，否则返回\-E\-P\-S\-T\-U\-D\-E\-N\-T\-\_\-\-I\-N\-V\-A\-L\-I\-D\-\_\-\-S\-T\-U\-D\-E\-N\-T\-\_\-\-N\-U\-M。 
+\end{DoxyReturn}
+\hypertarget{classepStudent_a8e546f0eaa7eb386bacd6f9afe390d69}{\index{ep\-Student@{ep\-Student}!get\-Type@{get\-Type}}
+\index{get\-Type@{get\-Type}!epStudent@{ep\-Student}}
+\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum \-Login\-Type {\bf ep\-Student\-::get\-Type} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepStudent_a8e546f0eaa7eb386bacd6f9afe390d69}
+
+
+获取客户端类型。 
+
+\begin{DoxyReturn}{\-Returns}
+相应客户端类型。 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classepUser_aa445c0b9c0ec07d7fb32b978281402ab}{ep\-User}.
+
+\hypertarget{classepStudent_a687b2cea50b85886c5f520b260236dfb}{\index{ep\-Student@{ep\-Student}!init@{init}}
+\index{init@{init}!epStudent@{ep\-Student}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Student\-::init} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{account, }
+\item[{const std\-::string \&}]{passwd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepStudent_a687b2cea50b85886c5f520b260236dfb}
+
+
+使用用户名和密码初始化学生对象。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em std\-::string\mbox{[}in\mbox{]}} & 用户名。 \\
+\hline
+{\em std\-::string\mbox{[}in\mbox{]}} & 密码。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+设置成功返回true，否则返回false。 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classepUser_a60c355f9dd74f22949f686f3d0264ac2}{ep\-User}.
+
+\hypertarget{classepStudent_a3b79afc2c1ea03f850e007b3e545c8d7}{\index{ep\-Student@{ep\-Student}!set\-Class\-Id@{set\-Class\-Id}}
+\index{set\-Class\-Id@{set\-Class\-Id}!epStudent@{ep\-Student}}
+\subsubsection[{set\-Class\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Student\-::set\-Class\-Id} (
+\begin{DoxyParamCaption}
+\item[{const int}]{}
+\end{DoxyParamCaption}
+)}}\label{classepStudent_a3b79afc2c1ea03f850e007b3e545c8d7}
+
+
+设置所属班级号。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 班级号。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+设置成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepStudent_a49dd418249de22896397be86bc732c8d}{\index{ep\-Student@{ep\-Student}!set\-Class\-Name@{set\-Class\-Name}}
+\index{set\-Class\-Name@{set\-Class\-Name}!epStudent@{ep\-Student}}
+\subsubsection[{set\-Class\-Name}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Student\-::set\-Class\-Name} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{class\-Name}
+\end{DoxyParamCaption}
+)}}\label{classepStudent_a49dd418249de22896397be86bc732c8d}
+
+
+设置所属班级名称。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em std\-::string\mbox{[}in\mbox{]}} & 班级名称。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+设置成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepStudent_ac274ba42ee17d35e320781cb2e8da574}{\index{ep\-Student@{ep\-Student}!set\-Student\-Num@{set\-Student\-Num}}
+\index{set\-Student\-Num@{set\-Student\-Num}!epStudent@{ep\-Student}}
+\subsubsection[{set\-Student\-Num}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Student\-::set\-Student\-Num} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{student\-Num}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepStudent_ac274ba42ee17d35e320781cb2e8da574}
+
+
+设置学号。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定学号。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+设置成功返回true，否则返回false。 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{epStudent_8h}{ep\-Student.\-h}\item 
+ep\-Student.\-cpp\end{DoxyCompactItemize}

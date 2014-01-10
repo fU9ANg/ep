@@ -74,7 +74,7 @@ public :
          *
          * @return 成功返回学生对象指针，否则返回NULL。
          */
-        const epStudent* getStudentById(const int);
+        const epStudent* getStudentByFd(const int);
         /**  @} */
 
         /**
@@ -84,7 +84,8 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoGroup(Buf*);
+        bool sendtoAllStudent(Buf*);
+        bool sendtoStudentByFd(const int, Buf*);
 
         /**
          * @name Just for debug

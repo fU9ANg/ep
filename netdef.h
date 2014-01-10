@@ -1,6 +1,10 @@
 #ifndef	__NETDEF_H__
 #define __NETDEF_H__
 
+#ifndef __DEBUG__
+#       define __DEBUG__
+#endif
+
 // for Buf.h
 #ifndef BUF_MAX_SIZE
 #    define BUF_MAX_SIZE	(512)
@@ -34,7 +38,7 @@
 #endif
 
 // for epSchool.h
-#ifndef EPSCHOOL_INVALID_ID
+#ifndef EPSCHOOL_INVALID_SCHOOL_ID
 #       define EPSCHOOL_INVALID_SCHOOL_ID      (-1)
 #endif
 
@@ -66,6 +70,21 @@
 // for epGroup.h
 #ifndef EPGROUP_INVALID_GROUP_ID
 #       define EPGROUP_INVALID_GROUP_ID (-1)
+#endif
+
+// for handle content
+#ifndef CHECK_USER
+#define CHECK_USER(T, obj) \
+        epUser* user = EPMANAGER->getUserByFd(p->getfd()); \
+        if (NULL == user) { \
+                SINGLE->bufpool.free(p); \
+                return; \
+        } \
+        T* obj = dynamic_cast<T*>(user);\
+        if (NULL == obj) { \
+                SINGLE->bufpool.free(p); \
+                return; \
+        }
 #endif
 
 #endif // __NETDEF_H__

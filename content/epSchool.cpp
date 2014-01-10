@@ -1,7 +1,7 @@
+#include <stdio.h> // for printf
 #include "epSchool.h"
-#include "../netdef.h" // for EPSCHOOL_INVALIED_SCHOOL_ID
 
-epSchool::epSchool(void) : id_(EPSCHOOL_INVALIED_SCHOOL_ID) {
+epSchool::epSchool(void) {
 }
 
 epSchool::~epSchool(void) {
@@ -41,7 +41,7 @@ epSchool::setSchoolNative(const std::string& native) {
 }
 
 void
-epSchool::dump(void) {
+epSchool::dump(void) const {
         printf("school id     = %d\n", id_);
         printf("school name   = %s\n", schoolName_.c_str());
         printf("school native = %s\n", native_.c_str());

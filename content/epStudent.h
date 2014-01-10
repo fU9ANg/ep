@@ -11,6 +11,7 @@
 
 #include "epPerson.h"
 #include "epUser.h"
+#include "../protocol.h"
 
 /**
  * @brief 学生类。
@@ -30,7 +31,7 @@ public :
          *
          * @return 设置成功返回true，否则返回false。
          */
-        bool setId(const int);
+        virtual bool setStudentNum(const std::string&);
         /**
          * @brief 设置所属班级号。
          *
@@ -47,6 +48,15 @@ public :
          * @return 设置成功返回true，否则返回false。
          */
         bool setClassName (const std::string&);
+        /**
+         * @brief 使用用户名和密码初始化学生对象。
+         *
+         * @param std::string[in] 用户名。
+         * @param std::string[in] 密码。
+         *
+         * @return 设置成功返回true，否则返回false。
+         */
+        virtual bool init(const std::string&, const std::string&);
         /**  @} */
 
         /**
@@ -55,9 +65,9 @@ public :
         /**
          * @brief 获取学号。
          *
-         * @return 成功返回该学生学号，否则返回EPSTUDENT_INVALID_STUDENT_ID。
+         * @return 成功返回该学生学号，否则返回EPSTUDENT_INVALID_STUDENT_NUM。
          */
-        int getId(void) const;
+        virtual std::string getStudentNum(void) const;
         /**
          * @brief 获取所属班号。
          *
@@ -70,6 +80,12 @@ public :
          * @return 成功返回所属班名称，否则返回EPCLASS_INVALID_CLASS_NAME。
          */
         const std::string getClassName (void) const;
+        /**
+         * @brief 获取客户端类型。
+         *
+         * @return 相应客户端类型。
+         */
+        virtual enum LoginType getType(void) const;
         /**  @} */
 
         /**
@@ -86,7 +102,7 @@ private :
         /**
          * @brief 学号。
          */
-        int id_;
+        std::string studentNum_;
         /**
          * @brief 存放所属班名称。
          */

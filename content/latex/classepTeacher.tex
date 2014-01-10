@@ -1,0 +1,205 @@
+\hypertarget{classepTeacher}{\section{ep\-Teacher \-Class \-Reference}
+\label{classepTeacher}\index{ep\-Teacher@{ep\-Teacher}}
+}
+
+
+教师类。  
+
+
+
+
+{\ttfamily \#include $<$ep\-Teacher.\-h$>$}
+
+\-Inheritance diagram for ep\-Teacher\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classepTeacher}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{Indent}{\bf set}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classepTeacher_a4003ebd5da127bcdc6dcc0ee24f0a7cb}{set\-Teacher\-Num} (const std\-::string \&)
+\begin{DoxyCompactList}\small\item\em 设置老师编号。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepTeacher_ab5616f3d6c4afe888051331623aad433}{set\-School\-Name} (const std\-::string \&)
+\begin{DoxyCompactList}\small\item\em 设置老师所属学校名字。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepTeacher_a856ca900f7a3591841bd1ec5590aaab2}{set\-School\-Id} (const int)
+\begin{DoxyCompactList}\small\item\em 设置老师所属学校\-I\-D。 \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classepTeacher_ae142dcff4c1c8ec7ae66ef27ef1ce520}{init} (const std\-::string \&, const std\-::string \&)
+\begin{DoxyCompactList}\small\item\em 通过传入的用户名和密码初始化教师对象。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf get}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual std\-::string \hyperlink{classepTeacher_abbbb349a991b534ff97eb0c548581a95}{get\-Teacher\-Num} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取老师编号。 \end{DoxyCompactList}\item 
+const std\-::string \& \hyperlink{classepTeacher_ad8cd0278bce52f10112d54a2d06ff6ed}{get\-School\-Name} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取老师所属学校名字。 \end{DoxyCompactList}\item 
+int \hyperlink{classepTeacher_ac48d8046208640fabfeaa9cd424d34f0}{get\-School\-Id} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取老师所属学校\-I\-D。 \end{DoxyCompactList}\item 
+virtual enum \-Login\-Type \hyperlink{classepTeacher_af4a8dcc9a51ae25c854bf223926cd8e2}{get\-Type} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取客户端相应类型。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf \-Just for debug}\par
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classepTeacher_adbd31dda242a312ff786c0f8809c7be1}{virtual void {\bfseries dump} (void)}\label{classepTeacher_adbd31dda242a312ff786c0f8809c7be1}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{\-Detailed \-Description}
+教师类。 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classepTeacher_ac48d8046208640fabfeaa9cd424d34f0}{\index{ep\-Teacher@{ep\-Teacher}!get\-School\-Id@{get\-School\-Id}}
+\index{get\-School\-Id@{get\-School\-Id}!epTeacher@{ep\-Teacher}}
+\subsubsection[{get\-School\-Id}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf ep\-Teacher\-::get\-School\-Id} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{classepTeacher_ac48d8046208640fabfeaa9cd424d34f0}
+
+
+获取老师所属学校\-I\-D。 
+
+\begin{DoxyReturn}{\-Returns}
+学校\-I\-D。 
+\end{DoxyReturn}
+\hypertarget{classepTeacher_ad8cd0278bce52f10112d54a2d06ff6ed}{\index{ep\-Teacher@{ep\-Teacher}!get\-School\-Name@{get\-School\-Name}}
+\index{get\-School\-Name@{get\-School\-Name}!epTeacher@{ep\-Teacher}}
+\subsubsection[{get\-School\-Name}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string \& {\bf ep\-Teacher\-::get\-School\-Name} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{classepTeacher_ad8cd0278bce52f10112d54a2d06ff6ed}
+
+
+获取老师所属学校名字。 
+
+\begin{DoxyReturn}{\-Returns}
+学校名字。 
+\end{DoxyReturn}
+\hypertarget{classepTeacher_abbbb349a991b534ff97eb0c548581a95}{\index{ep\-Teacher@{ep\-Teacher}!get\-Teacher\-Num@{get\-Teacher\-Num}}
+\index{get\-Teacher\-Num@{get\-Teacher\-Num}!epTeacher@{ep\-Teacher}}
+\subsubsection[{get\-Teacher\-Num}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf ep\-Teacher\-::get\-Teacher\-Num} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepTeacher_abbbb349a991b534ff97eb0c548581a95}
+
+
+获取老师编号。 
+
+\begin{DoxyReturn}{\-Returns}
+老师编号。 
+\end{DoxyReturn}
+\hypertarget{classepTeacher_af4a8dcc9a51ae25c854bf223926cd8e2}{\index{ep\-Teacher@{ep\-Teacher}!get\-Type@{get\-Type}}
+\index{get\-Type@{get\-Type}!epTeacher@{ep\-Teacher}}
+\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum \-Login\-Type {\bf ep\-Teacher\-::get\-Type} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepTeacher_af4a8dcc9a51ae25c854bf223926cd8e2}
+
+
+获取客户端相应类型。 
+
+\begin{DoxyReturn}{\-Returns}
+客户端类型。 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classepUser_aa445c0b9c0ec07d7fb32b978281402ab}{ep\-User}.
+
+\hypertarget{classepTeacher_ae142dcff4c1c8ec7ae66ef27ef1ce520}{\index{ep\-Teacher@{ep\-Teacher}!init@{init}}
+\index{init@{init}!epTeacher@{ep\-Teacher}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Teacher\-::init} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{account, }
+\item[{const std\-::string \&}]{passwd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepTeacher_ae142dcff4c1c8ec7ae66ef27ef1ce520}
+
+
+通过传入的用户名和密码初始化教师对象。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em std\-::string\mbox{[}in\mbox{]}} & 用户名。 \\
+\hline
+{\em std\-::string\mbox{[}in\mbox{]}} & 密码。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classepUser_a60c355f9dd74f22949f686f3d0264ac2}{ep\-User}.
+
+\hypertarget{classepTeacher_a856ca900f7a3591841bd1ec5590aaab2}{\index{ep\-Teacher@{ep\-Teacher}!set\-School\-Id@{set\-School\-Id}}
+\index{set\-School\-Id@{set\-School\-Id}!epTeacher@{ep\-Teacher}}
+\subsubsection[{set\-School\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Teacher\-::set\-School\-Id} (
+\begin{DoxyParamCaption}
+\item[{const int}]{school\-Id}
+\end{DoxyParamCaption}
+)}}\label{classepTeacher_a856ca900f7a3591841bd1ec5590aaab2}
+
+
+设置老师所属学校\-I\-D。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 学校\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepTeacher_ab5616f3d6c4afe888051331623aad433}{\index{ep\-Teacher@{ep\-Teacher}!set\-School\-Name@{set\-School\-Name}}
+\index{set\-School\-Name@{set\-School\-Name}!epTeacher@{ep\-Teacher}}
+\subsubsection[{set\-School\-Name}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Teacher\-::set\-School\-Name} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{school\-Name}
+\end{DoxyParamCaption}
+)}}\label{classepTeacher_ab5616f3d6c4afe888051331623aad433}
+
+
+设置老师所属学校名字。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em std\-::string\mbox{[}in\mbox{]}} & 学校名字。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepTeacher_a4003ebd5da127bcdc6dcc0ee24f0a7cb}{\index{ep\-Teacher@{ep\-Teacher}!set\-Teacher\-Num@{set\-Teacher\-Num}}
+\index{set\-Teacher\-Num@{set\-Teacher\-Num}!epTeacher@{ep\-Teacher}}
+\subsubsection[{set\-Teacher\-Num}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Teacher\-::set\-Teacher\-Num} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{teacher\-Num}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepTeacher_a4003ebd5da127bcdc6dcc0ee24f0a7cb}
+
+
+设置老师编号。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 老师编号。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{epTeacher_8h}{ep\-Teacher.\-h}\item 
+ep\-Teacher.\-cpp\end{DoxyCompactItemize}

@@ -33,13 +33,13 @@ public :
          *
          * @return 学校名字。
          */
-        const std::string& getSchoolName(void) const;
+        const std::string getSchoolName(void) const;
         /**
          * @brief 获取学校所属地区。
          *
          * @return 学校所属地区。
          */
-        const std::string& getNative(void) const;
+        const std::string getNative(void) const;
         /**  @} */
 
         /**
@@ -79,7 +79,7 @@ public :
         /**
          * @name Just for debug
          * @{ */
-        virtual void dump(void);
+        virtual void dump(void) const;
         /**  @} */
 
 

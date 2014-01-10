@@ -1,0 +1,173 @@
+\hypertarget{classepGroup}{\section{ep\-Group \-Class \-Reference}
+\label{classepGroup}\index{ep\-Group@{ep\-Group}}
+}
+
+
+组别类。  
+
+
+
+
+{\ttfamily \#include $<$ep\-Group.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classepGroup_aa23e3b07a638235c31a2e06547f9d320}{sendto\-All\-Student} (\-Buf $\ast$)
+\begin{DoxyCompactList}\small\item\em 将指定消息发送给该组所有学生。 \end{DoxyCompactList}\item 
+\hypertarget{classepGroup_a8954ffc41ea4c90151f5a1c0745d579c}{bool {\bfseries sendto\-Student\-By\-Fd} (const int, \-Buf $\ast$)}\label{classepGroup_a8954ffc41ea4c90151f5a1c0745d579c}
+
+\end{DoxyCompactItemize}
+\begin{Indent}{\bf set}\par
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classepGroup_ab892281e53a817618bfadfce6c74cbba}{set\-Id} (const int)
+\begin{DoxyCompactList}\small\item\em 设置组\-I\-D。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepGroup_a39e9b207f6dc5a01084cd9c2d4bdf85c}{insert\-Student} (int, const \hyperlink{classepStudent}{ep\-Student} \&)
+\begin{DoxyCompactList}\small\item\em 向学生列表中插入指定\-F\-D和学生对象。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepGroup_a346104820ed3f14e2de50925066f39c1}{remove\-Student\-By\-Fd} (const int)
+\begin{DoxyCompactList}\small\item\em 移除学生列表中的指定\-F\-D的学生对象，并不delete学生对象。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf get}\par
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classepGroup_aa511398840fabd7e75c14ae23e629bd5}{get\-Id} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取组\-I\-D。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf get by ???}\par
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{classepStudent}{ep\-Student} $\ast$ \hyperlink{classepGroup_ae234a006f3c83b5067551ef7dedd6e7d}{get\-Student\-By\-Fd} (const int)
+\begin{DoxyCompactList}\small\item\em 获取学生列表中指定\-F\-D的学生对象指针。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf \-Just for debug}\par
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classepGroup_ae7a9349b4516fb59af19f45abcb312eb}{virtual void {\bfseries dump} (void)}\label{classepGroup_ae7a9349b4516fb59af19f45abcb312eb}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{\-Detailed \-Description}
+组别类。 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classepGroup_aa511398840fabd7e75c14ae23e629bd5}{\index{ep\-Group@{ep\-Group}!get\-Id@{get\-Id}}
+\index{get\-Id@{get\-Id}!epGroup@{ep\-Group}}
+\subsubsection[{get\-Id}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf ep\-Group\-::get\-Id} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{classepGroup_aa511398840fabd7e75c14ae23e629bd5}
+
+
+获取组\-I\-D。 
+
+\begin{DoxyReturn}{\-Returns}
+成功返回组\-I\-D，否则返回\-E\-P\-G\-R\-O\-U\-P\-\_\-\-I\-N\-V\-A\-L\-I\-D\-\_\-\-G\-R\-O\-U\-P\-\_\-\-I\-D。 
+\end{DoxyReturn}
+\hypertarget{classepGroup_ae234a006f3c83b5067551ef7dedd6e7d}{\index{ep\-Group@{ep\-Group}!get\-Student\-By\-Fd@{get\-Student\-By\-Fd}}
+\index{get\-Student\-By\-Fd@{get\-Student\-By\-Fd}!epGroup@{ep\-Group}}
+\subsubsection[{get\-Student\-By\-Fd}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf ep\-Student} $\ast$ {\bf ep\-Group\-::get\-Student\-By\-Fd} (
+\begin{DoxyParamCaption}
+\item[{const int}]{fd}
+\end{DoxyParamCaption}
+)}}\label{classepGroup_ae234a006f3c83b5067551ef7dedd6e7d}
+
+
+获取学生列表中指定\-F\-D的学生对象指针。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定\-F\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回学生对象指针，否则返回\-N\-U\-L\-L。 
+\end{DoxyReturn}
+\hypertarget{classepGroup_a39e9b207f6dc5a01084cd9c2d4bdf85c}{\index{ep\-Group@{ep\-Group}!insert\-Student@{insert\-Student}}
+\index{insert\-Student@{insert\-Student}!epGroup@{ep\-Group}}
+\subsubsection[{insert\-Student}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Group\-::insert\-Student} (
+\begin{DoxyParamCaption}
+\item[{int}]{fd, }
+\item[{const {\bf ep\-Student} \&}]{student}
+\end{DoxyParamCaption}
+)}}\label{classepGroup_a39e9b207f6dc5a01084cd9c2d4bdf85c}
+
+
+向学生列表中插入指定\-F\-D和学生对象。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定\-F\-D。 \\
+\hline
+{\em \hyperlink{classepStudent}{ep\-Student}} & 指定学生对象。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepGroup_a346104820ed3f14e2de50925066f39c1}{\index{ep\-Group@{ep\-Group}!remove\-Student\-By\-Fd@{remove\-Student\-By\-Fd}}
+\index{remove\-Student\-By\-Fd@{remove\-Student\-By\-Fd}!epGroup@{ep\-Group}}
+\subsubsection[{remove\-Student\-By\-Fd}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Group\-::remove\-Student\-By\-Fd} (
+\begin{DoxyParamCaption}
+\item[{const int}]{fd}
+\end{DoxyParamCaption}
+)}}\label{classepGroup_a346104820ed3f14e2de50925066f39c1}
+
+
+移除学生列表中的指定\-F\-D的学生对象，并不delete学生对象。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定\-F\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepGroup_aa23e3b07a638235c31a2e06547f9d320}{\index{ep\-Group@{ep\-Group}!sendto\-All\-Student@{sendto\-All\-Student}}
+\index{sendto\-All\-Student@{sendto\-All\-Student}!epGroup@{ep\-Group}}
+\subsubsection[{sendto\-All\-Student}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Group\-::sendto\-All\-Student} (
+\begin{DoxyParamCaption}
+\item[{\-Buf $\ast$}]{p\-Buf}
+\end{DoxyParamCaption}
+)}}\label{classepGroup_aa23e3b07a638235c31a2e06547f9d320}
+
+
+将指定消息发送给该组所有学生。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Buf$\ast$\mbox{[}in\mbox{]}} & 指定消息内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepGroup_ab892281e53a817618bfadfce6c74cbba}{\index{ep\-Group@{ep\-Group}!set\-Id@{set\-Id}}
+\index{set\-Id@{set\-Id}!epGroup@{ep\-Group}}
+\subsubsection[{set\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-Group\-::set\-Id} (
+\begin{DoxyParamCaption}
+\item[{const int}]{id}
+\end{DoxyParamCaption}
+)}}\label{classepGroup_ab892281e53a817618bfadfce6c74cbba}
+
+
+设置组\-I\-D。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 指定组\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{epGroup_8h}{ep\-Group.\-h}\item 
+ep\-Group.\-cpp\end{DoxyCompactItemize}

@@ -16,7 +16,8 @@
 #include "epWhiteBoard.h"
 #include "epGroup.h"
 
-typedef std::map<int, epGroup> GROUP_MAP;
+typedef std::map<int, epGroup> EPGROUP_MAP;
+typedef std::map<int, epClass> EPCLASS_MAP;
 
 /**
  * @brief 教室类。
@@ -36,17 +37,31 @@ public :
          */
         const int getId(void) const;
         /**
+         * @brief 根据学生ID获取学生对象指针。
+         *
+         * @param int[in] 学号ID。
+         *
+         * @return 成功返回指向学生对象的指针，否则返回NULL。
+         */
+        epStudent* getStudentById(const int);
+        /**
          * @brief 获取所属该教室的老师对象。
          *
          * @return 老师对象。
          */
-        const epTeacher getTeacher(void) const;
+        epTeacher& getTeacher(void);
         /**
          * @brief 获取所属该教室的白板对象。
          *
          * @return 白板对象。
          */
         const epWhiteBoard getWhiteBoard(void) const;
+        /**
+         * @brief 获取该教室上课所使用的课程列表。
+         *
+         * @return 课程列表。
+         */
+        std::string getCourseList(void) const;
         /**  @} */
 
         /**
@@ -76,12 +91,22 @@ public :
          * @return 成功返回true，否则返回false。
          */
         bool setWhiteBoard(const epWhiteBoard&);
+        /**
+         * @brief 设置该教室上课的课程列表。
+         *
+         * @param std::string[in] 课程列表。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool setCourseList(const std::string&);
         /**  @} */
 
-        bool insertClass(const epClass&);
+        bool insertClass(epClass&);
         bool removeClassById(const int);
+        const epClass* getClassById(const int);
         bool insertGroup(const epGroup&);
         bool removeGroupById(const int);
+        const epGroup* getGroupById(const int);
 
         /**
          * @name sendto
@@ -102,7 +127,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoClass(const int, Buf*);
+        bool sendtoClassById(const int, Buf*);
         /**
          * @brief 将指定消息内容发送给所有在该教室上课的分组。
          *
@@ -119,7 +144,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoGroup(const int, Buf*);
+        bool sendtoGroupById(const int, Buf*);
         /**
          * @brief 将指定消息内容发送给在该教室上课的老师。
          *
@@ -142,7 +167,7 @@ public :
         /**
          * @name Just for debug
          * @{ */
-        virtual void dump(void) const;
+        virtual void dump(void);
         /**  @} */
 
 
@@ -167,6 +192,10 @@ private :
          * @brief 白板。
          */
         epWhiteBoard whiteboard_;
+        /**
+         * @brief 该教室上课时的课程列表。
+         */
+        std::string courseList_;
 };
 
 #endif // __EPCLASSROOM_H__

@@ -1,0 +1,205 @@
+\hypertarget{classepUser}{\section{ep\-User \-Class \-Reference}
+\label{classepUser}\index{ep\-User@{ep\-User}}
+}
+
+
+用户类。  
+
+
+
+
+{\ttfamily \#include $<$ep\-User.\-h$>$}
+
+\-Inheritance diagram for ep\-User\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classepUser}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{Indent}{\bf set}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classepUser_a223ded3bb13a97064122c6836b754d48}{set\-Id} (const int)
+\begin{DoxyCompactList}\small\item\em 设置客户端\-I\-D。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepUser_a8cd2e329a37b93500304b7578e2cc29b}{set\-Account} (const std\-::string \&)
+\begin{DoxyCompactList}\small\item\em 设置帐号。 \end{DoxyCompactList}\item 
+bool \hyperlink{classepUser_a733dba07ec00d2844152b6d079515566}{set\-Passwd} (const std\-::string \&)
+\begin{DoxyCompactList}\small\item\em 设置密码。 \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classepUser_a60c355f9dd74f22949f686f3d0264ac2}{init} (const std\-::string \&, const std\-::string \&)
+\begin{DoxyCompactList}\small\item\em 使用传入的用户名和密码初始化对象。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf get}\par
+\begin{DoxyCompactItemize}
+\item 
+const std\-::string \& \hyperlink{classepUser_a2b0e538c375b2306ae37bccd8caf8ed2}{get\-Account} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取帐号。 \end{DoxyCompactList}\item 
+const std\-::string \& \hyperlink{classepUser_a773d6c1b988f97eeaad23fb170aca93b}{get\-Passwd} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取密码。 \end{DoxyCompactList}\item 
+virtual enum \-Login\-Type \hyperlink{classepUser_aa445c0b9c0ec07d7fb32b978281402ab}{get\-Type} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取该客户端类型。 \end{DoxyCompactList}\item 
+virtual int \hyperlink{classepUser_a8fad9dfcf812e6952bba5ad98086d693}{get\-Id} (void) const 
+\begin{DoxyCompactList}\small\item\em 获取该客户端\-I\-D。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf \-Just for debug}\par
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classepUser_a831a0789df548f8d8eade686ef7fe22f}{virtual void {\bfseries dump} (void)}\label{classepUser_a831a0789df548f8d8eade686ef7fe22f}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{\-Detailed \-Description}
+用户类。 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classepUser_a2b0e538c375b2306ae37bccd8caf8ed2}{\index{ep\-User@{ep\-User}!get\-Account@{get\-Account}}
+\index{get\-Account@{get\-Account}!epUser@{ep\-User}}
+\subsubsection[{get\-Account}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string \& {\bf ep\-User\-::get\-Account} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{classepUser_a2b0e538c375b2306ae37bccd8caf8ed2}
+
+
+获取帐号。 
+
+\begin{DoxyReturn}{\-Returns}
+成功返回帐号。 
+\end{DoxyReturn}
+\hypertarget{classepUser_a8fad9dfcf812e6952bba5ad98086d693}{\index{ep\-User@{ep\-User}!get\-Id@{get\-Id}}
+\index{get\-Id@{get\-Id}!epUser@{ep\-User}}
+\subsubsection[{get\-Id}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf ep\-User\-::get\-Id} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepUser_a8fad9dfcf812e6952bba5ad98086d693}
+
+
+获取该客户端\-I\-D。 
+
+\begin{DoxyReturn}{\-Returns}
+客户端\-I\-D。 
+\end{DoxyReturn}
+\hypertarget{classepUser_a773d6c1b988f97eeaad23fb170aca93b}{\index{ep\-User@{ep\-User}!get\-Passwd@{get\-Passwd}}
+\index{get\-Passwd@{get\-Passwd}!epUser@{ep\-User}}
+\subsubsection[{get\-Passwd}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string \& {\bf ep\-User\-::get\-Passwd} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{classepUser_a773d6c1b988f97eeaad23fb170aca93b}
+
+
+获取密码。 
+
+\begin{DoxyReturn}{\-Returns}
+成功返回密码。 
+\end{DoxyReturn}
+\hypertarget{classepUser_aa445c0b9c0ec07d7fb32b978281402ab}{\index{ep\-User@{ep\-User}!get\-Type@{get\-Type}}
+\index{get\-Type@{get\-Type}!epUser@{ep\-User}}
+\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum \-Login\-Type {\bf ep\-User\-::get\-Type} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepUser_aa445c0b9c0ec07d7fb32b978281402ab}
+
+
+获取该客户端类型。 
+
+\begin{DoxyReturn}{\-Returns}
+相应相应客户端类型。 
+\end{DoxyReturn}
+
+
+\-Reimplemented in \hyperlink{classepStudent_a8e546f0eaa7eb386bacd6f9afe390d69}{ep\-Student}, \hyperlink{classepTeacher_af4a8dcc9a51ae25c854bf223926cd8e2}{ep\-Teacher}, and \hyperlink{classepWhiteBoard_af53ead55f5630984a730edc745add5e1}{ep\-White\-Board}.
+
+\hypertarget{classepUser_a60c355f9dd74f22949f686f3d0264ac2}{\index{ep\-User@{ep\-User}!init@{init}}
+\index{init@{init}!epUser@{ep\-User}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-User\-::init} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{account, }
+\item[{const std\-::string \&}]{passwd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepUser_a60c355f9dd74f22949f686f3d0264ac2}
+
+
+使用传入的用户名和密码初始化对象。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em std\-::string\mbox{[}in\mbox{]}} & 用户名。 \\
+\hline
+{\em std\-::string\mbox{[}in\mbox{]}} & 密码。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+
+
+\-Reimplemented in \hyperlink{classepStudent_a687b2cea50b85886c5f520b260236dfb}{ep\-Student}, \hyperlink{classepTeacher_ae142dcff4c1c8ec7ae66ef27ef1ce520}{ep\-Teacher}, and \hyperlink{classepWhiteBoard_a53a1e629a59eff2cf95a70cbc75b798a}{ep\-White\-Board}.
+
+\hypertarget{classepUser_a8cd2e329a37b93500304b7578e2cc29b}{\index{ep\-User@{ep\-User}!set\-Account@{set\-Account}}
+\index{set\-Account@{set\-Account}!epUser@{ep\-User}}
+\subsubsection[{set\-Account}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-User\-::set\-Account} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{account}
+\end{DoxyParamCaption}
+)}}\label{classepUser_a8cd2e329a37b93500304b7578e2cc29b}
+
+
+设置帐号。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em std\-::string\mbox{[}in\mbox{]}} & 指定帐号内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+\hypertarget{classepUser_a223ded3bb13a97064122c6836b754d48}{\index{ep\-User@{ep\-User}!set\-Id@{set\-Id}}
+\index{set\-Id@{set\-Id}!epUser@{ep\-User}}
+\subsubsection[{set\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-User\-::set\-Id} (
+\begin{DoxyParamCaption}
+\item[{const int}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classepUser_a223ded3bb13a97064122c6836b754d48}
+
+
+设置客户端\-I\-D。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int\mbox{[}in\mbox{]}} & 客户端\-I\-D。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+设置成功返回\-T\-R\-U\-E，否则返回\-F\-A\-L\-S\-E。 
+\end{DoxyReturn}
+\hypertarget{classepUser_a733dba07ec00d2844152b6d079515566}{\index{ep\-User@{ep\-User}!set\-Passwd@{set\-Passwd}}
+\index{set\-Passwd@{set\-Passwd}!epUser@{ep\-User}}
+\subsubsection[{set\-Passwd}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf ep\-User\-::set\-Passwd} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{passwd}
+\end{DoxyParamCaption}
+)}}\label{classepUser_a733dba07ec00d2844152b6d079515566}
+
+
+设置密码。 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em std\-::string\mbox{[}in\mbox{]}} & 指定密码内容。\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+成功返回true，否则返回false。 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{epUser_8h}{ep\-User.\-h}\item 
+ep\-User.\-cpp\end{DoxyCompactItemize}

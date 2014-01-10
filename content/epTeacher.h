@@ -11,7 +11,7 @@
 
 #include "epPerson.h"
 #include "epUser.h"
-
+#include "../protocol.h"
 /**
  * @brief 教师类。
  */
@@ -24,13 +24,13 @@ public :
          * @name set
          * @{ */
         /**
-         * @brief 设置老师ID。
+         * @brief 设置老师编号。
          *
-         * @param int[in] 老师ID。
+         * @param int[in] 老师编号。
          *
          * @return 成功返回true，否则返回false。
          */
-        bool setId(const int);
+        virtual bool setTeacherNum(const std::string&);
         /**
          * @brief 设置老师所属学校名字。
          *
@@ -47,17 +47,26 @@ public :
          * @return 成功返回true，否则返回false。
          */
         bool setSchoolId(const int);
+        /**
+         * @brief 通过传入的用户名和密码初始化教师对象。
+         *
+         * @param std::string[in] 用户名。
+         * @param std::string[in] 密码。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        virtual bool init(const std::string&, const std::string&);
         /**  @} */
 
         /**
          * @name get
          * @{ */
         /**
-         * @brief 获取老师ID。
+         * @brief 获取老师编号。
          *
-         * @return 老师ID。
+         * @return 老师编号。
          */
-        int getId(void) const;
+        virtual std::string getTeacherNum(void) const;
         /**
          * @brief 获取老师所属学校名字。
          *
@@ -70,6 +79,12 @@ public :
          * @return 学校ID。
          */
         int getSchoolId(void) const;
+        /**
+         * @brief 获取客户端相应类型。
+         *
+         * @return 客户端类型。
+         */
+        virtual enum LoginType getType(void) const;
         /**  @} */
 
         /**
@@ -87,7 +102,7 @@ private :
         /**
          * @brief 教师编号。
          */
-        int id_;
+        std::string teacherNum_;
         /**
          * @brief 存放所属学校名字。
          */
