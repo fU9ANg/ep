@@ -1261,12 +1261,17 @@ class cGetContent : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 common = 1;
+  // required string common = 1;
   inline bool has_common() const;
   inline void clear_common();
   static const int kCommonFieldNumber = 1;
-  inline ::google::protobuf::int32 common() const;
-  inline void set_common(::google::protobuf::int32 value);
+  inline const ::std::string& common() const;
+  inline void set_common(const ::std::string& value);
+  inline void set_common(const char* value);
+  inline void set_common(const char* value, size_t size);
+  inline ::std::string* mutable_common();
+  inline ::std::string* release_common();
+  inline void set_allocated_common(::std::string* common);
 
   // @@protoc_insertion_point(class_scope:cGetContent)
  private:
@@ -1275,7 +1280,7 @@ class cGetContent : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 common_;
+  ::std::string* common_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -1343,10 +1348,17 @@ class sGetContent : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string course_list = 1;
+  // required bool result = 1;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 1;
+  inline bool result() const;
+  inline void set_result(bool value);
+
+  // required string course_list = 2;
   inline bool has_course_list() const;
   inline void clear_course_list();
-  static const int kCourseListFieldNumber = 1;
+  static const int kCourseListFieldNumber = 2;
   inline const ::std::string& course_list() const;
   inline void set_course_list(const ::std::string& value);
   inline void set_course_list(const char* value);
@@ -1357,15 +1369,18 @@ class sGetContent : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:sGetContent)
  private:
+  inline void set_has_result();
+  inline void clear_has_result();
   inline void set_has_course_list();
   inline void clear_has_course_list();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* course_list_;
+  bool result_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -2191,21 +2206,21 @@ class cGetActiveStudentList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline ::google::protobuf::int32 id() const;
-  inline void set_id(::google::protobuf::int32 value);
+  // required int32 class_id = 1;
+  inline bool has_class_id() const;
+  inline void clear_class_id();
+  static const int kClassIdFieldNumber = 1;
+  inline ::google::protobuf::int32 class_id() const;
+  inline void set_class_id(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:cGetActiveStudentList)
  private:
-  inline void set_has_id();
-  inline void clear_has_id();
+  inline void set_has_class_id();
+  inline void clear_has_class_id();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 class_id_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -2355,21 +2370,21 @@ class sUpdateStudentStatus : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline ::google::protobuf::int32 id() const;
-  inline void set_id(::google::protobuf::int32 value);
+  // required int32 student_id = 1;
+  inline bool has_student_id() const;
+  inline void clear_student_id();
+  static const int kStudentIdFieldNumber = 1;
+  inline ::google::protobuf::int32 student_id() const;
+  inline void set_student_id(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:sUpdateStudentStatus)
  private:
-  inline void set_has_id();
-  inline void clear_has_id();
+  inline void set_has_student_id();
+  inline void clear_has_student_id();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 student_id_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -3886,7 +3901,7 @@ inline void sGetCourseList::set_allocated_res_path(::std::string* res_path) {
 
 // cGetContent
 
-// required int32 common = 1;
+// required string common = 1;
 inline bool cGetContent::has_common() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3897,30 +3912,100 @@ inline void cGetContent::clear_has_common() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void cGetContent::clear_common() {
-  common_ = 0;
+  if (common_ != &::google::protobuf::internal::kEmptyString) {
+    common_->clear();
+  }
   clear_has_common();
 }
-inline ::google::protobuf::int32 cGetContent::common() const {
+inline const ::std::string& cGetContent::common() const {
+  return *common_;
+}
+inline void cGetContent::set_common(const ::std::string& value) {
+  set_has_common();
+  if (common_ == &::google::protobuf::internal::kEmptyString) {
+    common_ = new ::std::string;
+  }
+  common_->assign(value);
+}
+inline void cGetContent::set_common(const char* value) {
+  set_has_common();
+  if (common_ == &::google::protobuf::internal::kEmptyString) {
+    common_ = new ::std::string;
+  }
+  common_->assign(value);
+}
+inline void cGetContent::set_common(const char* value, size_t size) {
+  set_has_common();
+  if (common_ == &::google::protobuf::internal::kEmptyString) {
+    common_ = new ::std::string;
+  }
+  common_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cGetContent::mutable_common() {
+  set_has_common();
+  if (common_ == &::google::protobuf::internal::kEmptyString) {
+    common_ = new ::std::string;
+  }
   return common_;
 }
-inline void cGetContent::set_common(::google::protobuf::int32 value) {
-  set_has_common();
-  common_ = value;
+inline ::std::string* cGetContent::release_common() {
+  clear_has_common();
+  if (common_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = common_;
+    common_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cGetContent::set_allocated_common(::std::string* common) {
+  if (common_ != &::google::protobuf::internal::kEmptyString) {
+    delete common_;
+  }
+  if (common) {
+    set_has_common();
+    common_ = common;
+  } else {
+    clear_has_common();
+    common_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // -------------------------------------------------------------------
 
 // sGetContent
 
-// required string course_list = 1;
-inline bool sGetContent::has_course_list() const {
+// required bool result = 1;
+inline bool sGetContent::has_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void sGetContent::set_has_course_list() {
+inline void sGetContent::set_has_result() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void sGetContent::clear_has_course_list() {
+inline void sGetContent::clear_has_result() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void sGetContent::clear_result() {
+  result_ = false;
+  clear_has_result();
+}
+inline bool sGetContent::result() const {
+  return result_;
+}
+inline void sGetContent::set_result(bool value) {
+  set_has_result();
+  result_ = value;
+}
+
+// required string course_list = 2;
+inline bool sGetContent::has_course_list() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sGetContent::set_has_course_list() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sGetContent::clear_has_course_list() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void sGetContent::clear_course_list() {
   if (course_list_ != &::google::protobuf::internal::kEmptyString) {
@@ -4684,26 +4769,26 @@ inline void sGetStudentList::set_allocated_res_path(::std::string* res_path) {
 
 // cGetActiveStudentList
 
-// required int32 id = 1;
-inline bool cGetActiveStudentList::has_id() const {
+// required int32 class_id = 1;
+inline bool cGetActiveStudentList::has_class_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void cGetActiveStudentList::set_has_id() {
+inline void cGetActiveStudentList::set_has_class_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void cGetActiveStudentList::clear_has_id() {
+inline void cGetActiveStudentList::clear_has_class_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void cGetActiveStudentList::clear_id() {
-  id_ = 0;
-  clear_has_id();
+inline void cGetActiveStudentList::clear_class_id() {
+  class_id_ = 0;
+  clear_has_class_id();
 }
-inline ::google::protobuf::int32 cGetActiveStudentList::id() const {
-  return id_;
+inline ::google::protobuf::int32 cGetActiveStudentList::class_id() const {
+  return class_id_;
 }
-inline void cGetActiveStudentList::set_id(::google::protobuf::int32 value) {
-  set_has_id();
-  id_ = value;
+inline void cGetActiveStudentList::set_class_id(::google::protobuf::int32 value) {
+  set_has_class_id();
+  class_id_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -4736,26 +4821,26 @@ inline void sGetActiveStudentList::set_id(::google::protobuf::int32 value) {
 
 // sUpdateStudentStatus
 
-// required int32 id = 1;
-inline bool sUpdateStudentStatus::has_id() const {
+// required int32 student_id = 1;
+inline bool sUpdateStudentStatus::has_student_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void sUpdateStudentStatus::set_has_id() {
+inline void sUpdateStudentStatus::set_has_student_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void sUpdateStudentStatus::clear_has_id() {
+inline void sUpdateStudentStatus::clear_has_student_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void sUpdateStudentStatus::clear_id() {
-  id_ = 0;
-  clear_has_id();
+inline void sUpdateStudentStatus::clear_student_id() {
+  student_id_ = 0;
+  clear_has_student_id();
 }
-inline ::google::protobuf::int32 sUpdateStudentStatus::id() const {
-  return id_;
+inline ::google::protobuf::int32 sUpdateStudentStatus::student_id() const {
+  return student_id_;
 }
-inline void sUpdateStudentStatus::set_id(::google::protobuf::int32 value) {
-  set_has_id();
-  id_ = value;
+inline void sUpdateStudentStatus::set_student_id(::google::protobuf::int32 value) {
+  set_has_student_id();
+  student_id_ = value;
 }
 
 // -------------------------------------------------------------------

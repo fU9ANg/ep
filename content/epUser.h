@@ -62,7 +62,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool setFuncType(const enum FuncType);
+        virtual bool setFuncType(const enum FuncType);
         /**
          * @brief 使用传入的用户名和密码初始化对象。
          *
@@ -121,8 +121,13 @@ public :
         virtual void dump(void);
         /**  @} */
 
-private :
+protected :
+        /**
+         * @brief 功能类型。
+         */
         enum FuncType funcType_;
+
+private :
         /**
          * @brief 用户ID。
          */

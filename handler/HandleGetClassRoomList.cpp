@@ -13,10 +13,15 @@
 
 void CHandleMessage::handleGetClassRoomList (Buf* p)
 {
+        /**
+         * @brief 教师请求所在学校的教室列表。
+         *        1. 检查用户类型是否为教师。
+         *        2. 根据教师所在学校ID，查找数据库，返回该学校所有教室的列表。
+         */
+
 #ifdef __DEBUG_HANDLE_HEAD_
         cout << "CT_GetClassRoomList\n";
 #endif
-        // TODO:
         epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
         if (NULL == pUser) {
                 SINGLE->bufpool.free(p);
@@ -51,4 +56,5 @@ void CHandleMessage::handleGetClassRoomList (Buf* p)
         }
 
         SINGLE->sendqueue.enqueue(packet(ST_GetClassList, vc, p->getfd()));
+        SINGLE->bufpool.free(p);
 }

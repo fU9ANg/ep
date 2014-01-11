@@ -14,6 +14,12 @@
 
 void CHandleMessage::handleGetGradeList (Buf* p)
 {
+        /**
+         * @brief 教师请求其所在学校的年级列表。
+         *        1. 查检该用户类型是否为教师。
+         *        2. 如果是教师，则根据该教室所在学校，查找数据库，返回年级列表。
+         */
+
 #ifdef __DEBUG_HANDLE_HEAD_
         cout << "CT_GetGradeList\n";
 #endif
@@ -24,8 +30,6 @@ void CHandleMessage::handleGetGradeList (Buf* p)
         int school_id = pTeacher->getSchoolId();
         sGetGradeList tmp;
         std::vector<sGetGradeList> vc;
-        std::string strpwd;
-        std::string Account;
         try {
                 MutexLockGuard guard(DATABASE->m_mutex);
                 PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_ALL_GRADE_LIST_BY_SCHOOL_ID);
@@ -39,7 +43,9 @@ void CHandleMessage::handleGetGradeList (Buf* p)
                 delete prst;
                 delete pstmt;
         }catch (SQLException e) {
+                printf("[DEBUG] %s : %s\n", __func__, e.what());
         }
 
-        SINGLE->sendqueue.enqueue(packet(ST_GetGradeList, tmp, p->getfd()));
+        SINGLE->sendqueue.enqueue(packet(ST_GetGradeList, vc, p->getfd()));
+        SINGLE->bufpool.free(p);
 }

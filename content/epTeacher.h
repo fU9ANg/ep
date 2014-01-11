@@ -48,6 +48,14 @@ public :
          */
         bool setSchoolId(const int);
         /**
+         * @brief 设置该客户的功能类型。
+         *
+         * @param FuncType[in] 功能类型。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        virtual bool setFuncType(const enum FuncType);
+        /**
          * @brief 通过传入的用户名和密码初始化教师对象。
          *
          * @param std::string[in] 用户名。

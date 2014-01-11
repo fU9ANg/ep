@@ -12,6 +12,13 @@
 #include "../content/epManager.h"
 
 void CHandleMessage::handleGetFuncList (Buf* p) {
+
+        /**
+         * @brief 用户请求功能列表。
+         *        1. 检查该用户是否在游离列表中，并有一定的类型（教师，学生等）。
+         *        2. 根据用户类型，查找数据库，返回功能列表。
+         */
+
 #ifdef __DEBUG_HANDLE_HEAD_
         cout << "CT_GetFuncList\n";
 #endif
@@ -28,6 +35,7 @@ void CHandleMessage::handleGetFuncList (Buf* p) {
             SINGLE->bufpool.free(p);
             return;
         }
+
         sGetFuncList tmp;
         std::vector<sGetFuncList> vc;
         string strpwd;
@@ -46,6 +54,7 @@ void CHandleMessage::handleGetFuncList (Buf* p) {
                 delete prst;
                 delete pstmt;
         }catch (SQLException e) {
+                printf("SQLException : %s\n", e.what());
         }
 
         SINGLE->sendqueue.enqueue(packet(ST_GetFuncList, vc, p->getfd()));

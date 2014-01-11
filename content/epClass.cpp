@@ -81,6 +81,7 @@ epClass::sendtoAllStudent(Buf* pBuf) {
                 if (pBuf->getfd() == it->first) { // not send to self.
                         continue;
                 }
+                p = SINGLE->bufpool.malloc();
                 p = pBuf;
                 p->setfd(it->first);
                 SINGLE->sendqueue.enqueue(p);
@@ -116,4 +117,15 @@ epClass::dump(void) {
         for (; cie!=it; ++it) {
                 (it->second).dump();
         }
+}
+
+std::vector<int>
+epClass::getActiveStudent(void) {
+        EPSTUDENT_MAP::iterator it = studentMap_.begin();
+        EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
+        std::vector<int> vi;
+        for (; cie!=it; ++it) {
+                vi.push_back((it->second).getId());
+        }
+        return vi;
 }

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+g++ -g -D_STANDARD -o UNIT_TEST.o -c UNIT_TEST.cpp &&
+gcc -g -D_STANDARD -o Sock.o -c ../Sock.c &&
+g++ -g -D_STANDARD -o protocol.pb.o -c ../message/proto/protocol.pb.cc -I../message &&
+g++ -g -D_STANDARD -o STUDENT UNIT_TEST.o Sock.o protocol.pb.o -lprotobuf &&
+g++ -g -D_STANDARD -o TEACHER UNIT_TEST.o Sock.o protocol.pb.o -lprotobuf &&
+g++ -g -D_STANDARD -o WHITEBOARD UNIT_TEST.o Sock.o protocol.pb.o -lprotobuf

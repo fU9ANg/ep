@@ -14,6 +14,18 @@ epWhiteBoard::setWhiteboardNum(const std::string& whiteboardNum) {
 }
 
 bool
+epWhiteBoard::setClassroomName(const std::string& classroomName) {
+        classroomName_ = classroomName;
+        return true;
+}
+
+bool
+epWhiteBoard::setClassroomId(const int classroomId) {
+        classroomId_ = classroomId;
+        return true;
+}
+
+bool
 epWhiteBoard::init(const std::string& account, const std::string& passwd) {
         epUser::init(account, passwd);
         // TODO :
@@ -28,6 +40,16 @@ epWhiteBoard::getWhiteboardNum(void) const {
 enum LoginType
 epWhiteBoard::getType(void) const {
         return LT_WHITEBOARD;
+}
+
+std::string
+epWhiteBoard::getClassroomName(void) const {
+        return classroomName_;
+}
+
+int
+epWhiteBoard::getClassroomId(void) const {
+        return classroomId_;
 }
 
 void

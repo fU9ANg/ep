@@ -1,10 +1,18 @@
 #include "epStudent.h"
+#include "database.h"
+#include "SQL.h"
 #include <stdio.h> // for printf
 
 epStudent::epStudent(void) {
 }
 
 epStudent::~epStudent(void) {
+}
+
+bool
+epStudent::setClassId (const int iid) {
+    classId_ = iid;
+    return true;
 }
 
 bool
@@ -20,10 +28,58 @@ epStudent::setClassName (const std::string& className) {
 }
 
 bool
+epStudent::setFuncType(const enum FuncType funcType) {
+        switch (funcType) {
+        case FT_PERSONAL :
+        case FT_SCHOOL :
+                funcType_ = funcType;
+                return true;
+                break;
+        default :
+                break;
+        }
+
+        funcType_ = FT_INVALID;
+        return false;
+}
+
+bool
 epStudent::init(const std::string& account, const std::string& passwd) {
         epUser::init(account, passwd);
-        // TODO :
-        return true;
+        bool result = false;
+        std::string strpwd;
+        try {
+                MutexLockGuard guard(DATABASE->m_mutex);
+                PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_STU_INFO_BY_ACCOUT);
+                pstmt->setString (1, account);
+                ResultSet* prst = pstmt->executeQuery ();
+                while (prst->next ()) {
+                        strpwd = prst->getString ("password");
+                        if (0 == strncmp(passwd.c_str(), strpwd.c_str(), strpwd.size()) && passwd.size() > 0) {
+
+                                setName (prst->getString("last_name"), prst->getString ("first_name"));
+                                setSex (prst->getString ("sex"));
+                                setAge (prst->getInt ("age"));
+                                setRace (prst->getString ("race_name"));
+                                //setBirthday (prst->getString ("birthday"));
+                                setNative (prst->getString ("native_name"));
+
+                                setStudentNum (prst->getString ("number"));
+                                setClassId (prst->getInt ("class_id"));
+                                setClassName (prst->getString ("class_name"));
+                                result = true;
+                        } else {
+                                result = false;
+                        }
+                }
+                delete prst;
+                delete pstmt;
+        }catch (SQLException e) {
+                printf ("SQLException: %s\n", e.what());    
+                result = false;
+        }
+
+        return result;
 }
 
 std::string

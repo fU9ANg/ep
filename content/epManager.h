@@ -42,6 +42,22 @@ public :
          */
         bool removeClassroomById(int);
         /**
+         * @brief 根据用户FD获取其当前上课教室对象指针。
+         *
+         * @param int[in] 用户FD。
+         *
+         * @return 查找成功返回教室对象指针，否则返回NULL。
+         */
+        epClassroom* getClassroomByFd(const int);
+        /**
+         * @brief 获取指定班级ID所对象的教室。
+         *
+         * @param int[in] 指定班级ID。
+         *
+         * @return 该班级所使用的教室。
+         */
+        epClassroom* getClassroomByClassId(const int);
+        /**
          * @brief 从教室列表中获取指定ID的教室对象指针。
          *
          * @param int[in] 指定教室ID。
@@ -76,6 +92,14 @@ public :
          */
         bool removeUserByFd(const int);
         /**
+         * @brief 根据登录帐号查找处于游离状态的用户。
+         *
+         * @param std::string[in] 帐号。
+         *
+         * @return 成功返回指向相应对象的指针，失败返回NULL。
+         */
+        epUser* getUserByAccount(const std::string&);
+        /**
          * @brief 获取指定FD的对象指针。
          *
          * @param int[in] 需要查找对象的FD。
@@ -108,6 +132,14 @@ public :
          */
         epStudent* getStudentByIdFromClassroom(const int);
         /**
+         * @brief 根据客户FD获取教师对象指针。
+         *
+         * @param int[in] 客户FD。
+         *
+         * @return 成功返回教师对象指针，否则返回NULL。
+         */
+        epTeacher* getTeacherByFd(const int);
+        /**
          * @brief 根据教师ID获取教师对象指针。
          *
          * @param int[in] 教师ID。
@@ -132,10 +164,26 @@ public :
          */
         epTeacher* getTeacherByIdFromClassroom(const int);
         /**
+         * @brief 根据指定班级ID获取该班级在线学生列表。
+         *
+         * @param int[in] 指定班级ID。
+         *
+         * @return 在线学生列表。
+         */
+        std::vector<int> getActiveStudentListFromClass(const int);
+        /**
          * @brief 将处于游离状态，并选择了学校功能，
          *        且在指定班级ID的学生加入到指定班级。
          *
          * @param int[in] 班级ID。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool insertStudentFromUserIntoClass(const int);
+        /**
+         * @brief 从游离列表中将学生加入到刚上课的指定ID的教室中。
+         *
+         * @param int[in] 指定教室ID。
          *
          * @return 成功返回true，否则返回false。
          */

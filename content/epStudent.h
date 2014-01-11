@@ -49,6 +49,14 @@ public :
          */
         bool setClassName (const std::string&);
         /**
+         * @brief 设置该客户的功能类型。
+         *
+         * @param FuncType[in] 功能类型。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        virtual bool setFuncType(const enum FuncType);
+        /**
          * @brief 使用用户名和密码初始化学生对象。
          *
          * @param std::string[in] 用户名。

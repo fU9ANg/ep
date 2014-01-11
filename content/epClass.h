@@ -10,6 +10,7 @@
 #define __EPCLASS_H__
 
 #include <map>
+#include <vector>
 
 #include "epStudent.h"
 #include "../Buf.h"
@@ -41,6 +42,12 @@ public :
          * @return 成功返回学生对象指针，否则返回NULL。
          */
         epStudent* getStudentById(const int);
+        /**
+         * @brief 获取在线学生列表。
+         *
+         * @return 在线学生列表。
+         */
+        std::vector<int> getActiveStudent(void);
         /**  @} */
 
         /**

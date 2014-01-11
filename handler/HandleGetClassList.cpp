@@ -8,13 +8,24 @@
 #include "../message/proto/protocol.pb.h"
 
 #include "../content/epUser.h"
+#include "../content/epTeacher.h"
+#include "../content/epManager.h"
+#include "../netdef.h"
 
 void CHandleMessage::handleGetClassList (Buf* p)
 {
+        /**
+         * @brief 教师根据所选择的年级ID，请求该年级所对象的班级列表。
+         *        1. 检查该用户类型是否为教师。
+         *        2. 根据教师所选择的年级ID，查找数据库，返回该年级所对应的班级列表。
+         */
+
 #ifdef __DEBUG_HANDLE_HEAD_
         cout << "CT_GetClassList\n";
 #endif
         // TODO:
+
+        CHECK_USER(epTeacher, pTeacher);
 
         cGetClassList gcrl;
         unpacket(p, gcrl);

@@ -56,16 +56,16 @@ message sGetGradeList { // 返回年级列表。
         required int32  grade_id   = 1;
         required string grade_name = 2;
         /*
-        required int32  course_id  = 3;
-        required string course_name= 4;
-        required string course_type= 5;
-        required int32  laguage    = 6;
-        required int32  art        = 7;
-        required int32  community  = 8;
-        required int32  health     = 9;
-        required int32  science    = 10;
-        required string resPath    = 11;
-        */
+           required int32  course_id  = 3;
+           required string course_name= 4;
+           required string course_type= 5;
+           required int32  laguage    = 6;
+           required int32  art        = 7;
+           required int32  community  = 8;
+           required int32  health     = 9;
+           required int32  science    = 10;
+           required string resPath    = 11;
+         */
 }
 
 // CT_GetCourseList
@@ -87,12 +87,13 @@ message sGetCourseList { // 返回学校对应的课程表。
 
 // CT_GetContent,
 message cGetContent {
-        required int32 common   = 1;
+        required string common    = 1;
 }
 
 // ST_GetContent,
 message sGetContent {
-        required string course_list = 1;
+        required bool   result      = 1;
+        required string course_list = 2;
 }
 
 // CT_GetClassList,
@@ -103,18 +104,18 @@ message cGetClassList {
 // ST_GetClassList,
 message sGetClassList {
         required int32  class_id        = 1;
-        required string class_name       = 2;
+        required string class_name      = 2;
 }
 
 // CT_GetClassRoomList
 message cGetClassRoomList {
-        required string content  = 1;
+        required string content         = 1;
 }
 
 // ST_GetClassRoomList
 message sGetClassRoomList {
         required int32  classroom_id    = 1;
-        required string classroom_name   = 2;
+        required string classroom_name  = 2;
 }
 
 // CT_SetContent
@@ -145,7 +146,7 @@ message sGetStudentList { // 单个学生简要信息。
 
 // CT_GetActiveStudentList,
 message cGetActiveStudentList {
-        required int32  id      = 1;
+        required int32  class_id      = 1;
 }
 
 // ST_GetActiveStudentList,
@@ -155,7 +156,7 @@ message sGetActiveStudentList {
 
 // ST_UpdateStudentStatus,
 message sUpdateStudentStatus {
-        required int32 id       = 1;
+        required int32  student_id      = 1;
 }
 
 // CT_GetStudentInfo

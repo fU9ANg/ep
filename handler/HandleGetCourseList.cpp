@@ -10,13 +10,31 @@
 #include "../content/epUser.h"
 #include "../content/epTeacher.h"
 #include "../content/epManager.h"
+#include "../netdef.h"
 
 void CHandleMessage::handleGetCourseList (Buf* p)
 {
+        /**
+         * @brief 教师请求所选年级的课程列表。
+         *        1. 检查用户类型是否为教师。
+         *        2. 根据所选择的年级ID，查找数据库，返回该年级所对应的课程列表。
+         */
 #ifdef __DEBUG_HANDLE_HEAD_
         cout << "CT_GetCourseList\n";
 #endif
         // TODO:
+
+        epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
+        if (NULL == pUser) {
+                SINGLE->bufpool.free(p);
+                return;
+        }
+
+        epTeacher* pTeacher = dynamic_cast<epTeacher*>(pUser);
+        if (NULL == pTeacher) {
+                SINGLE->bufpool.free(p);
+                return;
+        }
 
         cGetCourseList gcl;
         unpacket(p, gcl);
@@ -48,4 +66,5 @@ void CHandleMessage::handleGetCourseList (Buf* p)
         }
 
         SINGLE->sendqueue.enqueue(packet(ST_GetCourseList, vc, p->getfd()));
+        SINGLE->bufpool.free(p);
 }

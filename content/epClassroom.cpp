@@ -74,6 +74,7 @@ epClassroom::sendtoAllClass(Buf* pBuf) {
         EPCLASS_MAP::const_iterator cie = classMap_.end();
         Buf* p = NULL;
         for (; cie!=it; ++it) {
+                p = SINGLE->bufpool.malloc();
                 p = pBuf;
                 (it->second).sendtoAllStudent(p);
         }
@@ -102,6 +103,7 @@ epClassroom::sendtoAllGroup(Buf* pBuf) {
         EPGROUP_MAP::const_iterator cie = groupMap_.end();
         Buf* p = NULL;
         for (; cie!=it; ++it) {
+                p = SINGLE->bufpool.malloc();
                 p = pBuf;
                 (it->second).sendtoAllStudent(p);
         }
@@ -175,6 +177,17 @@ epClassroom::getClassById(const int id) {
                 }
         }
         return NULL;
+}
+
+std::vector<epClass*>
+epClassroom::getClassList(void) {
+        std::vector<epClass*> vc;
+        EPCLASS_MAP::iterator it = classMap_.begin();
+        EPCLASS_MAP::const_iterator cie = classMap_.end();
+        for (; cie!=it; ++it) {
+                vc.push_back(&(it->second));
+        }
+        return vc;
 }
 
 bool

@@ -1,7 +1,12 @@
 #include "epUser.h"
 #include <stdio.h> // for printf
+#include "../netdef.h"
 
-epUser::epUser(void) {
+epUser::epUser(void)
+        : funcType_(FT_INVALID)
+          , id_(EPUSER_INVALID_USER_ID)
+          , fd_(EPUSER_INVALID_USER_FD)
+{
 }
 
 epUser::~epUser(void) {
@@ -40,7 +45,8 @@ epUser::setFuncType(const enum FuncType funcType) {
 
 bool
 epUser::init(const std::string& account, const std::string& passwd) {
-        // TODO :
+        setAccount(account);
+        setPasswd(passwd);
         return true;
 }
 
@@ -56,6 +62,7 @@ epUser::getPasswd(void) const {
 
 enum LoginType
 epUser::getType(void) const {
+        printf("[DEBUG] epUser::getType : enter!\n");
         return LT_USER;
 }
 
@@ -76,7 +83,10 @@ epUser::getFuncType(void) const {
 
 void
 epUser::dump(void) {
-        printf("id      = %d\n", id_);
-        printf("account = %s\n", account_.c_str());
-        printf("passwd  = %s\n", passwd_.c_str());
+        printf("=======================================\n");
+        printf("id       = %d\n", id_);
+        printf("fd       = %d\n", fd_);
+        printf("funcType = %d\n", funcType_);
+        printf("account  = %s\n", account_.c_str());
+        printf("passwd   = %s\n", passwd_.c_str());
 }

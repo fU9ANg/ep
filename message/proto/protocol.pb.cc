@@ -323,7 +323,8 @@ void protobuf_AssignDesc_proto_2fprotocol_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(cGetContent));
   sGetContent_descriptor_ = file->message_type(13);
-  static const int sGetContent_offsets_[1] = {
+  static const int sGetContent_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(sGetContent, result_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(sGetContent, course_list_),
   };
   sGetContent_reflection_ =
@@ -466,7 +467,7 @@ void protobuf_AssignDesc_proto_2fprotocol_2eproto() {
       sizeof(sGetStudentList));
   cGetActiveStudentList_descriptor_ = file->message_type(22);
   static const int cGetActiveStudentList_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(cGetActiveStudentList, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(cGetActiveStudentList, class_id_),
   };
   cGetActiveStudentList_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -496,7 +497,7 @@ void protobuf_AssignDesc_proto_2fprotocol_2eproto() {
       sizeof(sGetActiveStudentList));
   sUpdateStudentStatus_descriptor_ = file->message_type(24);
   static const int sUpdateStudentStatus_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(sUpdateStudentStatus, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(sUpdateStudentStatus, student_id_),
   };
   sUpdateStudentStatus_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -740,30 +741,31 @@ void protobuf_AddDesc_proto_2fprotocol_2eproto() {
     "urse_name\030\002 \002(\t\022\020\n\010language\030\003 \002(\005\022\013\n\003art"
     "\030\004 \002(\005\022\021\n\tcommunity\030\005 \002(\005\022\016\n\006health\030\006 \002("
     "\005\022\017\n\007science\030\007 \002(\005\022\020\n\010res_path\030\010 \002(\t\"\035\n\013"
-    "cGetContent\022\016\n\006common\030\001 \002(\005\"\"\n\013sGetConte"
-    "nt\022\023\n\013course_list\030\001 \002(\t\"!\n\rcGetClassList"
-    "\022\020\n\010grade_id\030\001 \002(\005\"5\n\rsGetClassList\022\020\n\010c"
-    "lass_id\030\001 \002(\005\022\022\n\nclass_name\030\002 \002(\t\"$\n\021cGe"
-    "tClassRoomList\022\017\n\007content\030\001 \002(\t\"A\n\021sGetC"
-    "lassRoomList\022\024\n\014classroom_id\030\001 \002(\005\022\026\n\016cl"
-    "assroom_name\030\002 \002(\t\"J\n\013cSetContent\022\020\n\010cla"
-    "ss_id\030\001 \002(\005\022\024\n\014classroom_id\030\002 \002(\005\022\023\n\013cou"
-    "rse_list\030\003 \002(\t\"*\n\013sSetContent\022\016\n\006result\030"
-    "\001 \002(\010\022\013\n\003msg\030\002 \002(\t\"#\n\017cGetStudentList\022\020\n"
-    "\010class_id\030\001 \002(\005\"=\n\017sGetStudentList\022\n\n\002id"
-    "\030\001 \002(\005\022\014\n\004name\030\002 \002(\t\022\020\n\010res_path\030\003 \002(\t\"#"
-    "\n\025cGetActiveStudentList\022\n\n\002id\030\001 \002(\005\"#\n\025s"
-    "GetActiveStudentList\022\n\n\002id\030\001 \002(\005\"\"\n\024sUpd"
-    "ateStudentStatus\022\n\n\002id\030\001 \002(\005\"\035\n\017cGetStud"
-    "entInfo\022\n\n\002id\030\001 \002(\005\"\214\001\n\017sGetStudentInfo\022"
-    "\n\n\002id\030\001 \002(\005\022\016\n\006number\030\002 \002(\t\022\014\n\004name\030\003 \002("
-    "\t\022\013\n\003sex\030\004 \002(\t\022\014\n\004race\030\005 \002(\t\022\020\n\010birthday"
-    "\030\006 \002(\t\022\016\n\006native\030\007 \002(\t\022\022\n\nclass_name\030\010 \002"
-    "(\t\"\035\n\017cGetTeacherInfo\022\n\n\002id\030\001 \002(\005\"\215\001\n\017sG"
-    "etTeacherInfo\022\n\n\002id\030\001 \002(\005\022\016\n\006number\030\002 \002("
-    "\t\022\014\n\004name\030\003 \002(\t\022\013\n\003sex\030\004 \002(\t\022\014\n\004race\030\005 \002"
-    "(\t\022\020\n\010birthday\030\006 \002(\t\022\016\n\006native\030\007 \002(\t\022\023\n\013"
-    "school_name\030\010 \002(\t", 1537);
+    "cGetContent\022\016\n\006common\030\001 \002(\t\"2\n\013sGetConte"
+    "nt\022\016\n\006result\030\001 \002(\010\022\023\n\013course_list\030\002 \002(\t\""
+    "!\n\rcGetClassList\022\020\n\010grade_id\030\001 \002(\005\"5\n\rsG"
+    "etClassList\022\020\n\010class_id\030\001 \002(\005\022\022\n\nclass_n"
+    "ame\030\002 \002(\t\"$\n\021cGetClassRoomList\022\017\n\007conten"
+    "t\030\001 \002(\t\"A\n\021sGetClassRoomList\022\024\n\014classroo"
+    "m_id\030\001 \002(\005\022\026\n\016classroom_name\030\002 \002(\t\"J\n\013cS"
+    "etContent\022\020\n\010class_id\030\001 \002(\005\022\024\n\014classroom"
+    "_id\030\002 \002(\005\022\023\n\013course_list\030\003 \002(\t\"*\n\013sSetCo"
+    "ntent\022\016\n\006result\030\001 \002(\010\022\013\n\003msg\030\002 \002(\t\"#\n\017cG"
+    "etStudentList\022\020\n\010class_id\030\001 \002(\005\"=\n\017sGetS"
+    "tudentList\022\n\n\002id\030\001 \002(\005\022\014\n\004name\030\002 \002(\t\022\020\n\010"
+    "res_path\030\003 \002(\t\")\n\025cGetActiveStudentList\022"
+    "\020\n\010class_id\030\001 \002(\005\"#\n\025sGetActiveStudentLi"
+    "st\022\n\n\002id\030\001 \002(\005\"*\n\024sUpdateStudentStatus\022\022"
+    "\n\nstudent_id\030\001 \002(\005\"\035\n\017cGetStudentInfo\022\n\n"
+    "\002id\030\001 \002(\005\"\214\001\n\017sGetStudentInfo\022\n\n\002id\030\001 \002("
+    "\005\022\016\n\006number\030\002 \002(\t\022\014\n\004name\030\003 \002(\t\022\013\n\003sex\030\004"
+    " \002(\t\022\014\n\004race\030\005 \002(\t\022\020\n\010birthday\030\006 \002(\t\022\016\n\006"
+    "native\030\007 \002(\t\022\022\n\nclass_name\030\010 \002(\t\"\035\n\017cGet"
+    "TeacherInfo\022\n\n\002id\030\001 \002(\005\"\215\001\n\017sGetTeacherI"
+    "nfo\022\n\n\002id\030\001 \002(\005\022\016\n\006number\030\002 \002(\t\022\014\n\004name\030"
+    "\003 \002(\t\022\013\n\003sex\030\004 \002(\t\022\014\n\004race\030\005 \002(\t\022\020\n\010birt"
+    "hday\030\006 \002(\t\022\016\n\006native\030\007 \002(\t\022\023\n\013school_nam"
+    "e\030\010 \002(\t", 1567);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "proto/protocol.proto", &protobuf_RegisterTypes);
   cLogin::default_instance_ = new cLogin();
@@ -3976,7 +3978,7 @@ cGetContent::cGetContent(const cGetContent& from)
 
 void cGetContent::SharedCtor() {
   _cached_size_ = 0;
-  common_ = 0;
+  common_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3985,6 +3987,9 @@ cGetContent::~cGetContent() {
 }
 
 void cGetContent::SharedDtor() {
+  if (common_ != &::google::protobuf::internal::kEmptyString) {
+    delete common_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -4012,7 +4017,11 @@ cGetContent* cGetContent::New() const {
 
 void cGetContent::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    common_ = 0;
+    if (has_common()) {
+      if (common_ != &::google::protobuf::internal::kEmptyString) {
+        common_->clear();
+      }
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -4024,14 +4033,15 @@ bool cGetContent::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 common = 1;
+      // required string common = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &common_)));
-          set_has_common();
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_common()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->common().data(), this->common().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -4057,9 +4067,13 @@ bool cGetContent::MergePartialFromCodedStream(
 
 void cGetContent::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 common = 1;
+  // required string common = 1;
   if (has_common()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->common(), output);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->common().data(), this->common().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->common(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -4070,9 +4084,14 @@ void cGetContent::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* cGetContent::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 common = 1;
+  // required string common = 1;
   if (has_common()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->common(), target);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->common().data(), this->common().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->common(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4086,10 +4105,10 @@ int cGetContent::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 common = 1;
+    // required string common = 1;
     if (has_common()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::StringSize(
           this->common());
     }
 
@@ -4166,6 +4185,7 @@ void cGetContent::Swap(cGetContent* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int sGetContent::kResultFieldNumber;
 const int sGetContent::kCourseListFieldNumber;
 #endif  // !_MSC_VER
 
@@ -4185,6 +4205,7 @@ sGetContent::sGetContent(const sGetContent& from)
 
 void sGetContent::SharedCtor() {
   _cached_size_ = 0;
+  result_ = false;
   course_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -4224,6 +4245,7 @@ sGetContent* sGetContent::New() const {
 
 void sGetContent::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    result_ = false;
     if (has_course_list()) {
       if (course_list_ != &::google::protobuf::internal::kEmptyString) {
         course_list_->clear();
@@ -4240,10 +4262,26 @@ bool sGetContent::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string course_list = 1;
+      // required bool result = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &result_)));
+          set_has_result();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_course_list;
+        break;
+      }
+
+      // required string course_list = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_course_list:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_course_list()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8String(
@@ -4274,13 +4312,18 @@ bool sGetContent::MergePartialFromCodedStream(
 
 void sGetContent::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string course_list = 1;
+  // required bool result = 1;
+  if (has_result()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->result(), output);
+  }
+
+  // required string course_list = 2;
   if (has_course_list()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->course_list().data(), this->course_list().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->course_list(), output);
+      2, this->course_list(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -4291,14 +4334,19 @@ void sGetContent::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* sGetContent::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string course_list = 1;
+  // required bool result = 1;
+  if (has_result()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->result(), target);
+  }
+
+  // required string course_list = 2;
   if (has_course_list()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->course_list().data(), this->course_list().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->course_list(), target);
+        2, this->course_list(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4312,7 +4360,12 @@ int sGetContent::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string course_list = 1;
+    // required bool result = 1;
+    if (has_result()) {
+      total_size += 1 + 1;
+    }
+
+    // required string course_list = 2;
     if (has_course_list()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -4346,6 +4399,9 @@ void sGetContent::MergeFrom(const ::google::protobuf::Message& from) {
 void sGetContent::MergeFrom(const sGetContent& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_result()) {
+      set_result(from.result());
+    }
     if (from.has_course_list()) {
       set_course_list(from.course_list());
     }
@@ -4366,13 +4422,14 @@ void sGetContent::CopyFrom(const sGetContent& from) {
 }
 
 bool sGetContent::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
 
 void sGetContent::Swap(sGetContent* other) {
   if (other != this) {
+    std::swap(result_, other->result_);
     std::swap(course_list_, other->course_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -6461,7 +6518,7 @@ void sGetStudentList::Swap(sGetStudentList* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int cGetActiveStudentList::kIdFieldNumber;
+const int cGetActiveStudentList::kClassIdFieldNumber;
 #endif  // !_MSC_VER
 
 cGetActiveStudentList::cGetActiveStudentList()
@@ -6480,7 +6537,7 @@ cGetActiveStudentList::cGetActiveStudentList(const cGetActiveStudentList& from)
 
 void cGetActiveStudentList::SharedCtor() {
   _cached_size_ = 0;
-  id_ = 0;
+  class_id_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -6516,7 +6573,7 @@ cGetActiveStudentList* cGetActiveStudentList::New() const {
 
 void cGetActiveStudentList::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    id_ = 0;
+    class_id_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -6528,14 +6585,14 @@ bool cGetActiveStudentList::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 id = 1;
+      // required int32 class_id = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &id_)));
-          set_has_id();
+                 input, &class_id_)));
+          set_has_class_id();
         } else {
           goto handle_uninterpreted;
         }
@@ -6561,9 +6618,9 @@ bool cGetActiveStudentList::MergePartialFromCodedStream(
 
 void cGetActiveStudentList::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 id = 1;
-  if (has_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
+  // required int32 class_id = 1;
+  if (has_class_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->class_id(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -6574,9 +6631,9 @@ void cGetActiveStudentList::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* cGetActiveStudentList::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 id = 1;
-  if (has_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
+  // required int32 class_id = 1;
+  if (has_class_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->class_id(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -6590,11 +6647,11 @@ int cGetActiveStudentList::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 id = 1;
-    if (has_id()) {
+    // required int32 class_id = 1;
+    if (has_class_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->id());
+          this->class_id());
     }
 
   }
@@ -6624,8 +6681,8 @@ void cGetActiveStudentList::MergeFrom(const ::google::protobuf::Message& from) {
 void cGetActiveStudentList::MergeFrom(const cGetActiveStudentList& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_id()) {
-      set_id(from.id());
+    if (from.has_class_id()) {
+      set_class_id(from.class_id());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -6651,7 +6708,7 @@ bool cGetActiveStudentList::IsInitialized() const {
 
 void cGetActiveStudentList::Swap(cGetActiveStudentList* other) {
   if (other != this) {
-    std::swap(id_, other->id_);
+    std::swap(class_id_, other->class_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -6879,7 +6936,7 @@ void sGetActiveStudentList::Swap(sGetActiveStudentList* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int sUpdateStudentStatus::kIdFieldNumber;
+const int sUpdateStudentStatus::kStudentIdFieldNumber;
 #endif  // !_MSC_VER
 
 sUpdateStudentStatus::sUpdateStudentStatus()
@@ -6898,7 +6955,7 @@ sUpdateStudentStatus::sUpdateStudentStatus(const sUpdateStudentStatus& from)
 
 void sUpdateStudentStatus::SharedCtor() {
   _cached_size_ = 0;
-  id_ = 0;
+  student_id_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -6934,7 +6991,7 @@ sUpdateStudentStatus* sUpdateStudentStatus::New() const {
 
 void sUpdateStudentStatus::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    id_ = 0;
+    student_id_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -6946,14 +7003,14 @@ bool sUpdateStudentStatus::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 id = 1;
+      // required int32 student_id = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &id_)));
-          set_has_id();
+                 input, &student_id_)));
+          set_has_student_id();
         } else {
           goto handle_uninterpreted;
         }
@@ -6979,9 +7036,9 @@ bool sUpdateStudentStatus::MergePartialFromCodedStream(
 
 void sUpdateStudentStatus::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 id = 1;
-  if (has_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
+  // required int32 student_id = 1;
+  if (has_student_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->student_id(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -6992,9 +7049,9 @@ void sUpdateStudentStatus::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* sUpdateStudentStatus::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 id = 1;
-  if (has_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
+  // required int32 student_id = 1;
+  if (has_student_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->student_id(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -7008,11 +7065,11 @@ int sUpdateStudentStatus::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 id = 1;
-    if (has_id()) {
+    // required int32 student_id = 1;
+    if (has_student_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->id());
+          this->student_id());
     }
 
   }
@@ -7042,8 +7099,8 @@ void sUpdateStudentStatus::MergeFrom(const ::google::protobuf::Message& from) {
 void sUpdateStudentStatus::MergeFrom(const sUpdateStudentStatus& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_id()) {
-      set_id(from.id());
+    if (from.has_student_id()) {
+      set_student_id(from.student_id());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -7069,7 +7126,7 @@ bool sUpdateStudentStatus::IsInitialized() const {
 
 void sUpdateStudentStatus::Swap(sUpdateStudentStatus* other) {
   if (other != this) {
-    std::swap(id_, other->id_);
+    std::swap(student_id_, other->student_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
