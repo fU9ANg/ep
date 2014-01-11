@@ -12,6 +12,7 @@
 #include <errno.h>
 #include <iostream>
 #include <string>
+#include <map>
 
 #include "../protocol.h"
 #include "../Sock.h"
@@ -28,6 +29,35 @@
     MSG_HEAD_LEN + sizeof (int) + sizeof (type)
 
 using namespace std;
+
+struct numberProto
+{
+    int number;
+    string protocol;
+};
+
+struct numberProto NPARRAY [] =
+{   
+    {0, "Exit/Quit" },
+    {1, "CT_Login" },
+    {2, "CT_Logout" },
+    {3, "CT_GetFuncList" },
+    {4, "CT_SetFunc" },
+    {5, "CT_GetGradeList" },
+    {6, "CT_GetCourseList" },
+    {7, "CT_GetClassList" },
+    {8, "CT_GetClassRoomList" },
+    {9, "CT_SetContent" },
+    {10,"CT_GetStudentList" },
+    {11,"CT_GetStudentInfo" },
+    {12,"CT_GetTeacherInfo" },
+    {13,"CT_GetActiveStudentList" },
+};
+
+#define ARRAY_SIZE  (sizeof(NPARRAY)/sizeof(NPARRAY[0]))
+
+typedef map<int, string> PROTOCOL_MAP;
+typedef vector<string> PROTOCOL_VEC;
 
 int sfd;
 char buf[MAX_BUFF_SIZE];
@@ -615,10 +645,29 @@ void handlerGetActiveStudentList()
     dumpGetActiveStudentList ("ST_GetActiveStudentList", buffer);
 }
 
+void printArray (struct numberProto* array, size_t size)
+{
+    int loop = 0;
+    int idx  = 0;
+    cout << "==============================================\n";
+    for (; idx < size; idx++) {
+        string strProtocol = array[idx].protocol + " ]";
+        printf ("[%2d -> %-35s", idx, strProtocol.c_str());
+        if (++loop == 3) {
+            cout << endl;
+            loop = 0;
+        }
+    }
+    cout << "\n==============================================\n";
+
+
+}
+
 int main (int argc, char** argv)
 {
-    string strMessageType;
+    int strMessageId;
 
+#if 1
     if ((sfd = socket (AF_INET, SOCK_STREAM, 0)) < 0) {
         perror ("socket: ");
         return (-1);
@@ -633,72 +682,57 @@ int main (int argc, char** argv)
         return (-1);
     }
 
-#if 1
-    handlerLogin();
-    handlerGetFuncList();
-    handlerSetFunc();
-    handlerGetGradeList();
-    handlerGetCourseList();
-    handlerGetClassList();
-    handlerGetClassRoomList();
-    //handlerSetContent();
-#else
-    handlerLogin();
-    handlerGetFuncList();
-    handlerSetFunc();
-#endif 
-    while (1) {
-        cout << "input message type: ";
-        cin >> strMessageType;
+#endif
 
-        if (strMessageType == "CT_Login") {
+    printArray (NPARRAY, ARRAY_SIZE);
+
+    while (1) {
+        cout << "Input Message Id: ";
+        cin >> strMessageId;
+
+        if (strMessageId < 0 || strMessageId >= ARRAY_SIZE)
+            continue;
+
+        if (NPARRAY[strMessageId].protocol == "CT_Login") {
             handlerLogin();
         }
-        else if (strMessageType == "CT_Logout") {
+        else if (NPARRAY[strMessageId].protocol == "CT_Logout") {
             handlerLogout();
         }
-        else if (strMessageType == "CT_GetFuncList") {
+        else if (NPARRAY[strMessageId].protocol == "CT_GetFuncList") {
             handlerGetFuncList();
         }
-        else if (strMessageType == "CT_SetFunc") {
+        else if (NPARRAY[strMessageId].protocol == "CT_SetFunc") {
             handlerSetFunc();
         }
-        else if (strMessageType == "CT_GetGradeList") {
+        else if (NPARRAY[strMessageId].protocol == "CT_GetGradeList") {
             handlerGetGradeList();
         }
-        else if (strMessageType == "CT_GetCourseList") {
+        else if (NPARRAY[strMessageId].protocol == "CT_GetCourseList") {
             handlerGetCourseList();
         }
-        else if (strMessageType == "CT_GetClassList") {
+        else if (NPARRAY[strMessageId].protocol == "CT_GetClassList") {
             handlerGetClassList();
         }
-        else if (strMessageType == "CT_GetClassRoomList") {
+        else if (NPARRAY[strMessageId].protocol == "CT_GetClassRoomList") {
             handlerGetClassRoomList();
         }
-        else if (strMessageType == "CT_SetContent") {
+        else if (NPARRAY[strMessageId].protocol == "CT_SetContent") {
             handlerSetContent();
         }
-        else if (strMessageType == "CT_GetStudentList") {
+        else if (NPARRAY[strMessageId].protocol == "CT_GetStudentList") {
             handlerGetStudentList();
         }
-        else if (strMessageType == "CT_GetStudentInfo") {
+        else if (NPARRAY[strMessageId].protocol == "CT_GetStudentInfo") {
             handlerGetStudentInfo();
         }
-        else if (strMessageType == "CT_GetTeacherInfo") {
+        else if (NPARRAY[strMessageId].protocol == "CT_GetTeacherInfo") {
             handlerGetTeacherInfo();
         }
-        else if (strMessageType == "ST_GetActiveStudentList") {
+        else if (NPARRAY[strMessageId].protocol == "CT_GetActiveStudentList") {
             handlerGetActiveStudentList();
         }
-
-        else if ((strMessageType == "Exit") ||
-                 (strMessageType == "EXIT") ||
-                 (strMessageType == "exit") ||
-                 (strMessageType == "Quit") ||
-                 (strMessageType == "QUIT") ||
-                 (strMessageType == "quit") ||
-                 (strMessageType == "q"   ) ||
-                 (strMessageType == "Q")) {
+        else if (NPARRAY[strMessageId].protocol == "Exit/Quit") {
             cout << "Bye." << endl;
             break;
         }
