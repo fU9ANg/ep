@@ -41,13 +41,13 @@ public :
          *
          * @return 成功返回学生对象指针，否则返回NULL。
          */
-        epStudent* getStudentById(const int);
+        const epStudent* getStudentById(const int);
         /**
          * @brief 获取在线学生列表。
          *
          * @return 在线学生列表。
          */
-        std::vector<int> getActiveStudent(void);
+        const std::vector<int> getActiveStudent(void);
         /**  @} */
 
         /**
@@ -100,10 +100,11 @@ public :
          * @brief 将指定消息内容发送给该班所有学生。
          *
          * @param Buf[in] 指定消息内容。
+         * @param bool[in] true表示要发送给自己，false表示不发送给自己。
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoAllStudent(Buf*);
+        bool sendtoAllStudent(Buf*, const bool toSelf=false);
         /**
          * @brief 将指定消息发送给指定FD的学生。
          *

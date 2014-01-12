@@ -30,7 +30,7 @@ void CHandleMessage::handleSetFunc (Buf* p) {
         unpacket(p, setFunc);
 
         sSetFunc tmp;
-        epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
+        epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFd(p->getfd()));
         tmp.set_result((NULL==pUser) ? false : pUser->setFuncType((enum FuncType)setFunc.func_type()));
         SINGLE->sendqueue.enqueue(packet(ST_SetFunc, tmp, p->getfd()));
 

@@ -17,17 +17,11 @@ void CHandleMessage::handleGetStudentInfo (Buf* p)
 #endif
         // TODO:
 
-        epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
-        if (NULL == pUser) {
-                SINGLE->bufpool.free(p);
-                return;
-        }
-
         cGetStudentInfo gsi;
         unpacket(p, gsi);
 
         sGetStudentInfo tmp;
-        epStudent* pStudent = EPMANAGER->getStudentById(gsi.id());
+        const epStudent* pStudent = EPMANAGER->getStudentById(gsi.id());
         if (NULL == pStudent) { // 没有该学生。到数据库中进行查找。
                 string strpwd;
                 string Account;

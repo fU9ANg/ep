@@ -27,9 +27,17 @@ void CHandleMessage::handleSetContent (Buf* p)
 #ifdef __DEBUG_HANDLE_HEAD_
         cout << "CT_SetContent\n";
 #endif
-        // TODO:
 
-        CHECK_USER(epTeacher, pTeacher);
+        const epUser* user = EPMANAGER->getUserByFd(p->getfd());
+        if (NULL == user) {
+                SINGLE->bufpool.free(p);
+                return;
+        }
+        const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(user);
+        if (NULL == pTeacher) {
+                SINGLE->bufpool.free(p);
+                return;
+        }
 
         cSetContent sc;
         unpacket(p, sc);
@@ -55,7 +63,7 @@ void CHandleMessage::handleSetContent (Buf* p)
         pClassroom = new epClassroom(sc.classroom_id());
         pClass     = new epClass(sc.class_id());
 
-        pClassroom->setTeacher(*pTeacher);
+        pClassroom->setTeacher(pTeacher);
         pClassroom->insertClass(*pClass);
 
         EPMANAGER->insertClassroom(*pClassroom);

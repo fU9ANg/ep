@@ -22,13 +22,13 @@ void CHandleMessage::handleGetClassRoomList (Buf* p)
 #ifdef __DEBUG_HANDLE_HEAD_
         cout << "CT_GetClassRoomList\n";
 #endif
-        epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
+        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
         if (NULL == pUser) {
                 SINGLE->bufpool.free(p);
                 return;
         }
 
-        epTeacher* pTeacher = dynamic_cast<epTeacher*>(pUser);
+        const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);
         if (NULL == pTeacher) {
                 SINGLE->bufpool.free(p);
                 return;

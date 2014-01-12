@@ -94,19 +94,19 @@ public :
          *
          * @return 相应相应客户端类型。
          */
-        virtual enum LoginType getType(void) const;
+        virtual const enum LoginType getType(void) const;
         /**
          * @brief 获取该客户端ID。
          *
          * @return 客户端ID。
          */
-        virtual int getId(void) const;
+        virtual const int getId(void) const;
         /**
          * @brief 获取该客户端FD。
          *
          * @return 客户端FD。
          */
-        int getFd(void) const;
+        const int getFd(void) const;
         /**
          * @brief 获取该客户所选择的功能。
          *

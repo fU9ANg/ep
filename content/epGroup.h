@@ -61,7 +61,7 @@ public :
          *
          * @return 成功返回组ID，否则返回EPGROUP_INVALID_GROUP_ID。
          */
-        int getId(void) const;
+        const int getId(void) const;
         /**  @} */
 
         /**

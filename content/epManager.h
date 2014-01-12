@@ -11,7 +11,7 @@
 
 #include <map>
 
-#include "Uncopyable.h"
+#include "../Uncopyable.h"
 #include "epClassroom.h"
 #include "epUser.h"
 
@@ -98,7 +98,7 @@ public :
          *
          * @return 成功返回指向相应对象的指针，失败返回NULL。
          */
-        epUser* getUserByAccount(const std::string&);
+        const epUser* getUserByAccount(const std::string&);
         /**
          * @brief 获取指定FD的对象指针。
          *
@@ -106,7 +106,7 @@ public :
          *
          * @return 成功返回指向相应对象的指针，失败返回NULL。
          */
-        epUser* getUserByFd(const int);
+        const epUser* getUserByFd(const int);
         /**
          * @brief 根据学生ID获取学生对象指针。
          *
@@ -114,7 +114,7 @@ public :
          *
          * @return 成功返回学生对象指针，否则返回NULL。
          */
-        epStudent* getStudentById(const int);
+        const epStudent* getStudentById(const int);
         /**
          * @brief 根据学生ID获取学生对象指针。
          *
@@ -122,7 +122,7 @@ public :
          *
          * @return 成功返回学生对象指针，否则返回NULL。
          */
-        epStudent* getStudentByIdFromUser(const int);
+        const epStudent* getStudentByIdFromUser(const int);
         /**
          * @brief 根据学生ID获取学生对象指针。
          *
@@ -130,7 +130,7 @@ public :
          *
          * @return 成功返回学生对象指针，否则返回NULL。
          */
-        epStudent* getStudentByIdFromClassroom(const int);
+        const epStudent* getStudentByIdFromClassroom(const int);
         /**
          * @brief 根据客户FD获取教师对象指针。
          *
@@ -138,7 +138,7 @@ public :
          *
          * @return 成功返回教师对象指针，否则返回NULL。
          */
-        epTeacher* getTeacherByFd(const int);
+        const epTeacher* getTeacherByFd(const int);
         /**
          * @brief 根据教师ID获取教师对象指针。
          *
@@ -146,7 +146,7 @@ public :
          *
          * @return 成功返回教师对象指针，否则返回NULL。
          */
-        epTeacher* getTeacherById(const int);
+        const epTeacher* getTeacherById(const int);
         /**
          * @brief 根据教师ID获取教师对象指针。
          *
@@ -154,7 +154,7 @@ public :
          *
          * @return 成功返回教师对象指针，否则返回NULL。
          */
-        epTeacher* getTeacherByIdFromUser(const int);
+        const epTeacher* getTeacherByIdFromUser(const int);
         /**
          * @brief 根据教师ID获取教师对象指针。
          *
@@ -162,7 +162,7 @@ public :
          *
          * @return 成功返回教师对象指针，否则返回NULL。
          */
-        epTeacher* getTeacherByIdFromClassroom(const int);
+        const epTeacher* getTeacherByIdFromClassroom(const int);
         /**
          * @brief 根据指定班级ID获取该班级在线学生列表。
          *
@@ -197,22 +197,23 @@ public :
          */
         bool sendtoAllClassroom(Buf*);
         /**
-         * @brief 将指定消息内容发送给指定班级。
+         * @brief 将指定消息内容发送给指定教室。
          *
-         * @param int[in] 指定班级ID。
+         * @param int[in] 指定教室ID。
          * @param Buf[in] 指定消息内容。
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoClassroom(const int, Buf*);
+        bool sendtoClassroomById(const int, Buf*);
         /**
          * @brief 将指定消息内容发送给所有游离用户。
          *
          * @param Buf[in] 指定消息。
+         * @param bool[in] true将发送给自己，false不发送给自己。
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoAllUser(Buf*);
+        bool sendtoAllUser(Buf*, const bool);
         /**
          * @brief 将指定消息内容发送给指定游离用户。
          *
@@ -221,7 +222,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoUser(const int, Buf*);
+        bool sendtoUserByFd(const int, Buf*);
 
         /**
          * @name Just for debug

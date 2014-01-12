@@ -20,7 +20,7 @@ void CHandleMessage::handleGetTeacherInfo (Buf* p)
         unpacket(p, gti);
 
         sGetTeacherInfo tmp;
-        epTeacher* pTeacher = EPMANAGER->getTeacherById(gti.id());
+        const epTeacher* pTeacher = EPMANAGER->getTeacherById(gti.id());
         if (NULL == pTeacher) { // 没有找到教师信息。到数据库中进行查找。
                 string strpwd;
                 string Account;
@@ -30,7 +30,7 @@ void CHandleMessage::handleGetTeacherInfo (Buf* p)
                         pstmt->setInt (1, gti.id());
                         ResultSet* prst = pstmt->executeQuery ();
                         while (prst->next ()) {
-                                tmp.set_id         (prst->getInt("id"));
+                                tmp.set_id         (prst->getInt   ("id"));
                                 tmp.set_number     (prst->getString("number"));
                                 tmp.set_name       (prst->getString("name"));
                                 tmp.set_sex        (prst->getString("sex"));

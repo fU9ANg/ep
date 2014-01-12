@@ -59,7 +59,7 @@ epTeacher::getSchoolId(void) const {
         return schoolId_;
 }
 
-enum LoginType
+const enum LoginType
 epTeacher::getType(void) const {
         return LT_TEACHER;
 }

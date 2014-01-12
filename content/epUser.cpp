@@ -60,18 +60,18 @@ epUser::getPasswd(void) const {
         return passwd_;
 }
 
-enum LoginType
+const enum LoginType
 epUser::getType(void) const {
         printf("[DEBUG] epUser::getType : enter!\n");
         return LT_USER;
 }
 
-int
+const int
 epUser::getId(void) const {
         return id_;
 }
 
-int
+const int
 epUser::getFd(void) const {
         return fd_;
 }

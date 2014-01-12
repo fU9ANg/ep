@@ -43,25 +43,25 @@ public :
          *
          * @return 成功返回指向学生对象的指针，否则返回NULL。
          */
-        epStudent* getStudentById(const int);
+        const epStudent* getStudentById(const int);
         /**
-         * @brief 获取所属该教室的老师对象。
+         * @brief 获取所属该教室的老师对象指针。
          *
-         * @return 老师对象。
+         * @return 老师对象指针。
          */
-        epTeacher& getTeacher(void);
+        const epTeacher* getTeacher(void);
         /**
          * @brief 获取所属该教室的白板对象。
          *
          * @return 白板对象。
          */
-        const epWhiteBoard getWhiteBoard(void) const;
+        const epWhiteBoard* getWhiteBoard(void) const;
         /**
          * @brief 获取该教室上课所使用的课程列表。
          *
          * @return 课程列表。
          */
-        std::string getCourseList(void) const;
+        const std::string& getCourseList(void) const;
         /**  @} */
 
         /**
@@ -76,21 +76,21 @@ public :
          */
         bool setId(const int);
         /**
-         * @brief 指定老师。
+         * @brief 设定老师。
          *
-         * @param epTeacher[in] 老师对象。
+         * @param epTeacher[in] 老师对象指针。
          *
          * @return 成功返回true，否则返回false。
          */
-        bool setTeacher(const epTeacher&);
+        bool setTeacher(const epTeacher*);
         /**
          * @brief 指定白板。
          *
-         * @param epWhiteBoard[in] 白板对象。
+         * @param epWhiteBoard[in] 白板对象指针。
          *
          * @return 成功返回true，否则返回false。
          */
-        bool setWhiteBoard(const epWhiteBoard&);
+        bool setWhiteBoard(const epWhiteBoard*);
         /**
          * @brief 设置该教室上课的课程列表。
          *
@@ -188,11 +188,11 @@ private :
         /**
          * @brief 教师。
          */
-        epTeacher teacher_;
+        epTeacher* teacher_;
         /**
          * @brief 白板。
          */
-        epWhiteBoard whiteboard_;
+        epWhiteBoard* whiteboard_;
         /**
          * @brief 该教室上课时的课程列表。
          */

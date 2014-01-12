@@ -82,7 +82,7 @@ epStudent::init(const std::string& account, const std::string& passwd) {
         return result;
 }
 
-std::string
+const std::string
 epStudent::getStudentNum(void) const {
         return studentNum_;
 }
@@ -92,23 +92,20 @@ epStudent::getClassName (void) const {
         return className_;
 }
 
-int
+const int
 epStudent::getClassId(void) const {
         return classId_;
 }
 
-enum LoginType
+const enum LoginType
 epStudent::getType(void) const {
         return LT_STUDENT;
 }
 
 void
 epStudent::dump(void) {
-        printf("for user :\n");
         epUser::dump();
-        printf("for person :\n");
         epPerson::dump();
-        printf("for student :\n");
         printf("student number = %s\n", studentNum_.c_str());
         printf("class id       = %d\n", classId_);
         printf("class name     = %s\n", className_.c_str());

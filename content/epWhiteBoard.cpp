@@ -37,7 +37,7 @@ epWhiteBoard::getWhiteboardNum(void) const {
 		return whiteboardNum_;
 }
 
-enum LoginType
+const enum LoginType
 epWhiteBoard::getType(void) const {
         return LT_WHITEBOARD;
 }

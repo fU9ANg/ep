@@ -24,13 +24,13 @@ void CHandleMessage::handleGetCourseList (Buf* p)
 #endif
         // TODO:
 
-        epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
+        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
         if (NULL == pUser) {
                 SINGLE->bufpool.free(p);
                 return;
         }
 
-        epTeacher* pTeacher = dynamic_cast<epTeacher*>(pUser);
+        const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);
         if (NULL == pTeacher) {
                 SINGLE->bufpool.free(p);
                 return;

@@ -23,9 +23,20 @@ void CHandleMessage::handleGetClassList (Buf* p)
 #ifdef __DEBUG_HANDLE_HEAD_
         cout << "CT_GetClassList\n";
 #endif
-        // TODO:
 
-        CHECK_USER(epTeacher, pTeacher);
+        // 必须是处于游离状态的用户才能作用该协议。
+        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
+        if (NULL == pUser) {
+                SINGLE->bufpool.free(p);
+                return;
+        }
+
+        // 必须是教室才能使用该协议。
+        const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);
+        if (NULL == pTeacher) {
+                SINGLE->bufpool.free(p);
+                return;
+        }
 
         cGetClassList gcrl;
         unpacket(p, gcrl);

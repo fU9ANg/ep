@@ -75,13 +75,13 @@ public :
          *
          * @return 成功返回该学生学号，否则返回EPSTUDENT_INVALID_STUDENT_NUM。
          */
-        virtual std::string getStudentNum(void) const;
+        const std::string getStudentNum(void) const;
         /**
          * @brief 获取所属班号。
          *
          * @return 成功返回所属班号，否则返回EPCLASS_INVALID_CLASS_ID。
          */
-        int getClassId(void) const;
+        const int getClassId(void) const;
         /**
          * @brief 获取所属班名称。
          *
@@ -93,7 +93,7 @@ public :
          *
          * @return 相应客户端类型。
          */
-        virtual enum LoginType getType(void) const;
+        virtual const enum LoginType getType(void) const;
         /**  @} */
 
         /**

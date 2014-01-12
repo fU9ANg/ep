@@ -14,13 +14,13 @@ epClass::getId(void) {
         return id_;
 }
 
-epStudent*
-epClass::getStudentById(const int id) {
+const epStudent*
+epClass::getStudentById(const int student_id) {
         EPSTUDENT_MAP::iterator it = studentMap_.begin();
         EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
 
         for (; cie!=it; ++it) {
-                if (id == (it->second).getId()) {
+                if (student_id == (it->second).getId()) {
                         return &(it->second);
                 }
         }
@@ -29,56 +29,44 @@ epClass::getStudentById(const int id) {
 }
 
 bool
-epClass::insertStudent(int fd, const epStudent& student) {
-        EPSTUDENT_MAP::iterator it = studentMap_.begin();
-        EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
-
-        for (; cie!=it; ++it) {
-                if (fd == it->first) {
-                        return false;
-                }
+epClass::insertStudent(const int fd, const epStudent& student) {
+        EPSTUDENT_MAP::iterator it = studentMap_.find(fd);
+        if (studentMap_.end() != it) { // found
+                return false;
+        } else {
+                studentMap_.insert(std::make_pair<int, epStudent>(fd, student));
+                return true;
         }
-
-        studentMap_.insert(std::make_pair<int, epStudent>(fd, student));
-        return true;
 }
 
 bool
 epClass::removeStudentByFd(const int fd) {
-        EPSTUDENT_MAP::iterator it = studentMap_.begin();
-        EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
-
-        for (; cie!=it; ++it) {
-                if (fd == it->first) {
-                        studentMap_.erase(it);
-                        return true;
-                }
+        EPSTUDENT_MAP::iterator it = studentMap_.find(fd);
+        if (studentMap_.end() != it) { // found
+                studentMap_.erase(it);
+                return true;
+        } else {
+                return false;
         }
-
-        return false;
 }
 
 const epStudent*
 epClass::getStudentByFd(const int fd) {
-        EPSTUDENT_MAP::iterator it = studentMap_.begin();
-        EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
-
-        for (; cie!=it; ++it) {
-                if (fd == it->first) {
-                        return &(it->second);
-                }
+        EPSTUDENT_MAP::iterator it = studentMap_.find(fd);
+        if (studentMap_.end() != it) { // found
+                return &(it->second);
+        } else {
+                return NULL;
         }
-
-        return NULL;
 }
 
 bool
-epClass::sendtoAllStudent(Buf* pBuf) {
+epClass::sendtoAllStudent(Buf* pBuf, const bool toSelf) {
         EPSTUDENT_MAP::iterator it = studentMap_.begin();
         EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
         Buf* p = NULL;
         for (; cie!=it; ++it) {
-                if (pBuf->getfd() == it->first) { // not send to self.
+                if (!toSelf && pBuf->getfd()==it->first) { // send to self?
                         continue;
                 }
                 p = SINGLE->bufpool.malloc();
@@ -93,24 +81,19 @@ epClass::sendtoAllStudent(Buf* pBuf) {
 
 bool
 epClass::sendtoStudentByFd(const int fd, Buf* pBuf) {
-        EPSTUDENT_MAP::iterator it = studentMap_.begin();
-        EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
-        for (; cie!=it; ++it) {
-                if (fd == it->first) {
-                        pBuf->setfd(it->first);
-                        SINGLE->sendqueue.enqueue(pBuf);
-                        return true;
-                }
+        EPSTUDENT_MAP::iterator it = studentMap_.find(fd);
+        if (studentMap_.end() != it) { // found
+                pBuf->setfd(it->first);
+                SINGLE->sendqueue.enqueue(pBuf);
+                return true;
+        } else {
+                return false;
         }
-
-        // SINGLE->bufpool.free(pBuf); // ??? TODO
-        return false;
 }
 
 void
 epClass::dump(void) {
         printf("class id = %d\n", id_);
-
         printf("for student : \n");
         EPSTUDENT_MAP::iterator it = studentMap_.begin();
         EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
@@ -119,7 +102,7 @@ epClass::dump(void) {
         }
 }
 
-std::vector<int>
+const std::vector<int>
 epClass::getActiveStudent(void) {
         EPSTUDENT_MAP::iterator it = studentMap_.begin();
         EPSTUDENT_MAP::const_iterator cie = studentMap_.end();

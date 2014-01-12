@@ -24,7 +24,7 @@ void CHandleMessage::handleGetFuncList (Buf* p) {
 #endif
         // TODO:
 
-        epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
+        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
         if (NULL == pUser) {
                 SINGLE->bufpool.free(p);
                 return;

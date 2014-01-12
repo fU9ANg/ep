@@ -33,7 +33,7 @@ void CHandleMessage::handleLogin (Buf* p) {
         printf("clogin.account = %s\n", clogin.account().c_str());
         printf("clogin.passwd  = %s\n", clogin.passwd().c_str());
 
-        epUser* pUser = EPMANAGER->getUserByAccount(clogin.account());
+        epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByAccount(clogin.account()));
         if ((NULL==pUser) ? true : pUser->getType()!=clogin.type()) {
                 switch (clogin.type()) {
                 case LT_STUDENT :

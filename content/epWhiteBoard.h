@@ -72,7 +72,7 @@ public :
          *
          * @return 客户端类型。
          */
-        virtual enum LoginType getType(void) const;
+        virtual const enum LoginType getType(void) const;
         /**
          * @brief 获取白板所属教室名称。
          *
