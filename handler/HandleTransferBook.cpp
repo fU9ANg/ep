@@ -12,30 +12,52 @@
 #include "../content/epManager.h"
 #include "../netdef.h"
 
-void CHandleMessage::handleGetClassList (Buf* p)
+void CHandleMessage::handleTransferBook(Buf* p)
 {
-        /**
-         * @brief 教师根据所选择的年级ID，请求该年级所对象的班级列表。
-         *        1. 检查该用户类型是否为教师。
-         *        2. 根据教师所选择的年级ID，查找数据库，返回该年级所对应的班级列表。
-         */
-
 #ifdef __DEBUG_HANDLE_HEAD_
-        cout << "CT_GetClassList\n";
+        cout << "CT_TransferBook\n";
 #endif
 
-        // 必须是处于游离状态的用户才能作用该协议。
-        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
-        if (NULL == pUser) {
+        cTransferBook ctb;
+        if (!unpacket(p, ctb)) {
+                printf("[DEBUG] CHandleMessage::handleTransferBook : unpacket fail!\n");
                 SINGLE->bufpool.free(p);
                 return;
         }
 
-        // 必须是教师才能使用该协议。
-        const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);
-        if (NULL == pTeacher) {
+        // 必须是处于游离状态的用户才能作用该协议。
+        const epUser* fromUser = EPMANAGER->getUserByFd(p->getfd());
+        if (NULL == fromUser) {
+                printf("[DEBUG] CHandleMessage::handleTransferBook : NULL == fromUser\n");
                 SINGLE->bufpool.free(p);
                 return;
+        }
+
+#if 0
+        // from Teacher and Student
+        std::string first_name;
+        try {
+                MutexLockGuard guard(DATABASE->m_mutex);
+                PreparedStatement* pstmt = DATABASE->preStatement (XXX);
+                pstmt->setInt (1, ctb.account());
+                ResultSet* prst = pstmt->executeQuery ();
+                while (prst->next ()) {
+                        first_name = prst->getString("first_name");
+                }
+                delete prst;
+                delete pstmt;
+        }catch (SQLException e) {
+                printf("[DEBUG] CHandleMessage::handleGetClassList : SQLException = %s\n", e.what());
+                SINGLE->bufpool.free(p);
+                return;
+        }
+
+        bool result = false;
+        std::string msg;
+        if (0 == first_name.size()) {
+                result = false;
+                msg = ctb.account + "用户不存在。";
+        } else {
         }
 
         cGetClassList gcrl;
@@ -73,4 +95,5 @@ void CHandleMessage::handleGetClassList (Buf* p)
                 SINGLE->sendqueue.enqueue(pBuf);
         }
         SINGLE->bufpool.free(p);
+#endif
 }

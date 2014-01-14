@@ -11,31 +11,27 @@
 
 #include <map>
 
+#include "epBase.h"
+
 #include "epClass.h"
 #include "epTeacher.h"
 #include "epWhiteBoard.h"
 #include "epGroup.h"
 
-typedef std::map<int, epGroup> EPGROUP_MAP;
-typedef std::map<int, epClass> EPCLASS_MAP;
+typedef std::map<int, epGroup*> EPGROUP_MAP;
+typedef std::map<int, epClass*> EPCLASS_MAP;
 
 /**
  * @brief 教室类。
  */
-class epClassroom {
+class epClassroom : public epBase {
 public :
-        epClassroom(const int);
+        epClassroom(void);
         ~epClassroom(void);
 
         /**
          * @name get
          * @{ */
-        /**
-         * @brief 获取教室ID。
-         *
-         * @return 教室ID。
-         */
-        const int getId(void) const;
         /**
          * @brief 根据学生ID获取学生对象指针。
          *
@@ -44,6 +40,22 @@ public :
          * @return 成功返回指向学生对象的指针，否则返回NULL。
          */
         const epStudent* getStudentById(const int);
+        /**
+         * @brief 根据学生FD获取学生对象指针。
+         *
+         * @param int[in] 指定FD。
+         *
+         * @return 成功返回指向学生对象的指针，否则返回NULL。
+         */
+        const epStudent* getStudentByFd(const int);
+        /**
+         * @brief 根据指定FD删除用户（包括教师和白板）。
+         *
+         * @param int[in] 指定FD。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool deleteUserByFd(const int);
         /**
          * @brief 获取所属该教室的老师对象指针。
          *
@@ -57,6 +69,14 @@ public :
          */
         const epWhiteBoard* getWhiteBoard(void) const;
         /**
+         * @brief 根据客户端FD获取该用户对象指针。
+         *
+         * @param int[in] 指定用户FD。
+         *
+         * @return 查找成功返回对象指针，否则返回NULL。
+         */
+        const epUser* getUserByFd(const int);
+        /**
          * @brief 获取该教室上课所使用的课程列表。
          *
          * @return 课程列表。
@@ -67,14 +87,6 @@ public :
         /**
          * @name set
          * @{ */
-        /**
-         * @brief 设置教室ID。
-         *
-         * @param int[in] 教室ID。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        bool setId(const int);
         /**
          * @brief 设定老师。
          *
@@ -101,17 +113,27 @@ public :
         bool setCourseList(const std::string&);
         /**  @} */
 
-        bool insertClass(epClass&);
+        bool insertClass(epClass*);
         bool removeClassById(const int);
         epClass* getClassById(const int);
         std::vector<epClass*> getClassList(void);
-        bool insertGroup(const epGroup&);
+        bool insertGroup(epGroup*);
         bool removeGroupById(const int);
+        bool deleteGroupById(const int);
+        bool deleteAllGroup(void);
         epGroup* getGroupById(const int);
 
         /**
          * @name sendto
          * @{ */
+        /**
+         * @brief 将指定消息发送给该教室内的所有客户端。
+         *
+         * @param Buf[in] 指定消息。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool sendtoAllStudent(Buf*, const bool toSelf=false);
         /**
          * @brief 将指定消息内容发送给所有在该教室上课的班。
          *
@@ -164,7 +186,6 @@ public :
         bool sendtoWhiteBoard(Buf*);
         /**  @} */
 
-
         /**
          * @name Just for debug
          * @{ */
@@ -173,10 +194,6 @@ public :
 
 
 private :
-        /**
-         * @brief 教室ID。
-         */
-        int id_;
         /**
          * @brief 班列表。
          */

@@ -37,7 +37,13 @@ void CHandleMessage::handleGetCourseList (Buf* p)
         }
 
         cGetCourseList gcl;
-        unpacket(p, gcl);
+        if (!unpacket(p, gcl)) { // 解包失败。
+#ifdef __DEBUG__
+                printf("[DEBUG] %s : unpacket fail!\n", __func__);
+#endif
+                SINGLE->bufpool.free(p);
+                return;
+        }
         int grade_id = gcl.grade_id();
 
         sGetCourseList tmp;

@@ -28,13 +28,33 @@ void CHandleMessage::handleLogin (Buf* p) {
          */
         bool result = false;
         cLogin clogin;
-        unpacket(p, clogin);
+        if (!unpacket(p, clogin)) { // 解包失败。
+#ifdef __DEBUG__
+                printf("[DEBUG] %s : unpacket fail!\n", __func__);
+#endif
+                SINGLE->bufpool.free(p);
+                return;
+        }
+#ifdef __DEBUG__
         printf("clogin.type    = %d\n", clogin.type());
         printf("clogin.account = %s\n", clogin.account().c_str());
         printf("clogin.passwd  = %s\n", clogin.passwd().c_str());
+#endif
 
+        /*
         epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByAccount(clogin.account()));
-        if ((NULL==pUser) ? true : pUser->getType()!=clogin.type()) {
+        if (NULL == pUser) { // 该客户不处于游离状态。
+                pUser = getUserByFdFromClassroom(clogin.account());
+        }
+        // if ((NULL==pUser) ? true : pUser->getType()!=clogin.type()) {
+        */
+
+        epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFd(p->getfd()));
+        if (NULL == pUser) { // 该客户不处于游离状态。
+                pUser = const_cast<epUser*>(EPMANAGER->getUserByFdFromClassroom(p->getfd()));
+        }
+
+        if (NULL == pUser) {
                 switch (clogin.type()) {
                 case LT_STUDENT :
                         pUser = new epStudent();
@@ -55,14 +75,16 @@ void CHandleMessage::handleLogin (Buf* p) {
                         break;
                 }
 
-                result = pUser->init(clogin.account(), clogin.passwd());
-                if (!result) {
-                        printf("[INFO] handleLogin : epUser init fault!\n");
-                        delete pUser;
-                        pUser = NULL;
-                } else {
-                        EPMANAGER->insertUser(p->getfd(), pUser);
-                        pUser->setFd(p->getfd());
+                if (NULL != pUser) { // 登录类型是否超出规定范围。
+                        result = pUser->init(clogin.account(), clogin.passwd());
+                        if (!result) {
+                                printf("[INFO] handleLogin : epUser init fault!\n");
+                                delete pUser;
+                                pUser = NULL;
+                        } else {
+                                EPMANAGER->insertUser(p->getfd(), pUser);
+                                pUser->setFd(p->getfd());
+                        }
                 }
         } else {
                 result = false;
@@ -74,6 +96,7 @@ void CHandleMessage::handleLogin (Buf* p) {
         sLogin slogin;
         slogin.set_result(result);
 
+        printf("[DEBUG] CHandleMessage::handleLogin : slogin.result = %d\n", slogin.result());
         SINGLE->sendqueue.enqueue(packet(ST_Login, slogin, p->getfd()));
         SINGLE->bufpool.free(p);
 }

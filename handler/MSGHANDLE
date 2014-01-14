@@ -1,22 +1,33 @@
-    MSGNAME (CT_Test, handleTest);
-    MSGNAME(CT_Heart,handleHeart);
-    MSGNAME(CT_Auth,handleAuth);
+MSGNAME (CT_Test, handleTest);
+MSGNAME(CT_Heart, handleHeart);
+MSGNAME(CT_Auth, handleAuth);
 
-    // 登录
-    MSGNAME(CT_Login, handleLogin);
-    MSGNAME(CT_Logout, handleLogout);
-    MSGNAME(CT_GetFuncList, handleGetFuncList);
-    MSGNAME(CT_SetFunc, handleSetFunc);
-    MSGNAME(CT_GetGradeList, handleGetGradeList);
-    MSGNAME(CT_GetCourseList, handleGetCourseList);
-    MSGNAME(CT_GetClassList, handleGetClassList);
-    MSGNAME(CT_GetClassRoomList, handleGetClassRoomList);
-    MSGNAME(CT_SetContent,handleSetContent);
-    MSGNAME(CT_GetActiveStudentList, handleGetActiveStudentList);
-    MSGNAME(CT_GetContent, handleGetContent);
+// 登录
+MSGNAME(CT_Login, handleLogin);
+MSGNAME(CT_Logout, handleLogout);
+MSGNAME(CT_GetFuncList, handleGetFuncList);
+MSGNAME(CT_SetFunc, handleSetFunc);
+MSGNAME(CT_GetGradeList, handleGetGradeList);
+MSGNAME(CT_GetCourseList, handleGetCourseList);
+MSGNAME(CT_GetClassList, handleGetClassList);
+MSGNAME(CT_GetClassRoomList, handleGetClassRoomList);
+MSGNAME(CT_SetContent, handleSetContent);
+MSGNAME(CT_GetActiveStudentList, handleGetActiveStudentList);
+MSGNAME(CT_GetContent, handleGetContent);
 
 // 上课。
-    MSGNAME(CT_StartClass, handleStartClass);
-    MSGNAME(CT_GetStudentList, handleGetStudentList);
-    MSGNAME(CT_GetStudentInfo, handleGetStudentInfo);
-    MSGNAME(CT_GetTeacherInfo, handleGetTeacherInfo);
+MSGNAME(CT_StartClass, handleStartClass);
+MSGNAME(CT_GetStudentList, handleGetStudentList);
+MSGNAME(CT_GetStudentInfo, handleGetStudentInfo);
+MSGNAME(CT_GetTeacherInfo, handleGetTeacherInfo);
+MSGNAME(CT_SetGroup, handleSetGroup);
+
+// 绘本
+MSGNAME(CT_GetPersonalBooksList,        handleGetPersonalBooksList);
+MSGNAME(CT_GetPublicBooksList,          handleGetPublicBooksList);
+MSGNAME(CT_GetServerAddr,               handleGetServerAddr);
+MSGNAME(CT_UploadBook,                  handleUploadBook);
+MSGNAME(CT_DownloadFromPersonal,        handleDownloadFromPersonal);
+MSGNAME(CT_DownloadFromPublic,          handleDownloadFromPublic);
+MSGNAME(CT_TransferBook,                handleTransferBook);
+MSGNAME(CT_Publish,                     handlePublish);

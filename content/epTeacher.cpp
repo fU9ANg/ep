@@ -64,14 +64,18 @@ epTeacher::getType(void) const {
         return LT_TEACHER;
 }
 
+const std::string
+epTeacher::getNum(void) {
+        return teacherNum_;
+}
+
 void
 epTeacher::dump(void) {
-        printf("for user :\n");
         epUser::dump();
-        printf("for person :\n");
         epPerson::dump();
         printf("teacher number  = %s\n", teacherNum_.c_str());
         printf("school name     = %s\n", schoolName_.c_str());
+        printf("school id       = %d\n", schoolId_);
 }
 
 bool
@@ -96,6 +100,7 @@ epTeacher::init(const std::string& account, const std::string& passwd) {
                                 //setBirthday (prst->getString ("birthday"));
                                 setNative (prst->getString ("native_name"));
 
+                                setId         (prst->getInt    ("teacher_id"));
                                 setTeacherNum (prst->getString ("teacher_id"));
                                 setSchoolId (prst->getInt ("school_id"));
                                 setSchoolName (prst->getString ("school_name"));

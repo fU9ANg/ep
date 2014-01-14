@@ -17,8 +17,26 @@ void CHandleMessage::handleGetActiveStudentList (Buf* p)
         // TODO:
 
         cGetActiveStudentList casl;
-        unpacket(p, casl);
+        if (!unpacket(p, casl)) { // 解包失败。
+#ifdef __DEBUG__
+                printf("[DEBUG] %s : unpacket fail!\n", __func__);
+#endif
+                SINGLE->bufpool.free(p);
+                return;
+        }
 
         std::vector<int> vi = EPMANAGER->getActiveStudentListFromClass(casl.class_id());
-        SINGLE->sendqueue.enqueue(packet(ST_GetActiveStudentList, vi, p->getfd()));
+        std::vector<sGetActiveStudentList> vg;
+        for (int i=0; i<(signed)vi.size(); ++i) {
+                sGetActiveStudentList tmp;
+                tmp.set_id(vi[i]);
+                vg.push_back(tmp);
+        }
+
+        Buf* pBuf = packet(ST_GetActiveStudentList, vg, p->getfd());
+
+        if (NULL != pBuf) {
+                SINGLE->sendqueue.enqueue(pBuf);
+        }
+        SINGLE->bufpool.free(p);
 }

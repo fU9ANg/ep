@@ -15,7 +15,7 @@
 #include "epClassroom.h"
 #include "epUser.h"
 
-typedef std::map<int, epClassroom> EPCLASSROOM_MAP;
+typedef std::map<int, epClassroom*> EPCLASSROOM_MAP;
 typedef std::map<int, epUser*> EPUSER_MAP;
 
 /**
@@ -32,7 +32,15 @@ public :
          *
          * @return 插入成功返回true，否则返回false。
          */
-        bool insertClassroom(epClassroom&);
+        bool insertClassroom(epClassroom*);
+        /**
+         * @brief 从教室列表中删除教室对象。
+         *
+         * @param int[in] 指定教室ID。
+         *
+         * @return 成功返回true，否则返回false。
+         */
+        bool deleteClassroomById(int);
         /**
          * @brief 移除指定ID的教室，并不删除教室类。
          *
@@ -107,6 +115,14 @@ public :
          * @return 成功返回指向相应对象的指针，失败返回NULL。
          */
         const epUser* getUserByFd(const int);
+        /**
+         * @brief 在电子教室里查找指定FD的用户。
+         *
+         * @param int[in] 指定FD。
+         *
+         * @return 成功返回指向相应对象的指针，失败返回NULL。
+         */
+        const epUser* getUserByFdFromClassroom(const int);
         /**
          * @brief 根据学生ID获取学生对象指针。
          *

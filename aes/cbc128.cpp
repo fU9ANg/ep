@@ -8,6 +8,7 @@
 #endif
 #include <assert.h>
 
+
 #define STRICT_ALIGNMENT 1
 #if defined(__i386) || defined(__i386__) || \
     defined(__x86_64) || defined(__x86_64__) || \

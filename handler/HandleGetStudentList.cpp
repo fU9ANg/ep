@@ -15,7 +15,13 @@ void CHandleMessage::handleGetStudentList (Buf* p)
         // TODO:
 
         cGetStudentList gfl;
-        unpacket(p, gfl);
+        if (!unpacket(p, gfl)) { // 解包失败。
+#ifdef __DEBUG__
+                printf("[DEBUG] %s : unpacket fail!\n", __func__);
+#endif
+                SINGLE->bufpool.free(p);
+                return;
+        }
 
         sGetStudentList tmp;
         std::vector<sGetStudentList> vc;
@@ -23,6 +29,7 @@ void CHandleMessage::handleGetStudentList (Buf* p)
                 MutexLockGuard guard(DATABASE->m_mutex);
                 PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_STU_LIST_BY_CLASSID);
                 pstmt->setInt (1, gfl.class_id());
+                printf("[DEBUG] %s : class id = %d\n", __func__, gfl.class_id());
                 ResultSet* prst = pstmt->executeQuery ();
                 while (prst->next ()) {
 #if 0
@@ -42,6 +49,9 @@ void CHandleMessage::handleGetStudentList (Buf* p)
         }catch (SQLException e) {
         }
 
-        SINGLE->sendqueue.enqueue(packet(ST_GetStudentList, vc, p->getfd()));
+        Buf* pBuf = packet(ST_GetStudentList, vc, p->getfd());
+        if (NULL != pBuf) {
+                SINGLE->sendqueue.enqueue(pBuf);
+        }
         SINGLE->bufpool.free(p);
 }

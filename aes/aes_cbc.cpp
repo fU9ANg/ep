@@ -8,12 +8,13 @@
 #include "aes.h"
 #include "modes.h"
 
-void AES_cbc_encrypt(const unsigned char *in, unsigned char *out,
+void AES_cbc_encrypt128(const unsigned char *in, unsigned char *out,
 		     size_t len, const AES_KEY *key,
 		     unsigned char *ivec, const int enc) {
 
 	if (enc)
-		CRYPTO_cbc128_encrypt(in,out,len,key,ivec,(block128_f)AES_encrypt);
+		CRYPTO_cbc128_encrypt(in,out,len,key,ivec,(block128_f)AES_encrypt128);
 	else
-		CRYPTO_cbc128_decrypt(in,out,len,key,ivec,(block128_f)AES_decrypt);
+		CRYPTO_cbc128_decrypt(in,out,len,key,ivec,(block128_f)AES_decrypt128);
 }
+

@@ -19,6 +19,7 @@
  *    "This product includes software developed by the OpenSSL Project
  *    for use in the OpenSSL Toolkit. (http://www.openssl.org/)"
  *
+ *
  * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
  *    endorse or promote products derived from this software without
  *    prior written permission. For written permission, please contact
@@ -85,19 +86,17 @@ typedef struct aes_key_st AES_KEY;
 
 const char *AES_options(void);
 
-int AES_set_encrypt_key(const unsigned char *userKey, const int bits,
+int AES_set_encrypt_key128(const unsigned char *userKey, const int bits,
 	AES_KEY *key);
-int AES_set_decrypt_key(const unsigned char *userKey, const int bits,
+int AES_set_decrypt_key128(const unsigned char *userKey, const int bits,
 	AES_KEY *key);
 
-void AES_encrypt(const unsigned char *in, unsigned char *out,
+void AES_encrypt128(const unsigned char *in, unsigned char *out,
 	const AES_KEY *key);
-void AES_decrypt(const unsigned char *in, unsigned char *out,
+void AES_decrypt128(const unsigned char *in, unsigned char *out,
 	const AES_KEY *key);
 
-void AES_ecb_encrypt(const unsigned char *in, unsigned char *out,
-	const AES_KEY *key, const int enc);
-void AES_cbc_encrypt(const unsigned char *in, unsigned char *out,
+void AES_cbc_encrypt128(const unsigned char *in, unsigned char *out,
 	size_t length, const AES_KEY *key,
 	unsigned char *ivec, const int enc);
 

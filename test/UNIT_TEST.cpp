@@ -20,7 +20,7 @@
 #define SERV_IP "192.168.0.194"
 #define SERV_PORT 9999 
 
-#define MAX_BUFF_SIZE   1024
+#define MAX_BUFF_SIZE   8192
 #define BUFCLR(buf)    (void)memset(buf, 0x00, sizeof(buf))
 #define MEMCPYSTRTOBUF(buf) \
     (void) memcpy (buffer+MSG_HEAD_LEN+sizeof(int), g_tmp_str.c_str(), g_tmp_str.size())
@@ -52,6 +52,9 @@ struct numberProto NPARRAY [] =
     {11,"CT_GetStudentInfo" },
     {12,"CT_GetTeacherInfo" },
     {13,"CT_GetActiveStudentList" },
+    {14,"CT_UploadBook" },
+    {15,"CT_GetPersonalBooksList" },
+    {16,"Print_Message_List" },
 };
 
 #define ARRAY_SIZE  (sizeof(NPARRAY)/sizeof(NPARRAY[0]))
@@ -224,6 +227,22 @@ void dumpSetContent (string proto, char* buffer)
     dumpTail (buffer);
 }
 
+void dumpUploadBook (string proto, char* buffer)
+{
+    dumpHead (proto, buffer);
+    string strUploadBook;
+
+    sUploadBook sc;
+    strUploadBook = buffer + MSG_HEAD_LEN + sizeof(int);
+    sc.ParseFromString (strUploadBook);
+
+    //
+    cout << "upload.result =" << sc.result () << endl;
+    cout << "upload.message=" << sc.msg() << endl;
+ 
+    
+    dumpTail (buffer);
+}
 void dumpGetClassList (string proto, char* buffer)
 {
     dumpHead (proto, buffer);
@@ -246,7 +265,13 @@ void dumpGetStudentList (string proto, char* buffer)
 {
     dumpHead (proto, buffer);
     string strGetStudentList;
+#if 0
+    int count = 0;
+    if ((((MSG_HEAD*) buffer)->cLen) == 8) {
+    }dd
+#endif
     int count = *(int*) (buffer + MSG_HEAD_LEN);
+    printf ("count=%d\n", count);
     int i = 0;
 
     for (; i < count; i++) {
@@ -260,7 +285,6 @@ void dumpGetStudentList (string proto, char* buffer)
     }
     dumpTail (buffer);
 }
-
 void dumpGetActiveStudentList (string proto, char* buffer)
 {
 	 dumpHead (proto, buffer);
@@ -278,6 +302,26 @@ void dumpGetActiveStudentList (string proto, char* buffer)
 	 dumpTail (buffer);
 }
 
+void dumpGetPersonalBooksList (string proto, char* buffer)
+{
+    dumpHead (proto, buffer);
+    string strGetPersonalBooksList;
+
+	 int count = *(int*) (buffer + MSG_HEAD_LEN);
+	 int i = 0;
+	 	
+	 for(; i < count; i++) {
+		  sGetPersonalBooksList gasl;
+		  strGetPersonalBooksList = buffer + MSG_HEAD_LEN + sizeof (int) + i * sizeof (sGetPersonalBooksList);
+		  gasl.ParseFromString (strGetPersonalBooksList);
+		  //
+		  cout << "book (" << i << ") id=" << gasl.book_id() << endl;
+		  cout << "book (" << i << ") name=" << gasl.book_name() << endl;
+		  cout << "book (" << i << ") type=" << gasl.book_type() << endl;
+		  cout << "book (" << i << ") resPath=" << gasl.res_path() << endl;
+	 }
+     dumpTail (buffer);
+}
 void dumpGetStudentInfo (string proto, char* buffer)
 {
     dumpHead (proto, buffer);
@@ -291,7 +335,7 @@ void dumpGetStudentInfo (string proto, char* buffer)
     cout << "student name=" << gsi.name() << endl;
     cout << "student sex=" << gsi.sex() << endl;
     cout << "student race=" << gsi.race() << endl;
-    cout << "student birthday=" << gsi.birthday() << endl;
+    //cout << "student birthday=" << gsi.birthday() << endl;
     cout << "student native=" << gsi.native() << endl;
     cout << "student class_name=" << gsi.class_name() << endl;
 
@@ -333,12 +377,6 @@ void handlerLogin()
     cLogin login;
     cout << "ClientType:";
     cin >> client_type;
-#ifdef _STANDARD
-    login.set_type(client_type);
-    //login.set_account("学生12");
-    login.set_account("a");
-    login.set_passwd ("123456");
-#else
     cout << "Account:";
     cin >> client_account;
     cout << "Password:";
@@ -346,21 +384,33 @@ void handlerLogin()
     login.set_type(client_type);
     login.set_account(client_account);
     login.set_passwd (client_passwd);
-#endif
 
     g_tmp_str.clear();
     login.SerializeToString (&g_tmp_str);
     MEMCPYSTRTOBUF(buffer);
+
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
 
+#if 0
     // ST_Login
     recv_data (sfd, &buffer);
     dumpLogin ("ST_Login", buffer);
+#endif
 }
 
 void handlerLogout()
 {
+    ///// CT_Logout
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_Logout;
+    head->cLen = MSG_HEAD_LEN;
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+
+    exit (1);
 }
 
 void handlerGetFuncList()
@@ -373,10 +423,11 @@ void handlerGetFuncList()
 
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
-    
+#if 0    
     // ST_GetFuncList
     recv_data (sfd, &buffer);
     dumpGetFuncList ("ST_GetFuncList", buffer);
+#endif
 }
 
 void handlerSetFunc()
@@ -386,26 +437,23 @@ void handlerSetFunc()
     BUFCLR(buffer);
     head = (MSG_HEAD*) buffer;
     head->cType = CT_SetFunc;
-    head->cLen = MSG_HEAD_LEN + sizeof (cSetFunc);
+    head->cLen = SETHEADCLEN (cSetFunc);
 
     cSetFunc sf;
-#ifndef _STANDARD
     cout << "function type:";
     cin >> func_type;
     sf.set_func_type(func_type);
-#else
-    sf.set_func_type(2);
-#endif
 
     g_tmp_str.clear();
     sf.SerializeToString (&g_tmp_str);
     MEMCPYSTRTOBUF(buffer);
     send_v (sfd, buffer, head->cLen);
     BUFCLR (buffer);
-
+#if 0
     // ST_SetFunc
     recv_data (sfd, &buffer);
     dumpSetFunc ("ST_SetFunc", buffer);
+#endif
 }
 
 void handlerGetGradeList()
@@ -414,14 +462,15 @@ void handlerGetGradeList()
     BUFCLR(buffer);
     head = (MSG_HEAD*) buffer;
     head->cType = CT_GetGradeList;
-    head->cLen = MSG_HEAD_LEN + sizeof (cGetGradeList);
+    head->cLen = MSG_HEAD_LEN;
 
     send_v (sfd, buffer, head->cLen);
     BUFCLR (buffer);
-    
+#if 0    
     // ST_GetGradeList
     recv_data (sfd, &buffer);
     dumpGetGradeList ("ST_GetGradeList", buffer);
+#endif
 }
 
 void handlerGetCourseList()
@@ -434,23 +483,20 @@ void handlerGetCourseList()
     head->cLen = MSG_HEAD_LEN + sizeof (cGetCourseList);
 
     cGetCourseList cl;
-#ifndef _STANDARD
     cout << "grade id:";
     cin >> grade_id;
     cl.set_grade_id(grade_id);
-#else
-    cl.set_grade_id(1);
-#endif
 
     g_tmp_str.clear();
     cl.SerializeToString (&g_tmp_str);
     MEMCPYSTRTOBUF(buffer);
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
-
+#if 0
     // ST_GetCourseList
     recv_data (sfd, &buffer);
     dumpGetCourseList ("ST_GetCourseList", buffer);
+#endif
 }
 
 void handlerGetClassList()
@@ -464,22 +510,19 @@ void handlerGetClassList()
 
 
     cGetClassList cgcl;
-#ifndef _STANDARD
     cout << "grade id:";
     cin >> grade_id;
     cgcl.set_grade_id (grade_id);
-#else
-    cgcl.set_grade_id (1);
-#endif
 
     cgcl.SerializeToString (&g_tmp_str);
     MEMCPYSTRTOBUF (buffer);
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
-   
+#if 0   
     // ST_GetClassList
     recv_data (sfd, &buffer);
     dumpGetClassList ("ST_GetClassList", buffer);
+#endif
 }
 
 void handlerGetClassRoomList()
@@ -492,10 +535,12 @@ void handlerGetClassRoomList()
 
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
- 
+
+#if 0 
     // ST_GetClassRoomList
     recv_data (sfd, &buffer);
     dumpGetClassRoomList ("ST_GetClassRoomList", buffer);
+#endif
 }
 
 void handlerSetContent ()
@@ -510,7 +555,6 @@ void handlerSetContent ()
    
 
     cSetContent sc;
-#ifndef _STANDARD
     cout << "class id:"; 
     cin >> class_id;
     cout << "classroom id:"; 
@@ -520,21 +564,17 @@ void handlerSetContent ()
     sc.set_class_id (class_id);
     sc.set_classroom_id (classroom_id);
     sc.set_course_list(course_list);
-#else
-    sc.set_class_id (1);
-    sc.set_classroom_id (1);
-    sc.set_course_list("this is a course list.");
-#endif
 
     g_tmp_str.clear();
     sc.SerializeToString (&g_tmp_str);
     MEMCPYSTRTOBUF(buffer);
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
- 
+#if 0 
     // ST_SetContent
     recv_data (sfd, &buffer);
     dumpSetContent ("ST_SetContent", buffer);
+#endif
 }
 
 void handlerGetStudentList()
@@ -550,18 +590,18 @@ void handlerGetStudentList()
     cin >> class_id;
  
     cGetStudentList sl;
-#ifdef _STANDARD
     sl.set_class_id (class_id);
-#else
-    sl.set_class_id (1);
-#endif
+    //g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
 
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
-
+#if 0
     // ST_GetStudentList
     recv_data (sfd, &buffer);
     dumpGetStudentList ("ST_GetStudentList", buffer);
+#endif
 }
 
 void handlerGetStudentInfo()
@@ -571,26 +611,23 @@ void handlerGetStudentInfo()
     BUFCLR(buffer);
     head = (MSG_HEAD*) buffer;
     head->cType = CT_GetStudentInfo;
-    head->cLen = MSG_HEAD_LEN;
+    head->cLen = SETHEADCLEN(CT_GetStudentInfo);
    
     cout << "student id:";
     cin >> student_id; 
     cGetStudentInfo si;
-#ifdef _STANDARD
     si.set_id (student_id);
-#else
-    si.set_id (1);
-#endif
 
     g_tmp_str.clear();
     si.SerializeToString (&g_tmp_str);
     MEMCPYSTRTOBUF(buffer);
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
- 
+#if 0 
     // ST_GetStudentInfo
     recv_data (sfd, &buffer);
     dumpGetStudentInfo ("ST_GetStudentInfo", buffer);
+#endif
 }
 
 void handlerGetTeacherInfo()
@@ -600,25 +637,79 @@ void handlerGetTeacherInfo()
     BUFCLR(buffer);
     head = (MSG_HEAD*) buffer;
     head->cType = CT_GetTeacherInfo;
-    head->cLen = MSG_HEAD_LEN;
+    head->cLen = SETHEADCLEN(CT_GetTeacherInfo);
    
     cout << "teacher id:";
     cin >> teacher_id; 
     cGetTeacherInfo ti;
-#ifdef _STANDARD
     ti.set_id (teacher_id);
-#else
-    ti.set_id (1);
-#endif
+
+    g_tmp_str.clear();
+    ti.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
 
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
- 
+#if 0 
     // ST_GetTeacherInfo
     recv_data (sfd, &buffer);
     dumpGetTeacherInfo ("ST_GetTeacherInfo", buffer);
+#endif
 }
 
+void handlerUploadBook()
+{   
+    int class_id;
+    string book_name;
+    int  book_type  ;
+    string time     ;
+    int  belongs    ; // 所属班，用二进制占位表示。
+    int  art        ;
+    int  language   ;
+    int  community  ;
+    int  health     ;
+    int  science    ;
+    string res_path ;
+
+    //// CT_UploadBook
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_UploadBook;
+    head->cLen = SETHEADCLEN(cUploadBook);
+   
+    //cout << "class id:";
+    //cin >> class_id; 
+    cUploadBook ub;
+    ub.set_book_name ("绘刘师兄5");
+    ub.set_book_type (2);
+    ub.set_time ("2014/1/1");
+    ub.set_belongs (7);
+    ub.set_art (13);
+    ub.set_language (14);
+    ub.set_community (15);
+    ub.set_health (16);
+    ub.set_science (17);
+    ub.set_res_path ("..../res_path");
+
+    g_tmp_str.clear();
+    ub.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerGetPersonalBooksList()
+{   
+    //// CT_GetPersonalBooksList
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_GetPersonalBooksList;
+    head->cLen = MSG_HEAD_LEN; //SETHEADCLEN(cGetPersonalBooksList);
+   
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
 void handlerGetActiveStudentList()
 {   
     int class_id;
@@ -626,24 +717,26 @@ void handlerGetActiveStudentList()
     BUFCLR(buffer);
     head = (MSG_HEAD*) buffer;
     head->cType = CT_GetActiveStudentList;
-    head->cLen = MSG_HEAD_LEN;
+    head->cLen = SETHEADCLEN(cGetActiveStudentList);
    
     cout << "class id:";
     cin >> class_id; 
     cGetActiveStudentList sl;
-#ifdef _STANDARD
     sl.set_class_id (class_id);
-#else
-    sl.set_class_id (1);
-#endif
+
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
 
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
- 
+#if 0 
     // ST_GetActiveStudentList
     recv_data (sfd, &buffer);
     dumpGetActiveStudentList ("ST_GetActiveStudentList", buffer);
+#endif
 }
+
 
 void printArray (struct numberProto* array, size_t size)
 {
@@ -663,9 +756,99 @@ void printArray (struct numberProto* array, size_t size)
 
 }
 
+void dumpLogout (string proto, char* buffer)
+{
+    dumpHead (proto, buffer);
+    string strLogout;
+    sLogout l;
+    strLogout= buffer + MSG_HEAD_LEN + sizeof(int);
+    l.ParseFromString (strLogout);
+
+    cout << "logout logintype=" << l.login_type() << endl;
+    cout << "logout client number=" << l.num() << endl;
+
+    dumpTail (buffer);
+}
+
+void dumpUpdateStudentStatus (string proto, char* buffer)
+{
+    dumpHead (proto, buffer);
+    string strUpdateStudentStatus;
+    sUpdateStudentStatus l;
+    strUpdateStudentStatus = buffer + MSG_HEAD_LEN + sizeof(int);
+    l.ParseFromString (strUpdateStudentStatus);
+
+    cout << "student id=" << l.student_id () << endl;
+
+    dumpTail (buffer);
+}
+
+void* recv_callback (void* data)
+{
+    while (1) {
+        // ST_Logout
+        recv_data (sfd, &buffer);
+        switch (((MSG_HEAD*) buffer)->cType) {
+            case ST_Login:
+                dumpLogin ("ST_Login", buffer);
+                break;
+            case ST_UpdateStudentStatus:
+                dumpUpdateStudentStatus ("ST_UpdateStudentStatus", buffer);
+                break;
+            case ST_Logout:
+                dumpLogout("ST_Logout", buffer);
+                break;
+            case ST_GetFuncList:
+                dumpGetFuncList("ST_GetFuncList", buffer);
+                break;
+            case ST_SetFunc:
+                dumpSetFunc("ST_SetFunc", buffer);
+                break;
+            case ST_GetGradeList:
+                dumpGetGradeList("ST_GetGradeList", buffer);
+                break;
+            case ST_GetCourseList:
+                dumpGetCourseList("ST_GetCourseList", buffer);
+                break;
+            case ST_GetClassList:
+                dumpGetClassList("ST_GetClassList", buffer);
+                break;
+            case ST_GetClassRoomList:
+                dumpGetClassRoomList("ST_GetClassRoomList", buffer);
+                break;
+            case ST_SetContent:
+                dumpSetContent("ST_SetContent", buffer);
+                break;
+            case ST_GetStudentList:
+                dumpGetStudentList("ST_GetStudentList", buffer);
+                break;
+            case ST_GetStudentInfo:
+                dumpGetStudentInfo("ST_GetStudentInfo", buffer);
+                break;
+            case ST_GetTeacherInfo:
+                dumpGetTeacherInfo("ST_GetTeacherInfo", buffer);
+                break;
+            case ST_GetActiveStudentList:
+                dumpGetActiveStudentList("ST_GetActiveStudentList", buffer);
+                break;
+            case ST_GetPersonalBooksList:
+                dumpGetPersonalBooksList("ST_GetPersonalBooksList", buffer);
+                break;
+            case ST_UploadBook:
+                dumpUploadBook ("ST_UploadBook", buffer);
+                break;
+        }
+        
+        //cout << "Input Message Id: ";
+        usleep (100);
+    }
+}
+
 int main (int argc, char** argv)
 {
     int strMessageId;
+
+    pthread_t pid_recv = 0;
 
 #if 1
     if ((sfd = socket (AF_INET, SOCK_STREAM, 0)) < 0) {
@@ -684,16 +867,23 @@ int main (int argc, char** argv)
 
 #endif
 
+#if 1
+    pthread_create(&pid_recv, NULL, recv_callback, NULL);
+
+    //pthread_join  (pid_update, NULL);
+    //pthread_join  (pid_logout, NULL);
+#endif
+
     printArray (NPARRAY, ARRAY_SIZE);
 
+    cout << "Input Message Id: ";
     while (1) {
-        cout << "Input Message Id: ";
         cin >> strMessageId;
 
-        if (strMessageId < 0 || strMessageId >= ARRAY_SIZE)
-            continue;
-
-        if (NPARRAY[strMessageId].protocol == "CT_Login") {
+        if (NPARRAY[strMessageId].protocol == "Print_Message_List") {
+            printArray (NPARRAY, ARRAY_SIZE);
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_Login") {
             handlerLogin();
         }
         else if (NPARRAY[strMessageId].protocol == "CT_Logout") {
@@ -732,12 +922,18 @@ int main (int argc, char** argv)
         else if (NPARRAY[strMessageId].protocol == "CT_GetActiveStudentList") {
             handlerGetActiveStudentList();
         }
+        else if (NPARRAY[strMessageId].protocol == "CT_UploadBook") {
+            handlerUploadBook();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_GetPersonalBooksList") {
+            handlerGetPersonalBooksList();
+        }
         else if (NPARRAY[strMessageId].protocol == "Exit/Quit") {
             cout << "Bye." << endl;
             break;
         }
         else {
-            cout << "no handler" << endl;
+            cout << "[Error]: can't find handler." << endl;
         }
     }
     

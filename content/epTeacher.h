@@ -93,6 +93,7 @@ public :
          * @return 客户端类型。
          */
         virtual const enum LoginType getType(void) const;
+        virtual const std::string getNum(void);
         /**  @} */
 
         /**

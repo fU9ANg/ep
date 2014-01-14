@@ -113,6 +113,12 @@ public :
          * @return 功能。
          */
         enum FuncType getFuncType(void) const;
+        /**
+         * @brief 获取客户端编号（如学生学号）。
+         *
+         * @return 客户端编号。
+         */
+        virtual const std::string getNum(void) = 0;
         /**  @} */
 
         /**

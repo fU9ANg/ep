@@ -60,6 +60,24 @@ class cGetStudentInfo;
 class sGetStudentInfo;
 class cGetTeacherInfo;
 class sGetTeacherInfo;
+class cSetGroup;
+class sSetGroup;
+class cGetPersonalBooksList;
+class cGetServerAddr;
+class sGetServerAddr;
+class sGetPersonalBooksList;
+class cGetPublicBooksList;
+class sGetPublicBooksList;
+class cUploadBook;
+class sUploadBook;
+class cDownloadFromPersonal;
+class sDownloadFromPersonal;
+class cDownloadFromPublic;
+class sDownloadFromPublic;
+class cTransferBook;
+class sTransferBook;
+class cPublish;
+class sPublish;
 
 // ===================================================================
 
@@ -393,24 +411,39 @@ class sLogout : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 common = 1;
-  inline bool has_common() const;
-  inline void clear_common();
-  static const int kCommonFieldNumber = 1;
-  inline ::google::protobuf::int32 common() const;
-  inline void set_common(::google::protobuf::int32 value);
+  // required int32 login_type = 1;
+  inline bool has_login_type() const;
+  inline void clear_login_type();
+  static const int kLoginTypeFieldNumber = 1;
+  inline ::google::protobuf::int32 login_type() const;
+  inline void set_login_type(::google::protobuf::int32 value);
+
+  // required string num = 2;
+  inline bool has_num() const;
+  inline void clear_num();
+  static const int kNumFieldNumber = 2;
+  inline const ::std::string& num() const;
+  inline void set_num(const ::std::string& value);
+  inline void set_num(const char* value);
+  inline void set_num(const char* value, size_t size);
+  inline ::std::string* mutable_num();
+  inline ::std::string* release_num();
+  inline void set_allocated_num(::std::string* num);
 
   // @@protoc_insertion_point(class_scope:sLogout)
  private:
-  inline void set_has_common();
-  inline void clear_has_common();
+  inline void set_has_login_type();
+  inline void clear_has_login_type();
+  inline void set_has_num();
+  inline void clear_has_num();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 common_;
+  ::std::string* num_;
+  ::google::protobuf::int32 login_type_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -2934,6 +2967,1767 @@ class sGetTeacherInfo : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static sGetTeacherInfo* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class cSetGroup : public ::google::protobuf::Message {
+ public:
+  cSetGroup();
+  virtual ~cSetGroup();
+
+  cSetGroup(const cSetGroup& from);
+
+  inline cSetGroup& operator=(const cSetGroup& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cSetGroup& default_instance();
+
+  void Swap(cSetGroup* other);
+
+  // implements Message ----------------------------------------------
+
+  cSetGroup* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cSetGroup& from);
+  void MergeFrom(const cSetGroup& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 group_id = 1;
+  inline bool has_group_id() const;
+  inline void clear_group_id();
+  static const int kGroupIdFieldNumber = 1;
+  inline ::google::protobuf::int32 group_id() const;
+  inline void set_group_id(::google::protobuf::int32 value);
+
+  // required string group_name = 2;
+  inline bool has_group_name() const;
+  inline void clear_group_name();
+  static const int kGroupNameFieldNumber = 2;
+  inline const ::std::string& group_name() const;
+  inline void set_group_name(const ::std::string& value);
+  inline void set_group_name(const char* value);
+  inline void set_group_name(const char* value, size_t size);
+  inline ::std::string* mutable_group_name();
+  inline ::std::string* release_group_name();
+  inline void set_allocated_group_name(::std::string* group_name);
+
+  // required int32 student_cnt = 4;
+  inline bool has_student_cnt() const;
+  inline void clear_student_cnt();
+  static const int kStudentCntFieldNumber = 4;
+  inline ::google::protobuf::int32 student_cnt() const;
+  inline void set_student_cnt(::google::protobuf::int32 value);
+
+  // required string student_list = 3;
+  inline bool has_student_list() const;
+  inline void clear_student_list();
+  static const int kStudentListFieldNumber = 3;
+  inline const ::std::string& student_list() const;
+  inline void set_student_list(const ::std::string& value);
+  inline void set_student_list(const char* value);
+  inline void set_student_list(const char* value, size_t size);
+  inline ::std::string* mutable_student_list();
+  inline ::std::string* release_student_list();
+  inline void set_allocated_student_list(::std::string* student_list);
+
+  // @@protoc_insertion_point(class_scope:cSetGroup)
+ private:
+  inline void set_has_group_id();
+  inline void clear_has_group_id();
+  inline void set_has_group_name();
+  inline void clear_has_group_name();
+  inline void set_has_student_cnt();
+  inline void clear_has_student_cnt();
+  inline void set_has_student_list();
+  inline void clear_has_student_list();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* group_name_;
+  ::google::protobuf::int32 group_id_;
+  ::google::protobuf::int32 student_cnt_;
+  ::std::string* student_list_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cSetGroup* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sSetGroup : public ::google::protobuf::Message {
+ public:
+  sSetGroup();
+  virtual ~sSetGroup();
+
+  sSetGroup(const sSetGroup& from);
+
+  inline sSetGroup& operator=(const sSetGroup& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sSetGroup& default_instance();
+
+  void Swap(sSetGroup* other);
+
+  // implements Message ----------------------------------------------
+
+  sSetGroup* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sSetGroup& from);
+  void MergeFrom(const sSetGroup& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bool result = 1;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 1;
+  inline bool result() const;
+  inline void set_result(bool value);
+
+  // required string msg = 2;
+  inline bool has_msg() const;
+  inline void clear_msg();
+  static const int kMsgFieldNumber = 2;
+  inline const ::std::string& msg() const;
+  inline void set_msg(const ::std::string& value);
+  inline void set_msg(const char* value);
+  inline void set_msg(const char* value, size_t size);
+  inline ::std::string* mutable_msg();
+  inline ::std::string* release_msg();
+  inline void set_allocated_msg(::std::string* msg);
+
+  // @@protoc_insertion_point(class_scope:sSetGroup)
+ private:
+  inline void set_has_result();
+  inline void clear_has_result();
+  inline void set_has_msg();
+  inline void clear_has_msg();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* msg_;
+  bool result_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sSetGroup* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cGetPersonalBooksList : public ::google::protobuf::Message {
+ public:
+  cGetPersonalBooksList();
+  virtual ~cGetPersonalBooksList();
+
+  cGetPersonalBooksList(const cGetPersonalBooksList& from);
+
+  inline cGetPersonalBooksList& operator=(const cGetPersonalBooksList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cGetPersonalBooksList& default_instance();
+
+  void Swap(cGetPersonalBooksList* other);
+
+  // implements Message ----------------------------------------------
+
+  cGetPersonalBooksList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cGetPersonalBooksList& from);
+  void MergeFrom(const cGetPersonalBooksList& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:cGetPersonalBooksList)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cGetPersonalBooksList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cGetServerAddr : public ::google::protobuf::Message {
+ public:
+  cGetServerAddr();
+  virtual ~cGetServerAddr();
+
+  cGetServerAddr(const cGetServerAddr& from);
+
+  inline cGetServerAddr& operator=(const cGetServerAddr& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cGetServerAddr& default_instance();
+
+  void Swap(cGetServerAddr* other);
+
+  // implements Message ----------------------------------------------
+
+  cGetServerAddr* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cGetServerAddr& from);
+  void MergeFrom(const cGetServerAddr& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:cGetServerAddr)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cGetServerAddr* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sGetServerAddr : public ::google::protobuf::Message {
+ public:
+  sGetServerAddr();
+  virtual ~sGetServerAddr();
+
+  sGetServerAddr(const sGetServerAddr& from);
+
+  inline sGetServerAddr& operator=(const sGetServerAddr& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sGetServerAddr& default_instance();
+
+  void Swap(sGetServerAddr* other);
+
+  // implements Message ----------------------------------------------
+
+  sGetServerAddr* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sGetServerAddr& from);
+  void MergeFrom(const sGetServerAddr& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string serv_addr = 1;
+  inline bool has_serv_addr() const;
+  inline void clear_serv_addr();
+  static const int kServAddrFieldNumber = 1;
+  inline const ::std::string& serv_addr() const;
+  inline void set_serv_addr(const ::std::string& value);
+  inline void set_serv_addr(const char* value);
+  inline void set_serv_addr(const char* value, size_t size);
+  inline ::std::string* mutable_serv_addr();
+  inline ::std::string* release_serv_addr();
+  inline void set_allocated_serv_addr(::std::string* serv_addr);
+
+  // @@protoc_insertion_point(class_scope:sGetServerAddr)
+ private:
+  inline void set_has_serv_addr();
+  inline void clear_has_serv_addr();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* serv_addr_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sGetServerAddr* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sGetPersonalBooksList : public ::google::protobuf::Message {
+ public:
+  sGetPersonalBooksList();
+  virtual ~sGetPersonalBooksList();
+
+  sGetPersonalBooksList(const sGetPersonalBooksList& from);
+
+  inline sGetPersonalBooksList& operator=(const sGetPersonalBooksList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sGetPersonalBooksList& default_instance();
+
+  void Swap(sGetPersonalBooksList* other);
+
+  // implements Message ----------------------------------------------
+
+  sGetPersonalBooksList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sGetPersonalBooksList& from);
+  void MergeFrom(const sGetPersonalBooksList& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 book_id = 1;
+  inline bool has_book_id() const;
+  inline void clear_book_id();
+  static const int kBookIdFieldNumber = 1;
+  inline ::google::protobuf::int32 book_id() const;
+  inline void set_book_id(::google::protobuf::int32 value);
+
+  // required string book_name = 2;
+  inline bool has_book_name() const;
+  inline void clear_book_name();
+  static const int kBookNameFieldNumber = 2;
+  inline const ::std::string& book_name() const;
+  inline void set_book_name(const ::std::string& value);
+  inline void set_book_name(const char* value);
+  inline void set_book_name(const char* value, size_t size);
+  inline ::std::string* mutable_book_name();
+  inline ::std::string* release_book_name();
+  inline void set_allocated_book_name(::std::string* book_name);
+
+  // required int32 book_type = 4;
+  inline bool has_book_type() const;
+  inline void clear_book_type();
+  static const int kBookTypeFieldNumber = 4;
+  inline ::google::protobuf::int32 book_type() const;
+  inline void set_book_type(::google::protobuf::int32 value);
+
+  // required string res_path = 3;
+  inline bool has_res_path() const;
+  inline void clear_res_path();
+  static const int kResPathFieldNumber = 3;
+  inline const ::std::string& res_path() const;
+  inline void set_res_path(const ::std::string& value);
+  inline void set_res_path(const char* value);
+  inline void set_res_path(const char* value, size_t size);
+  inline ::std::string* mutable_res_path();
+  inline ::std::string* release_res_path();
+  inline void set_allocated_res_path(::std::string* res_path);
+
+  // @@protoc_insertion_point(class_scope:sGetPersonalBooksList)
+ private:
+  inline void set_has_book_id();
+  inline void clear_has_book_id();
+  inline void set_has_book_name();
+  inline void clear_has_book_name();
+  inline void set_has_book_type();
+  inline void clear_has_book_type();
+  inline void set_has_res_path();
+  inline void clear_has_res_path();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* book_name_;
+  ::google::protobuf::int32 book_id_;
+  ::google::protobuf::int32 book_type_;
+  ::std::string* res_path_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sGetPersonalBooksList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cGetPublicBooksList : public ::google::protobuf::Message {
+ public:
+  cGetPublicBooksList();
+  virtual ~cGetPublicBooksList();
+
+  cGetPublicBooksList(const cGetPublicBooksList& from);
+
+  inline cGetPublicBooksList& operator=(const cGetPublicBooksList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cGetPublicBooksList& default_instance();
+
+  void Swap(cGetPublicBooksList* other);
+
+  // implements Message ----------------------------------------------
+
+  cGetPublicBooksList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cGetPublicBooksList& from);
+  void MergeFrom(const cGetPublicBooksList& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:cGetPublicBooksList)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cGetPublicBooksList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sGetPublicBooksList : public ::google::protobuf::Message {
+ public:
+  sGetPublicBooksList();
+  virtual ~sGetPublicBooksList();
+
+  sGetPublicBooksList(const sGetPublicBooksList& from);
+
+  inline sGetPublicBooksList& operator=(const sGetPublicBooksList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sGetPublicBooksList& default_instance();
+
+  void Swap(sGetPublicBooksList* other);
+
+  // implements Message ----------------------------------------------
+
+  sGetPublicBooksList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sGetPublicBooksList& from);
+  void MergeFrom(const sGetPublicBooksList& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 book_id = 1;
+  inline bool has_book_id() const;
+  inline void clear_book_id();
+  static const int kBookIdFieldNumber = 1;
+  inline ::google::protobuf::int32 book_id() const;
+  inline void set_book_id(::google::protobuf::int32 value);
+
+  // required string book_name = 2;
+  inline bool has_book_name() const;
+  inline void clear_book_name();
+  static const int kBookNameFieldNumber = 2;
+  inline const ::std::string& book_name() const;
+  inline void set_book_name(const ::std::string& value);
+  inline void set_book_name(const char* value);
+  inline void set_book_name(const char* value, size_t size);
+  inline ::std::string* mutable_book_name();
+  inline ::std::string* release_book_name();
+  inline void set_allocated_book_name(::std::string* book_name);
+
+  // required int32 book_type = 4;
+  inline bool has_book_type() const;
+  inline void clear_book_type();
+  static const int kBookTypeFieldNumber = 4;
+  inline ::google::protobuf::int32 book_type() const;
+  inline void set_book_type(::google::protobuf::int32 value);
+
+  // required string res_path = 3;
+  inline bool has_res_path() const;
+  inline void clear_res_path();
+  static const int kResPathFieldNumber = 3;
+  inline const ::std::string& res_path() const;
+  inline void set_res_path(const ::std::string& value);
+  inline void set_res_path(const char* value);
+  inline void set_res_path(const char* value, size_t size);
+  inline ::std::string* mutable_res_path();
+  inline ::std::string* release_res_path();
+  inline void set_allocated_res_path(::std::string* res_path);
+
+  // @@protoc_insertion_point(class_scope:sGetPublicBooksList)
+ private:
+  inline void set_has_book_id();
+  inline void clear_has_book_id();
+  inline void set_has_book_name();
+  inline void clear_has_book_name();
+  inline void set_has_book_type();
+  inline void clear_has_book_type();
+  inline void set_has_res_path();
+  inline void clear_has_res_path();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* book_name_;
+  ::google::protobuf::int32 book_id_;
+  ::google::protobuf::int32 book_type_;
+  ::std::string* res_path_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sGetPublicBooksList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUploadBook : public ::google::protobuf::Message {
+ public:
+  cUploadBook();
+  virtual ~cUploadBook();
+
+  cUploadBook(const cUploadBook& from);
+
+  inline cUploadBook& operator=(const cUploadBook& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUploadBook& default_instance();
+
+  void Swap(cUploadBook* other);
+
+  // implements Message ----------------------------------------------
+
+  cUploadBook* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUploadBook& from);
+  void MergeFrom(const cUploadBook& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string book_name = 1;
+  inline bool has_book_name() const;
+  inline void clear_book_name();
+  static const int kBookNameFieldNumber = 1;
+  inline const ::std::string& book_name() const;
+  inline void set_book_name(const ::std::string& value);
+  inline void set_book_name(const char* value);
+  inline void set_book_name(const char* value, size_t size);
+  inline ::std::string* mutable_book_name();
+  inline ::std::string* release_book_name();
+  inline void set_allocated_book_name(::std::string* book_name);
+
+  // required int32 book_type = 2;
+  inline bool has_book_type() const;
+  inline void clear_book_type();
+  static const int kBookTypeFieldNumber = 2;
+  inline ::google::protobuf::int32 book_type() const;
+  inline void set_book_type(::google::protobuf::int32 value);
+
+  // required string time = 3;
+  inline bool has_time() const;
+  inline void clear_time();
+  static const int kTimeFieldNumber = 3;
+  inline const ::std::string& time() const;
+  inline void set_time(const ::std::string& value);
+  inline void set_time(const char* value);
+  inline void set_time(const char* value, size_t size);
+  inline ::std::string* mutable_time();
+  inline ::std::string* release_time();
+  inline void set_allocated_time(::std::string* time);
+
+  // required int32 belongs = 4;
+  inline bool has_belongs() const;
+  inline void clear_belongs();
+  static const int kBelongsFieldNumber = 4;
+  inline ::google::protobuf::int32 belongs() const;
+  inline void set_belongs(::google::protobuf::int32 value);
+
+  // required int32 art = 5;
+  inline bool has_art() const;
+  inline void clear_art();
+  static const int kArtFieldNumber = 5;
+  inline ::google::protobuf::int32 art() const;
+  inline void set_art(::google::protobuf::int32 value);
+
+  // required int32 language = 6;
+  inline bool has_language() const;
+  inline void clear_language();
+  static const int kLanguageFieldNumber = 6;
+  inline ::google::protobuf::int32 language() const;
+  inline void set_language(::google::protobuf::int32 value);
+
+  // required int32 community = 7;
+  inline bool has_community() const;
+  inline void clear_community();
+  static const int kCommunityFieldNumber = 7;
+  inline ::google::protobuf::int32 community() const;
+  inline void set_community(::google::protobuf::int32 value);
+
+  // required int32 health = 8;
+  inline bool has_health() const;
+  inline void clear_health();
+  static const int kHealthFieldNumber = 8;
+  inline ::google::protobuf::int32 health() const;
+  inline void set_health(::google::protobuf::int32 value);
+
+  // required int32 science = 9;
+  inline bool has_science() const;
+  inline void clear_science();
+  static const int kScienceFieldNumber = 9;
+  inline ::google::protobuf::int32 science() const;
+  inline void set_science(::google::protobuf::int32 value);
+
+  // required string res_path = 10;
+  inline bool has_res_path() const;
+  inline void clear_res_path();
+  static const int kResPathFieldNumber = 10;
+  inline const ::std::string& res_path() const;
+  inline void set_res_path(const ::std::string& value);
+  inline void set_res_path(const char* value);
+  inline void set_res_path(const char* value, size_t size);
+  inline ::std::string* mutable_res_path();
+  inline ::std::string* release_res_path();
+  inline void set_allocated_res_path(::std::string* res_path);
+
+  // @@protoc_insertion_point(class_scope:cUploadBook)
+ private:
+  inline void set_has_book_name();
+  inline void clear_has_book_name();
+  inline void set_has_book_type();
+  inline void clear_has_book_type();
+  inline void set_has_time();
+  inline void clear_has_time();
+  inline void set_has_belongs();
+  inline void clear_has_belongs();
+  inline void set_has_art();
+  inline void clear_has_art();
+  inline void set_has_language();
+  inline void clear_has_language();
+  inline void set_has_community();
+  inline void clear_has_community();
+  inline void set_has_health();
+  inline void clear_has_health();
+  inline void set_has_science();
+  inline void clear_has_science();
+  inline void set_has_res_path();
+  inline void clear_has_res_path();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* book_name_;
+  ::std::string* time_;
+  ::google::protobuf::int32 book_type_;
+  ::google::protobuf::int32 belongs_;
+  ::google::protobuf::int32 art_;
+  ::google::protobuf::int32 language_;
+  ::google::protobuf::int32 community_;
+  ::google::protobuf::int32 health_;
+  ::std::string* res_path_;
+  ::google::protobuf::int32 science_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUploadBook* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUploadBook : public ::google::protobuf::Message {
+ public:
+  sUploadBook();
+  virtual ~sUploadBook();
+
+  sUploadBook(const sUploadBook& from);
+
+  inline sUploadBook& operator=(const sUploadBook& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUploadBook& default_instance();
+
+  void Swap(sUploadBook* other);
+
+  // implements Message ----------------------------------------------
+
+  sUploadBook* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUploadBook& from);
+  void MergeFrom(const sUploadBook& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bool result = 1;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 1;
+  inline bool result() const;
+  inline void set_result(bool value);
+
+  // required string msg = 2;
+  inline bool has_msg() const;
+  inline void clear_msg();
+  static const int kMsgFieldNumber = 2;
+  inline const ::std::string& msg() const;
+  inline void set_msg(const ::std::string& value);
+  inline void set_msg(const char* value);
+  inline void set_msg(const char* value, size_t size);
+  inline ::std::string* mutable_msg();
+  inline ::std::string* release_msg();
+  inline void set_allocated_msg(::std::string* msg);
+
+  // @@protoc_insertion_point(class_scope:sUploadBook)
+ private:
+  inline void set_has_result();
+  inline void clear_has_result();
+  inline void set_has_msg();
+  inline void clear_has_msg();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* msg_;
+  bool result_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUploadBook* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cDownloadFromPersonal : public ::google::protobuf::Message {
+ public:
+  cDownloadFromPersonal();
+  virtual ~cDownloadFromPersonal();
+
+  cDownloadFromPersonal(const cDownloadFromPersonal& from);
+
+  inline cDownloadFromPersonal& operator=(const cDownloadFromPersonal& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cDownloadFromPersonal& default_instance();
+
+  void Swap(cDownloadFromPersonal* other);
+
+  // implements Message ----------------------------------------------
+
+  cDownloadFromPersonal* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cDownloadFromPersonal& from);
+  void MergeFrom(const cDownloadFromPersonal& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 book_id = 1;
+  inline bool has_book_id() const;
+  inline void clear_book_id();
+  static const int kBookIdFieldNumber = 1;
+  inline ::google::protobuf::int32 book_id() const;
+  inline void set_book_id(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:cDownloadFromPersonal)
+ private:
+  inline void set_has_book_id();
+  inline void clear_has_book_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 book_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cDownloadFromPersonal* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sDownloadFromPersonal : public ::google::protobuf::Message {
+ public:
+  sDownloadFromPersonal();
+  virtual ~sDownloadFromPersonal();
+
+  sDownloadFromPersonal(const sDownloadFromPersonal& from);
+
+  inline sDownloadFromPersonal& operator=(const sDownloadFromPersonal& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sDownloadFromPersonal& default_instance();
+
+  void Swap(sDownloadFromPersonal* other);
+
+  // implements Message ----------------------------------------------
+
+  sDownloadFromPersonal* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sDownloadFromPersonal& from);
+  void MergeFrom(const sDownloadFromPersonal& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string down_addr = 1;
+  inline bool has_down_addr() const;
+  inline void clear_down_addr();
+  static const int kDownAddrFieldNumber = 1;
+  inline const ::std::string& down_addr() const;
+  inline void set_down_addr(const ::std::string& value);
+  inline void set_down_addr(const char* value);
+  inline void set_down_addr(const char* value, size_t size);
+  inline ::std::string* mutable_down_addr();
+  inline ::std::string* release_down_addr();
+  inline void set_allocated_down_addr(::std::string* down_addr);
+
+  // @@protoc_insertion_point(class_scope:sDownloadFromPersonal)
+ private:
+  inline void set_has_down_addr();
+  inline void clear_has_down_addr();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* down_addr_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sDownloadFromPersonal* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cDownloadFromPublic : public ::google::protobuf::Message {
+ public:
+  cDownloadFromPublic();
+  virtual ~cDownloadFromPublic();
+
+  cDownloadFromPublic(const cDownloadFromPublic& from);
+
+  inline cDownloadFromPublic& operator=(const cDownloadFromPublic& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cDownloadFromPublic& default_instance();
+
+  void Swap(cDownloadFromPublic* other);
+
+  // implements Message ----------------------------------------------
+
+  cDownloadFromPublic* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cDownloadFromPublic& from);
+  void MergeFrom(const cDownloadFromPublic& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 book_id = 1;
+  inline bool has_book_id() const;
+  inline void clear_book_id();
+  static const int kBookIdFieldNumber = 1;
+  inline ::google::protobuf::int32 book_id() const;
+  inline void set_book_id(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:cDownloadFromPublic)
+ private:
+  inline void set_has_book_id();
+  inline void clear_has_book_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 book_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cDownloadFromPublic* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sDownloadFromPublic : public ::google::protobuf::Message {
+ public:
+  sDownloadFromPublic();
+  virtual ~sDownloadFromPublic();
+
+  sDownloadFromPublic(const sDownloadFromPublic& from);
+
+  inline sDownloadFromPublic& operator=(const sDownloadFromPublic& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sDownloadFromPublic& default_instance();
+
+  void Swap(sDownloadFromPublic* other);
+
+  // implements Message ----------------------------------------------
+
+  sDownloadFromPublic* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sDownloadFromPublic& from);
+  void MergeFrom(const sDownloadFromPublic& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string down_addr = 1;
+  inline bool has_down_addr() const;
+  inline void clear_down_addr();
+  static const int kDownAddrFieldNumber = 1;
+  inline const ::std::string& down_addr() const;
+  inline void set_down_addr(const ::std::string& value);
+  inline void set_down_addr(const char* value);
+  inline void set_down_addr(const char* value, size_t size);
+  inline ::std::string* mutable_down_addr();
+  inline ::std::string* release_down_addr();
+  inline void set_allocated_down_addr(::std::string* down_addr);
+
+  // @@protoc_insertion_point(class_scope:sDownloadFromPublic)
+ private:
+  inline void set_has_down_addr();
+  inline void clear_has_down_addr();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* down_addr_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sDownloadFromPublic* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cTransferBook : public ::google::protobuf::Message {
+ public:
+  cTransferBook();
+  virtual ~cTransferBook();
+
+  cTransferBook(const cTransferBook& from);
+
+  inline cTransferBook& operator=(const cTransferBook& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cTransferBook& default_instance();
+
+  void Swap(cTransferBook* other);
+
+  // implements Message ----------------------------------------------
+
+  cTransferBook* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cTransferBook& from);
+  void MergeFrom(const cTransferBook& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 book_id = 1;
+  inline bool has_book_id() const;
+  inline void clear_book_id();
+  static const int kBookIdFieldNumber = 1;
+  inline ::google::protobuf::int32 book_id() const;
+  inline void set_book_id(::google::protobuf::int32 value);
+
+  // required string account = 2;
+  inline bool has_account() const;
+  inline void clear_account();
+  static const int kAccountFieldNumber = 2;
+  inline const ::std::string& account() const;
+  inline void set_account(const ::std::string& value);
+  inline void set_account(const char* value);
+  inline void set_account(const char* value, size_t size);
+  inline ::std::string* mutable_account();
+  inline ::std::string* release_account();
+  inline void set_allocated_account(::std::string* account);
+
+  // @@protoc_insertion_point(class_scope:cTransferBook)
+ private:
+  inline void set_has_book_id();
+  inline void clear_has_book_id();
+  inline void set_has_account();
+  inline void clear_has_account();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* account_;
+  ::google::protobuf::int32 book_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cTransferBook* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sTransferBook : public ::google::protobuf::Message {
+ public:
+  sTransferBook();
+  virtual ~sTransferBook();
+
+  sTransferBook(const sTransferBook& from);
+
+  inline sTransferBook& operator=(const sTransferBook& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sTransferBook& default_instance();
+
+  void Swap(sTransferBook* other);
+
+  // implements Message ----------------------------------------------
+
+  sTransferBook* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sTransferBook& from);
+  void MergeFrom(const sTransferBook& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bool result = 1;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 1;
+  inline bool result() const;
+  inline void set_result(bool value);
+
+  // required string msg = 2;
+  inline bool has_msg() const;
+  inline void clear_msg();
+  static const int kMsgFieldNumber = 2;
+  inline const ::std::string& msg() const;
+  inline void set_msg(const ::std::string& value);
+  inline void set_msg(const char* value);
+  inline void set_msg(const char* value, size_t size);
+  inline ::std::string* mutable_msg();
+  inline ::std::string* release_msg();
+  inline void set_allocated_msg(::std::string* msg);
+
+  // @@protoc_insertion_point(class_scope:sTransferBook)
+ private:
+  inline void set_has_result();
+  inline void clear_has_result();
+  inline void set_has_msg();
+  inline void clear_has_msg();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* msg_;
+  bool result_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sTransferBook* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cPublish : public ::google::protobuf::Message {
+ public:
+  cPublish();
+  virtual ~cPublish();
+
+  cPublish(const cPublish& from);
+
+  inline cPublish& operator=(const cPublish& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cPublish& default_instance();
+
+  void Swap(cPublish* other);
+
+  // implements Message ----------------------------------------------
+
+  cPublish* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cPublish& from);
+  void MergeFrom(const cPublish& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 book_id = 1;
+  inline bool has_book_id() const;
+  inline void clear_book_id();
+  static const int kBookIdFieldNumber = 1;
+  inline ::google::protobuf::int32 book_id() const;
+  inline void set_book_id(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:cPublish)
+ private:
+  inline void set_has_book_id();
+  inline void clear_has_book_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 book_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cPublish* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sPublish : public ::google::protobuf::Message {
+ public:
+  sPublish();
+  virtual ~sPublish();
+
+  sPublish(const sPublish& from);
+
+  inline sPublish& operator=(const sPublish& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sPublish& default_instance();
+
+  void Swap(sPublish* other);
+
+  // implements Message ----------------------------------------------
+
+  sPublish* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sPublish& from);
+  void MergeFrom(const sPublish& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bool result = 1;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 1;
+  inline bool result() const;
+  inline void set_result(bool value);
+
+  // required string msg = 2;
+  inline bool has_msg() const;
+  inline void clear_msg();
+  static const int kMsgFieldNumber = 2;
+  inline const ::std::string& msg() const;
+  inline void set_msg(const ::std::string& value);
+  inline void set_msg(const char* value);
+  inline void set_msg(const char* value, size_t size);
+  inline ::std::string* mutable_msg();
+  inline ::std::string* release_msg();
+  inline void set_allocated_msg(::std::string* msg);
+
+  // @@protoc_insertion_point(class_scope:sPublish)
+ private:
+  inline void set_has_result();
+  inline void clear_has_result();
+  inline void set_has_msg();
+  inline void clear_has_msg();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* msg_;
+  bool result_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sPublish* default_instance_;
+};
 // ===================================================================
 
 
@@ -3159,26 +4953,96 @@ inline void cLogout::set_common(::google::protobuf::int32 value) {
 
 // sLogout
 
-// required int32 common = 1;
-inline bool sLogout::has_common() const {
+// required int32 login_type = 1;
+inline bool sLogout::has_login_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void sLogout::set_has_common() {
+inline void sLogout::set_has_login_type() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void sLogout::clear_has_common() {
+inline void sLogout::clear_has_login_type() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void sLogout::clear_common() {
-  common_ = 0;
-  clear_has_common();
+inline void sLogout::clear_login_type() {
+  login_type_ = 0;
+  clear_has_login_type();
 }
-inline ::google::protobuf::int32 sLogout::common() const {
-  return common_;
+inline ::google::protobuf::int32 sLogout::login_type() const {
+  return login_type_;
 }
-inline void sLogout::set_common(::google::protobuf::int32 value) {
-  set_has_common();
-  common_ = value;
+inline void sLogout::set_login_type(::google::protobuf::int32 value) {
+  set_has_login_type();
+  login_type_ = value;
+}
+
+// required string num = 2;
+inline bool sLogout::has_num() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sLogout::set_has_num() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sLogout::clear_has_num() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sLogout::clear_num() {
+  if (num_ != &::google::protobuf::internal::kEmptyString) {
+    num_->clear();
+  }
+  clear_has_num();
+}
+inline const ::std::string& sLogout::num() const {
+  return *num_;
+}
+inline void sLogout::set_num(const ::std::string& value) {
+  set_has_num();
+  if (num_ == &::google::protobuf::internal::kEmptyString) {
+    num_ = new ::std::string;
+  }
+  num_->assign(value);
+}
+inline void sLogout::set_num(const char* value) {
+  set_has_num();
+  if (num_ == &::google::protobuf::internal::kEmptyString) {
+    num_ = new ::std::string;
+  }
+  num_->assign(value);
+}
+inline void sLogout::set_num(const char* value, size_t size) {
+  set_has_num();
+  if (num_ == &::google::protobuf::internal::kEmptyString) {
+    num_ = new ::std::string;
+  }
+  num_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sLogout::mutable_num() {
+  set_has_num();
+  if (num_ == &::google::protobuf::internal::kEmptyString) {
+    num_ = new ::std::string;
+  }
+  return num_;
+}
+inline ::std::string* sLogout::release_num() {
+  clear_has_num();
+  if (num_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = num_;
+    num_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sLogout::set_allocated_num(::std::string* num) {
+  if (num_ != &::google::protobuf::internal::kEmptyString) {
+    delete num_;
+  }
+  if (num) {
+    set_has_num();
+    num_ = num;
+  } else {
+    clear_has_num();
+    num_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // -------------------------------------------------------------------
@@ -5924,6 +7788,1730 @@ inline void sGetTeacherInfo::set_allocated_school_name(::std::string* school_nam
   } else {
     clear_has_school_name();
     school_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// cSetGroup
+
+// required int32 group_id = 1;
+inline bool cSetGroup::has_group_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cSetGroup::set_has_group_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cSetGroup::clear_has_group_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cSetGroup::clear_group_id() {
+  group_id_ = 0;
+  clear_has_group_id();
+}
+inline ::google::protobuf::int32 cSetGroup::group_id() const {
+  return group_id_;
+}
+inline void cSetGroup::set_group_id(::google::protobuf::int32 value) {
+  set_has_group_id();
+  group_id_ = value;
+}
+
+// required string group_name = 2;
+inline bool cSetGroup::has_group_name() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cSetGroup::set_has_group_name() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cSetGroup::clear_has_group_name() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cSetGroup::clear_group_name() {
+  if (group_name_ != &::google::protobuf::internal::kEmptyString) {
+    group_name_->clear();
+  }
+  clear_has_group_name();
+}
+inline const ::std::string& cSetGroup::group_name() const {
+  return *group_name_;
+}
+inline void cSetGroup::set_group_name(const ::std::string& value) {
+  set_has_group_name();
+  if (group_name_ == &::google::protobuf::internal::kEmptyString) {
+    group_name_ = new ::std::string;
+  }
+  group_name_->assign(value);
+}
+inline void cSetGroup::set_group_name(const char* value) {
+  set_has_group_name();
+  if (group_name_ == &::google::protobuf::internal::kEmptyString) {
+    group_name_ = new ::std::string;
+  }
+  group_name_->assign(value);
+}
+inline void cSetGroup::set_group_name(const char* value, size_t size) {
+  set_has_group_name();
+  if (group_name_ == &::google::protobuf::internal::kEmptyString) {
+    group_name_ = new ::std::string;
+  }
+  group_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cSetGroup::mutable_group_name() {
+  set_has_group_name();
+  if (group_name_ == &::google::protobuf::internal::kEmptyString) {
+    group_name_ = new ::std::string;
+  }
+  return group_name_;
+}
+inline ::std::string* cSetGroup::release_group_name() {
+  clear_has_group_name();
+  if (group_name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = group_name_;
+    group_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cSetGroup::set_allocated_group_name(::std::string* group_name) {
+  if (group_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete group_name_;
+  }
+  if (group_name) {
+    set_has_group_name();
+    group_name_ = group_name;
+  } else {
+    clear_has_group_name();
+    group_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 student_cnt = 4;
+inline bool cSetGroup::has_student_cnt() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void cSetGroup::set_has_student_cnt() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void cSetGroup::clear_has_student_cnt() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void cSetGroup::clear_student_cnt() {
+  student_cnt_ = 0;
+  clear_has_student_cnt();
+}
+inline ::google::protobuf::int32 cSetGroup::student_cnt() const {
+  return student_cnt_;
+}
+inline void cSetGroup::set_student_cnt(::google::protobuf::int32 value) {
+  set_has_student_cnt();
+  student_cnt_ = value;
+}
+
+// required string student_list = 3;
+inline bool cSetGroup::has_student_list() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void cSetGroup::set_has_student_list() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void cSetGroup::clear_has_student_list() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void cSetGroup::clear_student_list() {
+  if (student_list_ != &::google::protobuf::internal::kEmptyString) {
+    student_list_->clear();
+  }
+  clear_has_student_list();
+}
+inline const ::std::string& cSetGroup::student_list() const {
+  return *student_list_;
+}
+inline void cSetGroup::set_student_list(const ::std::string& value) {
+  set_has_student_list();
+  if (student_list_ == &::google::protobuf::internal::kEmptyString) {
+    student_list_ = new ::std::string;
+  }
+  student_list_->assign(value);
+}
+inline void cSetGroup::set_student_list(const char* value) {
+  set_has_student_list();
+  if (student_list_ == &::google::protobuf::internal::kEmptyString) {
+    student_list_ = new ::std::string;
+  }
+  student_list_->assign(value);
+}
+inline void cSetGroup::set_student_list(const char* value, size_t size) {
+  set_has_student_list();
+  if (student_list_ == &::google::protobuf::internal::kEmptyString) {
+    student_list_ = new ::std::string;
+  }
+  student_list_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cSetGroup::mutable_student_list() {
+  set_has_student_list();
+  if (student_list_ == &::google::protobuf::internal::kEmptyString) {
+    student_list_ = new ::std::string;
+  }
+  return student_list_;
+}
+inline ::std::string* cSetGroup::release_student_list() {
+  clear_has_student_list();
+  if (student_list_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = student_list_;
+    student_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cSetGroup::set_allocated_student_list(::std::string* student_list) {
+  if (student_list_ != &::google::protobuf::internal::kEmptyString) {
+    delete student_list_;
+  }
+  if (student_list) {
+    set_has_student_list();
+    student_list_ = student_list;
+  } else {
+    clear_has_student_list();
+    student_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// sSetGroup
+
+// required bool result = 1;
+inline bool sSetGroup::has_result() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sSetGroup::set_has_result() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sSetGroup::clear_has_result() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sSetGroup::clear_result() {
+  result_ = false;
+  clear_has_result();
+}
+inline bool sSetGroup::result() const {
+  return result_;
+}
+inline void sSetGroup::set_result(bool value) {
+  set_has_result();
+  result_ = value;
+}
+
+// required string msg = 2;
+inline bool sSetGroup::has_msg() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sSetGroup::set_has_msg() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sSetGroup::clear_has_msg() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sSetGroup::clear_msg() {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    msg_->clear();
+  }
+  clear_has_msg();
+}
+inline const ::std::string& sSetGroup::msg() const {
+  return *msg_;
+}
+inline void sSetGroup::set_msg(const ::std::string& value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void sSetGroup::set_msg(const char* value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void sSetGroup::set_msg(const char* value, size_t size) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sSetGroup::mutable_msg() {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  return msg_;
+}
+inline ::std::string* sSetGroup::release_msg() {
+  clear_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msg_;
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sSetGroup::set_allocated_msg(::std::string* msg) {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    delete msg_;
+  }
+  if (msg) {
+    set_has_msg();
+    msg_ = msg;
+  } else {
+    clear_has_msg();
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// cGetPersonalBooksList
+
+// -------------------------------------------------------------------
+
+// cGetServerAddr
+
+// -------------------------------------------------------------------
+
+// sGetServerAddr
+
+// required string serv_addr = 1;
+inline bool sGetServerAddr::has_serv_addr() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sGetServerAddr::set_has_serv_addr() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sGetServerAddr::clear_has_serv_addr() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sGetServerAddr::clear_serv_addr() {
+  if (serv_addr_ != &::google::protobuf::internal::kEmptyString) {
+    serv_addr_->clear();
+  }
+  clear_has_serv_addr();
+}
+inline const ::std::string& sGetServerAddr::serv_addr() const {
+  return *serv_addr_;
+}
+inline void sGetServerAddr::set_serv_addr(const ::std::string& value) {
+  set_has_serv_addr();
+  if (serv_addr_ == &::google::protobuf::internal::kEmptyString) {
+    serv_addr_ = new ::std::string;
+  }
+  serv_addr_->assign(value);
+}
+inline void sGetServerAddr::set_serv_addr(const char* value) {
+  set_has_serv_addr();
+  if (serv_addr_ == &::google::protobuf::internal::kEmptyString) {
+    serv_addr_ = new ::std::string;
+  }
+  serv_addr_->assign(value);
+}
+inline void sGetServerAddr::set_serv_addr(const char* value, size_t size) {
+  set_has_serv_addr();
+  if (serv_addr_ == &::google::protobuf::internal::kEmptyString) {
+    serv_addr_ = new ::std::string;
+  }
+  serv_addr_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sGetServerAddr::mutable_serv_addr() {
+  set_has_serv_addr();
+  if (serv_addr_ == &::google::protobuf::internal::kEmptyString) {
+    serv_addr_ = new ::std::string;
+  }
+  return serv_addr_;
+}
+inline ::std::string* sGetServerAddr::release_serv_addr() {
+  clear_has_serv_addr();
+  if (serv_addr_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = serv_addr_;
+    serv_addr_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sGetServerAddr::set_allocated_serv_addr(::std::string* serv_addr) {
+  if (serv_addr_ != &::google::protobuf::internal::kEmptyString) {
+    delete serv_addr_;
+  }
+  if (serv_addr) {
+    set_has_serv_addr();
+    serv_addr_ = serv_addr;
+  } else {
+    clear_has_serv_addr();
+    serv_addr_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// sGetPersonalBooksList
+
+// required int32 book_id = 1;
+inline bool sGetPersonalBooksList::has_book_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sGetPersonalBooksList::set_has_book_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sGetPersonalBooksList::clear_has_book_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sGetPersonalBooksList::clear_book_id() {
+  book_id_ = 0;
+  clear_has_book_id();
+}
+inline ::google::protobuf::int32 sGetPersonalBooksList::book_id() const {
+  return book_id_;
+}
+inline void sGetPersonalBooksList::set_book_id(::google::protobuf::int32 value) {
+  set_has_book_id();
+  book_id_ = value;
+}
+
+// required string book_name = 2;
+inline bool sGetPersonalBooksList::has_book_name() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sGetPersonalBooksList::set_has_book_name() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sGetPersonalBooksList::clear_has_book_name() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sGetPersonalBooksList::clear_book_name() {
+  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
+    book_name_->clear();
+  }
+  clear_has_book_name();
+}
+inline const ::std::string& sGetPersonalBooksList::book_name() const {
+  return *book_name_;
+}
+inline void sGetPersonalBooksList::set_book_name(const ::std::string& value) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(value);
+}
+inline void sGetPersonalBooksList::set_book_name(const char* value) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(value);
+}
+inline void sGetPersonalBooksList::set_book_name(const char* value, size_t size) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sGetPersonalBooksList::mutable_book_name() {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  return book_name_;
+}
+inline ::std::string* sGetPersonalBooksList::release_book_name() {
+  clear_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = book_name_;
+    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sGetPersonalBooksList::set_allocated_book_name(::std::string* book_name) {
+  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete book_name_;
+  }
+  if (book_name) {
+    set_has_book_name();
+    book_name_ = book_name;
+  } else {
+    clear_has_book_name();
+    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 book_type = 4;
+inline bool sGetPersonalBooksList::has_book_type() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void sGetPersonalBooksList::set_has_book_type() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void sGetPersonalBooksList::clear_has_book_type() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void sGetPersonalBooksList::clear_book_type() {
+  book_type_ = 0;
+  clear_has_book_type();
+}
+inline ::google::protobuf::int32 sGetPersonalBooksList::book_type() const {
+  return book_type_;
+}
+inline void sGetPersonalBooksList::set_book_type(::google::protobuf::int32 value) {
+  set_has_book_type();
+  book_type_ = value;
+}
+
+// required string res_path = 3;
+inline bool sGetPersonalBooksList::has_res_path() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void sGetPersonalBooksList::set_has_res_path() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void sGetPersonalBooksList::clear_has_res_path() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void sGetPersonalBooksList::clear_res_path() {
+  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
+    res_path_->clear();
+  }
+  clear_has_res_path();
+}
+inline const ::std::string& sGetPersonalBooksList::res_path() const {
+  return *res_path_;
+}
+inline void sGetPersonalBooksList::set_res_path(const ::std::string& value) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(value);
+}
+inline void sGetPersonalBooksList::set_res_path(const char* value) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(value);
+}
+inline void sGetPersonalBooksList::set_res_path(const char* value, size_t size) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sGetPersonalBooksList::mutable_res_path() {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  return res_path_;
+}
+inline ::std::string* sGetPersonalBooksList::release_res_path() {
+  clear_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = res_path_;
+    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sGetPersonalBooksList::set_allocated_res_path(::std::string* res_path) {
+  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
+    delete res_path_;
+  }
+  if (res_path) {
+    set_has_res_path();
+    res_path_ = res_path;
+  } else {
+    clear_has_res_path();
+    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// cGetPublicBooksList
+
+// -------------------------------------------------------------------
+
+// sGetPublicBooksList
+
+// required int32 book_id = 1;
+inline bool sGetPublicBooksList::has_book_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sGetPublicBooksList::set_has_book_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sGetPublicBooksList::clear_has_book_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sGetPublicBooksList::clear_book_id() {
+  book_id_ = 0;
+  clear_has_book_id();
+}
+inline ::google::protobuf::int32 sGetPublicBooksList::book_id() const {
+  return book_id_;
+}
+inline void sGetPublicBooksList::set_book_id(::google::protobuf::int32 value) {
+  set_has_book_id();
+  book_id_ = value;
+}
+
+// required string book_name = 2;
+inline bool sGetPublicBooksList::has_book_name() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sGetPublicBooksList::set_has_book_name() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sGetPublicBooksList::clear_has_book_name() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sGetPublicBooksList::clear_book_name() {
+  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
+    book_name_->clear();
+  }
+  clear_has_book_name();
+}
+inline const ::std::string& sGetPublicBooksList::book_name() const {
+  return *book_name_;
+}
+inline void sGetPublicBooksList::set_book_name(const ::std::string& value) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(value);
+}
+inline void sGetPublicBooksList::set_book_name(const char* value) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(value);
+}
+inline void sGetPublicBooksList::set_book_name(const char* value, size_t size) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sGetPublicBooksList::mutable_book_name() {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  return book_name_;
+}
+inline ::std::string* sGetPublicBooksList::release_book_name() {
+  clear_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = book_name_;
+    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sGetPublicBooksList::set_allocated_book_name(::std::string* book_name) {
+  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete book_name_;
+  }
+  if (book_name) {
+    set_has_book_name();
+    book_name_ = book_name;
+  } else {
+    clear_has_book_name();
+    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 book_type = 4;
+inline bool sGetPublicBooksList::has_book_type() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void sGetPublicBooksList::set_has_book_type() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void sGetPublicBooksList::clear_has_book_type() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void sGetPublicBooksList::clear_book_type() {
+  book_type_ = 0;
+  clear_has_book_type();
+}
+inline ::google::protobuf::int32 sGetPublicBooksList::book_type() const {
+  return book_type_;
+}
+inline void sGetPublicBooksList::set_book_type(::google::protobuf::int32 value) {
+  set_has_book_type();
+  book_type_ = value;
+}
+
+// required string res_path = 3;
+inline bool sGetPublicBooksList::has_res_path() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void sGetPublicBooksList::set_has_res_path() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void sGetPublicBooksList::clear_has_res_path() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void sGetPublicBooksList::clear_res_path() {
+  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
+    res_path_->clear();
+  }
+  clear_has_res_path();
+}
+inline const ::std::string& sGetPublicBooksList::res_path() const {
+  return *res_path_;
+}
+inline void sGetPublicBooksList::set_res_path(const ::std::string& value) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(value);
+}
+inline void sGetPublicBooksList::set_res_path(const char* value) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(value);
+}
+inline void sGetPublicBooksList::set_res_path(const char* value, size_t size) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sGetPublicBooksList::mutable_res_path() {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  return res_path_;
+}
+inline ::std::string* sGetPublicBooksList::release_res_path() {
+  clear_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = res_path_;
+    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sGetPublicBooksList::set_allocated_res_path(::std::string* res_path) {
+  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
+    delete res_path_;
+  }
+  if (res_path) {
+    set_has_res_path();
+    res_path_ = res_path;
+  } else {
+    clear_has_res_path();
+    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// cUploadBook
+
+// required string book_name = 1;
+inline bool cUploadBook::has_book_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUploadBook::set_has_book_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUploadBook::clear_has_book_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUploadBook::clear_book_name() {
+  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
+    book_name_->clear();
+  }
+  clear_has_book_name();
+}
+inline const ::std::string& cUploadBook::book_name() const {
+  return *book_name_;
+}
+inline void cUploadBook::set_book_name(const ::std::string& value) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(value);
+}
+inline void cUploadBook::set_book_name(const char* value) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(value);
+}
+inline void cUploadBook::set_book_name(const char* value, size_t size) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUploadBook::mutable_book_name() {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  return book_name_;
+}
+inline ::std::string* cUploadBook::release_book_name() {
+  clear_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = book_name_;
+    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUploadBook::set_allocated_book_name(::std::string* book_name) {
+  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete book_name_;
+  }
+  if (book_name) {
+    set_has_book_name();
+    book_name_ = book_name;
+  } else {
+    clear_has_book_name();
+    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 book_type = 2;
+inline bool cUploadBook::has_book_type() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cUploadBook::set_has_book_type() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cUploadBook::clear_has_book_type() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cUploadBook::clear_book_type() {
+  book_type_ = 0;
+  clear_has_book_type();
+}
+inline ::google::protobuf::int32 cUploadBook::book_type() const {
+  return book_type_;
+}
+inline void cUploadBook::set_book_type(::google::protobuf::int32 value) {
+  set_has_book_type();
+  book_type_ = value;
+}
+
+// required string time = 3;
+inline bool cUploadBook::has_time() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void cUploadBook::set_has_time() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void cUploadBook::clear_has_time() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void cUploadBook::clear_time() {
+  if (time_ != &::google::protobuf::internal::kEmptyString) {
+    time_->clear();
+  }
+  clear_has_time();
+}
+inline const ::std::string& cUploadBook::time() const {
+  return *time_;
+}
+inline void cUploadBook::set_time(const ::std::string& value) {
+  set_has_time();
+  if (time_ == &::google::protobuf::internal::kEmptyString) {
+    time_ = new ::std::string;
+  }
+  time_->assign(value);
+}
+inline void cUploadBook::set_time(const char* value) {
+  set_has_time();
+  if (time_ == &::google::protobuf::internal::kEmptyString) {
+    time_ = new ::std::string;
+  }
+  time_->assign(value);
+}
+inline void cUploadBook::set_time(const char* value, size_t size) {
+  set_has_time();
+  if (time_ == &::google::protobuf::internal::kEmptyString) {
+    time_ = new ::std::string;
+  }
+  time_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUploadBook::mutable_time() {
+  set_has_time();
+  if (time_ == &::google::protobuf::internal::kEmptyString) {
+    time_ = new ::std::string;
+  }
+  return time_;
+}
+inline ::std::string* cUploadBook::release_time() {
+  clear_has_time();
+  if (time_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = time_;
+    time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUploadBook::set_allocated_time(::std::string* time) {
+  if (time_ != &::google::protobuf::internal::kEmptyString) {
+    delete time_;
+  }
+  if (time) {
+    set_has_time();
+    time_ = time;
+  } else {
+    clear_has_time();
+    time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 belongs = 4;
+inline bool cUploadBook::has_belongs() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void cUploadBook::set_has_belongs() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void cUploadBook::clear_has_belongs() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void cUploadBook::clear_belongs() {
+  belongs_ = 0;
+  clear_has_belongs();
+}
+inline ::google::protobuf::int32 cUploadBook::belongs() const {
+  return belongs_;
+}
+inline void cUploadBook::set_belongs(::google::protobuf::int32 value) {
+  set_has_belongs();
+  belongs_ = value;
+}
+
+// required int32 art = 5;
+inline bool cUploadBook::has_art() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void cUploadBook::set_has_art() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void cUploadBook::clear_has_art() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void cUploadBook::clear_art() {
+  art_ = 0;
+  clear_has_art();
+}
+inline ::google::protobuf::int32 cUploadBook::art() const {
+  return art_;
+}
+inline void cUploadBook::set_art(::google::protobuf::int32 value) {
+  set_has_art();
+  art_ = value;
+}
+
+// required int32 language = 6;
+inline bool cUploadBook::has_language() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void cUploadBook::set_has_language() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void cUploadBook::clear_has_language() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void cUploadBook::clear_language() {
+  language_ = 0;
+  clear_has_language();
+}
+inline ::google::protobuf::int32 cUploadBook::language() const {
+  return language_;
+}
+inline void cUploadBook::set_language(::google::protobuf::int32 value) {
+  set_has_language();
+  language_ = value;
+}
+
+// required int32 community = 7;
+inline bool cUploadBook::has_community() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void cUploadBook::set_has_community() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void cUploadBook::clear_has_community() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void cUploadBook::clear_community() {
+  community_ = 0;
+  clear_has_community();
+}
+inline ::google::protobuf::int32 cUploadBook::community() const {
+  return community_;
+}
+inline void cUploadBook::set_community(::google::protobuf::int32 value) {
+  set_has_community();
+  community_ = value;
+}
+
+// required int32 health = 8;
+inline bool cUploadBook::has_health() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void cUploadBook::set_has_health() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void cUploadBook::clear_has_health() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void cUploadBook::clear_health() {
+  health_ = 0;
+  clear_has_health();
+}
+inline ::google::protobuf::int32 cUploadBook::health() const {
+  return health_;
+}
+inline void cUploadBook::set_health(::google::protobuf::int32 value) {
+  set_has_health();
+  health_ = value;
+}
+
+// required int32 science = 9;
+inline bool cUploadBook::has_science() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void cUploadBook::set_has_science() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void cUploadBook::clear_has_science() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void cUploadBook::clear_science() {
+  science_ = 0;
+  clear_has_science();
+}
+inline ::google::protobuf::int32 cUploadBook::science() const {
+  return science_;
+}
+inline void cUploadBook::set_science(::google::protobuf::int32 value) {
+  set_has_science();
+  science_ = value;
+}
+
+// required string res_path = 10;
+inline bool cUploadBook::has_res_path() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void cUploadBook::set_has_res_path() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void cUploadBook::clear_has_res_path() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void cUploadBook::clear_res_path() {
+  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
+    res_path_->clear();
+  }
+  clear_has_res_path();
+}
+inline const ::std::string& cUploadBook::res_path() const {
+  return *res_path_;
+}
+inline void cUploadBook::set_res_path(const ::std::string& value) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(value);
+}
+inline void cUploadBook::set_res_path(const char* value) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(value);
+}
+inline void cUploadBook::set_res_path(const char* value, size_t size) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUploadBook::mutable_res_path() {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  return res_path_;
+}
+inline ::std::string* cUploadBook::release_res_path() {
+  clear_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = res_path_;
+    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUploadBook::set_allocated_res_path(::std::string* res_path) {
+  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
+    delete res_path_;
+  }
+  if (res_path) {
+    set_has_res_path();
+    res_path_ = res_path;
+  } else {
+    clear_has_res_path();
+    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// sUploadBook
+
+// required bool result = 1;
+inline bool sUploadBook::has_result() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sUploadBook::set_has_result() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sUploadBook::clear_has_result() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sUploadBook::clear_result() {
+  result_ = false;
+  clear_has_result();
+}
+inline bool sUploadBook::result() const {
+  return result_;
+}
+inline void sUploadBook::set_result(bool value) {
+  set_has_result();
+  result_ = value;
+}
+
+// required string msg = 2;
+inline bool sUploadBook::has_msg() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sUploadBook::set_has_msg() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sUploadBook::clear_has_msg() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sUploadBook::clear_msg() {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    msg_->clear();
+  }
+  clear_has_msg();
+}
+inline const ::std::string& sUploadBook::msg() const {
+  return *msg_;
+}
+inline void sUploadBook::set_msg(const ::std::string& value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void sUploadBook::set_msg(const char* value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void sUploadBook::set_msg(const char* value, size_t size) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUploadBook::mutable_msg() {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  return msg_;
+}
+inline ::std::string* sUploadBook::release_msg() {
+  clear_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msg_;
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUploadBook::set_allocated_msg(::std::string* msg) {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    delete msg_;
+  }
+  if (msg) {
+    set_has_msg();
+    msg_ = msg;
+  } else {
+    clear_has_msg();
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// cDownloadFromPersonal
+
+// required int32 book_id = 1;
+inline bool cDownloadFromPersonal::has_book_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cDownloadFromPersonal::set_has_book_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cDownloadFromPersonal::clear_has_book_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cDownloadFromPersonal::clear_book_id() {
+  book_id_ = 0;
+  clear_has_book_id();
+}
+inline ::google::protobuf::int32 cDownloadFromPersonal::book_id() const {
+  return book_id_;
+}
+inline void cDownloadFromPersonal::set_book_id(::google::protobuf::int32 value) {
+  set_has_book_id();
+  book_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// sDownloadFromPersonal
+
+// required string down_addr = 1;
+inline bool sDownloadFromPersonal::has_down_addr() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sDownloadFromPersonal::set_has_down_addr() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sDownloadFromPersonal::clear_has_down_addr() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sDownloadFromPersonal::clear_down_addr() {
+  if (down_addr_ != &::google::protobuf::internal::kEmptyString) {
+    down_addr_->clear();
+  }
+  clear_has_down_addr();
+}
+inline const ::std::string& sDownloadFromPersonal::down_addr() const {
+  return *down_addr_;
+}
+inline void sDownloadFromPersonal::set_down_addr(const ::std::string& value) {
+  set_has_down_addr();
+  if (down_addr_ == &::google::protobuf::internal::kEmptyString) {
+    down_addr_ = new ::std::string;
+  }
+  down_addr_->assign(value);
+}
+inline void sDownloadFromPersonal::set_down_addr(const char* value) {
+  set_has_down_addr();
+  if (down_addr_ == &::google::protobuf::internal::kEmptyString) {
+    down_addr_ = new ::std::string;
+  }
+  down_addr_->assign(value);
+}
+inline void sDownloadFromPersonal::set_down_addr(const char* value, size_t size) {
+  set_has_down_addr();
+  if (down_addr_ == &::google::protobuf::internal::kEmptyString) {
+    down_addr_ = new ::std::string;
+  }
+  down_addr_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sDownloadFromPersonal::mutable_down_addr() {
+  set_has_down_addr();
+  if (down_addr_ == &::google::protobuf::internal::kEmptyString) {
+    down_addr_ = new ::std::string;
+  }
+  return down_addr_;
+}
+inline ::std::string* sDownloadFromPersonal::release_down_addr() {
+  clear_has_down_addr();
+  if (down_addr_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = down_addr_;
+    down_addr_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sDownloadFromPersonal::set_allocated_down_addr(::std::string* down_addr) {
+  if (down_addr_ != &::google::protobuf::internal::kEmptyString) {
+    delete down_addr_;
+  }
+  if (down_addr) {
+    set_has_down_addr();
+    down_addr_ = down_addr;
+  } else {
+    clear_has_down_addr();
+    down_addr_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// cDownloadFromPublic
+
+// required int32 book_id = 1;
+inline bool cDownloadFromPublic::has_book_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cDownloadFromPublic::set_has_book_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cDownloadFromPublic::clear_has_book_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cDownloadFromPublic::clear_book_id() {
+  book_id_ = 0;
+  clear_has_book_id();
+}
+inline ::google::protobuf::int32 cDownloadFromPublic::book_id() const {
+  return book_id_;
+}
+inline void cDownloadFromPublic::set_book_id(::google::protobuf::int32 value) {
+  set_has_book_id();
+  book_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// sDownloadFromPublic
+
+// required string down_addr = 1;
+inline bool sDownloadFromPublic::has_down_addr() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sDownloadFromPublic::set_has_down_addr() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sDownloadFromPublic::clear_has_down_addr() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sDownloadFromPublic::clear_down_addr() {
+  if (down_addr_ != &::google::protobuf::internal::kEmptyString) {
+    down_addr_->clear();
+  }
+  clear_has_down_addr();
+}
+inline const ::std::string& sDownloadFromPublic::down_addr() const {
+  return *down_addr_;
+}
+inline void sDownloadFromPublic::set_down_addr(const ::std::string& value) {
+  set_has_down_addr();
+  if (down_addr_ == &::google::protobuf::internal::kEmptyString) {
+    down_addr_ = new ::std::string;
+  }
+  down_addr_->assign(value);
+}
+inline void sDownloadFromPublic::set_down_addr(const char* value) {
+  set_has_down_addr();
+  if (down_addr_ == &::google::protobuf::internal::kEmptyString) {
+    down_addr_ = new ::std::string;
+  }
+  down_addr_->assign(value);
+}
+inline void sDownloadFromPublic::set_down_addr(const char* value, size_t size) {
+  set_has_down_addr();
+  if (down_addr_ == &::google::protobuf::internal::kEmptyString) {
+    down_addr_ = new ::std::string;
+  }
+  down_addr_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sDownloadFromPublic::mutable_down_addr() {
+  set_has_down_addr();
+  if (down_addr_ == &::google::protobuf::internal::kEmptyString) {
+    down_addr_ = new ::std::string;
+  }
+  return down_addr_;
+}
+inline ::std::string* sDownloadFromPublic::release_down_addr() {
+  clear_has_down_addr();
+  if (down_addr_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = down_addr_;
+    down_addr_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sDownloadFromPublic::set_allocated_down_addr(::std::string* down_addr) {
+  if (down_addr_ != &::google::protobuf::internal::kEmptyString) {
+    delete down_addr_;
+  }
+  if (down_addr) {
+    set_has_down_addr();
+    down_addr_ = down_addr;
+  } else {
+    clear_has_down_addr();
+    down_addr_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// cTransferBook
+
+// required int32 book_id = 1;
+inline bool cTransferBook::has_book_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cTransferBook::set_has_book_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cTransferBook::clear_has_book_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cTransferBook::clear_book_id() {
+  book_id_ = 0;
+  clear_has_book_id();
+}
+inline ::google::protobuf::int32 cTransferBook::book_id() const {
+  return book_id_;
+}
+inline void cTransferBook::set_book_id(::google::protobuf::int32 value) {
+  set_has_book_id();
+  book_id_ = value;
+}
+
+// required string account = 2;
+inline bool cTransferBook::has_account() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cTransferBook::set_has_account() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cTransferBook::clear_has_account() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cTransferBook::clear_account() {
+  if (account_ != &::google::protobuf::internal::kEmptyString) {
+    account_->clear();
+  }
+  clear_has_account();
+}
+inline const ::std::string& cTransferBook::account() const {
+  return *account_;
+}
+inline void cTransferBook::set_account(const ::std::string& value) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  account_->assign(value);
+}
+inline void cTransferBook::set_account(const char* value) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  account_->assign(value);
+}
+inline void cTransferBook::set_account(const char* value, size_t size) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  account_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cTransferBook::mutable_account() {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  return account_;
+}
+inline ::std::string* cTransferBook::release_account() {
+  clear_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = account_;
+    account_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cTransferBook::set_allocated_account(::std::string* account) {
+  if (account_ != &::google::protobuf::internal::kEmptyString) {
+    delete account_;
+  }
+  if (account) {
+    set_has_account();
+    account_ = account;
+  } else {
+    clear_has_account();
+    account_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// sTransferBook
+
+// required bool result = 1;
+inline bool sTransferBook::has_result() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sTransferBook::set_has_result() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sTransferBook::clear_has_result() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sTransferBook::clear_result() {
+  result_ = false;
+  clear_has_result();
+}
+inline bool sTransferBook::result() const {
+  return result_;
+}
+inline void sTransferBook::set_result(bool value) {
+  set_has_result();
+  result_ = value;
+}
+
+// required string msg = 2;
+inline bool sTransferBook::has_msg() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sTransferBook::set_has_msg() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sTransferBook::clear_has_msg() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sTransferBook::clear_msg() {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    msg_->clear();
+  }
+  clear_has_msg();
+}
+inline const ::std::string& sTransferBook::msg() const {
+  return *msg_;
+}
+inline void sTransferBook::set_msg(const ::std::string& value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void sTransferBook::set_msg(const char* value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void sTransferBook::set_msg(const char* value, size_t size) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sTransferBook::mutable_msg() {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  return msg_;
+}
+inline ::std::string* sTransferBook::release_msg() {
+  clear_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msg_;
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sTransferBook::set_allocated_msg(::std::string* msg) {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    delete msg_;
+  }
+  if (msg) {
+    set_has_msg();
+    msg_ = msg;
+  } else {
+    clear_has_msg();
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// cPublish
+
+// required int32 book_id = 1;
+inline bool cPublish::has_book_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cPublish::set_has_book_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cPublish::clear_has_book_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cPublish::clear_book_id() {
+  book_id_ = 0;
+  clear_has_book_id();
+}
+inline ::google::protobuf::int32 cPublish::book_id() const {
+  return book_id_;
+}
+inline void cPublish::set_book_id(::google::protobuf::int32 value) {
+  set_has_book_id();
+  book_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// sPublish
+
+// required bool result = 1;
+inline bool sPublish::has_result() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sPublish::set_has_result() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sPublish::clear_has_result() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sPublish::clear_result() {
+  result_ = false;
+  clear_has_result();
+}
+inline bool sPublish::result() const {
+  return result_;
+}
+inline void sPublish::set_result(bool value) {
+  set_has_result();
+  result_ = value;
+}
+
+// required string msg = 2;
+inline bool sPublish::has_msg() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sPublish::set_has_msg() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sPublish::clear_has_msg() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sPublish::clear_msg() {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    msg_->clear();
+  }
+  clear_has_msg();
+}
+inline const ::std::string& sPublish::msg() const {
+  return *msg_;
+}
+inline void sPublish::set_msg(const ::std::string& value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void sPublish::set_msg(const char* value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void sPublish::set_msg(const char* value, size_t size) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sPublish::mutable_msg() {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  return msg_;
+}
+inline ::std::string* sPublish::release_msg() {
+  clear_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msg_;
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sPublish::set_allocated_msg(::std::string* msg) {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    delete msg_;
+  }
+  if (msg) {
+    set_has_msg();
+    msg_ = msg;
+  } else {
+    clear_has_msg();
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 

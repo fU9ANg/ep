@@ -22,4 +22,5 @@ int ecryptAES128(const char *pathname , const char * password , int mode);
 int ecryptAES128Parallel(const char *pathname , const char * password , int mode);
 
 
+
 #endif

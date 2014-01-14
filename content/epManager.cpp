@@ -19,18 +19,31 @@ epManager::~epManager(void) {
 }
 
 bool
-epManager::insertClassroom(epClassroom& obj) {
+epManager::insertClassroom(epClassroom* pObj) {
         EPCLASSROOM_MAP::iterator it = classroomMap_.begin();
         EPCLASSROOM_MAP::const_iterator cie = classroomMap_.end();
 
         for (; cie!=it; ++it) {
-                if (obj.getId() == it->first) {
+                if (pObj->getId() == it->first) {
                         return false;
                 }
         }
 
-        classroomMap_.insert(std::make_pair<int, epClassroom>(obj.getId(), obj));
+        classroomMap_.insert(std::make_pair<int, epClassroom*>(pObj->getId(), pObj));
         return true;
+}
+
+bool
+epManager::deleteClassroomById(int id) {
+        EPCLASSROOM_MAP::iterator it = classroomMap_.find(id);
+        if (classroomMap_.end() != it) { // found
+                delete it->second;
+                it->second = NULL;
+                classroomMap_.erase(it);
+                return true;
+        } else {
+                return false;
+        }
 }
 
 bool
@@ -63,16 +76,18 @@ epManager::getClassroomByFd(const int fd) {
         EPCLASSROOM_MAP::iterator it = classroomMap_.begin();
         EPCLASSROOM_MAP::const_iterator cie = classroomMap_.end();
         for (; cie!=it; ++it) {
-                if (NULL != (it->second).getStudentById(fd)) { // 学生
-                        return &(it->second);
+                if (NULL != (it->second)->getStudentByFd(fd)) { // 学生
+                        return it->second;
                 }
 
-                if (fd == (it->second).getTeacher()->getFd()) { // 教室。
-                        return &(it->second);
+                const epTeacher* pTeacher = (it->second)->getTeacher();
+                if (NULL!=pTeacher && fd==pTeacher->getFd()) { // 教室。
+                        return it->second;
                 }
 
-                if (fd == (it->second).getWhiteBoard()->getFd()) { // 白板。
-                        return &(it->second);
+                const epWhiteBoard* pWhiteboard = (it->second)->getWhiteBoard();
+                if (NULL!=pWhiteboard && fd==pWhiteboard->getFd()) { // 白板。
+                        return it->second;
                 }
         }
 
@@ -85,8 +100,8 @@ epManager::getClassroomByClassId(const int class_id) {
         EPCLASSROOM_MAP::const_iterator cie = classroomMap_.end();
 
         for (; cie!=it; ++it) {
-                if (NULL != (it->second).getClassById(class_id)) {
-                        return &(it->second);
+                if (NULL != (it->second)->getClassById(class_id)) {
+                        return it->second;
                 }
         }
 
@@ -110,7 +125,7 @@ epManager::getClassroomById(const int classroom_id) {
 
         EPCLASSROOM_MAP::iterator it = classroomMap_.find(classroom_id);
         if (classroomMap_.end() != it) { // found
-                return &(it->second);
+                return it->second;
         } else {
                 return NULL;
         }
@@ -123,7 +138,7 @@ epManager::getClassById(const int class_id) {
 
         epClass* pClass = NULL;
         for (; cie!=it; ++it) {
-                pClass = (it->second).getClassById(class_id);
+                pClass = (it->second)->getClassById(class_id);
                 if (NULL != pClass) {
                         return pClass;
                 }
@@ -210,6 +225,21 @@ epManager::getUserByFd(const int fd) {
         return (userMap_.end()!=it) ? it->second : NULL;
 }
 
+const epUser*
+epManager::getUserByFdFromClassroom(const int fd) {
+        EPCLASSROOM_MAP::iterator it  = classroomMap_.begin();
+        EPCLASSROOM_MAP::const_iterator cie  = classroomMap_.end();
+        epUser* pUser = NULL;
+        for (; cie!=it; ++it) {
+                pUser = const_cast<epUser*>((it->second)->getUserByFd(fd));
+                if (NULL != pUser) {
+                        return pUser;
+                }
+        }
+
+        return NULL;
+}
+
 const epStudent*
 epManager::getStudentByIdFromUser(const int student_id) {
         EPUSER_MAP::iterator it = userMap_.begin();
@@ -232,7 +262,7 @@ epManager::getStudentByIdFromClassroom(const int id) {
 
         epStudent* pStudent = NULL;
         for (; cie!=it; ++it) {
-                pStudent = const_cast<epStudent*>((it->second).getStudentById(id));
+                pStudent = const_cast<epStudent*>((it->second)->getStudentById(id));
                 if (NULL != pStudent) {
                         return pStudent;
                 }
@@ -255,8 +285,8 @@ epManager::getTeacherByFd(const int fd) {
         EPCLASSROOM_MAP::const_iterator cie = classroomMap_.end();
 
         for (; cie!=it; ++it) {
-                if (fd == (it->second).getTeacher()->getFd()) {
-                        return (it->second).getTeacher();
+                if (fd == (it->second)->getTeacher()->getFd()) {
+                        return (it->second)->getTeacher();
                 }
         }
 
@@ -284,8 +314,8 @@ epManager::getTeacherByIdFromClassroom(const int teacher_id) {
         EPCLASSROOM_MAP::const_iterator cie = classroomMap_.end();
 
         for (; cie!=it; ++it) {
-                if (teacher_id == (it->second).getTeacher()->getId()) {
-                        return (it->second).getTeacher();
+                if (teacher_id == (it->second)->getTeacher()->getId()) {
+                        return (it->second)->getTeacher();
                 }
         }
 
@@ -294,7 +324,13 @@ epManager::getTeacherByIdFromClassroom(const int teacher_id) {
 
 std::vector<int>
 epManager::getActiveStudentListFromClass(const int class_id) {
-        return getClassById(class_id)->getActiveStudent();
+        epClass* pClass = getClassById(class_id);
+        if (NULL != pClass) {
+                return pClass->getActiveStudent();
+        } else {
+                std::vector<int> vi;
+                return vi;
+        }
 }
 
 bool
@@ -309,7 +345,7 @@ epManager::insertStudentFromUserIntoClass(const int class_id) {
                 if (FT_SCHOOL == (it->second)->getFuncType() && LT_STUDENT == (it->second)->getType()) {
                         pStudent = dynamic_cast<epStudent*>(it->second);
                         if (class_id == pStudent->getClassId()) {
-                                pClass->insertStudent(it->first, *pStudent);
+                                pClass->insertStudent(it->first, pStudent);
                                 userMap_.erase(it);
                         }
                 }
@@ -345,7 +381,7 @@ epManager::getTeacherById(const int teacher_id) {
         */
 
         epTeacher* pTeacher = NULL;
-        return pTeacher=getTeacherByIdFromUser(teacher_id)
+        return (NULL != (pTeacher=const_cast<epTeacher*>(getTeacherByIdFromUser(teacher_id))))
                 ? pTeacher                                 // found from userMap_
                 : const_cast<epTeacher*>(getTeacherByIdFromClassroom(teacher_id)); // found from Classroom
 }
@@ -358,7 +394,7 @@ epManager::sendtoAllClassroom(Buf* pBuf) {
         for (; cie!=it; ++it) {
                 p = SINGLE->bufpool.malloc();
                 p = pBuf;
-                (it->second).sendtoAllClass(p);
+                (it->second)->sendtoAllClass(p);
         }
         SINGLE->bufpool.free(pBuf);
 
@@ -369,7 +405,7 @@ bool
 epManager::sendtoClassroomById(const int classroom_id, Buf* pBuf) {
         EPCLASSROOM_MAP::iterator it = classroomMap_.find(classroom_id);
         if (classroomMap_.end() != it) { // found
-                (it->second).sendtoAllClass(pBuf);
+                (it->second)->sendtoAllClass(pBuf);
                 return true;
         } else {
                 return false;
@@ -411,7 +447,7 @@ epManager::dumpClassroom(void) {
         EPCLASSROOM_MAP::iterator it = classroomMap_.begin();
         EPCLASSROOM_MAP::const_iterator cie = classroomMap_.end();
         for (; cie!=it; ++it) {
-                (it->second).dump();
+                (it->second)->dump();
         }
 }
 

@@ -12,28 +12,22 @@
 #include <map>
 #include "../Buf.h"
 
+#include "epBase.h"
+
 #include "epStudent.h"
 
-typedef std::map<int, epStudent> STUDENT_MAP;
+typedef std::map<int, epStudent*> STUDENT_MAP;
 
 /**
  * @brief 组别类。
  */
-class epGroup {
+class epGroup : public epBase {
 public :
         epGroup(void);
         ~epGroup(void);
         /**
          * @name set
          * @{ */
-        /**
-         * @brief 设置组ID。
-         *
-         * @param int[in] 指定组ID。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        bool setId(const int);
         /**
          * @brief 向学生列表中插入指定FD和学生对象。
          *
@@ -42,7 +36,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool insertStudent(int, const epStudent&);
+        bool insertStudent(int, epStudent*);
         /**
          * @brief 移除学生列表中的指定FD的学生对象，并不delete学生对象。
          *
@@ -56,12 +50,6 @@ public :
         /**
          * @name get
          * @{ */
-        /**
-         * @brief 获取组ID。
-         *
-         * @return 成功返回组ID，否则返回EPGROUP_INVALID_GROUP_ID。
-         */
-        const int getId(void) const;
         /**  @} */
 
         /**
@@ -95,10 +83,6 @@ public :
 
 
 private :
-        /**
-         * @brief 组ID
-         */
-        int id_;
         /**
          * @brief 该组学生列表。
          */

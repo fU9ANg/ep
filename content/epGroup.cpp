@@ -2,25 +2,19 @@
 #include "../netdef.h" // for EPGROUP_INVALID_GROUP_ID
 #include "../Single.h"
 
-epGroup::epGroup(void) : id_(EPGROUP_INVALID_GROUP_ID) {
+epGroup::epGroup(void) {
 }
 
 epGroup::~epGroup(void) {
 }
 
 bool
-epGroup::setId(const int id) {
-        id_ = id;
-        return true;
-}
-
-bool
-epGroup::insertStudent(int fd, const epStudent& student) {
+epGroup::insertStudent(int fd, epStudent* student) {
         STUDENT_MAP::iterator it = studentMap_.find(fd);
         if (studentMap_.end() != it) { // found
                 return false;
         } else {
-                studentMap_.insert(std::make_pair<int, epStudent>(fd, student));
+                studentMap_.insert(std::make_pair<int, epStudent*>(fd, student));
                 return true;
         }
 }
@@ -36,16 +30,11 @@ epGroup::removeStudentByFd(const int fd) {
         }
 }
 
-const int
-epGroup::getId(void) const {
-        return id_;
-}
-
 const epStudent*
 epGroup::getStudentByFd(const int fd) {
         STUDENT_MAP::iterator it = studentMap_.find(fd);
         if (studentMap_.end() != it) { // found
-                return &(it->second);
+                return it->second;
         } else {
                 return NULL;
         }
@@ -80,10 +69,10 @@ epGroup::sendtoStudentByFd(const int fd, Buf* pBuf) {
 
 void
 epGroup::dump(void) {
-        printf("group id = %d\n", id_);
+        epBase::dump();
         STUDENT_MAP::iterator it = studentMap_.begin();
         STUDENT_MAP::const_iterator cie = studentMap_.end();
         for (; cie!=it; ++it) {
-                (it->second).dump();
+                (it->second)->dump();
         }
 }

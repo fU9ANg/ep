@@ -17,6 +17,7 @@
 #include "aes_locl.h"
 
 #ifndef AES_ASM
+
 /*
 Te0[x] = S [x].[02, 01, 01, 03];
 Te1[x] = S [x].[03, 02, 01, 01];
@@ -611,7 +612,7 @@ static const u32 rcon[] = {
  *
  * @return 
  */
-int AES_set_encrypt_key(const unsigned char *userKey, const int bits,
+int AES_set_encrypt_key128(const unsigned char *userKey, const int bits,
 			AES_KEY *key) {
 
 	u32 *rk;
@@ -718,7 +719,7 @@ int AES_set_encrypt_key(const unsigned char *userKey, const int bits,
  *
  * @return 
  */
-int AES_set_decrypt_key(const unsigned char *userKey, const int bits,
+int AES_set_decrypt_key128(const unsigned char *userKey, const int bits,
 			 AES_KEY *key) {
 
         u32 *rk;
@@ -726,7 +727,7 @@ int AES_set_decrypt_key(const unsigned char *userKey, const int bits,
 	u32 temp;
 
 	/* first, start with an encryption schedule */
-	status = AES_set_encrypt_key(userKey, bits, key);
+	status = AES_set_encrypt_key128(userKey, bits, key);
 	if (status < 0)
 		return status;
 
@@ -773,7 +774,7 @@ int AES_set_decrypt_key(const unsigned char *userKey, const int bits,
  * @param out encrypt deta out
  * @param key 
  */
-void AES_encrypt(const unsigned char *in, unsigned char *out,
+void AES_encrypt128(const unsigned char *in, unsigned char *out,
 		 const AES_KEY *key) {
 
 	const u32 *rk;
@@ -967,7 +968,7 @@ void AES_encrypt(const unsigned char *in, unsigned char *out,
  * @param out decrypt data out
  * @param key
  */
-void AES_decrypt(const unsigned char *in, unsigned char *out,
+void AES_decrypt128(const unsigned char *in, unsigned char *out,
 		 const AES_KEY *key) {
 
 	const u32 *rk;

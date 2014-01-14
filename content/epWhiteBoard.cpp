@@ -52,8 +52,15 @@ epWhiteBoard::getClassroomId(void) const {
         return classroomId_;
 }
 
+const std::string
+epWhiteBoard::getNum(void) {
+        return whiteboardNum_;
+}
+
 void
 epWhiteBoard::dump(void) {
         epUser::dump();
-        printf("whileboard number = %s\n", whiteboardNum_.c_str());
+        printf("whileboard number         = %s\n", whiteboardNum_.c_str());
+        printf("whiteboard classroom id   = %d\n", classroomId_);
+        printf("whiteboard classroom name = %s\n", classroomName_.c_str());
 }

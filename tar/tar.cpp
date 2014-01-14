@@ -76,11 +76,11 @@ typedef struct TarBallInfo {
     /**
      * @brief Hard Link Tracking Information
      */
-	struct HardLinkInfo *hlInfoHead;       
+	HardLinkInfo *hlInfoHead;       
     /**
      * @brief Hard Link Info for the current file
      */
-	struct HardLinkInfo *hlInfo;        
+	HardLinkInfo *hlInfo;        
     //TODO: save only st_dev + st_ino
     /**
      * @brief the tarball stat info
@@ -570,7 +570,6 @@ static NOINLINE int writeTarFile(int tar_fd, int verboseFlag,
 	 * can avoid including the tarball into itself....  */
 	xfstat(tbInfo.tarFd, &tbInfo.tarFileStatBuf, "can't stat tar file");
 
-
 	tbInfo.excludeList = exclude;
 
 	/* Read the directory/files and iterate over them one at a time */
@@ -660,7 +659,7 @@ int tarArchive(const char * pathname,const char * tarname)
  *
  * @return 打包成功返回0，失败返回-1
  */
-int tarExtract(const char * tarname)
+int tarExtract(const char * tarname , const char * dirname)
 {
 	archive_handle_t *tar_handle;
 	tar_handle = init_handle();
@@ -678,6 +677,7 @@ int tarExtract(const char * tarname)
 	if (tar_handle->accept || tar_handle->reject)
 	tar_handle->filter = filter_accept_reject_list;
 
+
 	/* Open the tar file */
 	{
 		int tar_fd = STDIN_FILENO;
@@ -687,16 +687,81 @@ int tarExtract(const char * tarname)
 			tar_handle->src_fd = tar_fd;
 			tar_handle->seek = seek_by_read;
 		} else {
-			printf("do this\n");
 			tar_handle->src_fd = xopen(tarname, flags);
 		}
 	}
 	ret = EXIT_FAILURE;
 
+    if(dirname != NULL)
+            xchdir(dirname);
+
 	while (get_header_tar(tar_handle) == EXIT_SUCCESS)
 		ret = EXIT_SUCCESS; /* saw at least one header, good */
 
 	return ret;
+
+}
+
+
+int tarAppend(const char * pathname,const char * tarname)
+{
+        archive_handle_t * tar_handle;
+        tar_handle = init_handle();
+	    tar_handle->ah_flags = ARCHIVE_CREATE_LEADING_DIRS
+	                     | ARCHIVE_RESTORE_DATE
+	                     | ARCHIVE_UNLINK_OLD;
+
+	
+	    llist_add_to_end(&tar_handle->accept, (void *)pathname);
+        /* Open the tar file */
+        {
+	    	
+	    	int tar_fd = STDIN_FILENO;
+	    	int flags = O_RDONLY;
+	    	if (tar_handle->accept == NULL){
+	    		//To do notice
+	    		return -1;
+	    	}
+
+	    	flags = O_WRONLY | O_CREAT;
+
+	    	if (LONE_DASH(tarname)) {
+	    		tar_handle->src_fd = tar_fd;
+	    		tar_handle->seek = seek_by_read;
+	    	} else {
+	    		tar_handle->src_fd = xopen(tarname, flags);
+	    	}
+	    }
+
+
+#define TAR_TAIL_SKIP  (2*TAR_BLOCK_SIZE)
+        struct stat info;
+        fstat(tar_handle->src_fd,&info);
+        int size=info.st_size;
+        int status = lseek(tar_handle->src_fd, size-TAR_TAIL_SKIP,SEEK_SET);
+
+        int errorFlag = FALSE;
+	    struct TarBallInfo tbInfo;
+	    tbInfo.hlInfoHead = NULL;
+	    tbInfo.tarFd = tar_handle->src_fd;
+	    tbInfo.verboseFlag = 1;
+
+	    /* Store the stat info for the tarball's file, so
+	     * can avoid including the tarball into itself....  */
+	    xfstat(tbInfo.tarFd, &tbInfo.tarFileStatBuf, "can't stat tar file");
+
+	    tbInfo.excludeList = NULL;
+
+	    /* Read the directory/files and iterate over them one at a time */
+        struct stat statbuf;
+        lstat(pathname,&statbuf);
+        writeFileToTarball(pathname, &statbuf,&tbInfo, 0);
+
+        
+	    memset(block_buf, 0, 2*TAR_BLOCK_SIZE);
+	    xwrite(tbInfo.tarFd, block_buf, 2*TAR_BLOCK_SIZE);
+        return 0;
+
 
 }
 
@@ -713,13 +778,13 @@ int main(int argc,char *argv[])
 {
 	//char *pathname="test";
 	//char *tarname="test.tar";
-	tarArchive(argv[1],argv[2]);
-
-	//tarExtract(tarname);
+	//tarArchive("test","/home/duanwujie/test.tar");
+    //tarAppend("ta.txt","test.tar");
+    //tarAppend("cao.txt","test.tar");
+	tarExtract("/home/duanwujie/test.tar","/home/duanwujie/");
 	return 0;
 }
 #endif
-
 
 
 

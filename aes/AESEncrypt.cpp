@@ -2,11 +2,7 @@
 
 #include "AESEncrypt.h"
 
-/* 
- *
- *
- *
- */
+
 
 /**
  * @brief 加密/解密接口
@@ -46,9 +42,9 @@ int ecryptAES128(const char * pathname , const char * password , int flag)
     }
 
     if(1 == flag){
-        ret = AES_set_decrypt_key((const unsigned char *)key16,128,&key);
+        ret = AES_set_decrypt_key128((const unsigned char *)key16,128,&key);
     }else if (0 == flag){
-        ret = AES_set_encrypt_key((const unsigned char *)key16,128,&key);
+        ret = AES_set_encrypt_key128((const unsigned char *)key16,128,&key);
     }else{
         printf("Mode not support\n");
         return -1;
@@ -88,21 +84,21 @@ int ecryptAES128(const char * pathname , const char * password , int flag)
         unsigned char * pmap=mapmem;
         while(processSize != 0){
             if(processSize >= CRYPT_BLOCK_SIZE){
-                if(1 == flag)AES_cbc_encrypt(pmap,out,CRYPT_BLOCK_SIZE,&key,iv,AES_DECRYPT);
-                else if(0 == flag)AES_cbc_encrypt(pmap,out,CRYPT_BLOCK_SIZE,&key,iv,AES_ENCRYPT);
+                if(1 == flag)AES_cbc_encrypt128(pmap,out,CRYPT_BLOCK_SIZE,&key,iv,AES_DECRYPT);
+                else if(0 == flag)AES_cbc_encrypt128(pmap,out,CRYPT_BLOCK_SIZE,&key,iv,AES_ENCRYPT);
                 memcpy(pmap,out,CRYPT_BLOCK_SIZE);
                 starpos+=CRYPT_BLOCK_SIZE;
                 processSize-=CRYPT_BLOCK_SIZE;
                 pmap+=CRYPT_BLOCK_SIZE;
             }else if(processSize < CRYPT_BLOCK_SIZE && processSize >= 1){
                 if(1 == flag){
-                    AES_cbc_encrypt(pmap,out,processSize,&key,iv,AES_DECRYPT);
+                	AES_cbc_encrypt128(pmap,out,processSize,&key,iv,AES_DECRYPT);
                     memcpy(pmap,out,processSize);
                     processSize = 0;
                 }
 
                 else if(0 == flag){
-                        AES_cbc_encrypt(pmap,out,processSize,&key,iv,AES_ENCRYPT);
+                		AES_cbc_encrypt128(pmap,out,processSize,&key,iv,AES_ENCRYPT);
                         ret = processSize;
                         processSize = (processSize & 0xFFFFFFF0) +((processSize & 0xF)?16:0);
                         *(out+processSize) = (processSize - ret);

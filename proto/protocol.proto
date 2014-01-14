@@ -18,7 +18,8 @@ message cLogout {
 
 // ST_Logout
 message sLogout {
-        required int32 common   = 1;
+        required int32 login_type  = 1; // 说明是哪种类型的客户端退出。
+        required string num        = 2;
 }
 
 // CT_GetFuncList
@@ -192,4 +193,119 @@ message sGetTeacherInfo {
         required string native          = 7;
         required string school_name     = 8;
 }
+
+// CT_SetGroup
+message cSetGroup {
+        required int32  group_id        = 1;
+        required string group_name      = 2;
+        required int32  student_cnt     = 4;
+        required string student_list    = 3;
+}
+
+// ST_SetGroup
+message sSetGroup {
+        required bool   result          = 1;
+        required string msg             = 2;
+}
+
 /*}}}*/
+
+// 绘本
+// CT_GetPersonalBooksList,
+message cGetPersonalBooksList {
+}
+
+// CT_GetServerAddr
+message cGetServerAddr {
+}
+
+// ST_GetServerAddr
+message sGetServerAddr {
+        required string serv_addr       = 1;
+}
+
+// ST_GetPersonalBooksList,
+message sGetPersonalBooksList {
+        required int32  book_id         = 1; // key
+        required string book_name       = 2;
+        required int32  book_type       = 4;
+        required string res_path        = 3;
+}
+
+// CT_GetPublicBooksList,
+message cGetPublicBooksList {
+}
+
+// ST_GetPublicBooksList,
+message sGetPublicBooksList {
+        required int32  book_id         = 1; // key
+        required string book_name       = 2;
+        required int32  book_type       = 4;
+        required string res_path        = 3;
+}
+
+// CT_UploadBook,
+message cUploadBook {
+        required string book_name       = 1;
+        required int32  book_type       = 2;
+        required string time            = 3;
+        required int32  belongs         = 4; // 所属班，用二进制占位表示。
+        required int32  art             = 5;
+        required int32  language        = 6;
+        required int32  community       = 7;
+        required int32  health          = 8;
+        required int32  science         = 9;
+        required string res_path        = 10;
+}
+// ST_UploadBook,
+message sUploadBook {
+        required bool result            = 1; // 信息保存成功否。
+        required string msg             = 2;
+}
+
+// 从私人服务器进行下载。
+// CT_DownloadFromPersonal,
+message cDownloadFromPersonal {
+        required int32  book_id         = 1;
+}
+
+// ST_DownloadFromPersonal,
+message sDownloadFromPersonal {
+        required string down_addr       = 1;
+}
+
+// 从公共服务器进行下载。
+// CT_DownloadFromPublic,
+message cDownloadFromPublic {
+        required int32  book_id         = 1;
+}
+
+// ST_DownloadFromPublic,
+message sDownloadFromPublic {
+        required string down_addr       = 1;
+}
+
+// 指定传输。
+// CT_TransferBook,
+message cTransferBook {
+        required int32  book_id         = 1;
+        required string account         = 2;
+}
+
+// ST_TransferBook,
+message sTransferBook {
+        required bool   result          = 1;
+        required string msg             = 2;
+}
+
+// 发布。
+// CT_Publish,
+message cPublish {
+        required int32  book_id         = 1;
+}
+
+// ST_Publish,
+message sPublish {
+        required bool   result          = 1;
+        required string msg             = 2;
+}

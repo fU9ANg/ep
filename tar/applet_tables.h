@@ -18,3 +18,4 @@ const uint16_t applet_nameofs[] ALIGN2 = {
 const uint8_t applet_install_loc[] ALIGN1 = {
 0x01,
 };
+

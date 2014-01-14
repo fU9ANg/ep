@@ -62,7 +62,6 @@ epUser::getPasswd(void) const {
 
 const enum LoginType
 epUser::getType(void) const {
-        printf("[DEBUG] epUser::getType : enter!\n");
         return LT_USER;
 }
 

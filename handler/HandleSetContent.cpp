@@ -33,6 +33,7 @@ void CHandleMessage::handleSetContent (Buf* p)
                 SINGLE->bufpool.free(p);
                 return;
         }
+
         const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(user);
         if (NULL == pTeacher) {
                 SINGLE->bufpool.free(p);
@@ -40,7 +41,13 @@ void CHandleMessage::handleSetContent (Buf* p)
         }
 
         cSetContent sc;
-        unpacket(p, sc);
+        if (!unpacket(p, sc)) { // 解包失败。
+#ifdef __DEBUG__
+                printf("[DEBUG] %s : unpacket fail!\n", __func__);
+#endif
+                SINGLE->bufpool.free(p);
+                return;
+        }
         int classroom_id = sc.classroom_id();
 
         sSetContent tmp;
@@ -50,6 +57,7 @@ void CHandleMessage::handleSetContent (Buf* p)
                 tmp.set_msg("该教室已经被使用！");
                 SINGLE->sendqueue.enqueue(packet(ST_SetContent, tmp, p->getfd()));
                 SINGLE->bufpool.free(p);
+                return;
         }
 
         epClass* pClass = EPMANAGER->getClassById(sc.class_id());
@@ -58,15 +66,24 @@ void CHandleMessage::handleSetContent (Buf* p)
                 tmp.set_msg("该班已经在上课了！");
                 SINGLE->sendqueue.enqueue(packet(ST_SetContent, tmp, p->getfd()));
                 SINGLE->bufpool.free(p);
+                return;
         }
 
-        pClassroom = new epClassroom(sc.classroom_id());
-        pClass     = new epClass(sc.class_id());
 
+        // TODO : add whiteboard into classroom
+
+        pClassroom = new epClassroom();
         pClassroom->setTeacher(pTeacher);
-        pClassroom->insertClass(*pClass);
+        EPMANAGER->removeUserByFd(p->getfd());
 
-        EPMANAGER->insertClassroom(*pClassroom);
+        pClass     = new epClass();
+        pClass->setId(sc.class_id());
+        pClassroom->insertClass(pClass);
+
+        // insert classroom
+        pClassroom->setId(sc.classroom_id());
+        EPMANAGER->insertClassroom(pClassroom);
+
         EPMANAGER->insertStudentFromUserIntoClassroom(classroom_id);
 
         tmp.set_result(true);
@@ -74,6 +91,11 @@ void CHandleMessage::handleSetContent (Buf* p)
 #ifdef __DEBUG_DUMP__
         EPMANAGER->dumpClassroom();
 #endif
-        SINGLE->sendqueue.enqueue(packet(ST_SetContent, tmp, p->getfd()));
-        SINGLE->bufpool.free(p);
+        Buf* pBuf = packet(ST_SetContent, tmp, p->getfd());
+        if (NULL != pBuf) {
+                SINGLE->sendqueue.enqueue(pBuf);
+                SINGLE->bufpool.free(p);
+        }
+
+        return;
 }

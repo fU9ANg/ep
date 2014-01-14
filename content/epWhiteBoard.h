@@ -85,6 +85,7 @@ public :
          * @return 教室ID。
          */
         int getClassroomId(void) const;
+        virtual const std::string getNum(void);
         /**  @} */
 
         /**

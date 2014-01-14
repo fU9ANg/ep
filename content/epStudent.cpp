@@ -64,6 +64,7 @@ epStudent::init(const std::string& account, const std::string& passwd) {
                                 //setBirthday (prst->getString ("birthday"));
                                 setNative (prst->getString ("native_name"));
 
+                                setId         (prst->getInt    ("student_id"));
                                 setStudentNum (prst->getString ("number"));
                                 setClassId (prst->getInt ("class_id"));
                                 setClassName (prst->getString ("class_name"));
@@ -100,6 +101,11 @@ epStudent::getClassId(void) const {
 const enum LoginType
 epStudent::getType(void) const {
         return LT_STUDENT;
+}
+ 
+const std::string
+epStudent::getNum(void) {
+        return studentNum_;
 }
 
 void

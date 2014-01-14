@@ -12,28 +12,24 @@
 #include <map>
 #include <vector>
 
+#include "epBase.h"
+
 #include "epStudent.h"
 #include "../Buf.h"
 
-typedef std::map<int, epStudent> EPSTUDENT_MAP;
+typedef std::map<int, epStudent*> EPSTUDENT_MAP;
 
 /**
  * @brief 班级类。
  */
-class epClass {
+class epClass : public epBase {
 public :
-        epClass(const int);
+        epClass(void);
         ~epClass(void);
 
         /**
          * @name get
          * @{ */
-        /**
-         * @brief 获取该班ID。
-         *
-         * @return 成功返回该班级ID，否则返回EPCLASS_INVALID_CLASS_ID
-         */
-        int getId(void);
         /**
          * @brief 根据学生ID获取学生对象指针。
          *
@@ -54,14 +50,6 @@ public :
          * @name set
          * @{ */
         /**
-         * @brief 设置班级ID。
-         *
-         * @param int[in] 班级ID。
-         *
-         * @return 设置成功返回TRUE，否则返回FALSE。
-         */
-        bool setId(const int);
-        /**
          * @brief 将指定fd和学生对象插入到学生列表中。
          *
          * @param int[in] 指定FD。
@@ -69,7 +57,7 @@ public :
          *
          * @return 插入成功返回true，否则返回false。
          */
-        bool insertStudent(int, const epStudent&);
+        bool insertStudent(int, epStudent*);
         /**
          * @brief 从学生列表中移除指定FD的学生对象，并不delete该学生对象。
          *
@@ -78,6 +66,14 @@ public :
          * @return 移除成功返回true，否则返回false。
          */
         bool removeStudentByFd(const int);
+        /**
+         * @brief 根据FD删除学生。
+         *
+         * @param int[in] 指定FD。
+         *
+         * @return 删除成功返回true，否则返回false。
+         */
+        bool deleteStudentByFd(const int);
         /**  @} */
 
         /**
@@ -125,10 +121,6 @@ public :
 
 
 private :
-        /**
-         * @brief 班级ID。
-         */
-        int id_;
         /**
          * @brief 学生列表。first为FD，second为学生对象。
          */

@@ -18,7 +18,13 @@ void CHandleMessage::handleGetStudentInfo (Buf* p)
         // TODO:
 
         cGetStudentInfo gsi;
-        unpacket(p, gsi);
+        if (!unpacket(p, gsi)) { // 解包失败。
+#ifdef __DEBUG__
+                printf("[DEBUG] %s : unpacket fail!\n", __func__);
+#endif
+                SINGLE->bufpool.free(p);
+                return;
+        }
 
         sGetStudentInfo tmp;
         const epStudent* pStudent = EPMANAGER->getStudentById(gsi.id());
@@ -27,17 +33,17 @@ void CHandleMessage::handleGetStudentInfo (Buf* p)
                 string Account;
                 try {
                         MutexLockGuard guard(DATABASE->m_mutex);
-                        PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_STU_INFO_BY_NUM);
+                        PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_STU_INFO_BY_ID);
                         pstmt->setInt (1, gsi.id());
                         ResultSet* prst = pstmt->executeQuery ();
                         while (prst->next ()) {
-                                tmp.set_id        (prst->getInt("id"));
+                                tmp.set_id        (prst->getInt("student_id"));
                                 tmp.set_number    (prst->getString("number"));
-                                tmp.set_name      (prst->getString("name"));
+                                tmp.set_name      (prst->getString("last_name") + prst->getString("first_name"));
                                 tmp.set_sex       (prst->getString("sex"));
-                                tmp.set_race      (prst->getString("race"));
-                                tmp.set_birthday  (prst->getString("birthday"));
-                                tmp.set_native    (prst->getString("native"));
+                                tmp.set_race      (prst->getString("race_name"));
+                                tmp.set_birthday  (prst->getString("native_name"));
+                                tmp.set_native    (prst->getString("native_name"));
                                 tmp.set_class_name(prst->getString("class_name"));
                         }
                         delete prst;
@@ -55,6 +61,9 @@ void CHandleMessage::handleGetStudentInfo (Buf* p)
                 tmp.set_class_name(pStudent->getClassName());
         }
 
-        SINGLE->sendqueue.enqueue(packet(ST_GetStudentInfo, tmp, p->getfd()));
+        Buf* pBuf = packet(ST_GetStudentInfo, tmp, p->getfd());
+        if (NULL != pBuf) {
+                SINGLE->sendqueue.enqueue(pBuf);
+        }
         SINGLE->bufpool.free(p);
 }
