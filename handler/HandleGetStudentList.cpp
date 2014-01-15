@@ -49,9 +49,13 @@ void CHandleMessage::handleGetStudentList (Buf* p)
         }catch (SQLException e) {
         }
 
-        Buf* pBuf = packet(ST_GetStudentList, vc, p->getfd());
-        if (NULL != pBuf) {
-                SINGLE->sendqueue.enqueue(pBuf);
+        for (int i=0; i<(signed)vc.size(); ++i) {
+                Buf* pBuf = packet(ST_GetStudentList, vc[i], p->getfd());
+                if (NULL != pBuf) {
+                        *(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN) = vc.size();
+                        SINGLE->sendqueue.enqueue(pBuf);
+                }
         }
+
         SINGLE->bufpool.free(p);
 }

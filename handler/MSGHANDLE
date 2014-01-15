@@ -31,3 +31,7 @@ MSGNAME(CT_DownloadFromPersonal,        handleDownloadFromPersonal);
 MSGNAME(CT_DownloadFromPublic,          handleDownloadFromPublic);
 MSGNAME(CT_TransferBook,                handleTransferBook);
 MSGNAME(CT_Publish,                     handlePublish);
+
+// 绘画
+MSGNAME(CT_UpdateMutex, handleUpdateMutex);
+MSGNAME(CT_UpdateBackground, handleUpdateGroupDrawMsg);

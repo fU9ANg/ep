@@ -131,6 +131,17 @@ epManager::getClassroomById(const int classroom_id) {
         }
 }
 
+const epGroup*
+epManager::getGroupByFd(const int fd) {
+        epClassroom* pClassroom = getClassroomByFd(fd);
+        if (NULL == pClassroom) {
+                return NULL;
+        } else {
+                const epGroup* pGroup = pClassroom->getGroupByFd(fd);
+                return pGroup;
+        }
+}
+
 epClass*
 epManager::getClassById(const int class_id) {
         EPCLASSROOM_MAP::iterator it = classroomMap_.begin();

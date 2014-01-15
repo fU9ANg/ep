@@ -2,7 +2,7 @@
 #include "../netdef.h" // for EPGROUP_INVALID_GROUP_ID
 #include "../Single.h"
 
-epGroup::epGroup(void) {
+epGroup::epGroup(void) : lock_() {
 }
 
 epGroup::~epGroup(void) {
@@ -46,6 +46,9 @@ epGroup::sendtoAllStudent(Buf* pBuf) {
         STUDENT_MAP::const_iterator cie = studentMap_.end();
         Buf* p = NULL;
         for (; cie!=it; ++it) {
+                if (pBuf->getfd() == (it->second)->getFd()) {
+                        continue;
+                }
                 p = SINGLE->bufpool.malloc();
                 p = pBuf;
                 p->setfd(it->first);
@@ -64,6 +67,23 @@ epGroup::sendtoStudentByFd(const int fd, Buf* pBuf) {
                 return true;
         } else {
                 return false;
+        }
+}
+
+bool
+epGroup::setLock(const int lock) {
+        int i = 0;
+        for (; i<(signed)sizeof(lock); ++i) {
+                if ((lock&(1<<i)) != 0) {
+                        break;
+                }
+        }
+
+        if ((lock_&(1<<i)) != 0) {
+                return false;
+        } else {
+                lock_ = lock_ | (1<<i);
+                return true;
         }
 }
 

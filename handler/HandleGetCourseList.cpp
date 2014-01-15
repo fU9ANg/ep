@@ -71,6 +71,12 @@ void CHandleMessage::handleGetCourseList (Buf* p)
         }catch (SQLException e) {
         }
 
-        SINGLE->sendqueue.enqueue(packet(ST_GetCourseList, vc, p->getfd()));
+        for (int i=0; i<(signed)vc.size(); ++i) {
+                Buf* pBuf = packet(ST_GetCourseList, vc[i], p->getfd());
+                if (NULL != pBuf) {
+                        *(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN) = vc.size();
+                        SINGLE->sendqueue.enqueue(pBuf);
+                }
+        }
         SINGLE->bufpool.free(p);
 }

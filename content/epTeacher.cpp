@@ -90,7 +90,9 @@ epTeacher::init(const std::string& account, const std::string& passwd) {
                 ResultSet* prst = pstmt->executeQuery ();
                 while (prst->next ()) {
                         strpwd = prst->getString ("password");
-                        if (0 == strncmp(passwd.c_str(), strpwd.c_str(), strpwd.size()) && passwd.size() > 0) {
+                        if (0 == strncmp(passwd.c_str(), strpwd.c_str(), strpwd.size())
+                                        && passwd.size() > 0
+                                        && strpwd.size() == passwd.size()) {
 
                                 printf("teacher: login success!\n"); // ADD student_name to CLASS
                                 setName (prst->getString("last_name"), prst->getString ("first_name"));

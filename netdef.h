@@ -72,19 +72,13 @@
 #       define EPGROUP_INVALID_GROUP_ID (-1)
 #endif
 
-// for handle content
-#ifndef CHECK_USER
-#define CHECK_USER(T, obj) \
-        epUser* user = EPMANAGER->getUserByFd(p->getfd()); \
-        if (NULL == user) { \
-                SINGLE->bufpool.free(p); \
-                return; \
-        } \
-        T* obj = dynamic_cast<T*>(user);\
-        if (NULL == obj) { \
-                SINGLE->bufpool.free(p); \
-                return; \
-        }
+// for epUser.cpp
+#ifndef EPUSER_INVALID_USER_ID
+#       define EPUSER_INVALID_USER_ID   (-1)
+#endif
+
+#ifndef EPUSER_INVALID_USER_FD
+#       define EPUSER_INVALID_USER_FD (-1)
 #endif
 
 #endif // __NETDEF_H__

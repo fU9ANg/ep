@@ -17,7 +17,7 @@
 #include "../protocol.h"
 #include "../Sock.h"
 #include "../message/proto/protocol.pb.h"
-#define SERV_IP "192.168.0.194"
+#define SERV_IP "192.168.0.145"
 #define SERV_PORT 9999 
 
 #define MAX_BUFF_SIZE   8192
@@ -54,7 +54,13 @@ struct numberProto NPARRAY [] =
     {13,"CT_GetActiveStudentList" },
     {14,"CT_UploadBook" },
     {15,"CT_GetPersonalBooksList" },
-    {16,"Print_Message_List" },
+    {16,"CT_GetPublicBooksList" },
+    {17,"CT_GetServerAddr" },
+    {18,"CT_DownloadFromPersonal" },
+    {19,"CT_DownloadFromPublic" },
+    {20,"CT_TransferBook" },
+    {21,"CT_Publish" },
+    {22,"Print_Message_List" },
 };
 
 #define ARRAY_SIZE  (sizeof(NPARRAY)/sizeof(NPARRAY[0]))
@@ -125,7 +131,8 @@ void dumpGetFuncList (string proto, char* buffer)
 
     for (; i<count; i++) {
         sGetFuncList fl;
-        strGetFuncList = buffer + MSG_HEAD_LEN + sizeof (int) + i * sizeof (sGetFuncList);
+        // strGetFuncList = buffer + MSG_HEAD_LEN + sizeof (int) + i * sizeof (sGetFuncList);
+        strGetFuncList = (char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof(int) + i*sizeof(sGetFuncList);
         fl.ParseFromString (strGetFuncList);
         //
         cout << "grade(" << i << ") id=" << fl.id () << endl;
@@ -226,9 +233,91 @@ void dumpSetContent (string proto, char* buffer)
     
     dumpTail (buffer);
 }
+void dumpGetServerAddr(string proto, char* buffer)
+{
+    // ST_GetServerAddr
+    dumpHead (proto, buffer);
+    string strGetServerAddr;
+
+    sGetServerAddr sa;
+    strGetServerAddr = buffer + MSG_HEAD_LEN + sizeof(int);
+    sa.ParseFromString (strGetServerAddr);
+
+    //
+    cout << "server addr=" << sa.serv_addr() << endl;
+ 
+    dumpTail (buffer);
+}
+
+void dumpDownloadFromPersonal(string proto, char* buffer)
+{
+    // ST_DownloadFromPersonal
+    dumpHead (proto, buffer);
+    string strDownloadFromPersonal;
+
+    sDownloadFromPersonal dfp;
+    strDownloadFromPersonal = buffer + MSG_HEAD_LEN + sizeof(int);
+    dfp.ParseFromString (strDownloadFromPersonal);
+
+    //
+    cout << "personal down addr=" << dfp.down_addr() << endl;
+ 
+    dumpTail (buffer);
+}
+
+void dumpDownloadFromPublic(string proto, char* buffer)
+{
+    // ST_DownloadFromPublic
+    dumpHead (proto, buffer);
+    string strDownloadFromPublic;
+
+    sDownloadFromPublic fp;
+    strDownloadFromPublic= buffer + MSG_HEAD_LEN + sizeof(int);
+    fp.ParseFromString (strDownloadFromPublic);
+
+    //
+    cout << "public down addr=" << fp.down_addr() << endl;
+ 
+    dumpTail (buffer);
+}
+
+void dumpTransferBook(string proto, char* buffer)
+{
+    // ST_TransferBook
+    dumpHead (proto, buffer);
+    string strTransferBook;
+
+    sTransferBook tb;
+    strTransferBook = buffer + MSG_HEAD_LEN + sizeof(int);
+    tb.ParseFromString (strTransferBook);
+
+    //
+    cout << "transfer.result =" << tb.result () << endl;
+    cout << "transfer.message=" << tb.msg() << endl;
+    
+    dumpTail (buffer);
+}
+
+void dumpPublish(string proto, char* buffer)
+{
+    // ST_Publish
+    dumpHead (proto, buffer);
+    string strPublish;
+
+    sPublish p;
+    strPublish = buffer + MSG_HEAD_LEN + sizeof(int);
+    p.ParseFromString (strPublish);
+
+    //
+    cout << "publish.result =" << p.result () << endl;
+    cout << "publish.message=" << p.msg() << endl;
+ 
+    dumpTail (buffer);
+}
 
 void dumpUploadBook (string proto, char* buffer)
 {
+    // ST_UploadBook
     dumpHead (proto, buffer);
     string strUploadBook;
 
@@ -302,6 +391,27 @@ void dumpGetActiveStudentList (string proto, char* buffer)
 	 dumpTail (buffer);
 }
 
+void dumpGetPublicBooksList (string proto, char* buffer)
+{
+    dumpHead (proto, buffer);
+    string strGetPublicBooksList;
+
+	 int count = *(int*) (buffer + MSG_HEAD_LEN);
+	 int i = 0;
+	 	
+	 for(; i < count; i++) {
+		  sGetPublicBooksList gasl;
+		  strGetPublicBooksList = buffer + MSG_HEAD_LEN + sizeof (int) + i * sizeof (sGetPublicBooksList);
+		  gasl.ParseFromString (strGetPublicBooksList);
+		  //
+		  cout << "book (" << i << ") id=" << gasl.book_id() << endl;
+		  cout << "book (" << i << ") name=" << gasl.book_name() << endl;
+		  cout << "book (" << i << ") type=" << gasl.book_type() << endl;
+		  cout << "book (" << i << ") resPath=" << gasl.res_path() << endl;
+	 }
+     dumpTail (buffer);
+}
+
 void dumpGetPersonalBooksList (string proto, char* buffer)
 {
     dumpHead (proto, buffer);
@@ -322,6 +432,7 @@ void dumpGetPersonalBooksList (string proto, char* buffer)
 	 }
      dumpTail (buffer);
 }
+
 void dumpGetStudentInfo (string proto, char* buffer)
 {
     dumpHead (proto, buffer);
@@ -699,6 +810,18 @@ void handlerUploadBook()
     BUFCLR(buffer);
 }
 
+void handlerGetPublicBooksList()
+{   
+    //// CT_GetPublicBooksList
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_GetPublicBooksList;
+    head->cLen = MSG_HEAD_LEN; //SETHEADCLEN(cGetPersonalBooksList);
+   
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
 void handlerGetPersonalBooksList()
 {   
     //// CT_GetPersonalBooksList
@@ -710,6 +833,111 @@ void handlerGetPersonalBooksList()
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
 }
+
+void handlerGetServerAddr()
+{
+    //// CT_GetServerAddr
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_GetServerAddr;
+    head->cLen = MSG_HEAD_LEN;
+   
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerDownloadFromPersonal()
+{
+    int book_id;
+    //// CT_DownloadFromPersonal
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_DownloadFromPersonal;
+    head->cLen = SETHEADCLEN(cDownloadFromPersonal);
+   
+    cout << "book id:";
+    cin >> book_id; 
+    cDownloadFromPersonal dfp;
+    dfp.set_book_id (book_id);
+
+    g_tmp_str.clear();
+    dfp.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerDownlaodFromPublic()
+{
+    int book_id;
+    //// CT_DownloadFromPublic
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_DownloadFromPublic;
+    head->cLen = SETHEADCLEN(cDownloadFromPublic);
+   
+    cout << "book id:";
+    cin >> book_id; 
+    cDownloadFromPublic fp;
+    fp.set_book_id (book_id);
+
+    g_tmp_str.clear();
+    fp.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerTransferBook()
+{
+    int book_id;
+    string account;
+    //// CT_TransferBook
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_TransferBook;
+    head->cLen = SETHEADCLEN(cTransferBook);
+   
+    cout << "book id:";
+    cin >> book_id; 
+    cout << "account:";
+    cin >> account; 
+    cTransferBook tb;
+    tb.set_book_id (book_id);
+    tb.set_account (account);
+
+    g_tmp_str.clear();
+    tb.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerPublish()
+{
+    int book_id;
+    //// CT_Publish
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_Publish;
+    head->cLen = SETHEADCLEN(cPublish);
+   
+    cout << "book id:";
+    cin >> book_id; 
+    cPublish p;
+    p.set_book_id (book_id);
+
+    g_tmp_str.clear();
+    p.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
 void handlerGetActiveStudentList()
 {   
     int class_id;
@@ -834,6 +1062,24 @@ void* recv_callback (void* data)
             case ST_GetPersonalBooksList:
                 dumpGetPersonalBooksList("ST_GetPersonalBooksList", buffer);
                 break;
+            case ST_GetPublicBooksList:
+                dumpGetPublicBooksList("ST_GetPublicBooksList", buffer);
+                break;
+            case ST_GetServerAddr:
+                dumpGetServerAddr("ST_GetServerAddr", buffer);
+                break;
+            case ST_DownloadFromPersonal:
+                dumpDownloadFromPersonal("ST_DownloadFromPersonal", buffer);
+                break;
+            case ST_DownloadFromPublic:
+                dumpDownloadFromPublic("ST_DownloadFromPublic", buffer);
+                break;
+            case ST_TransferBook:
+                dumpTransferBook("ST_TransferBook", buffer);
+                break;
+            case ST_Publish:
+                dumpPublish("ST_Publish", buffer);
+                break;
             case ST_UploadBook:
                 dumpUploadBook ("ST_UploadBook", buffer);
                 break;
@@ -927,6 +1173,24 @@ int main (int argc, char** argv)
         }
         else if (NPARRAY[strMessageId].protocol == "CT_GetPersonalBooksList") {
             handlerGetPersonalBooksList();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_GetPublicBooksList") {
+            handlerGetPublicBooksList();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_GetServerAddr") {
+            handlerGetServerAddr();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_DownloadFromPersonal") {
+            handlerDownloadFromPersonal();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_DownloadFromPublic") {
+            handlerDownlaodFromPublic();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_TransferBook") {
+            handlerTransferBook();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_Publish") {
+            handlerPublish();
         }
         else if (NPARRAY[strMessageId].protocol == "Exit/Quit") {
             cout << "Bye." << endl;

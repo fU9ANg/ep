@@ -106,9 +106,12 @@ CREATE TABLE `course_group` (
 #
 LOCK TABLES `course_group` WRITE;
 /*!40000 ALTER TABLE `course_group` DISABLE KEYS */;
-INSERT INTO `course_group` VALUES (1,'绘本');
-INSERT INTO `course_group` VALUES (2,'绘画');
-INSERT INTO `course_group` VALUES (3,'连线');
+INSERT INTO `course_group` VALUES (1, '绘本');
+INSERT INTO `course_group` VALUES (2, '绘画');
+INSERT INTO `course_group` VALUES (3, '连线');
+INSERT INTO `course_group` VALUES (4, '拼图');
+INSERT INTO `course_group` VALUES (5, '语音');
+/*!40000 ALTER TABLE `course_group` ENABLE KEYS */;
 /*!40000 ALTER TABLE `course_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +121,7 @@ UNLOCK TABLES;
 #
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
-        `course_id` int (11) NOT NULL,
+        `course_id` int (11) NOT NULL AUTO_INCREMENT,
         `course_name` char (40) NOT NULL,
         `group_id` int (11) NOT NULL,
         `language` int (11) NOT NULL,
@@ -126,6 +129,7 @@ CREATE TABLE `course` (
         `community` int (11) NOT NULL,
         `health` int (11) NOT NULL,
         `science` int (11) NOT NULL,
+        `course_date` char (32) NOT NULL,
         `resPath` char (128) NOT NULL,
         PRIMARY KEY (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -135,11 +139,47 @@ CREATE TABLE `course` (
 #
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (1,'绘小猴子',2, 13, 56, 76, 25, 92, '/res/a.tar.gz');
-INSERT INTO `course` VALUES (2,'绘小鸭子',2, 83, 64, 15, 18, 32, '/res/b.tar.gz');
-INSERT INTO `course` VALUES (3,'三只小猪',1, 41, 26, 11, 65, 82, '/res/c.tar.gz');
-INSERT INTO `course` VALUES (4,'白雪公主',1, 35, 56, 25, 95, 11, '/res/d.tar.gz');
+INSERT INTO `course` VALUES (1,'绘小猴子',2, 13, 56, 76, 25, 92, '2013/1/14', '/res/a.tar.gz');
+INSERT INTO `course` VALUES (2,'绘小鸭子',2, 83, 64, 15, 18, 32, '2013/1/14', '/res/b.tar.gz');
+INSERT INTO `course` VALUES (3,'三只小猪',1, 41, 26, 11, 65, 82, '2013/1/14', '/res/c.tar.gz');
+INSERT INTO `course` VALUES (4,'白雪公主',1, 35, 56, 25, 95, 11, '2013/1/14', '/res/d.tar.gz');
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# ======================================================
+#
+# Source for table author_course (作品表)
+#
+DROP TABLE IF EXISTS `author_course`;
+CREATE TABLE `author_course` (
+        `author_course_id` int (11) NOT NULL AUTO_INCREMENT,
+        `author_id` int (11) NOT NULL,
+        `client_type_id` int (11) NOT NULL,
+        `course_id` int (11) NOT NULL,
+        `ispublish` int (2) NOT NULL,
+        `owner` int(11) NOT NULL,
+        PRIMARY KEY (`author_course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Dumping data for table author_course
+#
+LOCK TABLES `author_course` WRITE;
+/*!40000 ALTER TABLE `author_course` DISABLE KEYS */;
+INSERT INTO `author_course` VALUES (1 ,1,2,1,1,1);
+INSERT INTO `author_course` VALUES (2 ,1,2,2,1,1);
+INSERT INTO `author_course` VALUES (3 ,1,2,3,1,1);
+INSERT INTO `author_course` VALUES (4 ,1,2,4,0,1);
+
+INSERT INTO `author_course` VALUES (5 ,2,2,1,1,2);
+INSERT INTO `author_course` VALUES (6 ,2,2,2,1,2);
+INSERT INTO `author_course` VALUES (7 ,2,2,3,0,2);
+
+INSERT INTO `author_course` VALUES (8,3,2,2 ,1,3);
+INSERT INTO `author_course` VALUES (9,3,2,3 ,1,3);
+INSERT INTO `author_course` VALUES (10,3,2,4,0,3);
+/*!40000 ALTER TABLE `author_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
 # ======================================================
@@ -338,6 +378,7 @@ CREATE TABLE `teacher` (
         `last_name`             char(100)       NOT NULL,
         `first_name`            char(100)       NOT NULL,
         `sex`                   char(2)         DEFAULT '女',
+        `age`                   int(11)         NOT NULL DEFAULT '0',
         `race_id`               int(11)         NOT NULL,
         `birthday`              date            NOT NULL,
         `account`               char(100)       NOT NULL,
@@ -356,9 +397,10 @@ CREATE TABLE `teacher` (
 
 LOCK TABLES `teacher` WRITE;
 /*!40000 ALTER TABLE `teacher` DISABLE KEYS */;
-INSERT INTO `teacher` VALUES (1,'张','三','女',1,'1989-12-30','张三','123456',2001,1,1,1,2);
-INSERT INTO `teacher` VALUES (2,'李','四','男',1,'1989-12-30','李四','123456',2001,1,1,1,2);
-INSERT INTO `teacher` VALUES (3,'王','五','男',1,'1989-12-30','王五','123456',2001,1,1,1,2);
+INSERT INTO `teacher` VALUES (1,'张','三','女',1,1,'1989-12-30','t1','123456',2001,1,1,1,2);
+INSERT INTO `teacher` VALUES (2,'李','四','男',1,1,'1989-12-30','t2','123456',2001,1,1,1,2);
+INSERT INTO `teacher` VALUES (3,'王','五','男',1,1,'1989-12-30','t3','123456',2001,1,1,1,2);
+INSERT INTO `teacher` VALUES (5,'段','六','男',1,1,'1989-12-30','TTTTT','123456',2001,1,1,1,2);
 /*!40000 ALTER TABLE `teacher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,6 +415,7 @@ CREATE TABLE `student` (
         `last_name`             char(10)        NOT NULL,
         `first_name`            char(10)        NOT NULL,
         `sex`                   char(2)         DEFAULT '男',
+        `age`                   int(11)         NOT NULL DEFAULT '0',
         `race_id`               int(11)         NOT NULL,
         `birthday`              date            NOT NULL,
         `account`               char(100)       NOT NULL,
@@ -391,41 +434,41 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (1,'10000001','yang','c1','男',1,'2000-01-01','学生1','123456',1,1,1,1001,4);
-INSERT INTO `student` VALUES (2,'10000002','yang','c2','男',1,'2000-01-01','学生2','123456',1,1,1,1002,4);
-INSERT INTO `student` VALUES (3,'10000003','yang','c3','女',1,'2000-01-01','学生3','123456',1,1,1,1003,4);
-INSERT INTO `student` VALUES (4,'10000004','yang','c4','女',1,'2000-01-01','学生4','123456',1,1,1,1004,4);
-INSERT INTO `student` VALUES (5,'10000005','yang','c5','女',1,'2000-01-01','学生5','123456',1,1,1,1005,4);
-INSERT INTO `student` VALUES (6,'10000006','yang','c6','男',1,'2000-01-01','学生6','123456',1,1,1,1006,4);
-INSERT INTO `student` VALUES (7,'10000007','yang','c7','女',1,'2000-01-01','学生7','123456',1,1,1,1007,4);
-INSERT INTO `student` VALUES (8,'10000008','yang','c8','女',1,'2000-01-01','学生8','123456',1,1,1,1008,4);
-INSERT INTO `student` VALUES (9,'10000009','yang','c9','男',1,'2000-01-01','学生9','123456',1,1,1,1009,4);
-INSERT INTO `student` VALUES (10,'10000010','yang','c10','女',1,'2000-01-01','学生10','123456',1,1,1,1010,4);
-INSERT INTO `student` VALUES (11,'10000011','yang','c11','女',1,'2000-01-01','学生11','123456',1,1,1,1011,4);
-INSERT INTO `student` VALUES (12,'10000012','yang','c12','女',1,'2000-01-01','学生12','123456',1,1,1,1012,4);
-INSERT INTO `student` VALUES (13,'10000013','yang','c13','女',1,'2000-01-01','学生13','123456',1,1,1,1013,4);
-INSERT INTO `student` VALUES (14,'10000014','yang','c14','女',1,'2000-01-01','学生14','123456',1,1,1,1014,4);
-INSERT INTO `student` VALUES (15,'10000015','yang','c15','女',1,'2000-01-01','学生15','123456',1,1,1,1015,4);
-INSERT INTO `student` VALUES (16,'10000016','yang','c16','男',1,'2000-01-01','学生16','123456',1,1,1,1016,4);
-INSERT INTO `student` VALUES (17,'10000017','yang','c17','女',1,'2000-01-01','学生17','123456',1,1,1,1017,4);
-INSERT INTO `student` VALUES (18,'10000018','yang','c18','女',1,'2000-01-01','学生18','123456',1,1,1,1018,4);
-INSERT INTO `student` VALUES (19,'10000019','yang','c19','女',1,'2000-01-01','学生19','123456',1,1,1,1019,4);
-INSERT INTO `student` VALUES (20,'10000020','yang','c20','女',1,'2000-01-01','学生20','123456',1,1,1,1020,4);
-INSERT INTO `student` VALUES (21,'10000021','yang','c21','男',1,'2000-01-01','学生21','123456',1,1,1,1021,4);
-INSERT INTO `student` VALUES (22,'10000022','yang','c22','女',1,'2000-01-01','学生22','123456',1,1,1,1022,4);
-INSERT INTO `student` VALUES (23,'10000023','yang','c23','女',1,'2000-01-01','学生23','123456',1,1,1,1023,4);
-INSERT INTO `student` VALUES (24,'10000024','yang','c24','男',1,'2000-01-01','学生24','123456',1,1,1,1024,4);
-INSERT INTO `student` VALUES (25,'10000025','yang','c25','女',1,'2000-01-01','学生25','123456',1,1,1,1025,4);
-INSERT INTO `student` VALUES (26,'10000026','yang','c26','男',1,'2000-01-01','学生26','123456',1,1,1,1026,4);
-INSERT INTO `student` VALUES (27,'10000027','yang','c27','女',1,'2000-01-01','学生27','123456',1,1,1,1027,4);
-INSERT INTO `student` VALUES (28,'10000028','yang','c28','男',1,'2000-01-01','学生28','123456',1,1,1,1028,4);
-INSERT INTO `student` VALUES (29,'10000029','yang','c29','女',1,'2000-01-01','学生29','123456',1,1,1,1029,4);
-INSERT INTO `student` VALUES (30,'10000030','yang','c30','男',1,'2000-01-01','学生30','123456',1,1,1,1030,4);
-INSERT INTO `student` VALUES (31,'10000031','yang','c31','女',1,'2000-01-01','学生31','123456',1,1,1,1031,4);
-INSERT INTO `student` VALUES (32,'10000032','yang','c32','女',1,'2000-01-01','学生32','123456',1,1,1,1032,4);
-INSERT INTO `student` VALUES (33,'10000033','yang','c33','女',1,'2000-01-01','学生33','123456',1,1,1,1033,4);
-INSERT INTO `student` VALUES (34,'10000034','yang','c34','女',1,'2000-01-01','学生34','123456',1,1,1,1034,4);
-INSERT INTO `student` VALUES (35,'10000035','yang','c35','男',1,'2000-01-01','学生35','123456',1,1,1,1035,4);
+INSERT INTO `student` VALUES (1 ,'10000001','yang','c1' ,'男',1,1,'2000-01-01','s1','123456',1,1,1,1001,4);
+INSERT INTO `student` VALUES (2 ,'10000002','yang','c2' ,'男',1,1,'2000-01-01','s2','123456',1,1,1,1002,4);
+INSERT INTO `student` VALUES (3 ,'10000003','yang','c3' ,'女',1,1,'2000-01-01','s3','123456',1,1,1,1003,4);
+INSERT INTO `student` VALUES (4 ,'10000004','yang','c4' ,'女',1,1,'2000-01-01','s4','123456',1,1,1,1004,4);
+INSERT INTO `student` VALUES (5 ,'10000005','yang','c5' ,'女',1,1,'2000-01-01','s5','123456',1,1,1,1005,4);
+INSERT INTO `student` VALUES (6 ,'10000006','yang','c6' ,'男',1,1,'2000-01-01','s6','123456',1,1,1,1006,4);
+INSERT INTO `student` VALUES (7 ,'10000007','yang','c7' ,'女',1,1,'2000-01-01','s7','123456',1,1,1,1007,4);
+INSERT INTO `student` VALUES (8 ,'10000008','yang','c8' ,'女',1,1,'2000-01-01','s8','123456',1,1,1,1008,4);
+INSERT INTO `student` VALUES (9 ,'10000009','yang','c9' ,'男',1,1,'2000-01-01','s9','123456',1,1,1,1009,4);
+INSERT INTO `student` VALUES (10,'10000010','yang','c10','女',1,1,'2000-01-01','s10','123456',1,1,1,1010,4);
+INSERT INTO `student` VALUES (11,'10000011','yang','c11','女',1,1,'2000-01-01','s11','123456',1,1,1,1011,4);
+INSERT INTO `student` VALUES (12,'10000012','yang','c12','女',1,1,'2000-01-01','s12','123456',1,1,1,1012,4);
+INSERT INTO `student` VALUES (13,'10000013','yang','c13','女',1,1,'2000-01-01','s13','123456',1,1,1,1013,4);
+INSERT INTO `student` VALUES (14,'10000014','yang','c14','女',1,1,'2000-01-01','s14','123456',1,1,1,1014,4);
+INSERT INTO `student` VALUES (15,'10000015','yang','c15','女',1,1,'2000-01-01','s15','123456',1,1,1,1015,4);
+INSERT INTO `student` VALUES (16,'10000016','yang','c16','男',1,1,'2000-01-01','s16','123456',1,1,1,1016,4);
+INSERT INTO `student` VALUES (17,'10000017','yang','c17','女',1,1,'2000-01-01','s17','123456',1,1,1,1017,4);
+INSERT INTO `student` VALUES (18,'10000018','yang','c18','女',1,1,'2000-01-01','s18','123456',1,1,1,1018,4);
+INSERT INTO `student` VALUES (19,'10000019','yang','c19','女',1,1,'2000-01-01','s19','123456',1,1,1,1019,4);
+INSERT INTO `student` VALUES (20,'10000020','yang','c20','女',1,1,'2000-01-01','s20','123456',1,1,1,1020,4);
+INSERT INTO `student` VALUES (21,'10000021','yang','c21','男',1,1,'2000-01-01','s21','123456',1,1,1,1021,4);
+INSERT INTO `student` VALUES (22,'10000022','yang','c22','女',1,1,'2000-01-01','s22','123456',1,1,1,1022,4);
+INSERT INTO `student` VALUES (23,'10000023','yang','c23','女',1,1,'2000-01-01','s23','123456',1,1,1,1023,4);
+INSERT INTO `student` VALUES (24,'10000024','yang','c24','男',1,1,'2000-01-01','s24','123456',1,1,1,1024,4);
+INSERT INTO `student` VALUES (25,'10000025','yang','c25','女',1,1,'2000-01-01','s25','123456',1,1,1,1025,4);
+INSERT INTO `student` VALUES (26,'10000026','yang','c26','男',1,1,'2000-01-01','s26','123456',1,1,1,1026,4);
+INSERT INTO `student` VALUES (27,'10000027','yang','c27','女',1,1,'2000-01-01','s27','123456',1,1,1,1027,4);
+INSERT INTO `student` VALUES (28,'10000028','yang','c28','男',1,1,'2000-01-01','s28','123456',1,1,1,1028,4);
+INSERT INTO `student` VALUES (29,'10000029','yang','c29','女',1,1,'2000-01-01','s29','123456',1,1,1,1029,4);
+INSERT INTO `student` VALUES (30,'10000030','yang','c30','男',1,1,'2000-01-01','s30','123456',1,1,1,1030,4);
+INSERT INTO `student` VALUES (31,'10000031','yang','c31','女',1,1,'2000-01-01','s31','123456',1,1,1,1031,4);
+INSERT INTO `student` VALUES (32,'10000032','yang','c32','女',1,1,'2000-01-01','s32','123456',1,1,1,1032,4);
+INSERT INTO `student` VALUES (33,'10000033','yang','c33','女',1,1,'2000-01-01','s33','123456',1,1,1,1033,4);
+INSERT INTO `student` VALUES (34,'10000034','yang','c34','女',1,1,'2000-01-01','s34','123456',1,1,1,1034,4);
+INSERT INTO `student` VALUES (35,'10000035','yang','c35','男',1,1,'2000-01-01','s35','123456',1,1,1,1035,4);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 

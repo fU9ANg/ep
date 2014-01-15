@@ -283,6 +283,19 @@ epClassroom::getClassList(void) {
         return vc;
 }
 
+const epGroup*
+epClassroom::getGroupByFd(const int fd) {
+        EPGROUP_MAP::iterator it = groupMap_.begin();
+        EPGROUP_MAP::const_iterator cie = groupMap_.end();
+        for (; cie!=it; ++it) {
+                if (NULL != (it->second)->getStudentByFd(fd)) {
+                        return it->second;
+                }
+        }
+
+        return NULL;
+}
+
 bool
 epClassroom::insertGroup(epGroup* obj) {
         EPGROUP_MAP::iterator it = groupMap_.find(obj->getId());
@@ -310,7 +323,7 @@ epClassroom::deleteGroupById(const int group_id) {
         EPGROUP_MAP::iterator it = groupMap_.find(group_id);
         if (groupMap_.end() != it) {
                 delete it->second;
-                it->second = false;
+                it->second = NULL;
                 groupMap_.erase(it);
                 return true;
         } else {

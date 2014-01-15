@@ -117,6 +117,7 @@ public :
         bool removeClassById(const int);
         epClass* getClassById(const int);
         std::vector<epClass*> getClassList(void);
+        const epGroup* getGroupByFd(const int);
         bool insertGroup(epGroup*);
         bool removeGroupById(const int);
         bool deleteGroupById(const int);

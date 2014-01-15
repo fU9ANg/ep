@@ -42,10 +42,12 @@ class Config
         string  db_password;
         string  db_database;
         string  server_ip;
+        string  download_upload_server_ip;
 	string  username;
 	string  passwd;
 
         int     server_port;
+        int     download_upload_server_port;
         int     school_id;
         int     game_count;
 

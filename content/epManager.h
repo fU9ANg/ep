@@ -73,6 +73,7 @@ public :
          * @return 成功返回指定教室ID所对应的教室对象指针，否则返回NULL。
          */
         epClassroom* getClassroomById(int);
+        const epGroup* getGroupByFd(const int);
         /**
          * @brief 根据班级ID查找当前上课的班级对象。
          *

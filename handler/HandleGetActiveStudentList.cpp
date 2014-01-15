@@ -26,15 +26,7 @@ void CHandleMessage::handleGetActiveStudentList (Buf* p)
         }
 
         std::vector<int> vi = EPMANAGER->getActiveStudentListFromClass(casl.class_id());
-        std::vector<sGetActiveStudentList> vg;
-        for (int i=0; i<(signed)vi.size(); ++i) {
-                sGetActiveStudentList tmp;
-                tmp.set_id(vi[i]);
-                vg.push_back(tmp);
-        }
-
-        Buf* pBuf = packet(ST_GetActiveStudentList, vg, p->getfd());
-
+        Buf* pBuf = packet(ST_GetActiveStudentList, vi, p->getfd());
         if (NULL != pBuf) {
                 SINGLE->sendqueue.enqueue(pBuf);
         }

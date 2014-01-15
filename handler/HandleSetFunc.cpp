@@ -49,7 +49,6 @@ void CHandleMessage::handleSetFunc (Buf* p) {
                                 sUpdateStudentStatus uss;
                                 uss.set_student_id(pStudent->getId());
 
-                                printf ("send setfunc to all student.\n");
                                 Buf* pBuf1 = packet(ST_UpdateStudentStatus, uss, p->getfd());
                                 if (NULL != pBuf1) {
                                         pClass->sendtoAllStudent(pBuf1);
@@ -57,7 +56,6 @@ void CHandleMessage::handleSetFunc (Buf* p) {
 
                                 epClassroom* pClassroom = EPMANAGER->getClassroomByClassId(pClass->getId());
                                 if (NULL != pClassroom) {
-                                        printf ("send setfunc to teacher.\n");
                                         Buf* pBuf2 = packet(ST_UpdateStudentStatus, uss, p->getfd());
                                         if (NULL != pBuf2) {
                                                 pClassroom->sendtoTeacher(pBuf2);
@@ -70,7 +68,6 @@ void CHandleMessage::handleSetFunc (Buf* p) {
 
                                 // 将学生由游离状态加入该班级。
                                 pClass->insertStudent(pStudent->getFd(), pStudent);
-                                printf("[DEBUG] CHandleMessage::handleSetFunc : pStudent = %p\n", pStudent);
 
                                 // 将该学生从游离列表移除。
                                 EPMANAGER->removeUserByFd(p->getfd());

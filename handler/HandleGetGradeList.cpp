@@ -58,6 +58,39 @@ void CHandleMessage::handleGetGradeList (Buf* p)
                 printf("[DEBUG] %s : %s\n", __func__, e.what());
         }
 
-        SINGLE->sendqueue.enqueue(packet(ST_GetGradeList, vc, p->getfd()));
+        /*
+        for (int i=0; i<(signed)vc.size(); ++i) {
+                printf("[INFO] grade_id   = %d\n", vc[i].grade_id());
+                printf("[INFO] grade_name = %s\n", vc[i].grade_name().c_str());
+        }
+        */
+
+        tmp.ByteSize();
+
+        for (int i=0; i<(signed)vc.size(); ++i) {
+                Buf* pBuf = packet(ST_GetGradeList, vc[i], p->getfd());
+                if (NULL != pBuf) {
+                        /*
+                           sGetGradeList ggl;
+                           std::string tmp = (char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof(int);
+                           ggl.ParseFromString(tmp);
+                           printf("[INFO] grade_id = %d\n", ggl.grade_id());
+                           tmp = (char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof(int) + 128;
+                           ggl.ParseFromString(tmp);
+                           printf("[INFO] grade_id = %d\n", ggl.grade_id());
+                           tmp = (char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof(int) + 128*2;
+                           ggl.ParseFromString(tmp);
+                           printf("[INFO] grade_id = %d\n", ggl.grade_id());
+
+                           char* pc = (char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof(int);
+                           for (int i=0; i<32; ++i) {
+                           printf("%0#X ", *(pc+i));
+                           }
+                           printf("\n");
+                           */
+                        *(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN) = vc.size();
+                        SINGLE->sendqueue.enqueue(pBuf);
+                }
+        }
         SINGLE->bufpool.free(p);
 }

@@ -19,7 +19,7 @@ message cLogout {
 // ST_Logout
 message sLogout {
         required int32 login_type  = 1; // 说明是哪种类型的客户端退出。
-        required string num        = 2;
+        required int32 id          = 2;
 }
 
 // CT_GetFuncList
@@ -308,4 +308,160 @@ message cPublish {
 message sPublish {
         required bool   result          = 1;
         required string msg             = 2;
+}
+
+// 绘画
+// ST_UpdateStudentStatus 被动协议
+/*
+message sUpdateStudentStatus {
+        required int32  group_id        = 1;
+        required int32  student_id      = 2;
+}
+*/
+
+// 同步纸张 只作转发
+// CT_UpdateBackground,
+message cUpdateBackground {
+        required int32  paper_id        = 1;
+}
+
+// ST_UpdateBackground,
+message sUpdateBackground {
+        required int32  paper_id        = 1;
+}
+
+// 同步临摹图片到绘画层
+// CT_UpdateCopyIntoPaint,
+message cUpdateCopyIntoPaint {
+        required int32  pic_id          = 1;
+        required int32  pic_type        = 2;
+        required string pic_scale       = 3;
+        required string pic_rotation    = 4;
+        required string pt_x            = 5;
+        required string pt_y            = 6;
+}
+
+// ST_UpdateCopyIntoPaint,
+message sUpdateCopyIntoPaint {
+        required int32  pic_id          = 1;
+        required int32  pic_type        = 2;
+        required string pic_scale       = 3;
+        required string pic_rotation    = 4;
+        required string pt_x            = 5;
+        required string pt_y            = 6;
+}
+
+// 同步画笔或橡皮擦
+// CT_UpdatePenAnderaser,
+message cUpdatePenAnderaser {
+        required int32  pen_type        = 1;
+        required int32  pen_color       = 2;
+        required string pen_size        = 3;
+        required int32  pen_trans       = 4;
+}
+
+// ST_UpdatePenAnderaser,
+message sUpdatePenAnderaser {
+        required int32  pen_type        = 1;
+        required int32  pen_color       = 2;
+        required string pen_size        = 3;
+        required int32  pen_trans       = 4;
+}
+
+// 同步填色。
+// CT_UpdateFilling,
+message cUpdateFilling {
+        required string pt_list         = 1;
+        required int32  trans           = 3;
+        required int32  color           = 2;
+}
+
+// ST_UpdateFilling,
+message sUpdateFilling {
+        required string pt_list         = 1;
+        required int32  trans           = 3;
+        required int32  color           = 2;
+}
+
+// 同步印章 TODO
+// CT_UpdateStamp,
+message cUpdateStamp {
+        required int32  pic_id          = 1;
+        required string pt_x            = 2;
+        required string pt_y            = 3;
+}
+
+// ST_UpdateStamp,
+message sUpdateStamp {
+        required int32  pic_id          = 1;
+        required string pt_x            = 2;
+        required string pt_y            = 3;
+}
+
+// 同步填图
+// CT_UpdateFillPic,
+message cUpdateFillPic {
+        required int32  pic_id          = 1;
+        required string pt_x            = 2;
+        required string pt_y            = 3;
+}
+// ST_UpdateFillPic,
+message sUpdateFillPic {
+        required int32  pic_id          = 1;
+        required string pt_x            = 2;
+        required string pt_y            = 3;
+}
+
+// 同步锁定。
+// CT_UpdateMutex,
+message cUpdateMutex {
+        required int32 lock             = 1;
+}
+
+// ST_UpdateMutex,
+message sUpdateMutex {
+        required bool result            = 1;
+}
+
+// 同步屏贴。
+// CT_UpdateCollage,
+message cUpdateCollage {
+        required int32  id              = 8;
+        required int32  pic_id          = 1;
+        required int32  pic_type        = 2;
+        required string pic_scale       = 3;
+        required string pic_rotation    = 4;
+        required string pt_x            = 5;
+        required string pt_y            = 6;
+        required int32  layer           = 7;
+}
+
+// ST_UpdateCollage,
+message sUpdateCollage {
+        required int32  id              = 8;
+        required int32  pic_id          = 1;
+        required int32  pic_type        = 2;
+        required string pic_scale       = 3;
+        required string pic_rotation    = 4;
+        required string pt_x            = 5;
+        required string pt_y            = 6;
+        required int32  layer           = 7;
+}
+
+// 同步文字
+// CT_UpdateWord,
+message cUpdateWord {
+        required int32  id              = 9;
+        required int32  frame_id        = 1;
+        required string msg             = 2;
+        required int32  front           = 3;
+        required int32  color           = 4;
+        required int32  size            = 5;
+        required int32  effect_id       = 6;
+        required string frame_x         = 7;
+        required string frame_y         = 8;
+}
+
+// ST_UpdateWord,
+message sUpdateWord {
 }

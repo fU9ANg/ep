@@ -75,6 +75,8 @@ public :
         bool sendtoAllStudent(Buf*);
         bool sendtoStudentByFd(const int, Buf*);
 
+        bool setLock(const int);
+
         /**
          * @name Just for debug
          * @{ */
@@ -87,6 +89,10 @@ private :
          * @brief 该组学生列表。
          */
         STUDENT_MAP studentMap_;
+        /**
+         * @brief 组内同步锁。
+         */
+        int lock_;
 };
 
 #endif // __EPGROUP_H__

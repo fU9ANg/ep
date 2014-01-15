@@ -51,9 +51,13 @@ void CHandleMessage::handleGetPublicBooksList (Buf *p)
                 return;
         }
 
-        Buf* pBuf = packet(ST_GetPublicBooksList, vc, p->getfd());
-        if (NULL != pBuf) {
-                SINGLE->sendqueue.enqueue(pBuf);
+        for (int i=0; i<(signed)vc.size(); ++i) {
+                Buf* pBuf = packet(ST_GetPublicBooksList, vc[i], p->getfd());
+                if (NULL != pBuf) {
+                        *(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN) = vc.size();
+                        SINGLE->sendqueue.enqueue(pBuf);
+                }
         }
+
         SINGLE->bufpool.free(p);
 }

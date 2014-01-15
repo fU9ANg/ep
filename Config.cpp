@@ -84,6 +84,14 @@ void Config::readconfig (string file)
     lua_getglobal (lua,"server_ip");
     server_ip = lua_tostring (lua, -1);
 
+    // download & upload server IP
+    lua_getglobal (lua,"download_upload_server_ip");
+    download_upload_server_ip = lua_tostring(lua, -1);
+
+    // download & upload server Port
+    lua_getglobal (lua,"download_upload_server_port");
+    download_upload_server_port = lua_tointeger(lua, -1);
+
     //username
     lua_getglobal (lua, "username");
     username = lua_tostring(lua, -1);

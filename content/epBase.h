@@ -16,6 +16,9 @@
  */
 class epBase {
 public :
+        epBase(void) {}
+        virtual ~epBase(void) {}
+
         inline int getId(void) const {
                 return id_;
         }

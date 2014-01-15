@@ -18,7 +18,11 @@ CC      = ccache cc
 CFLAGS  = -Wall -Werror
 
 # flags of buildhouse
-BHFLAGS	= 
+BHFLAGS	= \
+	  -D__DEBUG_HANDLE_HEAD_ \
+	  -D__DEBUG_DUMP__ \
+	  -D__DEBUG__
+
 #-D_BUILD_HOUSE_GMAE
 
 # is debug? (for development)
@@ -27,6 +31,7 @@ CDEBUG  = -g -DDEBUG
 # macro
 CMACRO	= 
 #-D_OLD_MAKEHOUSE_GAME
+
 
 # objects
 OBJS    = 	main.o \
@@ -41,6 +46,11 @@ OBJS    = 	main.o \
 		AuthTask.o \
 		ProcessManager.o \
 		\
+		aes/aes_cbc.o \
+		aes/aes_core.o \
+		aes/AESEncrypt.o \
+		aes/cbc128.o \
+		\
 		content/LoginCheck.o \
 		content/epManager.o \
 		content/epSchool.o \
@@ -52,6 +62,8 @@ OBJS    = 	main.o \
 		content/epTeacher.o \
 		content/epStudent.o \
 		content/epWhiteBoard.o \
+		content/epParents.o \
+		content/epHeadmaster.o \
 		\
 		handler/HandleMessage.o \
 		handler/HandleSystem.o \
@@ -68,8 +80,24 @@ OBJS    = 	main.o \
 		handler/HandleGetFuncList.o \
 		handler/HandleGetTeacherInfo.o \
 		handler/HandleStartClass.o \
+		handler/HandleGetActiveStudentList.o \
+		handler/HandleGetContent.o \
+		handler/HandleSetGroup.o \
+		handler/HandleGetPersonalBooksList.o \
+		handler/HandleGetPublicBooksList.o \
+		handler/HandleGetServerAddr.o \
+		handler/HandleUploadBook.o \
+		handler/HandleDownloadFromPersonal.o \
+		handler/HandleDownloadFromPublic.o \
+		handler/HandleTransferBook.o \
+		handler/HandlePublish.o \
+        handler/HandleUpdateMutex.o \
+        handler/HandleUpdateGroupDrawMsg.o \
 		\
 		message/proto/protocol.pb.o
+
+RMOBJS	= cscope.* \
+	  tags
 
 # binary
 BIN	    = epServer
@@ -100,4 +128,4 @@ $(BIN):$(OBJS)
 .PHONY: clean
 
 clean:
-	-rm -rf $(OBJS) $(BIN) *~ logs .lock
+	-rm -rf $(OBJS) $(RMOBJS) $(BIN) *~ logs .lock

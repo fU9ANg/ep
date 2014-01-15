@@ -25,12 +25,11 @@ void CHandleMessage::handleLogout (Buf* p)
         sLogout tmp;
         pUser = const_cast<epUser*>(EPMANAGER->getUserByFdFromClassroom(p->getfd()));
         if (NULL != pUser) { // 该客户端正处于上课状态。
-                printf ("============== send logout ===============\n");
                 epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
                 if (NULL != pClassroom) {
                         enum LoginType type =  pUser->getType();
                         tmp.set_login_type(type);
-                        tmp.set_num(pUser->getNum());
+                        tmp.set_id(pUser->getId());
                         if (LT_STUDENT == type) {
                                 Buf* p1 = packet(ST_Logout, tmp, p->getfd());
                                 if (NULL != p1) {
@@ -39,24 +38,35 @@ void CHandleMessage::handleLogout (Buf* p)
 
                                 Buf* p2 = packet(ST_Logout, tmp, p->getfd());
                                 if (NULL != p2) {
-                                pClassroom->sendtoTeacher(p2);
+                                        pClassroom->sendtoTeacher(p2);
                                 }
 
                                 Buf* p3 = packet(ST_Logout, tmp, p->getfd());
                                 if (NULL != p3) {
-                                pClassroom->sendtoWhiteBoard(p3);
+                                        pClassroom->sendtoWhiteBoard(p3);
+                                }
+
+                                epGroup* pGroup = const_cast<epGroup*>(pClassroom->getGroupByFd(p->getfd()));
+                                if (NULL != pGroup) {
+                                        pGroup->removeStudentByFd(p->getfd());
+                                        /*
+                                        Buf* p4 = packet(ST_Logout, tmp, p->getfd());
+                                        if (NULL != p4) {
+                                                pGroup->sendtoAllStudent(p4);
+                                        }
+                                        */
                                 }
                         }
 
                         if (LT_TEACHER == type) {
                                 Buf* p1 = packet(ST_Logout, tmp, p->getfd());
                                 if (NULL != p1) {
-                                pClassroom->sendtoAllStudent(p1); // 不发送给自己。
+                                        pClassroom->sendtoAllStudent(p1); // 不发送给自己。
                                 }
 
                                 Buf* p2 = packet(ST_Logout, tmp, p->getfd());
                                 if (NULL != p2) {
-                                pClassroom->sendtoWhiteBoard(p2);
+                                        pClassroom->sendtoWhiteBoard(p2);
                                 }
 
 #ifdef __DEBUG_DUMP__
@@ -69,15 +79,15 @@ void CHandleMessage::handleLogout (Buf* p)
                         if (LT_WHITEBOARD == type) {
                                 Buf* p1 = packet(ST_Logout, tmp, p->getfd());
                                 if (NULL != p1) {
-                                pClassroom->sendtoAllStudent(p1);
+                                        pClassroom->sendtoAllStudent(p1);
                                 }
 
                                 Buf* p2 = packet(ST_Logout, tmp, p->getfd());
                                 if (NULL != p2) {
-                                pClassroom->sendtoTeacher(p2);
+                                        pClassroom->sendtoTeacher(p2);
                                 }
                         }
-                        pClassroom->deleteUserByFd(p->getfd());
+                        pClassroom->deleteUserByFd(p->getfd()); // delete Student or teacher or whiteboard
                 }
 
 #ifdef __DEBUG_DUMP__

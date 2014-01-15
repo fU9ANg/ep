@@ -33,7 +33,7 @@ CHandleMessage::handleUploadBook(Buf* p) {
         try {
                 MutexLockGuard guard(DATABASE->m_mutex);
                 PreparedStatement* pstmt = DATABASE->preStatement \
-                                           ("CALL epdb.proc2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                                           ("CALL epdb.proc2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 pstmt->setInt   (1, cub.book_type());
                 pstmt->setString(2, cub.book_name());
                 pstmt->setString(3, cub.time());
@@ -44,6 +44,8 @@ CHandleMessage::handleUploadBook(Buf* p) {
                 pstmt->setInt   (8, cub.health());
                 pstmt->setInt   (9, cub.science());
                 pstmt->setString(10,cub.res_path());
+                pstmt->setInt   (11,pUser->getId());
+                pstmt->setInt   (12,pUser->getType());
 
                 pstmt->execute ();
 #if 0 
