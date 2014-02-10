@@ -44,8 +44,10 @@ class Config
         string  server_ip;
 	string  username;
 	string  passwd;
+        string  download_upload_server_ip;
 
         int     server_port;
+        int     download_upload_server_port;
         int     school_id;
         int     game_count;
 

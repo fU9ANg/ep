@@ -21,41 +21,6 @@ public :
         ~epTeacher(void);
 
         /**
-         * @name set
-         * @{ */
-        /**
-         * @brief 设置老师编号。
-         *
-         * @param int[in] 老师编号。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        virtual bool setTeacherNum(const std::string&);
-        /**
-         * @brief 设置老师所属学校名字。
-         *
-         * @param std::string[in] 学校名字。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        bool setSchoolName(const std::string&);
-        /**
-         * @brief 设置老师所属学校ID。
-         *
-         * @param int[in] 学校ID。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        bool setSchoolId(const int);
-        /**
-         * @brief 设置该客户的功能类型。
-         *
-         * @param FuncType[in] 功能类型。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        virtual bool setFuncType(const enum FuncType);
-        /**
          * @brief 通过传入的用户名和密码初始化教师对象。
          *
          * @param std::string[in] 用户名。
@@ -64,42 +29,13 @@ public :
          * @return 成功返回true，否则返回false。
          */
         virtual bool init(const std::string&, const std::string&);
-        /**  @} */
 
-        /**
-         * @name get
-         * @{ */
-        /**
-         * @brief 获取老师编号。
-         *
-         * @return 老师编号。
-         */
-        virtual std::string getTeacherNum(void) const;
-        /**
-         * @brief 获取老师所属学校名字。
-         *
-         * @return 学校名字。
-         */
-        const std::string& getSchoolName (void) const;
-        /**
-         * @brief 获取老师所属学校ID。
-         *
-         * @return 学校ID。
-         */
-        int getSchoolId(void) const;
         /**
          * @brief 获取客户端相应类型。
          *
          * @return 客户端类型。
          */
         virtual const enum LoginType getType(void) const;
-        virtual const std::string getNum(void);
-        /**  @} */
-
-        /**
-         * @name get by ???
-         * @{ */
-        /**  @} */
 
         /**
          * @name Just for debug
@@ -107,7 +43,6 @@ public :
         virtual void dump(void);
         /**  @} */
 
-private :
         /**
          * @brief 教师编号。
          */

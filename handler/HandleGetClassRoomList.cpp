@@ -6,6 +6,7 @@
 #include "../database.h"
 #include "../global_functions.h"
 #include "../message/proto/protocol.pb.h"
+#include "../netdef.h"
 
 #include "../content/epUser.h"
 #include "../content/epTeacher.h"
@@ -24,37 +25,44 @@ void CHandleMessage::handleGetClassRoomList (Buf* p)
 #endif
         const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
         if (NULL == pUser) {
+                printf("[DEBUG] CHandleMessage::handleGetClassRoomList : NULL == pUser\n");
                 SINGLE->bufpool.free(p);
                 return;
         }
 
         const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);
         if (NULL == pTeacher) {
+                printf("[DEBUG] CHandleMessage::handleGetClassRoomList : NULL == pTeacher\n");
                 SINGLE->bufpool.free(p);
                 return;
         }
 
-        int school_id = pTeacher->getSchoolId();
+        int school_id = pTeacher->schoolId_;
 
         sGetClassRoomList tmp;
-        std::vector<sGetClassRoomList> vc;
-        string strpwd;
-        string Account;
+        ClassListNode* cln;
         try {
                 MutexLockGuard guard(DATABASE->m_mutex);
                 PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_CLASSROOM_LIST_BY_SCHOOL_ID);
                 pstmt->setInt (1, school_id);
                 ResultSet* prst = pstmt->executeQuery ();
                 while (prst->next ()) {
-                        tmp.set_classroom_id  (prst->getInt   ("classroom_id"));
-                        tmp.set_classroom_name(prst->getString("classroom_name"));
-                        vc.push_back(tmp);
+                        cln = tmp.add_classroom_list();
+                        cln->set_id  (prst->getInt   ("classroom_id"));
+                        cln->set_name(prst->getString("classroom_name"));
                 }
                 delete prst;
                 delete pstmt;
         }catch (SQLException e) {
+                printf("[DEBUG] CHandleMessage::handleGetClassRoomList : SQLException = %s\n", e.what());
+                SINGLE->bufpool.free(p);
+                return;
         }
 
-        SINGLE->sendqueue.enqueue(packet(ST_GetClassList, vc, p->getfd()));
+        Buf* pBuf = packet_list(ST_GetClassRoomList, tmp, p->getfd());
+        CHECK_BUF(pBuf, p);
+        SINGLE->sendqueue.enqueue(pBuf);
+
         SINGLE->bufpool.free(p);
+        return;
 }

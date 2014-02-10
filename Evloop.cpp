@@ -7,6 +7,8 @@
 */
 
 #include "Evloop.h"
+#include "Single.h"
+#include "global_functions.h"
 
 struct ev_loop* Evloop::loop = NULL;
 struct ev_io_info Evloop::ioarray[MAXFD];
@@ -72,16 +74,16 @@ int Evloop::work ()
     //建立监听
     startlisten ();
     ev_io *ev_io_watcher =  (ev_io*)malloc (sizeof (ev_io));
-    //ev_io ev_io_watcher;
-    //ev_timer timer;
+    // ev_io ev_io_watcher;
+    ev_timer timer;
     Evloop::loop = ev_loop_new (EVBACKEND_EPOLL);
 
     ev_io_init (ev_io_watcher, accept_cb, m_listenfd, EV_READ);
 
     ev_io_start (Evloop::loop, ev_io_watcher); 
-#if 0
+#if 1
     //定时器
-    ev_timer_init (&timer, time_cb, 5, 5);
+    ev_timer_init (&timer, time_cb, 5, 10);
     ev_timer_start (Evloop::loop,&timer); 
 #endif
     LOG (INFO)<< "ev_loop started";
@@ -153,7 +155,9 @@ void Evloop::recv_cb (struct ev_loop *loop, ev_io *w, int revents)
     }
 
     //收包头长度
-    int i = recv_v (w->fd, buf->ptr (), sizeof (int));
+    struct timeval timeout;
+    timeout.tv_usec = 500;
+    int i = recv_n (w->fd, buf->ptr (), sizeof (int), &timeout);
     if  ( sizeof (int) != i) {
         LOG (ERROR) << w->fd <<":recv head error! actually received len = "<< i 
             <<" info = "<< strerror (errno)<<endl;
@@ -164,7 +168,7 @@ void Evloop::recv_cb (struct ev_loop *loop, ev_io *w, int revents)
 
     //收包体
     int *p =  (int*)buf->ptr ();
-    i = recv_v (w->fd,  (char*)buf->ptr () + sizeof (int), *p - sizeof (unsigned int));
+    i = recv_n (w->fd,  (char*)buf->ptr () + sizeof (int), *p - sizeof (unsigned int), &timeout);
 
     if  (  (*p - sizeof (unsigned int)) !=  (unsigned int)i) {
         LOG (ERROR) << w->fd <<":recv body error! hope = "<< *p <<" actually received len = "<< i 
@@ -175,7 +179,8 @@ void Evloop::recv_cb (struct ev_loop *loop, ev_io *w, int revents)
     }
 
     Evloop::ioarray[w->fd].lasttime = ev_time ();
-    buf->setfd (w->fd);
+    buf->setfd  (w->fd);
+    buf->setsize(*p);
     //将buf压入队列
     SINGLE->recvqueue.enqueue (buf);
     return;
@@ -240,7 +245,11 @@ void Evloop::closefd (int fd)
     free (Evloop::ioarray[fd].io);
     Evloop::ioarray[fd].io = NULL;
     Evloop::clientcount--;
-    //ROOMMANAGER->del_client (fd);
+
+    Buf* pBuf = packet(CT_Logout, fd);
+    if (NULL != pBuf) {
+            SINGLE->recvqueue.enqueue(pBuf);
+    }
 }
 
 /**
@@ -258,7 +267,7 @@ void Evloop::time_cb (struct ev_loop* loop, struct ev_timer *timer, int revents)
             //检测超时断开
             if  (TIMEOUT < now - ioarray[i].lasttime) {
                 LOG (INFO) << i << " now: "<< now << " last recv data:" << ioarray[i].lasttime ;
-                //Evloop::closefd (i);
+                Evloop::closefd (i);
             }
         }
     }

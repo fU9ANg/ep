@@ -30,39 +30,47 @@ class CHandleMessage
 {
 public:
 
-    #define MSGNAME(name, handle) static void handle (Buf* p)
-    #include "MSGHANDLE"
-    #undef MSGNAME
+#define MSGNAME(name, handle) static void handle (Buf* p)
+#       include "MSGHANDLE"
+#undef MSGNAME
 
 public:
-    static handlefunc getHandler (int iCommandType)
-    {
-        HANDLEMAP::iterator it = CHandleMessage::m_HandleMap.find(iCommandType);
-        if (it != CHandleMessage::m_HandleMap.end())
-            return it->second;
+        static handlefunc getHandler (int iCommandType)
+        {
+                HANDLEMAP::iterator it = CHandleMessage::m_HandleMap.find(iCommandType);
+                if (it != CHandleMessage::m_HandleMap.end())
+                        return it->second;
 
-        return NULL;
-    }
+                return NULL;
+        }
 
-    static void initHandlers (void)
-    {
-        #define MSGNAME(name, handle) \
-            CHandleMessage::setHandler (name, &CHandleMessage::handle)
-        #include "MSGHANDLE"
-        #undef MSGNAME
-    }
+        static void initHandlers (void)
+        {
+#define MSGNAME(name, handle) \
+                CHandleMessage::setHandler (name, &CHandleMessage::handle)
+#include "MSGHANDLE"
+#undef MSGNAME
+                setHandler(CT_UpdateCopyIntoPaint, &CHandleMessage::handleUpdateGroupDrawMsg);
+                setHandler(CT_UpdatePenAnderaser,  &CHandleMessage::handleUpdateGroupDrawMsg);
+                setHandler(CT_UpdateFilling,       &CHandleMessage::handleUpdateGroupDrawMsg);
+                setHandler(CT_UpdateStamp,         &CHandleMessage::handleUpdateGroupDrawMsg);
+                setHandler(CT_UpdateFillPic,       &CHandleMessage::handleUpdateGroupDrawMsg);
+                setHandler(CT_UpdateCollage,       &CHandleMessage::handleUpdateGroupDrawMsg);
+                setHandler(CT_UpdateWord,          &CHandleMessage::handleUpdateGroupDrawMsg);
+                setHandler(CT_UpdateFrame,         &CHandleMessage::handleUpdateGroupDrawMsg);
+        }
 
-    static void setHandler (int iCommandType, handlefunc hHandler)
-    {
-        if (hHandler != NULL)
-            m_HandleMap.insert (std::pair<int, handlefunc>(iCommandType, hHandler));
-    }
+        static void setHandler (int iCommandType, handlefunc hHandler)
+        {
+                if (hHandler != NULL)
+                        m_HandleMap.insert (std::pair<int, handlefunc>(iCommandType, hHandler));
+        }
 
 private:
-    static bool postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen);
+        static bool postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen);
 
 private:
-    static HANDLEMAP m_HandleMap;
+        static HANDLEMAP m_HandleMap;
 
 public:
 

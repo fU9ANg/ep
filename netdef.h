@@ -58,7 +58,7 @@
 #endif
 
 // for epStudent.h
-#ifndef EPSTUDENT_INVALIED_ID
+#ifndef EPSTUDENT_INVALIED_STUDENT_ID
 #       define EPSTUDENT_INVALIED_STUDENT_ID    (-1)
 #endif
 
@@ -72,19 +72,44 @@
 #       define EPGROUP_INVALID_GROUP_ID (-1)
 #endif
 
-// for handle content
-#ifndef CHECK_USER
-#define CHECK_USER(T, obj) \
-        epUser* user = EPMANAGER->getUserByFd(p->getfd()); \
-        if (NULL == user) { \
-                SINGLE->bufpool.free(p); \
-                return; \
-        } \
-        T* obj = dynamic_cast<T*>(user);\
-        if (NULL == obj) { \
-                SINGLE->bufpool.free(p); \
-                return; \
-        }
+// for epUser.cpp
+#ifndef EPUSER_INVALID_USER_ID
+#       define EPUSER_INVALID_USER_ID   (-1)
 #endif
+
+#ifndef EPUSER_INVALID_USER_FD
+#       define EPUSER_INVALID_USER_FD (-1)
+#endif
+
+#ifndef GROUP_NAME_LEN
+#       define GROUP_NAME_LEN (128)
+#endif
+
+#ifndef TRUE
+#       define TRUE     (1)
+#endif
+
+#ifndef FALSE
+#       define FALSE   (2)
+#endif
+
+// for handler
+#define CHECK_BUF(dist, src) \
+        if (NULL == dist) { \
+                printf("[DEBUG] %s : NULL Buf\n", __func__); \
+                SINGLE->bufpool.free(src); \
+        }
+
+#define CLONE_BUF(dist, src) \
+        dist = SINGLE->bufpool.malloc(); \
+        CHECK_BUF(dist, src) \
+        dist->setfd(src->getfd()); \
+        dist->setsize(src->size()); \
+        memcpy(dist->ptr(), src->ptr(), dist->size())
+
+#define SET_OPTION(cn, type, obj) \
+                        if (0 != prst->get##type(#obj)) { \
+                                cn->set_##obj(prst->get##type(#obj)); \
+                        }
 
 #endif // __NETDEF_H__

@@ -52,12 +52,11 @@ public :
         /**
          * @brief 将指定fd和学生对象插入到学生列表中。
          *
-         * @param int[in] 指定FD。
          * @param epStudent[in] 指定学生对象。
          *
          * @return 插入成功返回true，否则返回false。
          */
-        bool insertStudent(int, epStudent*);
+        bool insertStudent(const epStudent*);
         /**
          * @brief 从学生列表中移除指定FD的学生对象，并不delete该学生对象。
          *
@@ -66,6 +65,8 @@ public :
          * @return 移除成功返回true，否则返回false。
          */
         bool removeStudentByFd(const int);
+        bool moveAllStudentToUser(void);
+
         /**
          * @brief 根据FD删除学生。
          *
@@ -87,6 +88,7 @@ public :
          * @return 成功返回学生对象指针，否则返回NULL。
          */
         const epStudent* getStudentByFd(const int);
+        const epUser* getUserByAccount(const std::string&);
         /**  @} */
 
         /**
@@ -111,7 +113,6 @@ public :
          */
         bool sendtoStudentByFd(const int, Buf*);
         /**  @} */
-
 
         /**
          * @name Just for debug

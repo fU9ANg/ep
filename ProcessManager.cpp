@@ -13,6 +13,7 @@
 
 #include "ProcessManager.h"
 #include "confirm.hpp"
+#include "DestroyClassroomTask.h"
 
 /**
 * @brief 
@@ -154,7 +155,8 @@ int ProcessManager::run ()
     printf ("server ip = [%s], port = [%d]\n", CONFIG->server_ip.c_str (), CONFIG->server_port);
     RecvTask* precv = new RecvTask ();
     SendTask* psend = new SendTask ();
-    AuthTask* pauth = new AuthTask ();
+    DestroyClassroomTask* pdes = new DestroyClassroomTask();
+    // AuthTask* pauth = new AuthTask ();
     //BHSyncTask* psync = new BHSyncTask ();
 
     //ROOMMANAGER->init ();
@@ -163,10 +165,11 @@ int ProcessManager::run ()
 
     m_thrpool->push_task (evloop);//监听和数据接收线程
     m_thrpool->push_task (precv);//数据处理线程
+    m_thrpool->push_task (pdes); // 负责定时销毁教室。
     //m_thrpool->push_task(precv);//数据处理线程
     //m_thrpool->push_task(psend);
     m_thrpool->push_task (psend);
-    m_thrpool->push_task (pauth);
+    // m_thrpool->push_task (pauth);
 
     //m_thrpool->push_task (psync);
 

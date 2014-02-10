@@ -31,17 +31,17 @@ void CHandleMessage::handleGetPublicBooksList (Buf *p)
         }
 
         sGetPublicBooksList tmp;
-        std::vector<sGetPublicBooksList> vc;
+        bookNode* book_node;
         try {
                 MutexLockGuard guard(DATABASE->m_mutex);
                 PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_COURSE_LIST_BY_AUTHOR_ID_AND_TYPE_PUBLISH);
                 ResultSet* prst = pstmt->executeQuery ();
                 while (prst->next ()) {
-                        tmp.set_book_id  (prst->getInt   ("book_id"));
-                        tmp.set_book_name(prst->getString("book_name"));
-                        tmp.set_book_type(prst->getInt   ("book_type"));
-                        tmp.set_res_path (prst->getString("res_path"));
-                        vc.push_back(tmp);
+                        book_node = tmp.add_book_list();
+                        book_node->set_book_id  (prst->getInt   ("book_id"));
+                        book_node->set_book_name(prst->getString("book_name"));
+                        book_node->set_book_type(prst->getInt   ("book_type"));
+                        book_node->set_res_path (prst->getString("res_path"));
                 }
                 delete prst;
                 delete pstmt;
@@ -51,9 +51,12 @@ void CHandleMessage::handleGetPublicBooksList (Buf *p)
                 return;
         }
 
-        Buf* pBuf = packet(ST_GetPublicBooksList, vc, p->getfd());
+        Buf* pBuf = packet_list(ST_GetPublicBooksList, tmp, p->getfd());
         if (NULL != pBuf) {
                 SINGLE->sendqueue.enqueue(pBuf);
+        } else {
+                printf("[DEBUG] CHandleMessage::handleGetPublicBooksList : NULL == pBuf\n");
         }
         SINGLE->bufpool.free(p);
+        return;
 }

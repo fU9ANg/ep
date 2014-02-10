@@ -73,6 +73,7 @@ public :
          * @return 成功返回指定教室ID所对应的教室对象指针，否则返回NULL。
          */
         epClassroom* getClassroomById(int);
+        const epGroup* getGroupByFd(const int);
         /**
          * @brief 根据班级ID查找当前上课的班级对象。
          *
@@ -107,6 +108,7 @@ public :
          * @return 成功返回指向相应对象的指针，失败返回NULL。
          */
         const epUser* getUserByAccount(const std::string&);
+        const epUser* getUserByAccountFromClassroom(const std::string&);
         /**
          * @brief 获取指定FD的对象指针。
          *
@@ -211,7 +213,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoAllClassroom(Buf*);
+        bool sendtoAllClassroom(Buf*, const bool toSelf=false);
         /**
          * @brief 将指定消息内容发送给指定教室。
          *
@@ -221,6 +223,7 @@ public :
          * @return 成功返回true，否则返回false。
          */
         bool sendtoClassroomById(const int, Buf*);
+        bool sendtoClassFromUser(Buf*, const int);
         /**
          * @brief 将指定消息内容发送给所有游离用户。
          *
@@ -229,7 +232,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoAllUser(Buf*, const bool);
+        bool sendtoAllUser(Buf*, const bool toSelf=false);
         /**
          * @brief 将指定消息内容发送给指定游离用户。
          *

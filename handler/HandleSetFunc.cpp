@@ -9,6 +9,7 @@
 
 #include "../content/epManager.h"
 #include "../content/epUser.h"
+#include "../netdef.h"
 
 void CHandleMessage::handleSetFunc (Buf* p) {
         /**
@@ -37,54 +38,66 @@ void CHandleMessage::handleSetFunc (Buf* p) {
 
         sSetFunc tmp;
         epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFd(p->getfd()));
-        tmp.set_result((NULL==pUser) ? false : pUser->setFuncType((enum FuncType)setFunc.func_type()));
-        SINGLE->sendqueue.enqueue(packet(ST_SetFunc, tmp, p->getfd()));
-
-        if (LT_STUDENT == pUser->getType() && FT_SCHOOL==setFunc.func_type()) { // 学生选择的是学校功能。
-                epStudent* pStudent = dynamic_cast<epStudent*>(pUser);
-                if (NULL != pStudent) {
-                        epClass* pClass = EPMANAGER->getClassById(pStudent->getClassId());
-                        if (NULL != pClass) { // 如果该班正在上课。
-                                // 将该学生上线状态通知给该班其它学生及教师和白板。
-                                sUpdateStudentStatus uss;
-                                uss.set_student_id(pStudent->getId());
-
-                                printf ("send setfunc to all student.\n");
-                                Buf* pBuf1 = packet(ST_UpdateStudentStatus, uss, p->getfd());
-                                if (NULL != pBuf1) {
-                                        pClass->sendtoAllStudent(pBuf1);
-                                }
-
-                                epClassroom* pClassroom = EPMANAGER->getClassroomByClassId(pClass->getId());
-                                if (NULL != pClassroom) {
-                                        printf ("send setfunc to teacher.\n");
-                                        Buf* pBuf2 = packet(ST_UpdateStudentStatus, uss, p->getfd());
-                                        if (NULL != pBuf2) {
-                                                pClassroom->sendtoTeacher(pBuf2);
-                                        }
-                                        Buf* pBuf3 = packet(ST_UpdateStudentStatus, uss, p->getfd());
-                                        if (NULL != pBuf3) {
-                                                pClassroom->sendtoWhiteBoard(pBuf3);
-                                        }
-                                }
-
-                                // 将学生由游离状态加入该班级。
-                                pClass->insertStudent(pStudent->getFd(), pStudent);
-                                printf("[DEBUG] CHandleMessage::handleSetFunc : pStudent = %p\n", pStudent);
-
-                                // 将该学生从游离列表移除。
-                                EPMANAGER->removeUserByFd(p->getfd());
-                                /*
-                                   delete pUser;
-                                   pUser = NULL;
-                                   */
-                        }
-                }
+        if (NULL == pUser) {
+                printf("[DEBUG] CHandleMessage::handleSetFunc : NULL == pUser\n");
+                SINGLE->bufpool.free(p);
+                return;
         }
 
-#ifdef __DEBUG__
+        printf("[DEBUG] CHandleMessage::handleSetFunc : setFunc.func_type() = %d\n", setFunc.func_type());
+        pUser->funcType_ = (enum FuncType)setFunc.func_type();
+        tmp.set_result(true);
+        Buf* pBuf = packet(ST_SetFunc, tmp, p->getfd());
+        CHECK_BUF(pBuf, p);
+        SINGLE->sendqueue.enqueue(pBuf);
+
+        epStudent*   pStudent   = NULL;
+        epClassroom* pClassroom = NULL;
+        Buf* p1 = NULL;
+        sUpdateStudentStatus suss;
+        switch (pUser->getType()) {
+        case LT_STUDENT :
+                pStudent = dynamic_cast<epStudent*>(pUser);
+                if (NULL == pStudent) {
+                        printf("[DEBUG] %s : NULL == pStudent\n", __func__);
+                        SINGLE->bufpool.free(p);
+                        return;
+                }
+
+                switch (setFunc.func_type()) {
+                case FT_SCHOOL :
+                        printf("[DEBUG] CHandleMessage::handleSetFunc : FT_SCHOOL : class id = %d\n", pStudent->classId_);
+                        pClassroom = EPMANAGER->getClassroomByClassId(pStudent->classId_);
+                        if (NULL == pClassroom) {
+                                printf("[DEBUG] %s : NULL == pClassroom\n", __func__);
+                                SINGLE->bufpool.free(p);
+                                return;
+                        }
+
+                        suss.set_student_id(pStudent->id_);
+
+                        printf("[DEBUG] CHandleMessage::handleSetFunc : send ST_UpdateStudentStatus\n");
+                        p1 = packet(ST_UpdateStudentStatus, suss, p->getfd());
+                        CHECK_BUF(p1, p);
+                        pClassroom->sendtoAll(p1);
+
+                        // 将学生由游离状态加入该班级。
+                        pClassroom->insertStudent(pStudent);
+                        // 将该学生从游离列表移除。
+                        EPMANAGER->removeUserByFd(p->getfd());
+                        break;
+                default :
+                        break;
+                }
+                break;
+        default :
+                break;
+        }
+
+#ifdef __DEBUG_DUMP__
         EPMANAGER->dumpClassroom();
 #endif
 
         SINGLE->bufpool.free(p);
+        return;
 }

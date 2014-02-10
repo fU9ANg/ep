@@ -46,15 +46,15 @@ void CHandleMessage::handleDownloadFromPublic(Buf* p) {
                 return;
         }
 
-        /*
-        tmp.set_down_addr("http://" + SINGLE->download_upload_server_ip
-                        ":" + SINGLE->download_upload_server_port + "/"
-                        + res_path);
+        tmp.set_result((0==res_path.size()) ? true : false);
+        char buf[128] = {0};
+        snprintf(buf, sizeof(CONFIG->download_upload_server_port), "%d", CONFIG->download_upload_server_port);
+        tmp.set_down_addr("http://" + CONFIG->download_upload_server_ip + ":" + buf + "/" + res_path);
 
         Buf* pBuf = packet(ST_GetClassList, tmp, p->getfd());
         if (NULL != pBuf) {
                 SINGLE->sendqueue.enqueue(pBuf);
         }
         SINGLE->bufpool.free(p);
-        */
+        return;
 }

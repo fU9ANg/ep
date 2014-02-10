@@ -27,6 +27,7 @@ void CHandleMessage::handleGetClassList (Buf* p)
         // 必须是处于游离状态的用户才能作用该协议。
         const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
         if (NULL == pUser) {
+                printf("[DEBUG] CHandleMessage::HandleMessage : NULL == pUser\n");
                 SINGLE->bufpool.free(p);
                 return;
         }
@@ -34,6 +35,7 @@ void CHandleMessage::handleGetClassList (Buf* p)
         // 必须是教师才能使用该协议。
         const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);
         if (NULL == pTeacher) {
+                printf("[DEBUG] CHandleMessage::HandleMessage : NULL == pTeacher\n");
                 SINGLE->bufpool.free(p);
                 return;
         }
@@ -47,30 +49,30 @@ void CHandleMessage::handleGetClassList (Buf* p)
                 return;
         }
 
-        int grade_id = gcrl.grade_id();
         sGetClassList tmp;
-        std::vector<sGetClassList> vc;
+        ClassListNode* cln;
         try {
                 MutexLockGuard guard(DATABASE->m_mutex);
                 PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_CLASS_LIST_BY_GRADE_ID);
-                pstmt->setInt (1, grade_id);
+                pstmt->setInt (1, gcrl.grade_id());
                 ResultSet* prst = pstmt->executeQuery ();
                 while (prst->next ()) {
-                        tmp.set_class_id (prst->getInt   ("class_id"));
-                        tmp.set_class_name(prst->getString("class_name"));
-                        vc.push_back(tmp);
+                        cln = tmp.add_class_list();
+                        cln->set_id  (prst->getInt   ("class_id"));
+                        cln->set_name(prst->getString("class_name"));
                 }
                 delete prst;
                 delete pstmt;
-        }catch (SQLException e) {
+        } catch (SQLException e) {
                 printf("[DEBUG] CHandleMessage::handleGetClassList : SQLException = %s\n", e.what());
                 SINGLE->bufpool.free(p);
                 return;
         }
 
-        Buf* pBuf = packet(ST_GetClassList, vc, p->getfd());
-        if (NULL != pBuf) {
-                SINGLE->sendqueue.enqueue(pBuf);
-        }
+        Buf* pBuf = packet_list(ST_GetClassList, tmp, p->getfd());
+        CHECK_BUF(pBuf, p);
+        SINGLE->sendqueue.enqueue(pBuf);
+
         SINGLE->bufpool.free(p);
+        return;
 }

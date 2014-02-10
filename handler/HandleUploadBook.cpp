@@ -8,6 +8,7 @@
 #include "../message/proto/protocol.pb.h"
 
 #include "../content/epManager.h"
+#include "../netdef.h"
 
 void
 CHandleMessage::handleUploadBook(Buf* p) {
@@ -33,7 +34,7 @@ CHandleMessage::handleUploadBook(Buf* p) {
         try {
                 MutexLockGuard guard(DATABASE->m_mutex);
                 PreparedStatement* pstmt = DATABASE->preStatement \
-                                           ("CALL epdb.proc2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                                           ("CALL epdb.proc2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 pstmt->setInt   (1, cub.book_type());
                 pstmt->setString(2, cub.book_name());
                 pstmt->setString(3, cub.time());
@@ -44,6 +45,8 @@ CHandleMessage::handleUploadBook(Buf* p) {
                 pstmt->setInt   (8, cub.health());
                 pstmt->setInt   (9, cub.science());
                 pstmt->setString(10,cub.res_path());
+                pstmt->setInt   (11,pUser->id_);
+                pstmt->setInt   (12,pUser->getType());
 
                 pstmt->execute ();
 #if 0 
@@ -57,13 +60,13 @@ CHandleMessage::handleUploadBook(Buf* p) {
                 //delete prst;
                 delete pstmt;
         }catch (SQLException e) {
-                printf ("SQLException: %s\n", e.what());
+                printf ("[DEBUG] %s : SQLException: %s\n", __func__, e.what());
                 SINGLE->bufpool.free(p);
                 return;
         }
 
         sUploadBook tmp;
-        tmp.set_result(true);
+        tmp.set_result(TRUE);
         tmp.set_msg("插入成功！\n");
 
         Buf* pBuf = packet(ST_UploadBook, tmp, p->getfd());

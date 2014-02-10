@@ -24,6 +24,7 @@ void CHandleMessage::handleGetPersonalBooksList (Buf *p)
 #endif
         const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
         if (NULL == pUser) {
+                printf("[DEBUG] CHandleMessage::handleGetPersonalBooksList : NULL == pUser\n");
                 SINGLE->bufpool.free(p);
                 return;
         }
@@ -36,31 +37,34 @@ void CHandleMessage::handleGetPersonalBooksList (Buf *p)
         }
 
         sGetPersonalBooksList tmp;
-        std::vector<sGetPersonalBooksList> vc;
+        bookNode *book_node;
         try {
                 MutexLockGuard guard(DATABASE->m_mutex);
                 PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_COURSE_LIST_BY_AUTHOR_ID_AND_TYPE_PERSONAL);
-                pstmt->setInt (1, pUser->getId());
+                pstmt->setInt (1, pUser->id_);
                 pstmt->setInt (2, pUser->getType());
                 ResultSet* prst = pstmt->executeQuery ();
                 while (prst->next ()) {
-                        tmp.set_book_id  (prst->getInt   ("book_id"));
-                        tmp.set_book_name(prst->getString("book_name"));
-                        tmp.set_book_type(prst->getInt   ("book_type"));
-                        tmp.set_res_path (prst->getString("res_path"));
-                        vc.push_back(tmp);
+                        book_node = tmp.add_book_list();
+                        book_node->set_book_id  (prst->getInt   ("book_id"));
+                        book_node->set_book_name(prst->getString("book_name"));
+                        book_node->set_book_type(prst->getInt   ("book_type"));
+                        book_node->set_res_path (prst->getString("res_path"));
                 }
                 delete prst;
                 delete pstmt;
-        }catch (SQLException e) {
+        } catch (SQLException e) {
                 printf("[DEBUG] CHandleMessage::handleGetPersonalBooksList : SQLException = %s\n", e.what());
                 SINGLE->bufpool.free(p);
                 return;
         }
 
-        Buf* pBuf = packet(ST_GetPersonalBooksList, vc, p->getfd());
+        Buf* pBuf = packet_list(ST_GetPersonalBooksList, tmp, p->getfd());
         if (NULL != pBuf) {
                 SINGLE->sendqueue.enqueue(pBuf);
+        } else {
+                printf("[DEBUG] CHandleMessage::handleGetPersonalBooksList : NULL == pBuf\n");
         }
         SINGLE->bufpool.free(p);
+        return;
 }

@@ -12,7 +12,7 @@
 void CHandleMessage::handleGetActiveStudentList (Buf* p)
 {
 #ifdef __DEBUG_HANDLE_HEAD_
-        cout << "CT_GetClassList\n";
+        cout << "CT_GetActiveStudentList fd = " << p->getfd() << endl;
 #endif
         // TODO:
 
@@ -25,18 +25,25 @@ void CHandleMessage::handleGetActiveStudentList (Buf* p)
                 return;
         }
 
+
+        // const epUser* pUser = EPMANAGER->getUserByFdFromClassroom(p->getfd());
         std::vector<int> vi = EPMANAGER->getActiveStudentListFromClass(casl.class_id());
-        std::vector<sGetActiveStudentList> vg;
+        sGetActiveStudentList tmp;
+        printf("[DEBUG] CHandleMessage::handleGetActiveStudentList ：vi.size() = %ld\n", vi.size());
         for (int i=0; i<(signed)vi.size(); ++i) {
-                sGetActiveStudentList tmp;
-                tmp.set_id(vi[i]);
-                vg.push_back(tmp);
+                printf("[DEBUG] CHandleMessage::handleGetActiveStudentList fd[%d]: idx = %d\n", p->getfd(), vi[i]);
+                tmp.add_student_list(vi[i]);
         }
 
-        Buf* pBuf = packet(ST_GetActiveStudentList, vg, p->getfd());
-
+        Buf* pBuf = packet_list(ST_GetActiveStudentList, tmp, p->getfd());
         if (NULL != pBuf) {
+                /*
+                printf ("[debug] CHandleMessage::handleGetActiveStudentList fd[%d], studnet idx=%d, %d\n",
+                    pBuf->getfd(), *(int*) ((char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof (int)), *(int*) ((char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof (int) + sizeof (int)));
+                    */
                 SINGLE->sendqueue.enqueue(pBuf);
         }
+
         SINGLE->bufpool.free(p);
+        return;
 }

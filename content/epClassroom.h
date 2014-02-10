@@ -57,18 +57,6 @@ public :
          */
         bool deleteUserByFd(const int);
         /**
-         * @brief 获取所属该教室的老师对象指针。
-         *
-         * @return 老师对象指针。
-         */
-        const epTeacher* getTeacher(void);
-        /**
-         * @brief 获取所属该教室的白板对象。
-         *
-         * @return 白板对象。
-         */
-        const epWhiteBoard* getWhiteBoard(void) const;
-        /**
          * @brief 根据客户端FD获取该用户对象指针。
          *
          * @param int[in] 指定用户FD。
@@ -76,49 +64,26 @@ public :
          * @return 查找成功返回对象指针，否则返回NULL。
          */
         const epUser* getUserByFd(const int);
-        /**
-         * @brief 获取该教室上课所使用的课程列表。
-         *
-         * @return 课程列表。
-         */
-        const std::string& getCourseList(void) const;
+        const epUser* getUserByAccount(const std::string&);
         /**  @} */
 
         /**
          * @name set
          * @{ */
-        /**
-         * @brief 设定老师。
-         *
-         * @param epTeacher[in] 老师对象指针。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        bool setTeacher(const epTeacher*);
-        /**
-         * @brief 指定白板。
-         *
-         * @param epWhiteBoard[in] 白板对象指针。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        bool setWhiteBoard(const epWhiteBoard*);
-        /**
-         * @brief 设置该教室上课的课程列表。
-         *
-         * @param std::string[in] 课程列表。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        bool setCourseList(const std::string&);
         /**  @} */
 
         bool insertClass(epClass*);
+        bool insertStudent(const epStudent*);
         bool removeClassById(const int);
+        bool moveAllStudentToUser(void);
+        bool moveWhiteboardToUser(void);
+        bool moveTeacherToUser(void);
         epClass* getClassById(const int);
         std::vector<epClass*> getClassList(void);
+        const epGroup* getGroupByFd(const int);
         bool insertGroup(epGroup*);
         bool removeGroupById(const int);
+        bool removeAllGroup(void);
         bool deleteGroupById(const int);
         bool deleteAllGroup(void);
         epGroup* getGroupById(const int);
@@ -133,7 +98,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoAllStudent(Buf*, const bool toSelf=false);
+        bool sendtoAllClass(Buf*, const bool toSelf=false);
         /**
          * @brief 将指定消息内容发送给所有在该教室上课的班。
          *
@@ -141,7 +106,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoAllClass(Buf*);
+        bool sendtoAll(Buf*, const bool toSelf=false);
         /**
          * @brief 将指定消息内容发送给在该教室上课的指定班。
          *
@@ -150,7 +115,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoClassById(const int, Buf*);
+        bool sendtoClassById(const int, Buf*, const bool toSelf=false);
         /**
          * @brief 将指定消息内容发送给所有在该教室上课的分组。
          *
@@ -158,7 +123,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoAllGroup(Buf*);
+        bool sendtoAllGroup(Buf*, const bool toSelf=false);
         /**
          * @brief 将指定消息内容发送给在该教室上课的指定分组。
          *
@@ -167,7 +132,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoGroupById(const int, Buf*);
+        bool sendtoGroupById(const int, Buf*, const bool toSelf=false);
         /**
          * @brief 将指定消息内容发送给在该教室上课的老师。
          *
@@ -175,7 +140,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoTeacher(Buf*);
+        bool sendtoTeacher(Buf*, const bool toSelf=true);
         /**
          * @brief 将指定消息内容发送给所属该教室的白板。
          *
@@ -183,7 +148,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoWhiteBoard(Buf*);
+        bool sendtoWhiteBoard(Buf*, const bool toSelf=true);
         /**  @} */
 
         /**
@@ -192,16 +157,6 @@ public :
         virtual void dump(void);
         /**  @} */
 
-
-private :
-        /**
-         * @brief 班列表。
-         */
-        EPCLASS_MAP classMap_;
-        /**
-         * @brief 组列表。
-         */
-        EPGROUP_MAP groupMap_;
         /**
          * @brief 教师。
          */
@@ -214,6 +169,15 @@ private :
          * @brief 该教室上课时的课程列表。
          */
         std::string courseList_;
+private :
+        /**
+         * @brief 班列表。
+         */
+        EPCLASS_MAP classMap_;
+        /**
+         * @brief 组列表。
+         */
+        EPGROUP_MAP groupMap_;
 };
 
 #endif // __EPCLASSROOM_H__

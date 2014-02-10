@@ -45,6 +45,7 @@ public :
          * @return 成功返回true，否则返回false。
          */
         bool removeStudentByFd(const int);
+        bool removeAllStudent(void);
         /**  @} */
 
         /**
@@ -63,6 +64,7 @@ public :
          * @return 成功返回学生对象指针，否则返回NULL。
          */
         const epStudent* getStudentByFd(const int);
+        int getNextIdByFd(const int);
         /**  @} */
 
         /**
@@ -72,8 +74,10 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoAllStudent(Buf*);
+        bool sendtoAllStudent(Buf*, const bool toSelf=false);
         bool sendtoStudentByFd(const int, Buf*);
+
+        bool setLock(const int);
 
         /**
          * @name Just for debug
@@ -87,6 +91,10 @@ private :
          * @brief 该组学生列表。
          */
         STUDENT_MAP studentMap_;
+        /**
+         * @brief 组内同步锁。
+         */
+        int lock_;
 };
 
 #endif // __EPGROUP_H__

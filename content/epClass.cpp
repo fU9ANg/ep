@@ -2,6 +2,7 @@
 #include "../Single.h"
 #include "../netdef.h" // EPCLASSROOM_INVALID_CLASSROOM_ID
 #include <stdio.h> // for printf
+#include "epManager.h"
 
 epClass::epClass(void) {
 }
@@ -10,8 +11,12 @@ epClass::~epClass(void) {
         EPSTUDENT_MAP::iterator it = studentMap_.begin();
         EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
         for (; cie!=it; ++it) {
+                /*
                 delete it->second;
                 it->second = NULL;
+                */
+                (it->second)->funcType_ = FT_INVALID;
+                EPMANAGER->insertUser(it->first, it->second);
                 studentMap_.erase(it);
         }
 }
@@ -22,7 +27,7 @@ epClass::getStudentById(const int student_id) {
         EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
 
         for (; cie!=it; ++it) {
-                if (student_id == (it->second)->getId()) {
+                if (student_id == (it->second)->id_) {
                         return it->second;
                 }
         }
@@ -31,17 +36,17 @@ epClass::getStudentById(const int student_id) {
 }
 
 bool
-epClass::insertStudent(const int fd, epStudent* student) {
-        if (NULL == student) {
-                printf("[DEBUG] epClass::insertStudent : NULL == student\n");
+epClass::insertStudent(const epStudent* obj) {
+        if (NULL == obj) {
+                printf("[DEBUG] epClass::insertStudent : NULL == obj\n");
                 return false;
         }
 
-        EPSTUDENT_MAP::iterator it = studentMap_.find(fd);
+        EPSTUDENT_MAP::iterator it = studentMap_.find(obj->fd_);
         if (studentMap_.end() != it) { // found
                 return false;
         } else {
-                studentMap_.insert(std::make_pair<int, epStudent*>(fd, student));
+                studentMap_.insert(std::make_pair<int, epStudent*>(obj->fd_, const_cast<epStudent*>(obj)));
                 return true;
         }
 }
@@ -55,6 +60,21 @@ epClass::removeStudentByFd(const int fd) {
         } else {
                 return false;
         }
+}
+
+bool
+epClass::moveAllStudentToUser(void) {
+        EPSTUDENT_MAP::iterator it = studentMap_.begin();
+        EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
+        for (; cie!=it; ++it) {
+                // TODO : 在移动学生过程中失败怎么办。
+                if (EPMANAGER->insertUser(it->first, it->second)) {
+                        studentMap_.erase(it);
+                } else {
+                        return false;
+                }
+        }
+        return true;
 }
 
 bool
@@ -80,19 +100,33 @@ epClass::getStudentByFd(const int fd) {
         }
 }
 
+const epUser*
+epClass::getUserByAccount(const std::string& account) {
+        EPSTUDENT_MAP::iterator it = studentMap_.begin();
+        EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
+        for (; cie!=it; ++it) {
+                if (account == (it->second)->account_) {
+                        return it->second;
+                }
+        }
+
+        return NULL;
+}
+
 bool
 epClass::sendtoAllStudent(Buf* pBuf, const bool toSelf) {
         EPSTUDENT_MAP::iterator it = studentMap_.begin();
         EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
         Buf* p = NULL;
         for (; cie!=it; ++it) {
-                if (!toSelf && pBuf->getfd()==it->first) { // send to self?
-                        continue;
+                if (US_ONLINE == (it->second)->userStatus_) {
+                        if (pBuf->getfd()==it->first && !toSelf) {
+                                continue;
+                        }
+                        CLONE_BUF(p, pBuf);
+                        p->setfd(it->first);
+                        SINGLE->sendqueue.enqueue(p);
                 }
-                p = SINGLE->bufpool.malloc();
-                p = pBuf;
-                p->setfd(it->first);
-                SINGLE->sendqueue.enqueue(p);
         }
 
         SINGLE->bufpool.free(pBuf);
@@ -102,11 +136,12 @@ epClass::sendtoAllStudent(Buf* pBuf, const bool toSelf) {
 bool
 epClass::sendtoStudentByFd(const int fd, Buf* pBuf) {
         EPSTUDENT_MAP::iterator it = studentMap_.find(fd);
-        if (studentMap_.end() != it) { // found
+        if (studentMap_.end()!=it && US_ONLINE==(it->second)->userStatus_) { // found
                 pBuf->setfd(it->first);
                 SINGLE->sendqueue.enqueue(pBuf);
                 return true;
         } else {
+                SINGLE->bufpool.free(pBuf);
                 return false;
         }
 }
@@ -128,7 +163,9 @@ epClass::getActiveStudent(void) {
         EPSTUDENT_MAP::const_iterator cie = studentMap_.end();
         std::vector<int> vi;
         for (; cie!=it; ++it) {
-                vi.push_back((it->second)->getId());
+                if (US_ONLINE == (it->second)->userStatus_) {
+                        vi.push_back((it->second)->id_);
+                }
         }
         return vi;
 }

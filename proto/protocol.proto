@@ -8,31 +8,35 @@ message cLogin {
 
 // ST_Login
 message sLogin {
-        required bool result   = 1;
+        optional bool  result           = 2;
+        optional bool  enter_classroom  = 3;
+        optional int32 student_id       = 1;
 }
 
 // CT_Logout
 message cLogout {
-        required int32 common   = 1;
 }
 
 // ST_Logout
 message sLogout {
         required int32 login_type  = 1; // 说明是哪种类型的客户端退出。
-        required string num        = 2;
+        required int32 id          = 2;
 }
 
 // CT_GetFuncList
 message cGetFuncList {
-        required string content  = 1;
 }
 
 // ST_GetFuncList
 // 返回的是对应权限的功能列表。
+message FuncNode {
+        required int32  id       = 1;
+        required string name     = 2;
+        required string res_path = 3;
+}
+
 message sGetFuncList {
-        required int32  id       = 3;
-        required string name     = 1;
-        required string res_path = 2;
+        repeated FuncNode func_list     = 1;
 }
 
 // CT_SetFunc
@@ -42,7 +46,7 @@ message cSetFunc {
 
 // ST_SetFunc
 message sSetFunc {
-        required bool   result   = 1; // 返回服务器是否设置成功。
+        optional bool   result   = 1; // 返回服务器是否设置成功。
 }
 /*}}}*/
 
@@ -54,19 +58,7 @@ message cGetGradeList {
 
 // ST_GetGradeList,
 message sGetGradeList { // 返回年级列表。
-        required int32  grade_id   = 1;
-        required string grade_name = 2;
-        /*
-           required int32  course_id  = 3;
-           required string course_name= 4;
-           required string course_type= 5;
-           required int32  laguage    = 6;
-           required int32  art        = 7;
-           required int32  community  = 8;
-           required int32  health     = 9;
-           required int32  science    = 10;
-           required string resPath    = 11;
-         */
+        repeated ClassListNode grade_list = 1;
 }
 
 // CT_GetCourseList
@@ -74,27 +66,41 @@ message cGetCourseList { // 请求年级对应的课程表。
         required int32 grade_id = 1;
 }
 
-// ST_GetCourseList
-message sGetCourseList { // 返回学校对应的课程表。
+message CourseNode {
         required int32  course_id   = 1;
         required string course_name = 2;
-        required int32  language    = 3;
-        required int32  art         = 4;
-        required int32  community   = 5;
-        required int32  health      = 6;
-        required int32  science     = 7;
-        required string res_path    = 8;
+        required int32  grade_id    = 3;
+        optional int32  language    = 4;
+        optional int32  art         = 5;
+        optional int32  community   = 6;
+        optional int32  health      = 7;
+        optional int32  science     = 8;
+        required string res_path    = 9;
+
+        enum CourseType {
+                CT_INVALID      = 1;
+                CT_RELAY        = 2;
+                CT_DRAW         = 3;
+                CT_FREEDRAW     = 4;
+        }
+        required CourseType course_type = 10 [default=CT_INVALID];
+        optional string xml_path        = 11;
+}
+
+// ST_GetCourseList
+message sGetCourseList { // 返回学校对应的课程表。
+        repeated CourseNode course_list = 1;
 }
 
 // CT_GetContent,
 message cGetContent {
-        required string common    = 1;
 }
 
 // ST_GetContent,
 message sGetContent {
-        required bool   result      = 1;
-        required string course_list = 2;
+        required int32  class_id         = 1;
+        required int32  classroom_id     = 2;
+        repeated ContentNode course_list = 3;
 }
 
 // CT_GetClassList,
@@ -102,21 +108,29 @@ message cGetClassList {
         required int32  grade_id        = 1;
 }
 
+message ClassListNode {
+        required int32  id       = 1;
+        required string name     = 2;
+        optional string res_path = 3;
+}
+
 // ST_GetClassList,
 message sGetClassList {
-        required int32  class_id        = 1;
-        required string class_name      = 2;
+        repeated ClassListNode class_list = 1;
 }
 
 // CT_GetClassRoomList
 message cGetClassRoomList {
-        required string content         = 1;
 }
 
 // ST_GetClassRoomList
 message sGetClassRoomList {
-        required int32  classroom_id    = 1;
-        required string classroom_name  = 2;
+        repeated ClassListNode classroom_list = 1;
+}
+
+message ContentNode {
+        required int32  course_id       = 1;
+        optional string course_xml      = 2;
 }
 
 // CT_SetContent
@@ -124,13 +138,26 @@ message cSetContent {
         required int32  class_id         = 1; // 班级ID
         required int32  classroom_id     = 2; // 教室ID
         // 课程列表。
-        required string course_list      = 3;
+        repeated ContentNode course_list = 3;
 }
 
 // ST_SetContent
 message sSetContent {
-        required bool   result          = 1;
+        optional bool   result          = 1;
         required string msg             = 2;
+}
+
+message sCourseware {
+        required int32  course_id       = 1;
+}
+
+// 下课
+// CT_ClassOver,
+message cClassOver {
+}
+
+// ST_ClassOver,
+message sClassOver {
 }
 
 // CT_GetStudentList
@@ -138,11 +165,15 @@ message cGetStudentList {
         required int32 class_id = 1;
 }
 
-// ST_GetStudentList
-message sGetStudentList { // 单个学生简要信息。
+message StudentListNode {
         required int32  id              = 1;
         required string name            = 2;
-        required string res_path        = 3;
+        optional string res_path        = 3;
+}
+
+// ST_GetStudentList
+message sGetStudentList { // 单个学生简要信息。
+        repeated StudentListNode student_list = 1;
 }
 
 // CT_GetActiveStudentList,
@@ -152,7 +183,7 @@ message cGetActiveStudentList {
 
 // ST_GetActiveStudentList,
 message sGetActiveStudentList {
-        required int32  id      = 1;
+        repeated int32  student_list = 1;
 }
 
 // ST_UpdateStudentStatus,
@@ -172,8 +203,8 @@ message sGetStudentInfo {
         required string name            = 3;
         required string sex             = 4;
         required string race            = 5;
-        required string birthday        = 6;
-        required string native          = 7;
+        required string native          = 6;
+        required int32  class_id        = 7;
         required string class_name      = 8;
 }
 
@@ -194,25 +225,49 @@ message sGetTeacherInfo {
         required string school_name     = 8;
 }
 
+message PeerGroup {
+        required int32  student_id      = 1;
+}
+
 // CT_SetGroup
 message cSetGroup {
         required int32  group_id        = 1;
         required string group_name      = 2;
-        required int32  student_cnt     = 4;
-        required string student_list    = 3;
+        repeated PeerGroup student_list = 3;
 }
 
 // ST_SetGroup
 message sSetGroup {
-        required bool   result          = 1;
-        required string msg             = 2;
+        required int32  result          = 2;
+        required string msg             = 1;
+}
+
+// CT_Relay
+message cRelay {
+}
+
+// ST_Relay
+message sRelay {
+        required int32  student_id      = 1;
 }
 
 /*}}}*/
 
 // 绘本
+message bookNode {
+        required int32  book_id         = 1; // key
+        required string book_name       = 2;
+        required int32  book_type       = 4;
+        required string res_path        = 3;
+}
+
 // CT_GetPersonalBooksList,
 message cGetPersonalBooksList {
+}
+
+// ST_GetPersonalBooksList,
+message sGetPersonalBooksList {
+        repeated bookNode book_list     = 1;
 }
 
 // CT_GetServerAddr
@@ -224,13 +279,6 @@ message sGetServerAddr {
         required string serv_addr       = 1;
 }
 
-// ST_GetPersonalBooksList,
-message sGetPersonalBooksList {
-        required int32  book_id         = 1; // key
-        required string book_name       = 2;
-        required int32  book_type       = 4;
-        required string res_path        = 3;
-}
 
 // CT_GetPublicBooksList,
 message cGetPublicBooksList {
@@ -238,10 +286,7 @@ message cGetPublicBooksList {
 
 // ST_GetPublicBooksList,
 message sGetPublicBooksList {
-        required int32  book_id         = 1; // key
-        required string book_name       = 2;
-        required int32  book_type       = 4;
-        required string res_path        = 3;
+        repeated bookNode book_list     = 1;
 }
 
 // CT_UploadBook,
@@ -259,8 +304,8 @@ message cUploadBook {
 }
 // ST_UploadBook,
 message sUploadBook {
-        required bool result            = 1; // 信息保存成功否。
-        required string msg             = 2;
+        required int32 result            = 2; // 信息保存成功否。
+        required string msg             = 1;
 }
 
 // 从私人服务器进行下载。
@@ -271,7 +316,8 @@ message cDownloadFromPersonal {
 
 // ST_DownloadFromPersonal,
 message sDownloadFromPersonal {
-        required string down_addr       = 1;
+        optional bool   result          = 1;
+        required string down_addr       = 2;
 }
 
 // 从公共服务器进行下载。
@@ -282,6 +328,7 @@ message cDownloadFromPublic {
 
 // ST_DownloadFromPublic,
 message sDownloadFromPublic {
+        optional bool   result          = 2;
         required string down_addr       = 1;
 }
 
@@ -294,8 +341,8 @@ message cTransferBook {
 
 // ST_TransferBook,
 message sTransferBook {
-        required bool   result          = 1;
-        required string msg             = 2;
+        required int32   result          = 2;
+        required string msg             = 1;
 }
 
 // 发布。
@@ -306,6 +353,199 @@ message cPublish {
 
 // ST_Publish,
 message sPublish {
-        required bool   result          = 1;
+        required int32   result          = 2;
+        required string msg             = 1;
+}
+// 绘画
+
+// 同步绘画信息。
+// CT_UpdateDrawSet
+message cUpdateDrawSet {
+        optional bool	facsimile	=1;
+        optional bool	puzzle		=2;
+        optional bool	frame		=3;
+        optional bool	record		=4;
+        optional bool	world		=5;
+        repeated string paper_name      =6;
+        repeated int32  pen_id          =7;
+}
+
+// 同步绘画信息。
+// CT_UpdateDrawInfo
+message cUpdateDrawInfo {
+}
+
+// ST_UpdateDrawInfo
+message sUpdateDrawInfo {
+}
+
+// 同步纸张 只作转发
+// CT_UpdateBackground,
+message cUpdateBackground {
+        required int32  paper_id        = 1;
+}
+
+// ST_UpdateBackground,
+message sUpdateBackground {
+        required int32  paper_id        = 1;
+}
+
+// 同步临摹图片到绘画层
+// CT_UpdateCopyIntoPaint,
+message cUpdateCopyIntoPaint {
+        required int32  pic_id          = 1;
+        required string pic_res		= 2;
+        required string pic_scale       = 3;
+        required string pic_rotation    = 4;
+        required string pt_x            = 5;
+        required string pt_y            = 6;
+        required int32 	op_type		= 7;
+}
+
+// ST_UpdateCopyIntoPaint,
+message sUpdateCopyIntoPaint {
+        required int32  pic_id          = 1;
+        required string pic_res         = 2;
+        required string pic_scale       = 3;
+        required string pic_rotation    = 4;
+        required string pt_x            = 5;
+        required string pt_y            = 6;
+        required int32 	op_type         = 7;
+}
+
+// 同步画笔或橡皮擦
+// CT_UpdatePenAnderaser,
+message cUpdatePenAnderaser {
+        required int32  pen_type        = 1;
+        required int32  pen_color       = 2;
+        required string pen_size        = 3;
+        required int32  pen_trans       = 4;
+        required int32  paint_type 	= 5;
+        required string pt_x 		= 6;
+        required string pt_y		= 7;
+        required string prept_x		= 8;
+        required string prept_y		= 9;
+}
+
+// ST_UpdatePenAnderaser,
+message sUpdatePenAnderaser {
+        required int32  pen_type        = 1;
+        required int32  pen_color       = 2;
+        required string pen_size        = 3;
+        required int32  pen_trans       = 4;
+        required int32  paint_type 	= 5;
+        required string pt_x 		= 6;
+        required string pt_y		= 7;
+        required string prept_x		= 8;
+        required string prept_y		= 9;
+}
+
+// 同步填色。
+// CT_UpdateFilling,
+message cUpdateFilling {
+        required string pt_list         = 1;
+        required int32  trans           = 3;
+        required int32  color           = 2;
+}
+
+// ST_UpdateFilling,
+message sUpdateFilling {
+        required string pt_list         = 1;
+        required int32  trans           = 3;
+        required int32  color           = 2;
+}
+
+// 同步印章 TODO
+// CT_UpdateStamp,
+message cUpdateStamp {
+        required string pic_res         = 1;
+        required string pt_x            = 2;
+        required string pt_y            = 3;
+}
+
+// ST_UpdateStamp,
+message sUpdateStamp {
+        required string pic_res         = 1;
+        required string pt_x            = 2;
+        required string pt_y            = 3;
+}
+
+// 同步填图
+// CT_UpdateFillPic,
+message cUpdateFillPic {
+        required string pic_res         = 1;
+        required string pt_x            = 2;
+        required string pt_y            = 3;
+}
+// ST_UpdateFillPic,
+message sUpdateFillPic {
+        required string pic_res         = 1;
+        required string pt_x            = 2;
+        required string pt_y            = 3;
+}
+
+// 同步锁定。
+// CT_UpdateMutex,
+message cUpdateMutex {
+        required int32 lock             = 1;
+}
+
+// ST_UpdateMutex,
+message sUpdateMutex {
+        required int32 result            = 1;
+}
+
+// 同步屏贴。
+// CT_UpdateCollage,
+message cUpdateCollage {
+        required int32  id              = 9;
+        required string pic_res         = 1;
+        required int32  pic_type        = 2;
+        required string pic_scale       = 3;
+        required string pic_rotation    = 4;
+        required string pt_x            = 5;
+        required string pt_y            = 6;
+        required int32  layer           = 7;
+        required int32  op_type		= 8;
+}
+
+// ST_UpdateCollage,
+message sUpdateCollage {
+        required int32  id              = 9;
+        required string pic_res         = 1;
+        required int32  pic_type        = 2;
+        required string pic_scale       = 3;
+        required string pic_rotation    = 4;
+        required string pt_x            = 5;
+        required string pt_y            = 6;
+        required int32  layer           = 7;
+        required int32  op_type		= 8;
+}
+
+// 同步文字
+// CT_UpdateWord,
+message cUpdateWord {
+        required int32  id              = 9;
+        required int32  frame_id        = 1;
         required string msg             = 2;
+        required int32  front           = 3;
+        required int32  color           = 4;
+        required int32  size            = 5;
+        required int32  effect_id       = 6;
+        required string frame_x         = 7;
+        required string frame_y         = 8;
+}
+
+// ST_UpdateWord,
+message sUpdateWord {
+}
+
+//同步边框
+//	CT_UpdateFrame,
+message cUpdateFrame {
+        required int32 	frame_id 	=1;
+}
+//	ST_UpdateFrame
+message sUpdateFrame {
+        required int32 	frame_id 	=1;
 }

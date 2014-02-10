@@ -6,78 +6,21 @@ epUser::epUser(void)
         : funcType_(FT_INVALID)
           , id_(EPUSER_INVALID_USER_ID)
           , fd_(EPUSER_INVALID_USER_FD)
-{
-}
+{ }
 
-epUser::~epUser(void) {
-}
+epUser::~epUser(void) { }
 
 bool
-epUser::setId(const int id) {
-        id_ = id;
-        return true;
-}
-
-bool
-epUser::setFd(const int fd) {
-        fd_ = fd;
-        return true;
-}
-
-bool
-epUser::setAccount(const std::string& account) {
+epUser::init(const std::string& account
+           , const std::string& passwd) {
         account_ = account;
+        passwd_  = passwd;
         return true;
-}
-
-bool
-epUser::setPasswd(const std::string& passwd) {
-        passwd_ = passwd;
-
-        return true;
-}
-
-bool
-epUser::setFuncType(const enum FuncType funcType) {
-        funcType_ = funcType;
-        return true;
-}
-
-bool
-epUser::init(const std::string& account, const std::string& passwd) {
-        setAccount(account);
-        setPasswd(passwd);
-        return true;
-}
-
-const std::string&
-epUser::getAccount(void) const {
-        return account_;
-}
-
-const std::string&
-epUser::getPasswd(void) const {
-        return passwd_;
 }
 
 const enum LoginType
 epUser::getType(void) const {
         return LT_USER;
-}
-
-const int
-epUser::getId(void) const {
-        return id_;
-}
-
-const int
-epUser::getFd(void) const {
-        return fd_;
-}
-
-enum FuncType
-epUser::getFuncType(void) const {
-        return funcType_;
 }
 
 void

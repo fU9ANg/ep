@@ -34,3 +34,80 @@ END
 4. sudo mkdir -v /var/ftp/SOURCES
 
 5. sudo chown ftp /var/ftp/SOURCES
+
+
+-------------------------------------
+INSERT SQL example:
+SQL:
+//INSERT INTO func VALUES (5,'办公室','2.png')
+#define TST_INSERT "INSERT INTO func VALUES (?,?,?)"
+
+C++:
+try {
+    MutexLockGuard guard(DATABASE->m_mutex);
+    PreparedStatement* pstmt = DATABASE->preStatement (TST_INSERT);
+    pstmt->setInt (1, 6);
+    pstmt->setString (2, "公会");
+    pstmt->setString (3, "3333.png");
+
+    int insertCnt = pstmt->executeUpdate ();
+    printf ("insertCnt=%d\n", insertCnt);
+    delete pstmt;
+}
+catch (SQLException e) {
+    printf ("[Error]: SQLException - %s", e.what());
+    return;
+}
+
+------------- call store procedure--------------
+
+//int result = 0;
+try {
+        MutexLockGuard guard(DATABASE->m_mutex);
+        PreparedStatement* pstmt = DATABASE->preStatement \
+                                   ("CALL epdb.proc1(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        pstmt->setInt (1, 1);
+        pstmt->setString (2, "¿?¿?¿?¿?111");
+        pstmt->setString (3, "2014/1/14");
+        pstmt->setString (4, "¿?¿?");
+        pstmt->setInt (5, 23);
+        pstmt->setInt (6, 45);
+        pstmt->setInt (7, 67);
+        pstmt->setInt (8, 89);
+        pstmt->setInt (9, 100);
+        pstmt->setString (10, "./resPath");
+
+        pstmt->execute ();
+#if 0 
+        pstmt = DATABASE->preStatement ("SELECT @_out AS out");
+        ResultSet* prst = pstmt->executeQuery ();
+        while (prst->next ()) {
+                result = prst->getInt ("out");
+                printf ("result============%d\n", result);
+        }
+#endif
+        //delete prst;
+        delete pstmt;
+}catch (SQLException e) {
+        printf ("SQLException: %s\n", e.what());
+}
+
+-------------------------------------------------
+        try {
+                int _in = -1000;
+                MutexLockGuard guard(DATABASE->m_mutex);
+                PreparedStatement* pstmt = DATABASE->preStatement \
+                                           ("CALL epdb.sp_test(?)");
+                pstmt->setInt  (1, _in);
+                ResultSet* prst = pstmt->executeQuery ();
+                while (prst->next()) {
+                    printf ("sql: rlt=%d\n", prst->getInt("rlt"));
+                    printf ("sql: msg=%s\n", prst->getString("msg").c_str());
+                }
+                delete prst;
+                delete pstmt;
+        }catch (SQLException e) {
+                printf ("SQLException: %s\n", e.what());
+                SINGLE->bufpool.free(p);
+                return;
+        }

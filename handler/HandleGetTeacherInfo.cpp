@@ -51,6 +51,8 @@ void CHandleMessage::handleGetTeacherInfo (Buf* p)
                         delete pstmt;
                 }catch (SQLException e) {
                         printf("[INFO] CHandleMessage::handleGetTeacherInfo : SQLException = %s\n", e.what());
+                        SINGLE->bufpool.free(p);
+                        return;
                 }
                 /*
         } else {
@@ -70,4 +72,5 @@ void CHandleMessage::handleGetTeacherInfo (Buf* p)
                         SINGLE->sendqueue.enqueue(pBuf);
                 }
                 SINGLE->bufpool.free(p);
+                return;
 }

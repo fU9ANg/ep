@@ -17,7 +17,7 @@
 #include "../protocol.h"
 #include "../Sock.h"
 #include "../message/proto/protocol.pb.h"
-#define SERV_IP "192.168.0.194"
+#define SERV_IP "222.186.50.76"
 #define SERV_PORT 9999 
 
 #define MAX_BUFF_SIZE   8192
@@ -48,13 +48,34 @@ struct numberProto NPARRAY [] =
     {7, "CT_GetClassList" },
     {8, "CT_GetClassRoomList" },
     {9, "CT_SetContent" },
-    {10,"CT_GetStudentList" },
-    {11,"CT_GetStudentInfo" },
-    {12,"CT_GetTeacherInfo" },
-    {13,"CT_GetActiveStudentList" },
-    {14,"CT_UploadBook" },
-    {15,"CT_GetPersonalBooksList" },
-    {16,"Print_Message_List" },
+	{10, "CT_GetContent" },
+    {11, "CT_StartClass" },
+ 	{12, "CT_Courseware" },
+    {13, "CT_ClassOver" },
+    {14,"CT_GetStudentList" },
+    {15,"CT_GetStudentInfo" },
+    {16,"CT_GetTeacherInfo" },
+    {17,"CT_GetActiveStudentList" },
+    {18,"CT_UploadBook" },
+    {19,"CT_GetPersonalBooksList" },
+    {20,"CT_GetPublicBooksList" },
+    {21,"CT_GetServerAddr" },
+    {22,"CT_DownloadFromPersonal" },
+    {23,"CT_DownloadFromPublic" },
+    {24,"CT_TransferBook" },
+    {25,"CT_Publish" },
+	{26,"CT_UpdateBackground" },
+	{27,"CT_UpdateCopyIntoPaint" },
+	{28,"CT_UpdatePenAnderaser" },
+	{29,"CT_UpdateFilling" },
+	{30,"CT_UpdateStamp" },
+	{31,"CT_UpdateFillPic" },
+	{32,"CT_UpdateMutex" },
+	{33,"CT_UpdateCollage" },
+	{34,"CT_UpdateWord" },
+	{35,"CT_SetGroup" },
+	{36,"CT_UpdateDrawInfo" },
+    {37,"Print_Message_List" },
 };
 
 #define ARRAY_SIZE  (sizeof(NPARRAY)/sizeof(NPARRAY[0]))
@@ -68,6 +89,7 @@ char* buffer = buf;
 MSG_HEAD* head = NULL;
 string g_tmp_str;
     
+#if 0
 void recv_data (int sfd, char** buffer)
 {
     int i = recv_v (sfd, (*buffer), sizeof (int));
@@ -115,6 +137,36 @@ void dumpLogin (string proto, char* buffer)
     dumpTail (buffer);  
 }
 
+void dumpGetContent (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+	string strGetContent = buffer + MSG_HEAD_LEN + sizeof(int);
+	sGetContent gct;
+	gct.ParseFromString (strGetContent);
+	if (gct.result())
+        cout << "result of Server: true" << endl;
+    else
+        cout << "result of Server: false" << endl;
+	cout << gct.course_list() <<endl;
+    dumpTail (buffer);  
+}
+
+void dumpStartClass (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+}
+
+void dumpUpdateDrawInfo (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+}
+
+void dumpClassOver (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+}
+
+
 void dumpGetFuncList (string proto, char* buffer)
 {
     dumpHead (proto, buffer);
@@ -123,16 +175,31 @@ void dumpGetFuncList (string proto, char* buffer)
     int count = *(int*) (buffer + MSG_HEAD_LEN);
     int i = 0;
 
-    for (; i<count; i++) {
+    //for (; i<count; i++) {
         sGetFuncList fl;
-        strGetFuncList = buffer + MSG_HEAD_LEN + sizeof (int) + i * sizeof (sGetFuncList);
+         strGetFuncList = buffer + MSG_HEAD_LEN + sizeof (int) + i * sizeof (sGetFuncList);
+        //strGetFuncList = (char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof(int) + i*sizeof(sGetFuncList);
         fl.ParseFromString (strGetFuncList);
         //
         cout << "grade(" << i << ") id=" << fl.id () << endl;
         cout << "grade(" << i << ") name=" << fl.name () << endl;
         cout << "grade(" << i << ") res_path=" << fl.res_path () << endl;
-    }
+    //}
     dumpTail (buffer);
+}
+
+void dumpSetGroup (string proto, char *buffer)
+{
+	dumpHead (proto, buffer);
+	string strSetGroup = buffer + MSG_HEAD_LEN + sizeof(int);
+	sSetGroup sg;
+	sg.ParseFromString (strSetGroup);
+	if (sg.result())
+        cout << "result of Server: true" << endl;
+    else
+        cout << "result of Server: false" << endl;
+	cout << sg.msg() <<endl;
+    dumpTail (buffer);  
 }
 
 void dumpSetFunc (string proto, char* buffer)
@@ -168,6 +235,12 @@ void dumpGetGradeList (string proto, char* buffer)
     dumpTail (buffer);
 }
 
+void dumpCourseware (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+	cout << "hello student " << endl;
+	dumpTail (buffer);
+}
 void dumpGetCourseList (string proto, char* buffer)
 {
     dumpHead (proto, buffer);
@@ -226,9 +299,91 @@ void dumpSetContent (string proto, char* buffer)
     
     dumpTail (buffer);
 }
+void dumpGetServerAddr(string proto, char* buffer)
+{
+    // ST_GetServerAddr
+    dumpHead (proto, buffer);
+    string strGetServerAddr;
+
+    sGetServerAddr sa;
+    strGetServerAddr = buffer + MSG_HEAD_LEN + sizeof(int);
+    sa.ParseFromString (strGetServerAddr);
+
+    //
+    cout << "server addr=" << sa.serv_addr() << endl;
+ 
+    dumpTail (buffer);
+}
+
+void dumpDownloadFromPersonal(string proto, char* buffer)
+{
+    // ST_DownloadFromPersonal
+    dumpHead (proto, buffer);
+    string strDownloadFromPersonal;
+
+    sDownloadFromPersonal dfp;
+    strDownloadFromPersonal = buffer + MSG_HEAD_LEN + sizeof(int);
+    dfp.ParseFromString (strDownloadFromPersonal);
+
+    //
+    cout << "personal down addr=" << dfp.down_addr() << endl;
+ 
+    dumpTail (buffer);
+}
+
+void dumpDownloadFromPublic(string proto, char* buffer)
+{
+    // ST_DownloadFromPublic
+    dumpHead (proto, buffer);
+    string strDownloadFromPublic;
+
+    sDownloadFromPublic fp;
+    strDownloadFromPublic= buffer + MSG_HEAD_LEN + sizeof(int);
+    fp.ParseFromString (strDownloadFromPublic);
+
+    //
+    cout << "public down addr=" << fp.down_addr() << endl;
+ 
+    dumpTail (buffer);
+}
+
+void dumpTransferBook(string proto, char* buffer)
+{
+    // ST_TransferBook
+    dumpHead (proto, buffer);
+    string strTransferBook;
+
+    sTransferBook tb;
+    strTransferBook = buffer + MSG_HEAD_LEN + sizeof(int);
+    tb.ParseFromString (strTransferBook);
+
+    //
+    cout << "transfer.result =" << tb.result () << endl;
+    cout << "transfer.message=" << tb.msg() << endl;
+    
+    dumpTail (buffer);
+}
+
+void dumpPublish(string proto, char* buffer)
+{
+    // ST_Publish
+    dumpHead (proto, buffer);
+    string strPublish;
+
+    sPublish p;
+    strPublish = buffer + MSG_HEAD_LEN + sizeof(int);
+    p.ParseFromString (strPublish);
+
+    //
+    cout << "publish.result =" << p.result () << endl;
+    cout << "publish.message=" << p.msg() << endl;
+ 
+    dumpTail (buffer);
+}
 
 void dumpUploadBook (string proto, char* buffer)
 {
+    // ST_UploadBook
     dumpHead (proto, buffer);
     string strUploadBook;
 
@@ -285,6 +440,7 @@ void dumpGetStudentList (string proto, char* buffer)
     }
     dumpTail (buffer);
 }
+
 void dumpGetActiveStudentList (string proto, char* buffer)
 {
 	 dumpHead (proto, buffer);
@@ -293,13 +449,36 @@ void dumpGetActiveStudentList (string proto, char* buffer)
 	 int i = 0;
 	 	
 	 for(; i < count; i++) {
-		  sGetActiveStudentList gasl;
-		  strGetActiveStudentList = buffer + MSG_HEAD_LEN + sizeof (int) + i * sizeof (sGetActiveStudentList);
-		  gasl.ParseFromString (strGetActiveStudentList);
+		  //sGetActiveStudentList gasl;
+		  //strGetActiveStudentList = buffer + MSG_HEAD_LEN + sizeof (int) + i * sizeof (sGetActiveStudentList);
+		  //gasl.ParseFromString (strGetActiveStudentList);
 		  //
-		  cout << "ActiveStudent(" << i << ") id=" << gasl.id() << endl;
+		  //cout << "ActiveStudent(" << i << ") id=" << gasl.id() << endl;
+		  cout << "ActiveStudent(" << i << ") id="
+                << *(int*) (buffer + MSG_HEAD_LEN + sizeof(int) + i*sizeof(int)) << endl;
 	 }
 	 dumpTail (buffer);
+}
+
+void dumpGetPublicBooksList (string proto, char* buffer)
+{
+    dumpHead (proto, buffer);
+    string strGetPublicBooksList;
+
+	 int count = *(int*) (buffer + MSG_HEAD_LEN);
+	 int i = 0;
+	 	
+	 for(; i < count; i++) {
+		  sGetPublicBooksList gasl;
+		  strGetPublicBooksList = buffer + MSG_HEAD_LEN + sizeof (int) + i * sizeof (sGetPublicBooksList);
+		  gasl.ParseFromString (strGetPublicBooksList);
+		  //
+		  cout << "book (" << i << ") id=" << gasl.book_id() << endl;
+		  cout << "book (" << i << ") name=" << gasl.book_name() << endl;
+		  cout << "book (" << i << ") type=" << gasl.book_type() << endl;
+		  cout << "book (" << i << ") resPath=" << gasl.res_path() << endl;
+	 }
+     dumpTail (buffer);
 }
 
 void dumpGetPersonalBooksList (string proto, char* buffer)
@@ -322,6 +501,7 @@ void dumpGetPersonalBooksList (string proto, char* buffer)
 	 }
      dumpTail (buffer);
 }
+
 void dumpGetStudentInfo (string proto, char* buffer)
 {
     dumpHead (proto, buffer);
@@ -363,6 +543,154 @@ void dumpGetTeacherInfo (string proto, char* buffer)
     dumpTail (buffer);
 }
 
+void dumpUpdateBackground (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+	string strUpdateBackground;
+	sUpdateBackground dbg;
+	strUpdateBackground = buffer + MSG_HEAD_LEN + sizeof(int);
+	dbg.ParseFromString (strUpdateBackground);
+
+	cout << "paper id= " << dbg.paper_id() <<endl;
+	dumpTail (buffer);
+}
+
+void dumpUpdateCopyIntoPaint (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+	string strUpdateCopyIntoPaint;
+	sUpdateCopyIntoPaint dcip;
+	strUpdateCopyIntoPaint = buffer + MSG_HEAD_LEN + sizeof(int);
+	dcip.ParseFromString (strUpdateCopyIntoPaint);
+
+	cout << "pic id= " << dcip.pic_id() <<endl;
+	cout << "pic res= " << dcip.pic_res() <<endl;
+	cout << "pic scale= " << dcip.pic_scale() <<endl;
+	cout << "pic rotation= " << dcip.pic_rotation() <<endl;
+	cout << "pic x= " << dcip.pt_x() <<endl;
+	cout << "pic y= " << dcip.pt_y() <<endl;
+	dumpTail (buffer);
+}
+
+void dumpUpdatePenAnderaser (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+	string strUpdatePenAnderaser;
+	sUpdatePenAnderaser dpa;
+	strUpdatePenAnderaser = buffer + MSG_HEAD_LEN + sizeof(int);
+	dpa.ParseFromString (strUpdatePenAnderaser);
+
+	cout << "pen color= " << dpa.pen_color() <<endl;
+	cout << "pen size= " << dpa.pen_size() <<endl;
+	cout << "pen trans= " << dpa.pen_trans() <<endl;
+	cout << "paint type= " << dpa.paint_type() <<endl;
+	cout << "pt x= " << dpa.pt_x() <<endl;
+	cout << "pt y= " << dpa.pt_y() <<endl;
+	cout << "prePt x= " << dpa.prept_x() <<endl;
+	cout << "prePt y= " << dpa.prept_y() <<endl;
+
+	dumpTail (buffer);
+}
+
+void dumpUpdateFilling (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+	string strUpdateFilling;
+	sUpdateFilling df;
+	strUpdateFilling = buffer + MSG_HEAD_LEN + sizeof(int);
+	df.ParseFromString (strUpdateFilling);
+
+	cout << "pt list= " << df.pt_list() <<endl;
+	cout << "trans= " << df.trans() <<endl;
+	cout << "color= " << df.color() <<endl;
+
+	dumpTail (buffer);
+}
+
+void dumpUpdateStamp (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+	string strUpdateStamp;
+	sUpdateStamp ds;
+	strUpdateStamp = buffer + MSG_HEAD_LEN + sizeof(int);
+	ds.ParseFromString (strUpdateStamp);
+
+	cout << "pic id= " << ds.pic_id() <<endl;
+	cout << "pt x= " << ds.pt_x() <<endl;
+	cout << "pt y= " << ds.pt_y() <<endl;
+
+	dumpTail (buffer);
+}
+
+void dumpUpdateFillPic (string proto, char* buffer) 
+{
+	dumpHead (proto, buffer);
+	string strUpdateFillPic;
+	sUpdateFillPic dfp;
+	strUpdateFillPic = buffer + MSG_HEAD_LEN + sizeof(int);
+	dfp.ParseFromString (strUpdateFillPic);
+
+	cout << "pic id= " << dfp.pic_id() <<endl;
+	cout << "pt x= " << dfp.pt_x() <<endl;
+	cout << "pt y= " << dfp.pt_y() <<endl;
+
+	dumpTail (buffer);
+}
+
+void dumpUpdateMutex (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+	string strUpdateMutex;
+	sUpdateMutex dm;
+	strUpdateMutex = buffer + MSG_HEAD_LEN + sizeof(int);
+	dm.ParseFromString (strUpdateMutex);
+
+	cout << "result= " << dm.result() <<endl;
+	dumpTail (buffer);
+}
+
+void dumpUpdateCollage (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+	string strUpdateCollage;
+	sUpdateCollage dc;
+	strUpdateCollage = buffer + MSG_HEAD_LEN + sizeof(int);
+	dc.ParseFromString (strUpdateCollage);
+
+	cout << "id= " << dc.id() <<endl;
+	cout << "pic id= " << dc.pic_id() <<endl;
+	cout << "pic type= " << dc.pic_type() <<endl;
+	cout << "pic scale= " << dc.pic_scale() <<endl;
+	cout << "pic rotation= " << dc.pic_rotation() <<endl;
+	cout << "pt x= " << dc.pt_x() <<endl;
+	cout << "pt y= " << dc.pt_y() <<endl;
+	cout << "layer = " << dc.layer() <<endl;
+
+	dumpTail (buffer);
+}
+
+void dumpUpdateWord (string proto, char* buffer)
+{
+	dumpHead (proto, buffer);
+	string strUpdateWord;
+	cUpdateWord dw;
+	strUpdateWord = buffer + MSG_HEAD_LEN + sizeof(int);
+	dw.ParseFromString (strUpdateWord);
+
+	cout << "id= " << dw.id() <<endl;
+	cout << "frame id= " << dw.frame_id() <<endl;
+	cout << "msg= " << dw.msg() <<endl;
+	cout << "front= " << dw.front() <<endl;
+	cout << "color= " << dw.color() <<endl;
+	cout << "size= " << dw.size() <<endl;
+	cout << "effect id= " << dw.effect_id() <<endl;
+	cout << "frame x = " << dw.frame_x() <<endl;
+	cout << "frame y =" << dw.frame_y() << endl;
+
+	dumpTail (buffer);
+}
+
+
 void handlerLogin()
 {
     string client_account, client_passwd;
@@ -399,6 +727,55 @@ void handlerLogin()
 #endif
 }
 
+void handlerStartClass ()
+{
+	BUFCLR(buffer);
+	head = (MSG_HEAD*) buffer;
+	head->cType = CT_StartClass;
+	head->cLen = MSG_HEAD_LEN ;
+	send_v (sfd, buffer, head->cLen);
+	BUFCLR(buffer);
+}
+
+void handlerUpdateDrawInfo ()
+{
+	BUFCLR(buffer);
+	head = (MSG_HEAD*) buffer;
+	head->cType = CT_UpdateDrawInfo;
+	head->cLen = MSG_HEAD_LEN ;
+	send_v (sfd, buffer, head->cLen);
+	BUFCLR(buffer);
+}
+
+void handlerClassOver()
+{
+	BUFCLR(buffer);
+	head = (MSG_HEAD*) buffer;
+	head->cType = CT_ClassOver;
+	head->cLen = MSG_HEAD_LEN ;
+	send_v (sfd, buffer, head->cLen);
+	BUFCLR(buffer);
+}
+
+void handlerGetContent()
+{
+	BUFCLR(buffer);
+	head = (MSG_HEAD*) buffer;
+	head->cType = CT_GetContent;
+	head->cLen = MSG_HEAD_LEN ;
+	send_v (sfd, buffer, head->cLen);
+	BUFCLR(buffer);
+}
+
+void handlerCourseware()
+{
+	BUFCLR(buffer);
+	head = (MSG_HEAD*) buffer;
+	head->cType = CT_Courseware;
+	head->cLen = MSG_HEAD_LEN ;
+	send_v (sfd, buffer, head->cLen);
+	BUFCLR(buffer);
+}
 void handlerLogout()
 {
     ///// CT_Logout
@@ -699,6 +1076,18 @@ void handlerUploadBook()
     BUFCLR(buffer);
 }
 
+void handlerGetPublicBooksList()
+{   
+    //// CT_GetPublicBooksList
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_GetPublicBooksList;
+    head->cLen = MSG_HEAD_LEN; //SETHEADCLEN(cGetPersonalBooksList);
+   
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
 void handlerGetPersonalBooksList()
 {   
     //// CT_GetPersonalBooksList
@@ -710,6 +1099,111 @@ void handlerGetPersonalBooksList()
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
 }
+
+void handlerGetServerAddr()
+{
+    //// CT_GetServerAddr
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_GetServerAddr;
+    head->cLen = MSG_HEAD_LEN;
+   
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerDownloadFromPersonal()
+{
+    int book_id;
+    //// CT_DownloadFromPersonal
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_DownloadFromPersonal;
+    head->cLen = SETHEADCLEN(cDownloadFromPersonal);
+   
+    cout << "book id:";
+    cin >> book_id; 
+    cDownloadFromPersonal dfp;
+    dfp.set_book_id (book_id);
+
+    g_tmp_str.clear();
+    dfp.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerDownlaodFromPublic()
+{
+    int book_id;
+    //// CT_DownloadFromPublic
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_DownloadFromPublic;
+    head->cLen = SETHEADCLEN(cDownloadFromPublic);
+   
+    cout << "book id:";
+    cin >> book_id; 
+    cDownloadFromPublic fp;
+    fp.set_book_id (book_id);
+
+    g_tmp_str.clear();
+    fp.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerTransferBook()
+{
+    int book_id;
+    string account;
+    //// CT_TransferBook
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_TransferBook;
+    head->cLen = SETHEADCLEN(cTransferBook);
+   
+    cout << "book id:";
+    cin >> book_id; 
+    cout << "account:";
+    cin >> account; 
+    cTransferBook tb;
+    tb.set_book_id (book_id);
+    tb.set_account (account);
+
+    g_tmp_str.clear();
+    tb.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerPublish()
+{
+    int book_id;
+    //// CT_Publish
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_Publish;
+    head->cLen = SETHEADCLEN(cPublish);
+   
+    cout << "book id:";
+    cin >> book_id; 
+    cPublish p;
+    p.set_book_id (book_id);
+
+    g_tmp_str.clear();
+    p.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
 void handlerGetActiveStudentList()
 {   
     int class_id;
@@ -737,6 +1231,366 @@ void handlerGetActiveStudentList()
 #endif
 }
 
+void handlerUpdateBackground ()
+{
+    int paper_id;
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_UpdateBackground;
+    head->cLen = SETHEADCLEN(cUpdateBackground);
+   
+    cout << "paper id:";
+    cin >> paper_id; 
+    cUpdateBackground sl;
+    sl.set_paper_id(paper_id);
+
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerUpdateCopyIntoPaint ()
+{
+    int pic_id;
+	string pic_res;
+	string pic_scale;
+	string pic_rotation;
+	string pt_x;
+	string pt_y;
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_UpdateCopyIntoPaint;
+    head->cLen = SETHEADCLEN(cUpdateCopyIntoPaint);
+   
+    cout << "pic id:";
+    cin >> pic_id; 
+	cout << "pic res:";
+	cin >> pic_res;
+	cout << "pic scale:";
+	cin >> pic_scale;
+	cout << "pic rotation:";
+	cin >> pic_rotation;
+	cout <<"pt x:";
+	cin >> pt_x;
+	cout << "pt y:";
+	cin >> pt_y;
+    cUpdateCopyIntoPaint sl;
+	sl.set_pic_id (pic_id);
+	sl.set_pic_res (pic_res);
+	sl.set_pic_scale (pic_scale);
+	sl.set_pic_rotation (pic_rotation);
+	sl.set_pt_x (pt_x);
+	sl.set_pt_y (pt_y);
+
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerUpdatePenAnderaser ()
+{
+	int pen_type;
+	int pen_color;
+	string pen_size;
+	int pen_trans;
+	int paint_type;
+	string pt_x;
+	string pt_y;
+	string prePt_x;
+	string prePt_y;
+
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_UpdatePenAnderaser;
+    head->cLen = SETHEADCLEN(cUpdatePenAnderaser);
+
+    cout << "pen_type:";
+    cin >> pen_type; 
+	cout << "pen color:";
+	cin >> pen_color;
+	cout << "pen size:";
+	cin >> pen_size;
+	cout << "pen trans:";
+	cin >> pen_trans;
+	cout << "paint_type:";
+	cin >> paint_type;
+	cout <<"pt x:";
+	cin >> pt_x;
+	cout << "pt y:";
+	cin >> pt_y;
+	cout << "prePt x:";
+	cin >> prePt_x;
+	cout << "prePt y:";
+	cin >> prePt_y;
+    cUpdatePenAnderaser sl;
+	sl.set_pen_type (pen_type);
+	sl.set_pen_color (pen_color);
+	sl.set_pen_size (pen_size);
+	sl.set_pen_trans (pen_trans);
+	sl.set_paint_type(paint_type);
+	sl.set_pt_x (pt_x);
+	sl.set_pt_y (pt_y);
+	sl.set_prept_x(prePt_x);
+	sl.set_prept_y(prePt_y);
+
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerUpdateFilling ()
+{
+	string pt_list;
+	int trans;
+	int color;
+
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_UpdateFilling;
+    head->cLen = SETHEADCLEN(cUpdateFilling);
+   
+    cout << "pt list:";
+    cin >> pt_list; 
+	cout << "trans:";
+	cin >> trans;
+	cout << "color:";
+	cin >> color;
+    cUpdateFilling sl;
+    sl.set_pt_list (pt_list);
+	sl.set_trans (trans);
+	sl.set_color (color);
+
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerUpdateStamp ()
+{
+	int pic_id;
+	string pt_x;
+	string pt_y;
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_UpdateStamp;
+    head->cLen = SETHEADCLEN(cUpdateStamp);
+   
+	cout << "pic Id:";
+	cin >> pic_id;
+	cout <<"pt x:";
+	cin >> pt_x;
+	cout << "pt y:";
+	cin >> pt_y;
+    cUpdateStamp sl;
+	sl.set_pic_id (pic_id);
+	sl.set_pt_x (pt_x);
+	sl.set_pt_y (pt_y);
+
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerUpdateFillPic ()
+{
+	int pic_id;
+	string pt_x;
+	string pt_y;
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_UpdateFillPic;
+    head->cLen = SETHEADCLEN(cUpdateFillPic);
+   
+	cout << "pic Id:";
+	cin >> pic_id;
+	cout <<"pt x:";
+	cin >> pt_x;
+	cout << "pt y:";
+	cin >> pt_y;
+    cUpdateFillPic sl;
+	sl.set_pic_id (pic_id);
+	sl.set_pt_x (pt_x);
+	sl.set_pt_y (pt_y);
+
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerUpdateMutex ()
+{
+	int lock;
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_UpdateMutex;
+    head->cLen = SETHEADCLEN(cUpdateMutex);
+   
+	cout << "lock:";
+	cin >> lock;
+    cUpdateMutex sl;
+	sl.set_lock (lock);
+
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerSetGroup ()
+{
+	int group_id;
+	string group_name;
+	int student_cnt;
+	string student_list;
+
+	BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_SetGroup;
+    head->cLen = SETHEADCLEN(cSetGroup);
+   
+	cout << "group id:";
+	cin >> group_id;
+	cout << "group name:";
+	cin >> group_name;
+	cout << "student cnt:";
+	cin >> student_cnt;
+	cout << "student list:";
+	cin >> student_list;
+    cSetGroup sl;
+	sl.set_group_id (group_id);
+	sl.set_group_name (group_name);
+	sl.set_student_cnt (student_cnt);
+	sl.set_student_list (student_list);
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+
+}
+
+void handlerUpdateCollage ()
+{
+	int id;
+	int pic_id;
+	int pic_type;
+	string pic_scale;
+	string pic_rotation;
+	string pt_x;
+	string pt_y;
+	int layer;
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_UpdateCollage;
+    head->cLen = SETHEADCLEN(cUpdateCollage);
+   
+	cout << "id:";
+	cin >> id;
+	cout << "pic id:";
+    cin >> pic_id; 
+	cout << "pic type:";
+	cin >> pic_type;
+	cout << "pic scale:";
+	cin >> pic_scale;
+	cout << "pic rotation:";
+	cin >> pic_rotation;
+	cout <<"pt x:";
+	cin >> pt_x;
+	cout << "pt y:";
+	cin >> pt_y;
+	cout << "layer:";
+	cin >> layer;
+    cUpdateCollage sl;
+	sl.set_id(id);
+	sl.set_pic_id (pic_id);
+	sl.set_pic_type (pic_type);
+	sl.set_pic_scale (pic_scale);
+	sl.set_pic_rotation (pic_rotation);
+	sl.set_pt_x (pt_x);
+	sl.set_pt_y (pt_y);
+	sl.set_layer(layer);
+
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void handlerUpdateWord ()
+{
+	int id;
+	int frame_id;
+	string msg;
+	int front;
+	int color;
+	int size;
+	int effect_id;
+	string frame_x;
+	string frame_y;
+    BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_UpdateWord;
+    head->cLen = SETHEADCLEN(cUpdateWord);
+   
+	cout << "id:";
+	cin >> id;
+	cout << "frame id:";
+    cin >> frame_id; 
+	cout << "msg:";
+	cin >> msg;
+	cout << "front:";
+	cin >> front;
+	cout << "color:";
+	cin >> color;
+	cout <<"size:";
+	cin >> size;
+	cout << "effect_id:";
+	cin >> effect_id;
+	cout << "frame_x:";
+	cin >> frame_x;
+	cout << "frame_y:";
+	cin >> frame_y;
+    cUpdateWord sl;
+	sl.set_id(id);
+	sl.set_frame_id (frame_id);
+	sl.set_msg (msg);
+	sl.set_front (front);
+	sl.set_color(color);
+	sl.set_size (size);
+	sl.set_effect_id (effect_id);
+	sl.set_frame_x(frame_x);
+	sl.set_frame_y(frame_y);
+
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
 
 void printArray (struct numberProto* array, size_t size)
 {
@@ -765,7 +1619,7 @@ void dumpLogout (string proto, char* buffer)
     l.ParseFromString (strLogout);
 
     cout << "logout logintype=" << l.login_type() << endl;
-    cout << "logout client number=" << l.num() << endl;
+    cout << "logout client number=" << l.id() << endl;
 
     dumpTail (buffer);
 }
@@ -834,15 +1688,80 @@ void* recv_callback (void* data)
             case ST_GetPersonalBooksList:
                 dumpGetPersonalBooksList("ST_GetPersonalBooksList", buffer);
                 break;
+            case ST_GetPublicBooksList:
+                dumpGetPublicBooksList("ST_GetPublicBooksList", buffer);
+                break;
+            case ST_GetServerAddr:
+                dumpGetServerAddr("ST_GetServerAddr", buffer);
+                break;
+            case ST_DownloadFromPersonal:
+                dumpDownloadFromPersonal("ST_DownloadFromPersonal", buffer);
+                break;
+            case ST_DownloadFromPublic:
+                dumpDownloadFromPublic("ST_DownloadFromPublic", buffer);
+                break;
+            case ST_TransferBook:
+                dumpTransferBook("ST_TransferBook", buffer);
+                break;
+            case ST_Publish:
+                dumpPublish("ST_Publish", buffer);
+                break;
             case ST_UploadBook:
                 dumpUploadBook ("ST_UploadBook", buffer);
                 break;
+			case ST_UpdateBackground:
+				dumpUpdateBackground ("ST_UpdateBackground", buffer);
+				break;
+			case ST_UpdateCopyIntoPaint:
+				dumpUpdateCopyIntoPaint ("ST_UpdateCopyIntoPaint", buffer);
+				break;
+			case ST_UpdatePenAnderaser:
+				dumpUpdatePenAnderaser ("ST_UpdatePenAnderaser", buffer);
+				break;
+			case ST_UpdateFilling:
+				dumpUpdateFilling ("ST_UpdateFilling", buffer);
+				break;
+			case ST_UpdateStamp:
+				dumpUpdateStamp ("ST_UpdateStamp", buffer);
+				break;
+			case ST_UpdateFillPic:
+				dumpUpdateFillPic ("ST_UpdateFillPic", buffer);
+				break;
+			case ST_UpdateMutex:
+				dumpUpdateMutex ("ST_UpdateMutex", buffer);
+				break;
+			case ST_UpdateCollage:
+				dumpUpdateCollage ("ST_UpdateCollage", buffer);
+				break;
+			case ST_UpdateWord:
+				dumpUpdateWord ("ST_UpdateWord", buffer);
+				break;
+			case ST_Courseware:
+				dumpCourseware ("ST_Courseware", buffer);
+				break;
+			case ST_GetContent:
+				dumpGetContent ("ST_GetContent", buffer);
+				break;
+			case ST_StartClass:
+				dumpStartClass ("ST_StartClass", buffer);
+				break;
+			case ST_ClassOver:
+				dumpClassOver ("ST_ClassOver", buffer);
+				break;
+			case ST_SetGroup:
+				dumpSetGroup ("ST_Group", buffer);
+				break;
+			case ST_UpdateDrawInfo:
+				dumpUpdateDrawInfo ("ST_UpdateDrawInfo", buffer);
+				break;
         }
         
         //cout << "Input Message Id: ";
         usleep (100);
     }
 }
+
+#endif
 
 int main (int argc, char** argv)
 {
@@ -865,17 +1784,18 @@ int main (int argc, char** argv)
         return (-1);
     }
 
+    getchar ();
 #endif
 
 #if 1
-    pthread_create(&pid_recv, NULL, recv_callback, NULL);
+    //pthread_create(&pid_recv, NULL, recv_callback, NULL);
 
     //pthread_join  (pid_update, NULL);
     //pthread_join  (pid_logout, NULL);
 #endif
 
+#if 0
     printArray (NPARRAY, ARRAY_SIZE);
-
     cout << "Input Message Id: ";
     while (1) {
         cin >> strMessageId;
@@ -928,14 +1848,83 @@ int main (int argc, char** argv)
         else if (NPARRAY[strMessageId].protocol == "CT_GetPersonalBooksList") {
             handlerGetPersonalBooksList();
         }
+        else if (NPARRAY[strMessageId].protocol == "CT_GetPublicBooksList") {
+            handlerGetPublicBooksList();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_GetServerAddr") {
+            handlerGetServerAddr();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_DownloadFromPersonal") {
+            handlerDownloadFromPersonal();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_DownloadFromPublic") {
+            handlerDownlaodFromPublic();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_TransferBook") {
+            handlerTransferBook();
+        }
+        else if (NPARRAY[strMessageId].protocol == "CT_Publish") {
+            handlerPublish();
+        }
+		else if (NPARRAY[strMessageId].protocol == "CT_UpdateBackground") {
+			handlerUpdateBackground();
+		}
+		else if (NPARRAY[strMessageId].protocol == "CT_UpdateCopyIntoPaint") {
+
+			handlerUpdateCopyIntoPaint();
+		}
+		else if (NPARRAY[strMessageId].protocol == "CT_UpdatePenAnderaser") {
+			handlerUpdatePenAnderaser();
+		}
+		else if (NPARRAY[strMessageId].protocol == "CT_UpdateFilling") {
+			handlerUpdateFilling();
+		}
+		else if (NPARRAY[strMessageId].protocol == "CT_UpdateStamp") {
+			handlerUpdateStamp();
+		}
+		else if (NPARRAY[strMessageId].protocol == "CT_UpdateFillPic") {
+			handlerUpdateFillPic();
+		}
+		else if (NPARRAY[strMessageId].protocol == "CT_UpdateMutex") {
+			handlerUpdateMutex();
+		}
+		else if (NPARRAY[strMessageId].protocol == "CT_UpdateCollage") {
+			handlerUpdateCollage();
+		}
+		else if (NPARRAY[strMessageId].protocol == "CT_UpdateWord") {
+            handlerUpdateWord();
+        }
+
+		else if (NPARRAY[strMessageId].protocol == "CT_Courseware") {
+			handlerCourseware();
+		}
+			
+		else if (NPARRAY[strMessageId].protocol == "CT_GetContent") {
+			handlerGetContent();
+		}
+
+		else if (NPARRAY[strMessageId].protocol == "CT_StartClass") {
+			handlerStartClass();
+		}
+		else if (NPARRAY[strMessageId].protocol == "CT_ClassOver") {
+			handlerClassOver();
+		}
+		else if (NPARRAY[strMessageId].protocol == "CT_SetGroup") {
+			handlerSetGroup();
+		}
+		else if (NPARRAY[strMessageId].protocol == "CT_UpdateDrawInfo") {
+			handlerUpdateDrawInfo();
+		}
+
         else if (NPARRAY[strMessageId].protocol == "Exit/Quit") {
             cout << "Bye." << endl;
             break;
         }
+		
         else {
             cout << "[Error]: can't find handler." << endl;
         }
     }
-    
+#endif    
     return (0);
 }

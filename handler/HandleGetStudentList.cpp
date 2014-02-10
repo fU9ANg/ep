@@ -6,6 +6,7 @@
 #include "../database.h"
 #include "../global_functions.h"
 #include "../message/proto/protocol.pb.h"
+#include "../netdef.h"
 
 void CHandleMessage::handleGetStudentList (Buf* p)
 {
@@ -24,34 +25,34 @@ void CHandleMessage::handleGetStudentList (Buf* p)
         }
 
         sGetStudentList tmp;
-        std::vector<sGetStudentList> vc;
+        StudentListNode* sn;
+        bool isvalue = false;
         try {
                 MutexLockGuard guard(DATABASE->m_mutex);
                 PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_STU_LIST_BY_CLASSID);
                 pstmt->setInt (1, gfl.class_id());
-                printf("[DEBUG] %s : class id = %d\n", __func__, gfl.class_id());
+                // printf("[DEBUG] %s : class id = %d\n", __func__, gfl.class_id());
                 ResultSet* prst = pstmt->executeQuery ();
-                while (prst->next ()) {
-#if 0
-                        tmp.set_id      (prst->getInt   ("id"));
-                        tmp.set_name    (prst->getString("name"));
-                        tmp.set_res_path(prst->getString("res_path"));//res for icon
-#endif
-                        tmp.set_id      (prst->getInt   ("student_id"));
-                        tmp.set_name    (prst->getString("first_name"));
-                        tmp.set_res_path(prst->getString("last_name"));//res for icon
-
-
-                        vc.push_back(tmp);
+                isvalue = prst->next();
+                while (isvalue) {
+                        sn = tmp.add_student_list();
+                        sn->set_id      (prst->getInt   ("student_id"));
+                        sn->set_name    (prst->getString("first_name"));
+                        sn->set_res_path(prst->getString("last_name"));//res for icon
+                        isvalue = prst->next();
                 }
                 delete prst;
                 delete pstmt;
-        }catch (SQLException e) {
+        } catch (SQLException e) {
+                printf("[DEBUG] CHandleMessage::handleGetStudentList : SQLException = %s\n", e.what());
+                SINGLE->bufpool.free(p);
+                return;
         }
 
-        Buf* pBuf = packet(ST_GetStudentList, vc, p->getfd());
-        if (NULL != pBuf) {
-                SINGLE->sendqueue.enqueue(pBuf);
-        }
+        Buf* pBuf = packet_list(ST_GetStudentList, tmp, p->getfd());
+        CHECK_BUF(pBuf, p);
+        SINGLE->sendqueue.enqueue(pBuf);
+
         SINGLE->bufpool.free(p);
+        return;
 }

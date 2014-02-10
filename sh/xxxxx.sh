@@ -1,8 +1,8 @@
 #!/bin/sh
 
 #
-# ecServer re-start script
-# no client connection to server, that ecServer re-start 
+# epServer re-start script
+# no client connection to server, that epServer re-start 
 #
 
 SLEEP_SECOND=3
@@ -14,22 +14,19 @@ do
     echo $STAT
     if [ $STAT -eq 0 ]
     then
-        cd ~/ecServer_AUTH
-        ./ecServer -d &
-        nohup ./uploadfile.py &
+        cd ~/epServer
+        ./epServer -d &
     elif [ $STAT -eq 1 ]
     then
         if [ $RESTART_FLAGS -eq 1 ]
         then
             cd ~
-            echo "\033[32;49;1m [kill and restart server...] \033[39;49;0m"
+            echo "\033[32;49;1m [kill and restart epServer...] \033[39;49;0m"
             echo "RESTART SERVER:"`date`>>restart_log
-            killall ecServer
-            killall uploadfile.py
-            cd ~/ecServer_AUTH
+            killall epServer
+            cd ~/epServer
             sleep 1
-            ./ecServer -d &
-            nohup ./uploadfile.py &
+            ./epServer -d &
             RESTART_FLAGS=0
         fi
     else

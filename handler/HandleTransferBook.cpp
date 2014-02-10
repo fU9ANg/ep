@@ -33,13 +33,12 @@ void CHandleMessage::handleTransferBook(Buf* p)
                 return;
         }
 
-#if 0
-        // from Teacher and Student
         std::string first_name;
         try {
                 MutexLockGuard guard(DATABASE->m_mutex);
                 PreparedStatement* pstmt = DATABASE->preStatement (XXX);
-                pstmt->setInt (1, ctb.account());
+                pstmt->setString (1, ctb.account());
+                pstmt->setInt    (2, ctb.book_id());
                 ResultSet* prst = pstmt->executeQuery ();
                 while (prst->next ()) {
                         first_name = prst->getString("first_name");
@@ -52,30 +51,20 @@ void CHandleMessage::handleTransferBook(Buf* p)
                 return;
         }
 
-        bool result = false;
+        // bool result = FALSE;
         std::string msg;
         if (0 == first_name.size()) {
-                result = false;
-                msg = ctb.account + "用户不存在。";
+                // result = FALSE;
+                msg = ctb.account() + "用户不存在。";
         } else {
+                // result = TRUE;
         }
 
-        cGetClassList gcrl;
-        if (!unpacket(p, gcrl)) { // 解包失败。
-#ifdef __DEBUG__
-                printf("[DEBUG] %s : unpacket fail!\n", __func__);
-#endif
-                SINGLE->bufpool.free(p);
-                return;
-        }
-
-        int grade_id = gcrl.grade_id();
-        sGetClassList tmp;
-        std::vector<sGetClassList> vc;
+#if 0
         try {
                 MutexLockGuard guard(DATABASE->m_mutex);
-                PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_CLASS_LIST_BY_GRADE_ID);
-                pstmt->setInt (1, grade_id);
+                PreparedStatement* pstmt = DATABASE->preStatement (XXX); // book_id
+                pstmt->setInt (1, ctb.book_id());
                 ResultSet* prst = pstmt->executeQuery ();
                 while (prst->next ()) {
                         tmp.set_class_id (prst->getInt   ("class_id"));
@@ -96,4 +85,7 @@ void CHandleMessage::handleTransferBook(Buf* p)
         }
         SINGLE->bufpool.free(p);
 #endif
+
+        SINGLE->bufpool.free(p);
+        return;
 }

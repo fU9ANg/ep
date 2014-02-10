@@ -6,6 +6,7 @@
 #include "../database.h"
 #include "../global_functions.h"
 #include "../message/proto/protocol.pb.h"
+#include "../netdef.h"
 
 #include "../content/epUser.h"
 #include "../content/epTeacher.h"
@@ -22,41 +23,56 @@ void CHandleMessage::handleGetFuncList (Buf* p) {
 #ifdef __DEBUG_HANDLE_HEAD_
         cout << "CT_GetFuncList\n";
 #endif
-        // TODO:
-
         const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
         if (NULL == pUser) {
+                printf("[DEBUG] %s : NULL == pUser\n", __func__);
                 SINGLE->bufpool.free(p);
                 return;
         }
 
-        enum LoginType lt = pUser->getType();
-        if (lt == LT_USER) {
-            SINGLE->bufpool.free(p);
-            return;
+        if (LT_USER == pUser->getType()) {
+                printf("[DEBUG] %s : lt == LT_USER\n", __func__);
+                SINGLE->bufpool.free(p);
+                return;
         }
 
         sGetFuncList tmp;
-        std::vector<sGetFuncList> vc;
-        string strpwd;
-        string Account;
+        FuncNode* fn;
         try {
                 MutexLockGuard guard(DATABASE->m_mutex);
                 PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_FUNC_LIST_BY_TYPE);
-                pstmt->setInt (1, lt);
+                pstmt->setInt (1, pUser->getType());
                 ResultSet* prst = pstmt->executeQuery ();
                 while (prst->next ()) {
-                        tmp.set_id(prst->getInt("id"));
-                        tmp.set_name(prst->getString("name"));
-                        tmp.set_res_path(prst->getString("res_path"));
-                        vc.push_back(tmp);
+                        fn = tmp.add_func_list();
+                        fn->set_id      (prst->getInt("id"));
+                        fn->set_name    (prst->getString("name"));
+                        fn->set_res_path(prst->getString("res_path"));
                 }
                 delete prst;
                 delete pstmt;
-        }catch (SQLException e) {
-                printf("SQLException : %s\n", e.what());
+        } catch (SQLException e) {
+                printf("[DEBUG] %s : SQLException : %s\n", __func__, e.what());
+                SINGLE->bufpool.free(p);
+                return;
         }
 
-        SINGLE->sendqueue.enqueue(packet(ST_GetFuncList, vc, p->getfd()));
+        epStudent* pStudent = dynamic_cast<epStudent*>(const_cast<epUser*>(pUser));
+        if (NULL != pStudent) {
+                epClassroom* pClassroom = EPMANAGER->getClassroomByClassId(pStudent->classId_);
+                if (NULL != pClassroom) {
+                        printf("[DEBUG] CHandleMessage::handleGetFuncList : NULL != pClassroom\n");
+                        fn = tmp.add_func_list();
+                        fn->set_id      (FT_SCHOOL);
+                        fn->set_name    ("教室");
+                        fn->set_res_path("abc");
+                }
+        }
+
+        Buf* pBuf = packet_list(ST_GetFuncList, tmp, p->getfd());
+        CHECK_BUF(pBuf, p);
+        SINGLE->sendqueue.enqueue(pBuf);
+
         SINGLE->bufpool.free(p);
+        return;
 }

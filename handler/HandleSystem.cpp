@@ -11,6 +11,8 @@ void CHandleMessage::handleTest (Buf* p)
     cout << "CT_Test\n";
 #endif
     // TODO:
+    SINGLE->bufpool.free(p);
+    return;
 }
 
 
@@ -20,12 +22,16 @@ void CHandleMessage::handleAuth (Buf* p)
     cout << "CT_Auth\n";
 #endif
     // TODO:
+    SINGLE->bufpool.free(p);
+    return;
 }
 
 void CHandleMessage::handleHeart (Buf* p)
 {
 #ifdef __DEBUG_HANDLE_HEAD_
-    cout << "CT_Heart\n";
+    // cout << "CT_Heart : fd = " << p->getfd() << endl;
 #endif
     // TODO:
+    SINGLE->bufpool.free(p);
+    return;
 }

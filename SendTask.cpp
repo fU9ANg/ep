@@ -25,6 +25,11 @@ int SendTask::work ()
 
         int fd = p->getfd ();
 
+        /*
+        printf("[DEBUG] SendTask::work : send fd   = %d\n", fd);
+        printf("[DEBUG] SendTask::work : send size = %ld\n", p->size());
+        */
+
         if (fd <= 0)
         {
             cout << "[SEND] -- fd of buffer <= 0" << endl;

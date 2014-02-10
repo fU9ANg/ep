@@ -21,6 +21,12 @@ server_port=9999;
 -- ecServer IP
 server_ip="192.168.0.194";
 
+-- download & upload server IP
+download_upload_server_ip="192.168.0.194"
+
+-- download & upload server Port
+download_upload_server_port=8888
+
 -- username
 username="QSV1234";
 --username="username1234"

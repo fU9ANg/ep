@@ -66,114 +66,176 @@ static Buf* combine_buf(Buf* dist, Buf** src) {
 }
 */
 
-/*
 static int
 unpacket_cnt(Buf* pBuf) {
-	return *(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN);
+        if (NULL == pBuf) {
+                return -1;
+        } else  {
+                return *(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN);
+        }
 }
-*/
 
-template <typename T> T&
+static Buf*
+packet_head(enum CommandType type, const int obj_size, const int cnt, const int fd) {
+	Buf* pBuf = SINGLE->bufpool.malloc();
+        if (NULL == pBuf) { // 内存分配失败。
+#ifdef __DEBUG__
+                printf("[DEBUG] %s : NULL == pBuf\n", __func__);
+#endif
+                return NULL;
+        }
+
+	MSG_HEAD* head = (MSG_HEAD*)pBuf->ptr();
+	head->cType = type;
+	head->cLen = MSG_HEAD_LEN + sizeof(int) + obj_size*cnt;
+	*(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN) = cnt;
+#ifdef __DEBUG__
+        // printf("[DEBUG] %s : *(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN) = %d\n", __func__, *(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN));
+#endif
+
+        pBuf->setsize(head->cLen);
+        pBuf->setfd(fd);
+
+        return pBuf;
+        unpacket_cnt(NULL);
+}
+
+template <typename T> Buf*
+packet_list(enum CommandType type, T& obj, const int fd) {
+        std::string send_buf;
+        if (!obj.SerializePartialToString(&send_buf)) {
+#ifdef __DEBUG__
+                printf("[DEBUG] %s : SerializeToString fail.\n", __func__);
+#endif
+                return NULL;
+        } else {
+                int obj_size = send_buf.size();
+                Buf* pBuf = packet_head(type, obj_size, 1, fd);
+                if (NULL == pBuf) {
+#ifdef __DEBUG__
+                        printf("[DEBUG] %s : NULL == pBuf\n", __func__);
+#endif
+                        return NULL;
+                } else {
+                        memcpy(((char*)pBuf->ptr())+MSG_HEAD_LEN+sizeof(int), send_buf.c_str(), send_buf.size());
+                        return pBuf;
+                }
+        }
+}
+
+template <typename T> bool
 unpacket(Buf* pBuf, T& obj, int cnt = 0) {
-	std::string recv_buf = (char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof(int) + sizeof(T)*cnt;
-	obj.ParseFromString(recv_buf);
-	return obj;
+        std::string recv_buf = (char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof(int) + sizeof(T)*cnt;
+        bool flag = obj.ParseFromString(recv_buf);
+        (void)flag;
+#ifdef __DEBUG__
+        // printf("[DEBUG] unpacket : flag = %s\n", flag ? "true" : "false");
+#endif
+        return true;
+}
+
+static Buf*
+packet(enum CommandType type, int fd) {
+        return packet_head(type, 0, 0, fd);
 }
 
 template <typename T> Buf*
 packet(enum CommandType type, const T& obj, int fd) {
-	Buf* pBuf = SINGLE->bufpool.malloc();
-
-	MSG_HEAD* head = (MSG_HEAD*)pBuf->ptr();
-	head->cType = type;
-
-	head->cLen  = MSG_HEAD_LEN + sizeof(obj);
-	*(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN) = 1;
-
-	std::string send_buf;
-	obj.SerializeToString(&send_buf);
-	memcpy(((char*)pBuf->ptr())+MSG_HEAD_LEN+sizeof(int), send_buf.c_str(), send_buf.size());
-
-	pBuf->setsize(head->cLen);
-	pBuf->setfd(fd);
-
-	return pBuf;
+        std::string send_buf;
+        if (!obj.SerializeToString(&send_buf)) {
+#ifdef __DEBUG__
+                printf("[DEBUG] %s : SerializeToString fail.\n", __func__);
+#endif
+                return NULL;
+        } else {
+                // int obj_size = sizeof(obj);
+                int obj_size = send_buf.size();
+                Buf* pBuf = packet_head(type, obj_size, 1, fd);
+                if (NULL == pBuf) { // 内存分配失败。
+#ifdef __DEBUG__
+                        printf("[DEBUG] %s : NULL == pBuf\n", __func__);
+#endif
+                        return NULL;
+                }
+                memcpy(((char*)pBuf->ptr())+MSG_HEAD_LEN+sizeof(int), send_buf.c_str(), send_buf.size());
+                return pBuf;
+        }
 }
 
 template <typename T> Buf*
 packet(enum CommandType type, std::vector<T>& vc, int fd) {
-	Buf* pBuf = SINGLE->bufpool.malloc();
-
-	MSG_HEAD* head = (MSG_HEAD*)pBuf->ptr();
-	head->cType = type;
-
-        int cnt = vc.size();
-	head->cLen = MSG_HEAD_LEN + sizeof(vc[0])*cnt;
-	*(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN) = cnt;
-
-	std::string send_buf;
-        for (int i=0; i<cnt; ++i) {
-                vc[i].SerializeToString(&send_buf);
-                memcpy(((char*)pBuf->ptr())+MSG_HEAD_LEN+sizeof(int)+sizeof(vc[0])*i
-                                , send_buf.c_str(), send_buf.size());
+        Buf* pBuf = packet_head(type, sizeof(vc[0]), vc.size(), fd);
+        if (NULL == pBuf) { // 内存分配失败。
+#ifdef __DEBUG__
+                printf("[DEBUG] %s : NULL == pBuf\n", __func__);
+#endif
+                return NULL;
         }
 
-        pBuf->setsize(head->cLen);
-        pBuf->setfd(fd);
+        for (int i=0; i<(signed)vc.size(); ++i) {
+                std::string send_buf;
+                vc[i].SerializeToString(&send_buf);
+                printf("[INFO] packet : send_buf.size() = %d\n", (signed)send_buf.size());
+                memcpy(((char*)pBuf->ptr())+MSG_HEAD_LEN+sizeof(int)+128*i
+                                , send_buf.c_str(), send_buf.size());
+        }
+        return pBuf;
+}
 
+template <> Buf*
+packet(enum CommandType type, std::vector<int>& vc, int fd) {
+        Buf* pBuf = packet_head(type, sizeof(vc[0]), vc.size(), fd);
+        if (NULL == pBuf) { // 内存分配失败。
+#ifdef __DEBUG__
+                printf("[DEBUG] %s : NULL == pBuf\n", __func__);
+#endif
+                return NULL;
+        }
+
+        std::string send_buf;
+        for (int i=0; i<(signed)vc.size(); ++i) {
+                memcpy(((char*)pBuf->ptr())+MSG_HEAD_LEN+sizeof(int)+sizeof(vc[0])*i \
+                                , &vc[i], sizeof(vc[0]));
+        }
+
+        SINGLE->bufpool.free(packet(type, 0));
         return pBuf;
 }
 
 /*
-static Buf*
-packet(enum CommandType type, int fd) {
-        Buf* pBuf = SINGLE->bufpool.malloc();
+   static Buf*
+   combine_buf(Buf* dist, Buf** src) {
+   if (NULL == dist && NULL == *src) {
+   return NULL;
+   }
 
-        MSG_HEAD* head = (MSG_HEAD*)pBuf->ptr();
-        head->cType = type;
+   if (NULL == dist) {
+   return *src;
+   }
 
-        head->cLen  = MSG_HEAD_LEN;
-        *(int*)((char*)pBuf->ptr() + MSG_HEAD_LEN) = 0;
+   if (NULL == *src) {
+   return dist;
+   }
 
-        pBuf->setsize(head->cLen);
-        pBuf->setfd(fd);
+   if (((MSG_HEAD*)dist->ptr())->cType != ((MSG_HEAD*)(*src)->ptr())->cType) {
+   return NULL;
+   } else {
+   MSG_HEAD* dist_head = (MSG_HEAD*)dist->ptr();
+   MSG_HEAD* src_head  = (MSG_HEAD*)(*src)->ptr();
 
-        return pBuf;
-}
+ *(int*)((char*)dist->ptr() + MSG_HEAD_LEN) = unpacket_cnt(dist) + unpacket_cnt(*src);
+ memcpy((char*)dist->ptr()+dist_head->cLen \
+ , (char*)(*src)->ptr()+MSG_HEAD_LEN+sizeof(int) \
+ , src_head->cLen - MSG_HEAD_LEN - sizeof(int));
 
-static Buf*
-combine_buf(Buf* dist, Buf** src) {
-        if (NULL == dist && NULL == *src) {
-                return NULL;
-        }
+ dist_head->cLen = dist_head->cLen + src_head->cLen - MSG_HEAD_LEN - sizeof(int);
+ SINGLE->bufpool.free(*src);
+ *src = NULL;
 
-        if (NULL == dist) {
-                return *src;
-        }
-
-        if (NULL == *src) {
-                return dist;
-        }
-
-        if (((MSG_HEAD*)dist->ptr())->cType != ((MSG_HEAD*)(*src)->ptr())->cType) {
-                return NULL;
-        } else {
-                MSG_HEAD* dist_head = (MSG_HEAD*)dist->ptr();
-                MSG_HEAD* src_head  = (MSG_HEAD*)(*src)->ptr();
-
-                *(int*)((char*)dist->ptr() + MSG_HEAD_LEN) = unpacket_cnt(dist) + unpacket_cnt(*src);
-                memcpy((char*)dist->ptr()+dist_head->cLen \
-                                , (char*)(*src)->ptr()+MSG_HEAD_LEN+sizeof(int) \
-                                , src_head->cLen - MSG_HEAD_LEN - sizeof(int));
-
-                dist_head->cLen = dist_head->cLen + src_head->cLen - MSG_HEAD_LEN - sizeof(int);
-                SINGLE->bufpool.free(*src);
-                *src = NULL;
-
-                return dist;
-        }
-}
-*/
+ return dist;
+ }
+ }
+ */
 
 }; // end of namespace
 

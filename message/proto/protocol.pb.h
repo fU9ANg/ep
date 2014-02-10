@@ -23,6 +23,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
@@ -36,22 +37,30 @@ class sLogin;
 class cLogout;
 class sLogout;
 class cGetFuncList;
+class FuncNode;
 class sGetFuncList;
 class cSetFunc;
 class sSetFunc;
 class cGetGradeList;
 class sGetGradeList;
 class cGetCourseList;
+class CourseNode;
 class sGetCourseList;
 class cGetContent;
 class sGetContent;
 class cGetClassList;
+class ClassListNode;
 class sGetClassList;
 class cGetClassRoomList;
 class sGetClassRoomList;
+class ContentNode;
 class cSetContent;
 class sSetContent;
+class sCourseware;
+class cClassOver;
+class sClassOver;
 class cGetStudentList;
+class StudentListNode;
 class sGetStudentList;
 class cGetActiveStudentList;
 class sGetActiveStudentList;
@@ -60,12 +69,16 @@ class cGetStudentInfo;
 class sGetStudentInfo;
 class cGetTeacherInfo;
 class sGetTeacherInfo;
+class PeerGroup;
 class cSetGroup;
 class sSetGroup;
+class cRelay;
+class sRelay;
+class bookNode;
 class cGetPersonalBooksList;
+class sGetPersonalBooksList;
 class cGetServerAddr;
 class sGetServerAddr;
-class sGetPersonalBooksList;
 class cGetPublicBooksList;
 class sGetPublicBooksList;
 class cUploadBook;
@@ -78,7 +91,51 @@ class cTransferBook;
 class sTransferBook;
 class cPublish;
 class sPublish;
+class cUpdateDrawSet;
+class cUpdateDrawInfo;
+class sUpdateDrawInfo;
+class cUpdateBackground;
+class sUpdateBackground;
+class cUpdateCopyIntoPaint;
+class sUpdateCopyIntoPaint;
+class cUpdatePenAnderaser;
+class sUpdatePenAnderaser;
+class cUpdateFilling;
+class sUpdateFilling;
+class cUpdateStamp;
+class sUpdateStamp;
+class cUpdateFillPic;
+class sUpdateFillPic;
+class cUpdateMutex;
+class sUpdateMutex;
+class cUpdateCollage;
+class sUpdateCollage;
+class cUpdateWord;
+class sUpdateWord;
+class cUpdateFrame;
+class sUpdateFrame;
 
+enum CourseNode_CourseType {
+  CourseNode_CourseType_CT_INVALID = 1,
+  CourseNode_CourseType_CT_RELAY = 2,
+  CourseNode_CourseType_CT_DRAW = 3,
+  CourseNode_CourseType_CT_FREEDRAW = 4
+};
+bool CourseNode_CourseType_IsValid(int value);
+const CourseNode_CourseType CourseNode_CourseType_CourseType_MIN = CourseNode_CourseType_CT_INVALID;
+const CourseNode_CourseType CourseNode_CourseType_CourseType_MAX = CourseNode_CourseType_CT_FREEDRAW;
+const int CourseNode_CourseType_CourseType_ARRAYSIZE = CourseNode_CourseType_CourseType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* CourseNode_CourseType_descriptor();
+inline const ::std::string& CourseNode_CourseType_Name(CourseNode_CourseType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    CourseNode_CourseType_descriptor(), value);
+}
+inline bool CourseNode_CourseType_Parse(
+    const ::std::string& name, CourseNode_CourseType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<CourseNode_CourseType>(
+    CourseNode_CourseType_descriptor(), name, value);
+}
 // ===================================================================
 
 class cLogin : public ::google::protobuf::Message {
@@ -247,24 +304,44 @@ class sLogin : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required bool result = 1;
+  // optional bool result = 2;
   inline bool has_result() const;
   inline void clear_result();
-  static const int kResultFieldNumber = 1;
+  static const int kResultFieldNumber = 2;
   inline bool result() const;
   inline void set_result(bool value);
+
+  // optional bool enter_classroom = 3;
+  inline bool has_enter_classroom() const;
+  inline void clear_enter_classroom();
+  static const int kEnterClassroomFieldNumber = 3;
+  inline bool enter_classroom() const;
+  inline void set_enter_classroom(bool value);
+
+  // optional int32 student_id = 1;
+  inline bool has_student_id() const;
+  inline void clear_student_id();
+  static const int kStudentIdFieldNumber = 1;
+  inline ::google::protobuf::int32 student_id() const;
+  inline void set_student_id(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:sLogin)
  private:
   inline void set_has_result();
   inline void clear_has_result();
+  inline void set_has_enter_classroom();
+  inline void clear_has_enter_classroom();
+  inline void set_has_student_id();
+  inline void clear_has_student_id();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   bool result_;
+  bool enter_classroom_;
+  ::google::protobuf::int32 student_id_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -329,24 +406,14 @@ class cLogout : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 common = 1;
-  inline bool has_common() const;
-  inline void clear_common();
-  static const int kCommonFieldNumber = 1;
-  inline ::google::protobuf::int32 common() const;
-  inline void set_common(::google::protobuf::int32 value);
-
   // @@protoc_insertion_point(class_scope:cLogout)
  private:
-  inline void set_has_common();
-  inline void clear_has_common();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 common_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[1];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -418,29 +485,24 @@ class sLogout : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 login_type() const;
   inline void set_login_type(::google::protobuf::int32 value);
 
-  // required string num = 2;
-  inline bool has_num() const;
-  inline void clear_num();
-  static const int kNumFieldNumber = 2;
-  inline const ::std::string& num() const;
-  inline void set_num(const ::std::string& value);
-  inline void set_num(const char* value);
-  inline void set_num(const char* value, size_t size);
-  inline ::std::string* mutable_num();
-  inline ::std::string* release_num();
-  inline void set_allocated_num(::std::string* num);
+  // required int32 id = 2;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 2;
+  inline ::google::protobuf::int32 id() const;
+  inline void set_id(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:sLogout)
  private:
   inline void set_has_login_type();
   inline void clear_has_login_type();
-  inline void set_has_num();
-  inline void clear_has_num();
+  inline void set_has_id();
+  inline void clear_has_id();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* num_;
   ::google::protobuf::int32 login_type_;
+  ::google::protobuf::int32 id_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -508,29 +570,14 @@ class cGetFuncList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string content = 1;
-  inline bool has_content() const;
-  inline void clear_content();
-  static const int kContentFieldNumber = 1;
-  inline const ::std::string& content() const;
-  inline void set_content(const ::std::string& value);
-  inline void set_content(const char* value);
-  inline void set_content(const char* value, size_t size);
-  inline ::std::string* mutable_content();
-  inline ::std::string* release_content();
-  inline void set_allocated_content(::std::string* content);
-
   // @@protoc_insertion_point(class_scope:cGetFuncList)
  private:
-  inline void set_has_content();
-  inline void clear_has_content();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* content_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[1];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -538,6 +585,118 @@ class cGetFuncList : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static cGetFuncList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class FuncNode : public ::google::protobuf::Message {
+ public:
+  FuncNode();
+  virtual ~FuncNode();
+
+  FuncNode(const FuncNode& from);
+
+  inline FuncNode& operator=(const FuncNode& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const FuncNode& default_instance();
+
+  void Swap(FuncNode* other);
+
+  // implements Message ----------------------------------------------
+
+  FuncNode* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const FuncNode& from);
+  void MergeFrom(const FuncNode& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::int32 id() const;
+  inline void set_id(::google::protobuf::int32 value);
+
+  // required string name = 2;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 2;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // required string res_path = 3;
+  inline bool has_res_path() const;
+  inline void clear_res_path();
+  static const int kResPathFieldNumber = 3;
+  inline const ::std::string& res_path() const;
+  inline void set_res_path(const ::std::string& value);
+  inline void set_res_path(const char* value);
+  inline void set_res_path(const char* value, size_t size);
+  inline ::std::string* mutable_res_path();
+  inline ::std::string* release_res_path();
+  inline void set_allocated_res_path(::std::string* res_path);
+
+  // @@protoc_insertion_point(class_scope:FuncNode)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_res_path();
+  inline void clear_has_res_path();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* name_;
+  ::std::string* res_path_;
+  ::google::protobuf::int32 id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static FuncNode* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -595,54 +754,27 @@ class sGetFuncList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 3;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 3;
-  inline ::google::protobuf::int32 id() const;
-  inline void set_id(::google::protobuf::int32 value);
-
-  // required string name = 1;
-  inline bool has_name() const;
-  inline void clear_name();
-  static const int kNameFieldNumber = 1;
-  inline const ::std::string& name() const;
-  inline void set_name(const ::std::string& value);
-  inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
-  inline ::std::string* mutable_name();
-  inline ::std::string* release_name();
-  inline void set_allocated_name(::std::string* name);
-
-  // required string res_path = 2;
-  inline bool has_res_path() const;
-  inline void clear_res_path();
-  static const int kResPathFieldNumber = 2;
-  inline const ::std::string& res_path() const;
-  inline void set_res_path(const ::std::string& value);
-  inline void set_res_path(const char* value);
-  inline void set_res_path(const char* value, size_t size);
-  inline ::std::string* mutable_res_path();
-  inline ::std::string* release_res_path();
-  inline void set_allocated_res_path(::std::string* res_path);
+  // repeated .FuncNode func_list = 1;
+  inline int func_list_size() const;
+  inline void clear_func_list();
+  static const int kFuncListFieldNumber = 1;
+  inline const ::FuncNode& func_list(int index) const;
+  inline ::FuncNode* mutable_func_list(int index);
+  inline ::FuncNode* add_func_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::FuncNode >&
+      func_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::FuncNode >*
+      mutable_func_list();
 
   // @@protoc_insertion_point(class_scope:sGetFuncList)
  private:
-  inline void set_has_id();
-  inline void clear_has_id();
-  inline void set_has_name();
-  inline void clear_has_name();
-  inline void set_has_res_path();
-  inline void clear_has_res_path();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* name_;
-  ::std::string* res_path_;
-  ::google::protobuf::int32 id_;
+  ::google::protobuf::RepeatedPtrField< ::FuncNode > func_list_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -789,7 +921,7 @@ class sSetFunc : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required bool result = 1;
+  // optional bool result = 1;
   inline bool has_result() const;
   inline void clear_result();
   static const int kResultFieldNumber = 1;
@@ -953,39 +1085,27 @@ class sGetGradeList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 grade_id = 1;
-  inline bool has_grade_id() const;
-  inline void clear_grade_id();
-  static const int kGradeIdFieldNumber = 1;
-  inline ::google::protobuf::int32 grade_id() const;
-  inline void set_grade_id(::google::protobuf::int32 value);
-
-  // required string grade_name = 2;
-  inline bool has_grade_name() const;
-  inline void clear_grade_name();
-  static const int kGradeNameFieldNumber = 2;
-  inline const ::std::string& grade_name() const;
-  inline void set_grade_name(const ::std::string& value);
-  inline void set_grade_name(const char* value);
-  inline void set_grade_name(const char* value, size_t size);
-  inline ::std::string* mutable_grade_name();
-  inline ::std::string* release_grade_name();
-  inline void set_allocated_grade_name(::std::string* grade_name);
+  // repeated .ClassListNode grade_list = 1;
+  inline int grade_list_size() const;
+  inline void clear_grade_list();
+  static const int kGradeListFieldNumber = 1;
+  inline const ::ClassListNode& grade_list(int index) const;
+  inline ::ClassListNode* mutable_grade_list(int index);
+  inline ::ClassListNode* add_grade_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::ClassListNode >&
+      grade_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::ClassListNode >*
+      mutable_grade_list();
 
   // @@protoc_insertion_point(class_scope:sGetGradeList)
  private:
-  inline void set_has_grade_id();
-  inline void clear_has_grade_id();
-  inline void set_has_grade_name();
-  inline void clear_has_grade_name();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* grade_name_;
-  ::google::protobuf::int32 grade_id_;
+  ::google::protobuf::RepeatedPtrField< ::ClassListNode > grade_list_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -1078,6 +1198,229 @@ class cGetCourseList : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class CourseNode : public ::google::protobuf::Message {
+ public:
+  CourseNode();
+  virtual ~CourseNode();
+
+  CourseNode(const CourseNode& from);
+
+  inline CourseNode& operator=(const CourseNode& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CourseNode& default_instance();
+
+  void Swap(CourseNode* other);
+
+  // implements Message ----------------------------------------------
+
+  CourseNode* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CourseNode& from);
+  void MergeFrom(const CourseNode& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  typedef CourseNode_CourseType CourseType;
+  static const CourseType CT_INVALID = CourseNode_CourseType_CT_INVALID;
+  static const CourseType CT_RELAY = CourseNode_CourseType_CT_RELAY;
+  static const CourseType CT_DRAW = CourseNode_CourseType_CT_DRAW;
+  static const CourseType CT_FREEDRAW = CourseNode_CourseType_CT_FREEDRAW;
+  static inline bool CourseType_IsValid(int value) {
+    return CourseNode_CourseType_IsValid(value);
+  }
+  static const CourseType CourseType_MIN =
+    CourseNode_CourseType_CourseType_MIN;
+  static const CourseType CourseType_MAX =
+    CourseNode_CourseType_CourseType_MAX;
+  static const int CourseType_ARRAYSIZE =
+    CourseNode_CourseType_CourseType_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  CourseType_descriptor() {
+    return CourseNode_CourseType_descriptor();
+  }
+  static inline const ::std::string& CourseType_Name(CourseType value) {
+    return CourseNode_CourseType_Name(value);
+  }
+  static inline bool CourseType_Parse(const ::std::string& name,
+      CourseType* value) {
+    return CourseNode_CourseType_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  // required int32 course_id = 1;
+  inline bool has_course_id() const;
+  inline void clear_course_id();
+  static const int kCourseIdFieldNumber = 1;
+  inline ::google::protobuf::int32 course_id() const;
+  inline void set_course_id(::google::protobuf::int32 value);
+
+  // required string course_name = 2;
+  inline bool has_course_name() const;
+  inline void clear_course_name();
+  static const int kCourseNameFieldNumber = 2;
+  inline const ::std::string& course_name() const;
+  inline void set_course_name(const ::std::string& value);
+  inline void set_course_name(const char* value);
+  inline void set_course_name(const char* value, size_t size);
+  inline ::std::string* mutable_course_name();
+  inline ::std::string* release_course_name();
+  inline void set_allocated_course_name(::std::string* course_name);
+
+  // required int32 grade_id = 3;
+  inline bool has_grade_id() const;
+  inline void clear_grade_id();
+  static const int kGradeIdFieldNumber = 3;
+  inline ::google::protobuf::int32 grade_id() const;
+  inline void set_grade_id(::google::protobuf::int32 value);
+
+  // optional int32 language = 4;
+  inline bool has_language() const;
+  inline void clear_language();
+  static const int kLanguageFieldNumber = 4;
+  inline ::google::protobuf::int32 language() const;
+  inline void set_language(::google::protobuf::int32 value);
+
+  // optional int32 art = 5;
+  inline bool has_art() const;
+  inline void clear_art();
+  static const int kArtFieldNumber = 5;
+  inline ::google::protobuf::int32 art() const;
+  inline void set_art(::google::protobuf::int32 value);
+
+  // optional int32 community = 6;
+  inline bool has_community() const;
+  inline void clear_community();
+  static const int kCommunityFieldNumber = 6;
+  inline ::google::protobuf::int32 community() const;
+  inline void set_community(::google::protobuf::int32 value);
+
+  // optional int32 health = 7;
+  inline bool has_health() const;
+  inline void clear_health();
+  static const int kHealthFieldNumber = 7;
+  inline ::google::protobuf::int32 health() const;
+  inline void set_health(::google::protobuf::int32 value);
+
+  // optional int32 science = 8;
+  inline bool has_science() const;
+  inline void clear_science();
+  static const int kScienceFieldNumber = 8;
+  inline ::google::protobuf::int32 science() const;
+  inline void set_science(::google::protobuf::int32 value);
+
+  // required string res_path = 9;
+  inline bool has_res_path() const;
+  inline void clear_res_path();
+  static const int kResPathFieldNumber = 9;
+  inline const ::std::string& res_path() const;
+  inline void set_res_path(const ::std::string& value);
+  inline void set_res_path(const char* value);
+  inline void set_res_path(const char* value, size_t size);
+  inline ::std::string* mutable_res_path();
+  inline ::std::string* release_res_path();
+  inline void set_allocated_res_path(::std::string* res_path);
+
+  // required .CourseNode.CourseType course_type = 10 [default = CT_INVALID];
+  inline bool has_course_type() const;
+  inline void clear_course_type();
+  static const int kCourseTypeFieldNumber = 10;
+  inline ::CourseNode_CourseType course_type() const;
+  inline void set_course_type(::CourseNode_CourseType value);
+
+  // optional string xml_path = 11;
+  inline bool has_xml_path() const;
+  inline void clear_xml_path();
+  static const int kXmlPathFieldNumber = 11;
+  inline const ::std::string& xml_path() const;
+  inline void set_xml_path(const ::std::string& value);
+  inline void set_xml_path(const char* value);
+  inline void set_xml_path(const char* value, size_t size);
+  inline ::std::string* mutable_xml_path();
+  inline ::std::string* release_xml_path();
+  inline void set_allocated_xml_path(::std::string* xml_path);
+
+  // @@protoc_insertion_point(class_scope:CourseNode)
+ private:
+  inline void set_has_course_id();
+  inline void clear_has_course_id();
+  inline void set_has_course_name();
+  inline void clear_has_course_name();
+  inline void set_has_grade_id();
+  inline void clear_has_grade_id();
+  inline void set_has_language();
+  inline void clear_has_language();
+  inline void set_has_art();
+  inline void clear_has_art();
+  inline void set_has_community();
+  inline void clear_has_community();
+  inline void set_has_health();
+  inline void clear_has_health();
+  inline void set_has_science();
+  inline void clear_has_science();
+  inline void set_has_res_path();
+  inline void clear_has_res_path();
+  inline void set_has_course_type();
+  inline void clear_has_course_type();
+  inline void set_has_xml_path();
+  inline void clear_has_xml_path();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* course_name_;
+  ::google::protobuf::int32 course_id_;
+  ::google::protobuf::int32 grade_id_;
+  ::google::protobuf::int32 language_;
+  ::google::protobuf::int32 art_;
+  ::google::protobuf::int32 community_;
+  ::google::protobuf::int32 health_;
+  ::std::string* res_path_;
+  ::google::protobuf::int32 science_;
+  int course_type_;
+  ::std::string* xml_path_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static CourseNode* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class sGetCourseList : public ::google::protobuf::Message {
  public:
   sGetCourseList();
@@ -1132,104 +1475,27 @@ class sGetCourseList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 course_id = 1;
-  inline bool has_course_id() const;
-  inline void clear_course_id();
-  static const int kCourseIdFieldNumber = 1;
-  inline ::google::protobuf::int32 course_id() const;
-  inline void set_course_id(::google::protobuf::int32 value);
-
-  // required string course_name = 2;
-  inline bool has_course_name() const;
-  inline void clear_course_name();
-  static const int kCourseNameFieldNumber = 2;
-  inline const ::std::string& course_name() const;
-  inline void set_course_name(const ::std::string& value);
-  inline void set_course_name(const char* value);
-  inline void set_course_name(const char* value, size_t size);
-  inline ::std::string* mutable_course_name();
-  inline ::std::string* release_course_name();
-  inline void set_allocated_course_name(::std::string* course_name);
-
-  // required int32 language = 3;
-  inline bool has_language() const;
-  inline void clear_language();
-  static const int kLanguageFieldNumber = 3;
-  inline ::google::protobuf::int32 language() const;
-  inline void set_language(::google::protobuf::int32 value);
-
-  // required int32 art = 4;
-  inline bool has_art() const;
-  inline void clear_art();
-  static const int kArtFieldNumber = 4;
-  inline ::google::protobuf::int32 art() const;
-  inline void set_art(::google::protobuf::int32 value);
-
-  // required int32 community = 5;
-  inline bool has_community() const;
-  inline void clear_community();
-  static const int kCommunityFieldNumber = 5;
-  inline ::google::protobuf::int32 community() const;
-  inline void set_community(::google::protobuf::int32 value);
-
-  // required int32 health = 6;
-  inline bool has_health() const;
-  inline void clear_health();
-  static const int kHealthFieldNumber = 6;
-  inline ::google::protobuf::int32 health() const;
-  inline void set_health(::google::protobuf::int32 value);
-
-  // required int32 science = 7;
-  inline bool has_science() const;
-  inline void clear_science();
-  static const int kScienceFieldNumber = 7;
-  inline ::google::protobuf::int32 science() const;
-  inline void set_science(::google::protobuf::int32 value);
-
-  // required string res_path = 8;
-  inline bool has_res_path() const;
-  inline void clear_res_path();
-  static const int kResPathFieldNumber = 8;
-  inline const ::std::string& res_path() const;
-  inline void set_res_path(const ::std::string& value);
-  inline void set_res_path(const char* value);
-  inline void set_res_path(const char* value, size_t size);
-  inline ::std::string* mutable_res_path();
-  inline ::std::string* release_res_path();
-  inline void set_allocated_res_path(::std::string* res_path);
+  // repeated .CourseNode course_list = 1;
+  inline int course_list_size() const;
+  inline void clear_course_list();
+  static const int kCourseListFieldNumber = 1;
+  inline const ::CourseNode& course_list(int index) const;
+  inline ::CourseNode* mutable_course_list(int index);
+  inline ::CourseNode* add_course_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::CourseNode >&
+      course_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::CourseNode >*
+      mutable_course_list();
 
   // @@protoc_insertion_point(class_scope:sGetCourseList)
  private:
-  inline void set_has_course_id();
-  inline void clear_has_course_id();
-  inline void set_has_course_name();
-  inline void clear_has_course_name();
-  inline void set_has_language();
-  inline void clear_has_language();
-  inline void set_has_art();
-  inline void clear_has_art();
-  inline void set_has_community();
-  inline void clear_has_community();
-  inline void set_has_health();
-  inline void clear_has_health();
-  inline void set_has_science();
-  inline void clear_has_science();
-  inline void set_has_res_path();
-  inline void clear_has_res_path();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* course_name_;
-  ::google::protobuf::int32 course_id_;
-  ::google::protobuf::int32 language_;
-  ::google::protobuf::int32 art_;
-  ::google::protobuf::int32 community_;
-  ::google::protobuf::int32 health_;
-  ::google::protobuf::int32 science_;
-  ::std::string* res_path_;
+  ::google::protobuf::RepeatedPtrField< ::CourseNode > course_list_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -1294,29 +1560,14 @@ class cGetContent : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string common = 1;
-  inline bool has_common() const;
-  inline void clear_common();
-  static const int kCommonFieldNumber = 1;
-  inline const ::std::string& common() const;
-  inline void set_common(const ::std::string& value);
-  inline void set_common(const char* value);
-  inline void set_common(const char* value, size_t size);
-  inline ::std::string* mutable_common();
-  inline ::std::string* release_common();
-  inline void set_allocated_common(::std::string* common);
-
   // @@protoc_insertion_point(class_scope:cGetContent)
  private:
-  inline void set_has_common();
-  inline void clear_has_common();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* common_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[1];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -1381,39 +1632,47 @@ class sGetContent : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required bool result = 1;
-  inline bool has_result() const;
-  inline void clear_result();
-  static const int kResultFieldNumber = 1;
-  inline bool result() const;
-  inline void set_result(bool value);
+  // required int32 class_id = 1;
+  inline bool has_class_id() const;
+  inline void clear_class_id();
+  static const int kClassIdFieldNumber = 1;
+  inline ::google::protobuf::int32 class_id() const;
+  inline void set_class_id(::google::protobuf::int32 value);
 
-  // required string course_list = 2;
-  inline bool has_course_list() const;
+  // required int32 classroom_id = 2;
+  inline bool has_classroom_id() const;
+  inline void clear_classroom_id();
+  static const int kClassroomIdFieldNumber = 2;
+  inline ::google::protobuf::int32 classroom_id() const;
+  inline void set_classroom_id(::google::protobuf::int32 value);
+
+  // repeated .ContentNode course_list = 3;
+  inline int course_list_size() const;
   inline void clear_course_list();
-  static const int kCourseListFieldNumber = 2;
-  inline const ::std::string& course_list() const;
-  inline void set_course_list(const ::std::string& value);
-  inline void set_course_list(const char* value);
-  inline void set_course_list(const char* value, size_t size);
-  inline ::std::string* mutable_course_list();
-  inline ::std::string* release_course_list();
-  inline void set_allocated_course_list(::std::string* course_list);
+  static const int kCourseListFieldNumber = 3;
+  inline const ::ContentNode& course_list(int index) const;
+  inline ::ContentNode* mutable_course_list(int index);
+  inline ::ContentNode* add_course_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::ContentNode >&
+      course_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::ContentNode >*
+      mutable_course_list();
 
   // @@protoc_insertion_point(class_scope:sGetContent)
  private:
-  inline void set_has_result();
-  inline void clear_has_result();
-  inline void set_has_course_list();
-  inline void clear_has_course_list();
+  inline void set_has_class_id();
+  inline void clear_has_class_id();
+  inline void set_has_classroom_id();
+  inline void clear_has_classroom_id();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* course_list_;
-  bool result_;
+  ::google::protobuf::int32 class_id_;
+  ::google::protobuf::int32 classroom_id_;
+  ::google::protobuf::RepeatedPtrField< ::ContentNode > course_list_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -1506,6 +1765,118 @@ class cGetClassList : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class ClassListNode : public ::google::protobuf::Message {
+ public:
+  ClassListNode();
+  virtual ~ClassListNode();
+
+  ClassListNode(const ClassListNode& from);
+
+  inline ClassListNode& operator=(const ClassListNode& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ClassListNode& default_instance();
+
+  void Swap(ClassListNode* other);
+
+  // implements Message ----------------------------------------------
+
+  ClassListNode* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ClassListNode& from);
+  void MergeFrom(const ClassListNode& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::int32 id() const;
+  inline void set_id(::google::protobuf::int32 value);
+
+  // required string name = 2;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 2;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // optional string res_path = 3;
+  inline bool has_res_path() const;
+  inline void clear_res_path();
+  static const int kResPathFieldNumber = 3;
+  inline const ::std::string& res_path() const;
+  inline void set_res_path(const ::std::string& value);
+  inline void set_res_path(const char* value);
+  inline void set_res_path(const char* value, size_t size);
+  inline ::std::string* mutable_res_path();
+  inline ::std::string* release_res_path();
+  inline void set_allocated_res_path(::std::string* res_path);
+
+  // @@protoc_insertion_point(class_scope:ClassListNode)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_res_path();
+  inline void clear_has_res_path();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* name_;
+  ::std::string* res_path_;
+  ::google::protobuf::int32 id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static ClassListNode* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class sGetClassList : public ::google::protobuf::Message {
  public:
   sGetClassList();
@@ -1560,39 +1931,27 @@ class sGetClassList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 class_id = 1;
-  inline bool has_class_id() const;
-  inline void clear_class_id();
-  static const int kClassIdFieldNumber = 1;
-  inline ::google::protobuf::int32 class_id() const;
-  inline void set_class_id(::google::protobuf::int32 value);
-
-  // required string class_name = 2;
-  inline bool has_class_name() const;
-  inline void clear_class_name();
-  static const int kClassNameFieldNumber = 2;
-  inline const ::std::string& class_name() const;
-  inline void set_class_name(const ::std::string& value);
-  inline void set_class_name(const char* value);
-  inline void set_class_name(const char* value, size_t size);
-  inline ::std::string* mutable_class_name();
-  inline ::std::string* release_class_name();
-  inline void set_allocated_class_name(::std::string* class_name);
+  // repeated .ClassListNode class_list = 1;
+  inline int class_list_size() const;
+  inline void clear_class_list();
+  static const int kClassListFieldNumber = 1;
+  inline const ::ClassListNode& class_list(int index) const;
+  inline ::ClassListNode* mutable_class_list(int index);
+  inline ::ClassListNode* add_class_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::ClassListNode >&
+      class_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::ClassListNode >*
+      mutable_class_list();
 
   // @@protoc_insertion_point(class_scope:sGetClassList)
  private:
-  inline void set_has_class_id();
-  inline void clear_has_class_id();
-  inline void set_has_class_name();
-  inline void clear_has_class_name();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* class_name_;
-  ::google::protobuf::int32 class_id_;
+  ::google::protobuf::RepeatedPtrField< ::ClassListNode > class_list_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -1657,29 +2016,14 @@ class cGetClassRoomList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string content = 1;
-  inline bool has_content() const;
-  inline void clear_content();
-  static const int kContentFieldNumber = 1;
-  inline const ::std::string& content() const;
-  inline void set_content(const ::std::string& value);
-  inline void set_content(const char* value);
-  inline void set_content(const char* value, size_t size);
-  inline ::std::string* mutable_content();
-  inline ::std::string* release_content();
-  inline void set_allocated_content(::std::string* content);
-
   // @@protoc_insertion_point(class_scope:cGetClassRoomList)
  private:
-  inline void set_has_content();
-  inline void clear_has_content();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* content_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[1];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -1744,36 +2088,121 @@ class sGetClassRoomList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 classroom_id = 1;
-  inline bool has_classroom_id() const;
-  inline void clear_classroom_id();
-  static const int kClassroomIdFieldNumber = 1;
-  inline ::google::protobuf::int32 classroom_id() const;
-  inline void set_classroom_id(::google::protobuf::int32 value);
-
-  // required string classroom_name = 2;
-  inline bool has_classroom_name() const;
-  inline void clear_classroom_name();
-  static const int kClassroomNameFieldNumber = 2;
-  inline const ::std::string& classroom_name() const;
-  inline void set_classroom_name(const ::std::string& value);
-  inline void set_classroom_name(const char* value);
-  inline void set_classroom_name(const char* value, size_t size);
-  inline ::std::string* mutable_classroom_name();
-  inline ::std::string* release_classroom_name();
-  inline void set_allocated_classroom_name(::std::string* classroom_name);
+  // repeated .ClassListNode classroom_list = 1;
+  inline int classroom_list_size() const;
+  inline void clear_classroom_list();
+  static const int kClassroomListFieldNumber = 1;
+  inline const ::ClassListNode& classroom_list(int index) const;
+  inline ::ClassListNode* mutable_classroom_list(int index);
+  inline ::ClassListNode* add_classroom_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::ClassListNode >&
+      classroom_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::ClassListNode >*
+      mutable_classroom_list();
 
   // @@protoc_insertion_point(class_scope:sGetClassRoomList)
  private:
-  inline void set_has_classroom_id();
-  inline void clear_has_classroom_id();
-  inline void set_has_classroom_name();
-  inline void clear_has_classroom_name();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* classroom_name_;
-  ::google::protobuf::int32 classroom_id_;
+  ::google::protobuf::RepeatedPtrField< ::ClassListNode > classroom_list_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sGetClassRoomList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ContentNode : public ::google::protobuf::Message {
+ public:
+  ContentNode();
+  virtual ~ContentNode();
+
+  ContentNode(const ContentNode& from);
+
+  inline ContentNode& operator=(const ContentNode& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ContentNode& default_instance();
+
+  void Swap(ContentNode* other);
+
+  // implements Message ----------------------------------------------
+
+  ContentNode* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ContentNode& from);
+  void MergeFrom(const ContentNode& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 course_id = 1;
+  inline bool has_course_id() const;
+  inline void clear_course_id();
+  static const int kCourseIdFieldNumber = 1;
+  inline ::google::protobuf::int32 course_id() const;
+  inline void set_course_id(::google::protobuf::int32 value);
+
+  // optional string course_xml = 2;
+  inline bool has_course_xml() const;
+  inline void clear_course_xml();
+  static const int kCourseXmlFieldNumber = 2;
+  inline const ::std::string& course_xml() const;
+  inline void set_course_xml(const ::std::string& value);
+  inline void set_course_xml(const char* value);
+  inline void set_course_xml(const char* value, size_t size);
+  inline ::std::string* mutable_course_xml();
+  inline ::std::string* release_course_xml();
+  inline void set_allocated_course_xml(::std::string* course_xml);
+
+  // @@protoc_insertion_point(class_scope:ContentNode)
+ private:
+  inline void set_has_course_id();
+  inline void clear_has_course_id();
+  inline void set_has_course_xml();
+  inline void clear_has_course_xml();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* course_xml_;
+  ::google::protobuf::int32 course_id_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -1783,7 +2212,7 @@ class sGetClassRoomList : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
 
   void InitAsDefaultInstance();
-  static sGetClassRoomList* default_instance_;
+  static ContentNode* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1855,17 +2284,17 @@ class cSetContent : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 classroom_id() const;
   inline void set_classroom_id(::google::protobuf::int32 value);
 
-  // required string course_list = 3;
-  inline bool has_course_list() const;
+  // repeated .ContentNode course_list = 3;
+  inline int course_list_size() const;
   inline void clear_course_list();
   static const int kCourseListFieldNumber = 3;
-  inline const ::std::string& course_list() const;
-  inline void set_course_list(const ::std::string& value);
-  inline void set_course_list(const char* value);
-  inline void set_course_list(const char* value, size_t size);
-  inline ::std::string* mutable_course_list();
-  inline ::std::string* release_course_list();
-  inline void set_allocated_course_list(::std::string* course_list);
+  inline const ::ContentNode& course_list(int index) const;
+  inline ::ContentNode* mutable_course_list(int index);
+  inline ::ContentNode* add_course_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::ContentNode >&
+      course_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::ContentNode >*
+      mutable_course_list();
 
   // @@protoc_insertion_point(class_scope:cSetContent)
  private:
@@ -1873,14 +2302,12 @@ class cSetContent : public ::google::protobuf::Message {
   inline void clear_has_class_id();
   inline void set_has_classroom_id();
   inline void clear_has_classroom_id();
-  inline void set_has_course_list();
-  inline void clear_has_course_list();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::int32 class_id_;
   ::google::protobuf::int32 classroom_id_;
-  ::std::string* course_list_;
+  ::google::protobuf::RepeatedPtrField< ::ContentNode > course_list_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -1948,7 +2375,7 @@ class sSetContent : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required bool result = 1;
+  // optional bool result = 1;
   inline bool has_result() const;
   inline void clear_result();
   static const int kResultFieldNumber = 1;
@@ -1988,6 +2415,232 @@ class sSetContent : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static sSetContent* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sCourseware : public ::google::protobuf::Message {
+ public:
+  sCourseware();
+  virtual ~sCourseware();
+
+  sCourseware(const sCourseware& from);
+
+  inline sCourseware& operator=(const sCourseware& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sCourseware& default_instance();
+
+  void Swap(sCourseware* other);
+
+  // implements Message ----------------------------------------------
+
+  sCourseware* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sCourseware& from);
+  void MergeFrom(const sCourseware& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 course_id = 1;
+  inline bool has_course_id() const;
+  inline void clear_course_id();
+  static const int kCourseIdFieldNumber = 1;
+  inline ::google::protobuf::int32 course_id() const;
+  inline void set_course_id(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:sCourseware)
+ private:
+  inline void set_has_course_id();
+  inline void clear_has_course_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 course_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sCourseware* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cClassOver : public ::google::protobuf::Message {
+ public:
+  cClassOver();
+  virtual ~cClassOver();
+
+  cClassOver(const cClassOver& from);
+
+  inline cClassOver& operator=(const cClassOver& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cClassOver& default_instance();
+
+  void Swap(cClassOver* other);
+
+  // implements Message ----------------------------------------------
+
+  cClassOver* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cClassOver& from);
+  void MergeFrom(const cClassOver& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:cClassOver)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cClassOver* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sClassOver : public ::google::protobuf::Message {
+ public:
+  sClassOver();
+  virtual ~sClassOver();
+
+  sClassOver(const sClassOver& from);
+
+  inline sClassOver& operator=(const sClassOver& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sClassOver& default_instance();
+
+  void Swap(sClassOver* other);
+
+  // implements Message ----------------------------------------------
+
+  sClassOver* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sClassOver& from);
+  void MergeFrom(const sClassOver& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:sClassOver)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sClassOver* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -2073,6 +2726,118 @@ class cGetStudentList : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class StudentListNode : public ::google::protobuf::Message {
+ public:
+  StudentListNode();
+  virtual ~StudentListNode();
+
+  StudentListNode(const StudentListNode& from);
+
+  inline StudentListNode& operator=(const StudentListNode& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const StudentListNode& default_instance();
+
+  void Swap(StudentListNode* other);
+
+  // implements Message ----------------------------------------------
+
+  StudentListNode* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const StudentListNode& from);
+  void MergeFrom(const StudentListNode& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::int32 id() const;
+  inline void set_id(::google::protobuf::int32 value);
+
+  // required string name = 2;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 2;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // optional string res_path = 3;
+  inline bool has_res_path() const;
+  inline void clear_res_path();
+  static const int kResPathFieldNumber = 3;
+  inline const ::std::string& res_path() const;
+  inline void set_res_path(const ::std::string& value);
+  inline void set_res_path(const char* value);
+  inline void set_res_path(const char* value, size_t size);
+  inline ::std::string* mutable_res_path();
+  inline ::std::string* release_res_path();
+  inline void set_allocated_res_path(::std::string* res_path);
+
+  // @@protoc_insertion_point(class_scope:StudentListNode)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_res_path();
+  inline void clear_has_res_path();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* name_;
+  ::std::string* res_path_;
+  ::google::protobuf::int32 id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static StudentListNode* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class sGetStudentList : public ::google::protobuf::Message {
  public:
   sGetStudentList();
@@ -2127,54 +2892,27 @@ class sGetStudentList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline ::google::protobuf::int32 id() const;
-  inline void set_id(::google::protobuf::int32 value);
-
-  // required string name = 2;
-  inline bool has_name() const;
-  inline void clear_name();
-  static const int kNameFieldNumber = 2;
-  inline const ::std::string& name() const;
-  inline void set_name(const ::std::string& value);
-  inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
-  inline ::std::string* mutable_name();
-  inline ::std::string* release_name();
-  inline void set_allocated_name(::std::string* name);
-
-  // required string res_path = 3;
-  inline bool has_res_path() const;
-  inline void clear_res_path();
-  static const int kResPathFieldNumber = 3;
-  inline const ::std::string& res_path() const;
-  inline void set_res_path(const ::std::string& value);
-  inline void set_res_path(const char* value);
-  inline void set_res_path(const char* value, size_t size);
-  inline ::std::string* mutable_res_path();
-  inline ::std::string* release_res_path();
-  inline void set_allocated_res_path(::std::string* res_path);
+  // repeated .StudentListNode student_list = 1;
+  inline int student_list_size() const;
+  inline void clear_student_list();
+  static const int kStudentListFieldNumber = 1;
+  inline const ::StudentListNode& student_list(int index) const;
+  inline ::StudentListNode* mutable_student_list(int index);
+  inline ::StudentListNode* add_student_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::StudentListNode >&
+      student_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::StudentListNode >*
+      mutable_student_list();
 
   // @@protoc_insertion_point(class_scope:sGetStudentList)
  private:
-  inline void set_has_id();
-  inline void clear_has_id();
-  inline void set_has_name();
-  inline void clear_has_name();
-  inline void set_has_res_path();
-  inline void clear_has_res_path();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* name_;
-  ::std::string* res_path_;
-  ::google::protobuf::int32 id_;
+  ::google::protobuf::RepeatedPtrField< ::StudentListNode > student_list_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -2321,21 +3059,24 @@ class sGetActiveStudentList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline ::google::protobuf::int32 id() const;
-  inline void set_id(::google::protobuf::int32 value);
+  // repeated int32 student_list = 1;
+  inline int student_list_size() const;
+  inline void clear_student_list();
+  static const int kStudentListFieldNumber = 1;
+  inline ::google::protobuf::int32 student_list(int index) const;
+  inline void set_student_list(int index, ::google::protobuf::int32 value);
+  inline void add_student_list(::google::protobuf::int32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      student_list() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_student_list();
 
   // @@protoc_insertion_point(class_scope:sGetActiveStudentList)
  private:
-  inline void set_has_id();
-  inline void clear_has_id();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 id_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > student_list_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -2622,22 +3363,10 @@ class sGetStudentInfo : public ::google::protobuf::Message {
   inline ::std::string* release_race();
   inline void set_allocated_race(::std::string* race);
 
-  // required string birthday = 6;
-  inline bool has_birthday() const;
-  inline void clear_birthday();
-  static const int kBirthdayFieldNumber = 6;
-  inline const ::std::string& birthday() const;
-  inline void set_birthday(const ::std::string& value);
-  inline void set_birthday(const char* value);
-  inline void set_birthday(const char* value, size_t size);
-  inline ::std::string* mutable_birthday();
-  inline ::std::string* release_birthday();
-  inline void set_allocated_birthday(::std::string* birthday);
-
-  // required string native = 7;
+  // required string native = 6;
   inline bool has_native() const;
   inline void clear_native();
-  static const int kNativeFieldNumber = 7;
+  static const int kNativeFieldNumber = 6;
   inline const ::std::string& native() const;
   inline void set_native(const ::std::string& value);
   inline void set_native(const char* value);
@@ -2645,6 +3374,13 @@ class sGetStudentInfo : public ::google::protobuf::Message {
   inline ::std::string* mutable_native();
   inline ::std::string* release_native();
   inline void set_allocated_native(::std::string* native);
+
+  // required int32 class_id = 7;
+  inline bool has_class_id() const;
+  inline void clear_class_id();
+  static const int kClassIdFieldNumber = 7;
+  inline ::google::protobuf::int32 class_id() const;
+  inline void set_class_id(::google::protobuf::int32 value);
 
   // required string class_name = 8;
   inline bool has_class_name() const;
@@ -2670,10 +3406,10 @@ class sGetStudentInfo : public ::google::protobuf::Message {
   inline void clear_has_sex();
   inline void set_has_race();
   inline void clear_has_race();
-  inline void set_has_birthday();
-  inline void clear_has_birthday();
   inline void set_has_native();
   inline void clear_has_native();
+  inline void set_has_class_id();
+  inline void clear_has_class_id();
   inline void set_has_class_name();
   inline void clear_has_class_name();
 
@@ -2682,11 +3418,11 @@ class sGetStudentInfo : public ::google::protobuf::Message {
   ::std::string* number_;
   ::std::string* name_;
   ::std::string* sex_;
+  ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 class_id_;
   ::std::string* race_;
-  ::std::string* birthday_;
   ::std::string* native_;
   ::std::string* class_name_;
-  ::google::protobuf::int32 id_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
@@ -2969,6 +3705,88 @@ class sGetTeacherInfo : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class PeerGroup : public ::google::protobuf::Message {
+ public:
+  PeerGroup();
+  virtual ~PeerGroup();
+
+  PeerGroup(const PeerGroup& from);
+
+  inline PeerGroup& operator=(const PeerGroup& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PeerGroup& default_instance();
+
+  void Swap(PeerGroup* other);
+
+  // implements Message ----------------------------------------------
+
+  PeerGroup* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PeerGroup& from);
+  void MergeFrom(const PeerGroup& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 student_id = 1;
+  inline bool has_student_id() const;
+  inline void clear_student_id();
+  static const int kStudentIdFieldNumber = 1;
+  inline ::google::protobuf::int32 student_id() const;
+  inline void set_student_id(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:PeerGroup)
+ private:
+  inline void set_has_student_id();
+  inline void clear_has_student_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 student_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static PeerGroup* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class cSetGroup : public ::google::protobuf::Message {
  public:
   cSetGroup();
@@ -3042,24 +3860,17 @@ class cSetGroup : public ::google::protobuf::Message {
   inline ::std::string* release_group_name();
   inline void set_allocated_group_name(::std::string* group_name);
 
-  // required int32 student_cnt = 4;
-  inline bool has_student_cnt() const;
-  inline void clear_student_cnt();
-  static const int kStudentCntFieldNumber = 4;
-  inline ::google::protobuf::int32 student_cnt() const;
-  inline void set_student_cnt(::google::protobuf::int32 value);
-
-  // required string student_list = 3;
-  inline bool has_student_list() const;
+  // repeated .PeerGroup student_list = 3;
+  inline int student_list_size() const;
   inline void clear_student_list();
   static const int kStudentListFieldNumber = 3;
-  inline const ::std::string& student_list() const;
-  inline void set_student_list(const ::std::string& value);
-  inline void set_student_list(const char* value);
-  inline void set_student_list(const char* value, size_t size);
-  inline ::std::string* mutable_student_list();
-  inline ::std::string* release_student_list();
-  inline void set_allocated_student_list(::std::string* student_list);
+  inline const ::PeerGroup& student_list(int index) const;
+  inline ::PeerGroup* mutable_student_list(int index);
+  inline ::PeerGroup* add_student_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::PeerGroup >&
+      student_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::PeerGroup >*
+      mutable_student_list();
 
   // @@protoc_insertion_point(class_scope:cSetGroup)
  private:
@@ -3067,20 +3878,15 @@ class cSetGroup : public ::google::protobuf::Message {
   inline void clear_has_group_id();
   inline void set_has_group_name();
   inline void clear_has_group_name();
-  inline void set_has_student_cnt();
-  inline void clear_has_student_cnt();
-  inline void set_has_student_list();
-  inline void clear_has_student_list();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* group_name_;
+  ::google::protobuf::RepeatedPtrField< ::PeerGroup > student_list_;
   ::google::protobuf::int32 group_id_;
-  ::google::protobuf::int32 student_cnt_;
-  ::std::string* student_list_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -3145,17 +3951,17 @@ class sSetGroup : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required bool result = 1;
+  // required int32 result = 2;
   inline bool has_result() const;
   inline void clear_result();
-  static const int kResultFieldNumber = 1;
-  inline bool result() const;
-  inline void set_result(bool value);
+  static const int kResultFieldNumber = 2;
+  inline ::google::protobuf::int32 result() const;
+  inline void set_result(::google::protobuf::int32 value);
 
-  // required string msg = 2;
+  // required string msg = 1;
   inline bool has_msg() const;
   inline void clear_msg();
-  static const int kMsgFieldNumber = 2;
+  static const int kMsgFieldNumber = 1;
   inline const ::std::string& msg() const;
   inline void set_msg(const ::std::string& value);
   inline void set_msg(const char* value);
@@ -3174,7 +3980,7 @@ class sSetGroup : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* msg_;
-  bool result_;
+  ::google::protobuf::int32 result_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -3185,6 +3991,282 @@ class sSetGroup : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static sSetGroup* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cRelay : public ::google::protobuf::Message {
+ public:
+  cRelay();
+  virtual ~cRelay();
+
+  cRelay(const cRelay& from);
+
+  inline cRelay& operator=(const cRelay& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cRelay& default_instance();
+
+  void Swap(cRelay* other);
+
+  // implements Message ----------------------------------------------
+
+  cRelay* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cRelay& from);
+  void MergeFrom(const cRelay& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:cRelay)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cRelay* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sRelay : public ::google::protobuf::Message {
+ public:
+  sRelay();
+  virtual ~sRelay();
+
+  sRelay(const sRelay& from);
+
+  inline sRelay& operator=(const sRelay& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sRelay& default_instance();
+
+  void Swap(sRelay* other);
+
+  // implements Message ----------------------------------------------
+
+  sRelay* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sRelay& from);
+  void MergeFrom(const sRelay& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 student_id = 1;
+  inline bool has_student_id() const;
+  inline void clear_student_id();
+  static const int kStudentIdFieldNumber = 1;
+  inline ::google::protobuf::int32 student_id() const;
+  inline void set_student_id(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:sRelay)
+ private:
+  inline void set_has_student_id();
+  inline void clear_has_student_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 student_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sRelay* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class bookNode : public ::google::protobuf::Message {
+ public:
+  bookNode();
+  virtual ~bookNode();
+
+  bookNode(const bookNode& from);
+
+  inline bookNode& operator=(const bookNode& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const bookNode& default_instance();
+
+  void Swap(bookNode* other);
+
+  // implements Message ----------------------------------------------
+
+  bookNode* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const bookNode& from);
+  void MergeFrom(const bookNode& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 book_id = 1;
+  inline bool has_book_id() const;
+  inline void clear_book_id();
+  static const int kBookIdFieldNumber = 1;
+  inline ::google::protobuf::int32 book_id() const;
+  inline void set_book_id(::google::protobuf::int32 value);
+
+  // required string book_name = 2;
+  inline bool has_book_name() const;
+  inline void clear_book_name();
+  static const int kBookNameFieldNumber = 2;
+  inline const ::std::string& book_name() const;
+  inline void set_book_name(const ::std::string& value);
+  inline void set_book_name(const char* value);
+  inline void set_book_name(const char* value, size_t size);
+  inline ::std::string* mutable_book_name();
+  inline ::std::string* release_book_name();
+  inline void set_allocated_book_name(::std::string* book_name);
+
+  // required int32 book_type = 4;
+  inline bool has_book_type() const;
+  inline void clear_book_type();
+  static const int kBookTypeFieldNumber = 4;
+  inline ::google::protobuf::int32 book_type() const;
+  inline void set_book_type(::google::protobuf::int32 value);
+
+  // required string res_path = 3;
+  inline bool has_res_path() const;
+  inline void clear_res_path();
+  static const int kResPathFieldNumber = 3;
+  inline const ::std::string& res_path() const;
+  inline void set_res_path(const ::std::string& value);
+  inline void set_res_path(const char* value);
+  inline void set_res_path(const char* value, size_t size);
+  inline ::std::string* mutable_res_path();
+  inline ::std::string* release_res_path();
+  inline void set_allocated_res_path(::std::string* res_path);
+
+  // @@protoc_insertion_point(class_scope:bookNode)
+ private:
+  inline void set_has_book_id();
+  inline void clear_has_book_id();
+  inline void set_has_book_name();
+  inline void clear_has_book_name();
+  inline void set_has_book_type();
+  inline void clear_has_book_type();
+  inline void set_has_res_path();
+  inline void clear_has_res_path();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* book_name_;
+  ::google::protobuf::int32 book_id_;
+  ::google::protobuf::int32 book_type_;
+  ::std::string* res_path_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static bookNode* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -3257,6 +4339,91 @@ class cGetPersonalBooksList : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static cGetPersonalBooksList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sGetPersonalBooksList : public ::google::protobuf::Message {
+ public:
+  sGetPersonalBooksList();
+  virtual ~sGetPersonalBooksList();
+
+  sGetPersonalBooksList(const sGetPersonalBooksList& from);
+
+  inline sGetPersonalBooksList& operator=(const sGetPersonalBooksList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sGetPersonalBooksList& default_instance();
+
+  void Swap(sGetPersonalBooksList* other);
+
+  // implements Message ----------------------------------------------
+
+  sGetPersonalBooksList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sGetPersonalBooksList& from);
+  void MergeFrom(const sGetPersonalBooksList& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .bookNode book_list = 1;
+  inline int book_list_size() const;
+  inline void clear_book_list();
+  static const int kBookListFieldNumber = 1;
+  inline const ::bookNode& book_list(int index) const;
+  inline ::bookNode* mutable_book_list(int index);
+  inline ::bookNode* add_book_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::bookNode >&
+      book_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::bookNode >*
+      mutable_book_list();
+
+  // @@protoc_insertion_point(class_scope:sGetPersonalBooksList)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::bookNode > book_list_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sGetPersonalBooksList* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -3419,128 +4586,6 @@ class sGetServerAddr : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class sGetPersonalBooksList : public ::google::protobuf::Message {
- public:
-  sGetPersonalBooksList();
-  virtual ~sGetPersonalBooksList();
-
-  sGetPersonalBooksList(const sGetPersonalBooksList& from);
-
-  inline sGetPersonalBooksList& operator=(const sGetPersonalBooksList& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const sGetPersonalBooksList& default_instance();
-
-  void Swap(sGetPersonalBooksList* other);
-
-  // implements Message ----------------------------------------------
-
-  sGetPersonalBooksList* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const sGetPersonalBooksList& from);
-  void MergeFrom(const sGetPersonalBooksList& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required int32 book_id = 1;
-  inline bool has_book_id() const;
-  inline void clear_book_id();
-  static const int kBookIdFieldNumber = 1;
-  inline ::google::protobuf::int32 book_id() const;
-  inline void set_book_id(::google::protobuf::int32 value);
-
-  // required string book_name = 2;
-  inline bool has_book_name() const;
-  inline void clear_book_name();
-  static const int kBookNameFieldNumber = 2;
-  inline const ::std::string& book_name() const;
-  inline void set_book_name(const ::std::string& value);
-  inline void set_book_name(const char* value);
-  inline void set_book_name(const char* value, size_t size);
-  inline ::std::string* mutable_book_name();
-  inline ::std::string* release_book_name();
-  inline void set_allocated_book_name(::std::string* book_name);
-
-  // required int32 book_type = 4;
-  inline bool has_book_type() const;
-  inline void clear_book_type();
-  static const int kBookTypeFieldNumber = 4;
-  inline ::google::protobuf::int32 book_type() const;
-  inline void set_book_type(::google::protobuf::int32 value);
-
-  // required string res_path = 3;
-  inline bool has_res_path() const;
-  inline void clear_res_path();
-  static const int kResPathFieldNumber = 3;
-  inline const ::std::string& res_path() const;
-  inline void set_res_path(const ::std::string& value);
-  inline void set_res_path(const char* value);
-  inline void set_res_path(const char* value, size_t size);
-  inline ::std::string* mutable_res_path();
-  inline ::std::string* release_res_path();
-  inline void set_allocated_res_path(::std::string* res_path);
-
-  // @@protoc_insertion_point(class_scope:sGetPersonalBooksList)
- private:
-  inline void set_has_book_id();
-  inline void clear_has_book_id();
-  inline void set_has_book_name();
-  inline void clear_has_book_name();
-  inline void set_has_book_type();
-  inline void clear_has_book_type();
-  inline void set_has_res_path();
-  inline void clear_has_res_path();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::std::string* book_name_;
-  ::google::protobuf::int32 book_id_;
-  ::google::protobuf::int32 book_type_;
-  ::std::string* res_path_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
-
-  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
-  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
-  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
-
-  void InitAsDefaultInstance();
-  static sGetPersonalBooksList* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class cGetPublicBooksList : public ::google::protobuf::Message {
  public:
   cGetPublicBooksList();
@@ -3667,64 +4712,27 @@ class sGetPublicBooksList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 book_id = 1;
-  inline bool has_book_id() const;
-  inline void clear_book_id();
-  static const int kBookIdFieldNumber = 1;
-  inline ::google::protobuf::int32 book_id() const;
-  inline void set_book_id(::google::protobuf::int32 value);
-
-  // required string book_name = 2;
-  inline bool has_book_name() const;
-  inline void clear_book_name();
-  static const int kBookNameFieldNumber = 2;
-  inline const ::std::string& book_name() const;
-  inline void set_book_name(const ::std::string& value);
-  inline void set_book_name(const char* value);
-  inline void set_book_name(const char* value, size_t size);
-  inline ::std::string* mutable_book_name();
-  inline ::std::string* release_book_name();
-  inline void set_allocated_book_name(::std::string* book_name);
-
-  // required int32 book_type = 4;
-  inline bool has_book_type() const;
-  inline void clear_book_type();
-  static const int kBookTypeFieldNumber = 4;
-  inline ::google::protobuf::int32 book_type() const;
-  inline void set_book_type(::google::protobuf::int32 value);
-
-  // required string res_path = 3;
-  inline bool has_res_path() const;
-  inline void clear_res_path();
-  static const int kResPathFieldNumber = 3;
-  inline const ::std::string& res_path() const;
-  inline void set_res_path(const ::std::string& value);
-  inline void set_res_path(const char* value);
-  inline void set_res_path(const char* value, size_t size);
-  inline ::std::string* mutable_res_path();
-  inline ::std::string* release_res_path();
-  inline void set_allocated_res_path(::std::string* res_path);
+  // repeated .bookNode book_list = 1;
+  inline int book_list_size() const;
+  inline void clear_book_list();
+  static const int kBookListFieldNumber = 1;
+  inline const ::bookNode& book_list(int index) const;
+  inline ::bookNode* mutable_book_list(int index);
+  inline ::bookNode* add_book_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::bookNode >&
+      book_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::bookNode >*
+      mutable_book_list();
 
   // @@protoc_insertion_point(class_scope:sGetPublicBooksList)
  private:
-  inline void set_has_book_id();
-  inline void clear_has_book_id();
-  inline void set_has_book_name();
-  inline void clear_has_book_name();
-  inline void set_has_book_type();
-  inline void clear_has_book_type();
-  inline void set_has_res_path();
-  inline void clear_has_res_path();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* book_name_;
-  ::google::protobuf::int32 book_id_;
-  ::google::protobuf::int32 book_type_;
-  ::std::string* res_path_;
+  ::google::protobuf::RepeatedPtrField< ::bookNode > book_list_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -3976,17 +4984,17 @@ class sUploadBook : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required bool result = 1;
+  // required int32 result = 2;
   inline bool has_result() const;
   inline void clear_result();
-  static const int kResultFieldNumber = 1;
-  inline bool result() const;
-  inline void set_result(bool value);
+  static const int kResultFieldNumber = 2;
+  inline ::google::protobuf::int32 result() const;
+  inline void set_result(::google::protobuf::int32 value);
 
-  // required string msg = 2;
+  // required string msg = 1;
   inline bool has_msg() const;
   inline void clear_msg();
-  static const int kMsgFieldNumber = 2;
+  static const int kMsgFieldNumber = 1;
   inline const ::std::string& msg() const;
   inline void set_msg(const ::std::string& value);
   inline void set_msg(const char* value);
@@ -4005,7 +5013,7 @@ class sUploadBook : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* msg_;
-  bool result_;
+  ::google::protobuf::int32 result_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -4155,10 +5163,17 @@ class sDownloadFromPersonal : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string down_addr = 1;
+  // optional bool result = 1;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 1;
+  inline bool result() const;
+  inline void set_result(bool value);
+
+  // required string down_addr = 2;
   inline bool has_down_addr() const;
   inline void clear_down_addr();
-  static const int kDownAddrFieldNumber = 1;
+  static const int kDownAddrFieldNumber = 2;
   inline const ::std::string& down_addr() const;
   inline void set_down_addr(const ::std::string& value);
   inline void set_down_addr(const char* value);
@@ -4169,15 +5184,18 @@ class sDownloadFromPersonal : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:sDownloadFromPersonal)
  private:
+  inline void set_has_result();
+  inline void clear_has_result();
   inline void set_has_down_addr();
   inline void clear_has_down_addr();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* down_addr_;
+  bool result_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -4324,6 +5342,13 @@ class sDownloadFromPublic : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
+  // optional bool result = 2;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 2;
+  inline bool result() const;
+  inline void set_result(bool value);
+
   // required string down_addr = 1;
   inline bool has_down_addr() const;
   inline void clear_down_addr();
@@ -4338,15 +5363,18 @@ class sDownloadFromPublic : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:sDownloadFromPublic)
  private:
+  inline void set_has_result();
+  inline void clear_has_result();
   inline void set_has_down_addr();
   inline void clear_has_down_addr();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* down_addr_;
+  bool result_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
   friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
@@ -4508,17 +5536,17 @@ class sTransferBook : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required bool result = 1;
+  // required int32 result = 2;
   inline bool has_result() const;
   inline void clear_result();
-  static const int kResultFieldNumber = 1;
-  inline bool result() const;
-  inline void set_result(bool value);
+  static const int kResultFieldNumber = 2;
+  inline ::google::protobuf::int32 result() const;
+  inline void set_result(::google::protobuf::int32 value);
 
-  // required string msg = 2;
+  // required string msg = 1;
   inline bool has_msg() const;
   inline void clear_msg();
-  static const int kMsgFieldNumber = 2;
+  static const int kMsgFieldNumber = 1;
   inline const ::std::string& msg() const;
   inline void set_msg(const ::std::string& value);
   inline void set_msg(const char* value);
@@ -4537,7 +5565,7 @@ class sTransferBook : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* msg_;
-  bool result_;
+  ::google::protobuf::int32 result_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -4687,17 +5715,17 @@ class sPublish : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required bool result = 1;
+  // required int32 result = 2;
   inline bool has_result() const;
   inline void clear_result();
-  static const int kResultFieldNumber = 1;
-  inline bool result() const;
-  inline void set_result(bool value);
+  static const int kResultFieldNumber = 2;
+  inline ::google::protobuf::int32 result() const;
+  inline void set_result(::google::protobuf::int32 value);
 
-  // required string msg = 2;
+  // required string msg = 1;
   inline bool has_msg() const;
   inline void clear_msg();
-  static const int kMsgFieldNumber = 2;
+  static const int kMsgFieldNumber = 1;
   inline const ::std::string& msg() const;
   inline void set_msg(const ::std::string& value);
   inline void set_msg(const char* value);
@@ -4716,7 +5744,7 @@ class sPublish : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* msg_;
-  bool result_;
+  ::google::protobuf::int32 result_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -4727,6 +5755,2807 @@ class sPublish : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static sPublish* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdateDrawSet : public ::google::protobuf::Message {
+ public:
+  cUpdateDrawSet();
+  virtual ~cUpdateDrawSet();
+
+  cUpdateDrawSet(const cUpdateDrawSet& from);
+
+  inline cUpdateDrawSet& operator=(const cUpdateDrawSet& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdateDrawSet& default_instance();
+
+  void Swap(cUpdateDrawSet* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdateDrawSet* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdateDrawSet& from);
+  void MergeFrom(const cUpdateDrawSet& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional bool facsimile = 1;
+  inline bool has_facsimile() const;
+  inline void clear_facsimile();
+  static const int kFacsimileFieldNumber = 1;
+  inline bool facsimile() const;
+  inline void set_facsimile(bool value);
+
+  // optional bool puzzle = 2;
+  inline bool has_puzzle() const;
+  inline void clear_puzzle();
+  static const int kPuzzleFieldNumber = 2;
+  inline bool puzzle() const;
+  inline void set_puzzle(bool value);
+
+  // optional bool frame = 3;
+  inline bool has_frame() const;
+  inline void clear_frame();
+  static const int kFrameFieldNumber = 3;
+  inline bool frame() const;
+  inline void set_frame(bool value);
+
+  // optional bool record = 4;
+  inline bool has_record() const;
+  inline void clear_record();
+  static const int kRecordFieldNumber = 4;
+  inline bool record() const;
+  inline void set_record(bool value);
+
+  // optional bool world = 5;
+  inline bool has_world() const;
+  inline void clear_world();
+  static const int kWorldFieldNumber = 5;
+  inline bool world() const;
+  inline void set_world(bool value);
+
+  // repeated string paper_name = 6;
+  inline int paper_name_size() const;
+  inline void clear_paper_name();
+  static const int kPaperNameFieldNumber = 6;
+  inline const ::std::string& paper_name(int index) const;
+  inline ::std::string* mutable_paper_name(int index);
+  inline void set_paper_name(int index, const ::std::string& value);
+  inline void set_paper_name(int index, const char* value);
+  inline void set_paper_name(int index, const char* value, size_t size);
+  inline ::std::string* add_paper_name();
+  inline void add_paper_name(const ::std::string& value);
+  inline void add_paper_name(const char* value);
+  inline void add_paper_name(const char* value, size_t size);
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& paper_name() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_paper_name();
+
+  // repeated int32 pen_id = 7;
+  inline int pen_id_size() const;
+  inline void clear_pen_id();
+  static const int kPenIdFieldNumber = 7;
+  inline ::google::protobuf::int32 pen_id(int index) const;
+  inline void set_pen_id(int index, ::google::protobuf::int32 value);
+  inline void add_pen_id(::google::protobuf::int32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      pen_id() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_pen_id();
+
+  // @@protoc_insertion_point(class_scope:cUpdateDrawSet)
+ private:
+  inline void set_has_facsimile();
+  inline void clear_has_facsimile();
+  inline void set_has_puzzle();
+  inline void clear_has_puzzle();
+  inline void set_has_frame();
+  inline void clear_has_frame();
+  inline void set_has_record();
+  inline void clear_has_record();
+  inline void set_has_world();
+  inline void clear_has_world();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  bool facsimile_;
+  bool puzzle_;
+  bool frame_;
+  bool record_;
+  bool world_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> paper_name_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > pen_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdateDrawSet* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdateDrawInfo : public ::google::protobuf::Message {
+ public:
+  cUpdateDrawInfo();
+  virtual ~cUpdateDrawInfo();
+
+  cUpdateDrawInfo(const cUpdateDrawInfo& from);
+
+  inline cUpdateDrawInfo& operator=(const cUpdateDrawInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdateDrawInfo& default_instance();
+
+  void Swap(cUpdateDrawInfo* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdateDrawInfo* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdateDrawInfo& from);
+  void MergeFrom(const cUpdateDrawInfo& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:cUpdateDrawInfo)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdateDrawInfo* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUpdateDrawInfo : public ::google::protobuf::Message {
+ public:
+  sUpdateDrawInfo();
+  virtual ~sUpdateDrawInfo();
+
+  sUpdateDrawInfo(const sUpdateDrawInfo& from);
+
+  inline sUpdateDrawInfo& operator=(const sUpdateDrawInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUpdateDrawInfo& default_instance();
+
+  void Swap(sUpdateDrawInfo* other);
+
+  // implements Message ----------------------------------------------
+
+  sUpdateDrawInfo* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUpdateDrawInfo& from);
+  void MergeFrom(const sUpdateDrawInfo& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:sUpdateDrawInfo)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUpdateDrawInfo* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdateBackground : public ::google::protobuf::Message {
+ public:
+  cUpdateBackground();
+  virtual ~cUpdateBackground();
+
+  cUpdateBackground(const cUpdateBackground& from);
+
+  inline cUpdateBackground& operator=(const cUpdateBackground& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdateBackground& default_instance();
+
+  void Swap(cUpdateBackground* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdateBackground* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdateBackground& from);
+  void MergeFrom(const cUpdateBackground& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 paper_id = 1;
+  inline bool has_paper_id() const;
+  inline void clear_paper_id();
+  static const int kPaperIdFieldNumber = 1;
+  inline ::google::protobuf::int32 paper_id() const;
+  inline void set_paper_id(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:cUpdateBackground)
+ private:
+  inline void set_has_paper_id();
+  inline void clear_has_paper_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 paper_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdateBackground* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUpdateBackground : public ::google::protobuf::Message {
+ public:
+  sUpdateBackground();
+  virtual ~sUpdateBackground();
+
+  sUpdateBackground(const sUpdateBackground& from);
+
+  inline sUpdateBackground& operator=(const sUpdateBackground& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUpdateBackground& default_instance();
+
+  void Swap(sUpdateBackground* other);
+
+  // implements Message ----------------------------------------------
+
+  sUpdateBackground* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUpdateBackground& from);
+  void MergeFrom(const sUpdateBackground& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 paper_id = 1;
+  inline bool has_paper_id() const;
+  inline void clear_paper_id();
+  static const int kPaperIdFieldNumber = 1;
+  inline ::google::protobuf::int32 paper_id() const;
+  inline void set_paper_id(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:sUpdateBackground)
+ private:
+  inline void set_has_paper_id();
+  inline void clear_has_paper_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 paper_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUpdateBackground* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdateCopyIntoPaint : public ::google::protobuf::Message {
+ public:
+  cUpdateCopyIntoPaint();
+  virtual ~cUpdateCopyIntoPaint();
+
+  cUpdateCopyIntoPaint(const cUpdateCopyIntoPaint& from);
+
+  inline cUpdateCopyIntoPaint& operator=(const cUpdateCopyIntoPaint& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdateCopyIntoPaint& default_instance();
+
+  void Swap(cUpdateCopyIntoPaint* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdateCopyIntoPaint* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdateCopyIntoPaint& from);
+  void MergeFrom(const cUpdateCopyIntoPaint& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 pic_id = 1;
+  inline bool has_pic_id() const;
+  inline void clear_pic_id();
+  static const int kPicIdFieldNumber = 1;
+  inline ::google::protobuf::int32 pic_id() const;
+  inline void set_pic_id(::google::protobuf::int32 value);
+
+  // required string pic_res = 2;
+  inline bool has_pic_res() const;
+  inline void clear_pic_res();
+  static const int kPicResFieldNumber = 2;
+  inline const ::std::string& pic_res() const;
+  inline void set_pic_res(const ::std::string& value);
+  inline void set_pic_res(const char* value);
+  inline void set_pic_res(const char* value, size_t size);
+  inline ::std::string* mutable_pic_res();
+  inline ::std::string* release_pic_res();
+  inline void set_allocated_pic_res(::std::string* pic_res);
+
+  // required string pic_scale = 3;
+  inline bool has_pic_scale() const;
+  inline void clear_pic_scale();
+  static const int kPicScaleFieldNumber = 3;
+  inline const ::std::string& pic_scale() const;
+  inline void set_pic_scale(const ::std::string& value);
+  inline void set_pic_scale(const char* value);
+  inline void set_pic_scale(const char* value, size_t size);
+  inline ::std::string* mutable_pic_scale();
+  inline ::std::string* release_pic_scale();
+  inline void set_allocated_pic_scale(::std::string* pic_scale);
+
+  // required string pic_rotation = 4;
+  inline bool has_pic_rotation() const;
+  inline void clear_pic_rotation();
+  static const int kPicRotationFieldNumber = 4;
+  inline const ::std::string& pic_rotation() const;
+  inline void set_pic_rotation(const ::std::string& value);
+  inline void set_pic_rotation(const char* value);
+  inline void set_pic_rotation(const char* value, size_t size);
+  inline ::std::string* mutable_pic_rotation();
+  inline ::std::string* release_pic_rotation();
+  inline void set_allocated_pic_rotation(::std::string* pic_rotation);
+
+  // required string pt_x = 5;
+  inline bool has_pt_x() const;
+  inline void clear_pt_x();
+  static const int kPtXFieldNumber = 5;
+  inline const ::std::string& pt_x() const;
+  inline void set_pt_x(const ::std::string& value);
+  inline void set_pt_x(const char* value);
+  inline void set_pt_x(const char* value, size_t size);
+  inline ::std::string* mutable_pt_x();
+  inline ::std::string* release_pt_x();
+  inline void set_allocated_pt_x(::std::string* pt_x);
+
+  // required string pt_y = 6;
+  inline bool has_pt_y() const;
+  inline void clear_pt_y();
+  static const int kPtYFieldNumber = 6;
+  inline const ::std::string& pt_y() const;
+  inline void set_pt_y(const ::std::string& value);
+  inline void set_pt_y(const char* value);
+  inline void set_pt_y(const char* value, size_t size);
+  inline ::std::string* mutable_pt_y();
+  inline ::std::string* release_pt_y();
+  inline void set_allocated_pt_y(::std::string* pt_y);
+
+  // required int32 op_type = 7;
+  inline bool has_op_type() const;
+  inline void clear_op_type();
+  static const int kOpTypeFieldNumber = 7;
+  inline ::google::protobuf::int32 op_type() const;
+  inline void set_op_type(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:cUpdateCopyIntoPaint)
+ private:
+  inline void set_has_pic_id();
+  inline void clear_has_pic_id();
+  inline void set_has_pic_res();
+  inline void clear_has_pic_res();
+  inline void set_has_pic_scale();
+  inline void clear_has_pic_scale();
+  inline void set_has_pic_rotation();
+  inline void clear_has_pic_rotation();
+  inline void set_has_pt_x();
+  inline void clear_has_pt_x();
+  inline void set_has_pt_y();
+  inline void clear_has_pt_y();
+  inline void set_has_op_type();
+  inline void clear_has_op_type();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* pic_res_;
+  ::std::string* pic_scale_;
+  ::std::string* pic_rotation_;
+  ::google::protobuf::int32 pic_id_;
+  ::google::protobuf::int32 op_type_;
+  ::std::string* pt_x_;
+  ::std::string* pt_y_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdateCopyIntoPaint* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUpdateCopyIntoPaint : public ::google::protobuf::Message {
+ public:
+  sUpdateCopyIntoPaint();
+  virtual ~sUpdateCopyIntoPaint();
+
+  sUpdateCopyIntoPaint(const sUpdateCopyIntoPaint& from);
+
+  inline sUpdateCopyIntoPaint& operator=(const sUpdateCopyIntoPaint& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUpdateCopyIntoPaint& default_instance();
+
+  void Swap(sUpdateCopyIntoPaint* other);
+
+  // implements Message ----------------------------------------------
+
+  sUpdateCopyIntoPaint* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUpdateCopyIntoPaint& from);
+  void MergeFrom(const sUpdateCopyIntoPaint& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 pic_id = 1;
+  inline bool has_pic_id() const;
+  inline void clear_pic_id();
+  static const int kPicIdFieldNumber = 1;
+  inline ::google::protobuf::int32 pic_id() const;
+  inline void set_pic_id(::google::protobuf::int32 value);
+
+  // required string pic_res = 2;
+  inline bool has_pic_res() const;
+  inline void clear_pic_res();
+  static const int kPicResFieldNumber = 2;
+  inline const ::std::string& pic_res() const;
+  inline void set_pic_res(const ::std::string& value);
+  inline void set_pic_res(const char* value);
+  inline void set_pic_res(const char* value, size_t size);
+  inline ::std::string* mutable_pic_res();
+  inline ::std::string* release_pic_res();
+  inline void set_allocated_pic_res(::std::string* pic_res);
+
+  // required string pic_scale = 3;
+  inline bool has_pic_scale() const;
+  inline void clear_pic_scale();
+  static const int kPicScaleFieldNumber = 3;
+  inline const ::std::string& pic_scale() const;
+  inline void set_pic_scale(const ::std::string& value);
+  inline void set_pic_scale(const char* value);
+  inline void set_pic_scale(const char* value, size_t size);
+  inline ::std::string* mutable_pic_scale();
+  inline ::std::string* release_pic_scale();
+  inline void set_allocated_pic_scale(::std::string* pic_scale);
+
+  // required string pic_rotation = 4;
+  inline bool has_pic_rotation() const;
+  inline void clear_pic_rotation();
+  static const int kPicRotationFieldNumber = 4;
+  inline const ::std::string& pic_rotation() const;
+  inline void set_pic_rotation(const ::std::string& value);
+  inline void set_pic_rotation(const char* value);
+  inline void set_pic_rotation(const char* value, size_t size);
+  inline ::std::string* mutable_pic_rotation();
+  inline ::std::string* release_pic_rotation();
+  inline void set_allocated_pic_rotation(::std::string* pic_rotation);
+
+  // required string pt_x = 5;
+  inline bool has_pt_x() const;
+  inline void clear_pt_x();
+  static const int kPtXFieldNumber = 5;
+  inline const ::std::string& pt_x() const;
+  inline void set_pt_x(const ::std::string& value);
+  inline void set_pt_x(const char* value);
+  inline void set_pt_x(const char* value, size_t size);
+  inline ::std::string* mutable_pt_x();
+  inline ::std::string* release_pt_x();
+  inline void set_allocated_pt_x(::std::string* pt_x);
+
+  // required string pt_y = 6;
+  inline bool has_pt_y() const;
+  inline void clear_pt_y();
+  static const int kPtYFieldNumber = 6;
+  inline const ::std::string& pt_y() const;
+  inline void set_pt_y(const ::std::string& value);
+  inline void set_pt_y(const char* value);
+  inline void set_pt_y(const char* value, size_t size);
+  inline ::std::string* mutable_pt_y();
+  inline ::std::string* release_pt_y();
+  inline void set_allocated_pt_y(::std::string* pt_y);
+
+  // required int32 op_type = 7;
+  inline bool has_op_type() const;
+  inline void clear_op_type();
+  static const int kOpTypeFieldNumber = 7;
+  inline ::google::protobuf::int32 op_type() const;
+  inline void set_op_type(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:sUpdateCopyIntoPaint)
+ private:
+  inline void set_has_pic_id();
+  inline void clear_has_pic_id();
+  inline void set_has_pic_res();
+  inline void clear_has_pic_res();
+  inline void set_has_pic_scale();
+  inline void clear_has_pic_scale();
+  inline void set_has_pic_rotation();
+  inline void clear_has_pic_rotation();
+  inline void set_has_pt_x();
+  inline void clear_has_pt_x();
+  inline void set_has_pt_y();
+  inline void clear_has_pt_y();
+  inline void set_has_op_type();
+  inline void clear_has_op_type();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* pic_res_;
+  ::std::string* pic_scale_;
+  ::std::string* pic_rotation_;
+  ::google::protobuf::int32 pic_id_;
+  ::google::protobuf::int32 op_type_;
+  ::std::string* pt_x_;
+  ::std::string* pt_y_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUpdateCopyIntoPaint* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdatePenAnderaser : public ::google::protobuf::Message {
+ public:
+  cUpdatePenAnderaser();
+  virtual ~cUpdatePenAnderaser();
+
+  cUpdatePenAnderaser(const cUpdatePenAnderaser& from);
+
+  inline cUpdatePenAnderaser& operator=(const cUpdatePenAnderaser& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdatePenAnderaser& default_instance();
+
+  void Swap(cUpdatePenAnderaser* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdatePenAnderaser* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdatePenAnderaser& from);
+  void MergeFrom(const cUpdatePenAnderaser& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 pen_type = 1;
+  inline bool has_pen_type() const;
+  inline void clear_pen_type();
+  static const int kPenTypeFieldNumber = 1;
+  inline ::google::protobuf::int32 pen_type() const;
+  inline void set_pen_type(::google::protobuf::int32 value);
+
+  // required int32 pen_color = 2;
+  inline bool has_pen_color() const;
+  inline void clear_pen_color();
+  static const int kPenColorFieldNumber = 2;
+  inline ::google::protobuf::int32 pen_color() const;
+  inline void set_pen_color(::google::protobuf::int32 value);
+
+  // required string pen_size = 3;
+  inline bool has_pen_size() const;
+  inline void clear_pen_size();
+  static const int kPenSizeFieldNumber = 3;
+  inline const ::std::string& pen_size() const;
+  inline void set_pen_size(const ::std::string& value);
+  inline void set_pen_size(const char* value);
+  inline void set_pen_size(const char* value, size_t size);
+  inline ::std::string* mutable_pen_size();
+  inline ::std::string* release_pen_size();
+  inline void set_allocated_pen_size(::std::string* pen_size);
+
+  // required int32 pen_trans = 4;
+  inline bool has_pen_trans() const;
+  inline void clear_pen_trans();
+  static const int kPenTransFieldNumber = 4;
+  inline ::google::protobuf::int32 pen_trans() const;
+  inline void set_pen_trans(::google::protobuf::int32 value);
+
+  // required int32 paint_type = 5;
+  inline bool has_paint_type() const;
+  inline void clear_paint_type();
+  static const int kPaintTypeFieldNumber = 5;
+  inline ::google::protobuf::int32 paint_type() const;
+  inline void set_paint_type(::google::protobuf::int32 value);
+
+  // required string pt_x = 6;
+  inline bool has_pt_x() const;
+  inline void clear_pt_x();
+  static const int kPtXFieldNumber = 6;
+  inline const ::std::string& pt_x() const;
+  inline void set_pt_x(const ::std::string& value);
+  inline void set_pt_x(const char* value);
+  inline void set_pt_x(const char* value, size_t size);
+  inline ::std::string* mutable_pt_x();
+  inline ::std::string* release_pt_x();
+  inline void set_allocated_pt_x(::std::string* pt_x);
+
+  // required string pt_y = 7;
+  inline bool has_pt_y() const;
+  inline void clear_pt_y();
+  static const int kPtYFieldNumber = 7;
+  inline const ::std::string& pt_y() const;
+  inline void set_pt_y(const ::std::string& value);
+  inline void set_pt_y(const char* value);
+  inline void set_pt_y(const char* value, size_t size);
+  inline ::std::string* mutable_pt_y();
+  inline ::std::string* release_pt_y();
+  inline void set_allocated_pt_y(::std::string* pt_y);
+
+  // required string prept_x = 8;
+  inline bool has_prept_x() const;
+  inline void clear_prept_x();
+  static const int kPreptXFieldNumber = 8;
+  inline const ::std::string& prept_x() const;
+  inline void set_prept_x(const ::std::string& value);
+  inline void set_prept_x(const char* value);
+  inline void set_prept_x(const char* value, size_t size);
+  inline ::std::string* mutable_prept_x();
+  inline ::std::string* release_prept_x();
+  inline void set_allocated_prept_x(::std::string* prept_x);
+
+  // required string prept_y = 9;
+  inline bool has_prept_y() const;
+  inline void clear_prept_y();
+  static const int kPreptYFieldNumber = 9;
+  inline const ::std::string& prept_y() const;
+  inline void set_prept_y(const ::std::string& value);
+  inline void set_prept_y(const char* value);
+  inline void set_prept_y(const char* value, size_t size);
+  inline ::std::string* mutable_prept_y();
+  inline ::std::string* release_prept_y();
+  inline void set_allocated_prept_y(::std::string* prept_y);
+
+  // @@protoc_insertion_point(class_scope:cUpdatePenAnderaser)
+ private:
+  inline void set_has_pen_type();
+  inline void clear_has_pen_type();
+  inline void set_has_pen_color();
+  inline void clear_has_pen_color();
+  inline void set_has_pen_size();
+  inline void clear_has_pen_size();
+  inline void set_has_pen_trans();
+  inline void clear_has_pen_trans();
+  inline void set_has_paint_type();
+  inline void clear_has_paint_type();
+  inline void set_has_pt_x();
+  inline void clear_has_pt_x();
+  inline void set_has_pt_y();
+  inline void clear_has_pt_y();
+  inline void set_has_prept_x();
+  inline void clear_has_prept_x();
+  inline void set_has_prept_y();
+  inline void clear_has_prept_y();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 pen_type_;
+  ::google::protobuf::int32 pen_color_;
+  ::std::string* pen_size_;
+  ::google::protobuf::int32 pen_trans_;
+  ::google::protobuf::int32 paint_type_;
+  ::std::string* pt_x_;
+  ::std::string* pt_y_;
+  ::std::string* prept_x_;
+  ::std::string* prept_y_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdatePenAnderaser* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUpdatePenAnderaser : public ::google::protobuf::Message {
+ public:
+  sUpdatePenAnderaser();
+  virtual ~sUpdatePenAnderaser();
+
+  sUpdatePenAnderaser(const sUpdatePenAnderaser& from);
+
+  inline sUpdatePenAnderaser& operator=(const sUpdatePenAnderaser& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUpdatePenAnderaser& default_instance();
+
+  void Swap(sUpdatePenAnderaser* other);
+
+  // implements Message ----------------------------------------------
+
+  sUpdatePenAnderaser* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUpdatePenAnderaser& from);
+  void MergeFrom(const sUpdatePenAnderaser& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 pen_type = 1;
+  inline bool has_pen_type() const;
+  inline void clear_pen_type();
+  static const int kPenTypeFieldNumber = 1;
+  inline ::google::protobuf::int32 pen_type() const;
+  inline void set_pen_type(::google::protobuf::int32 value);
+
+  // required int32 pen_color = 2;
+  inline bool has_pen_color() const;
+  inline void clear_pen_color();
+  static const int kPenColorFieldNumber = 2;
+  inline ::google::protobuf::int32 pen_color() const;
+  inline void set_pen_color(::google::protobuf::int32 value);
+
+  // required string pen_size = 3;
+  inline bool has_pen_size() const;
+  inline void clear_pen_size();
+  static const int kPenSizeFieldNumber = 3;
+  inline const ::std::string& pen_size() const;
+  inline void set_pen_size(const ::std::string& value);
+  inline void set_pen_size(const char* value);
+  inline void set_pen_size(const char* value, size_t size);
+  inline ::std::string* mutable_pen_size();
+  inline ::std::string* release_pen_size();
+  inline void set_allocated_pen_size(::std::string* pen_size);
+
+  // required int32 pen_trans = 4;
+  inline bool has_pen_trans() const;
+  inline void clear_pen_trans();
+  static const int kPenTransFieldNumber = 4;
+  inline ::google::protobuf::int32 pen_trans() const;
+  inline void set_pen_trans(::google::protobuf::int32 value);
+
+  // required int32 paint_type = 5;
+  inline bool has_paint_type() const;
+  inline void clear_paint_type();
+  static const int kPaintTypeFieldNumber = 5;
+  inline ::google::protobuf::int32 paint_type() const;
+  inline void set_paint_type(::google::protobuf::int32 value);
+
+  // required string pt_x = 6;
+  inline bool has_pt_x() const;
+  inline void clear_pt_x();
+  static const int kPtXFieldNumber = 6;
+  inline const ::std::string& pt_x() const;
+  inline void set_pt_x(const ::std::string& value);
+  inline void set_pt_x(const char* value);
+  inline void set_pt_x(const char* value, size_t size);
+  inline ::std::string* mutable_pt_x();
+  inline ::std::string* release_pt_x();
+  inline void set_allocated_pt_x(::std::string* pt_x);
+
+  // required string pt_y = 7;
+  inline bool has_pt_y() const;
+  inline void clear_pt_y();
+  static const int kPtYFieldNumber = 7;
+  inline const ::std::string& pt_y() const;
+  inline void set_pt_y(const ::std::string& value);
+  inline void set_pt_y(const char* value);
+  inline void set_pt_y(const char* value, size_t size);
+  inline ::std::string* mutable_pt_y();
+  inline ::std::string* release_pt_y();
+  inline void set_allocated_pt_y(::std::string* pt_y);
+
+  // required string prept_x = 8;
+  inline bool has_prept_x() const;
+  inline void clear_prept_x();
+  static const int kPreptXFieldNumber = 8;
+  inline const ::std::string& prept_x() const;
+  inline void set_prept_x(const ::std::string& value);
+  inline void set_prept_x(const char* value);
+  inline void set_prept_x(const char* value, size_t size);
+  inline ::std::string* mutable_prept_x();
+  inline ::std::string* release_prept_x();
+  inline void set_allocated_prept_x(::std::string* prept_x);
+
+  // required string prept_y = 9;
+  inline bool has_prept_y() const;
+  inline void clear_prept_y();
+  static const int kPreptYFieldNumber = 9;
+  inline const ::std::string& prept_y() const;
+  inline void set_prept_y(const ::std::string& value);
+  inline void set_prept_y(const char* value);
+  inline void set_prept_y(const char* value, size_t size);
+  inline ::std::string* mutable_prept_y();
+  inline ::std::string* release_prept_y();
+  inline void set_allocated_prept_y(::std::string* prept_y);
+
+  // @@protoc_insertion_point(class_scope:sUpdatePenAnderaser)
+ private:
+  inline void set_has_pen_type();
+  inline void clear_has_pen_type();
+  inline void set_has_pen_color();
+  inline void clear_has_pen_color();
+  inline void set_has_pen_size();
+  inline void clear_has_pen_size();
+  inline void set_has_pen_trans();
+  inline void clear_has_pen_trans();
+  inline void set_has_paint_type();
+  inline void clear_has_paint_type();
+  inline void set_has_pt_x();
+  inline void clear_has_pt_x();
+  inline void set_has_pt_y();
+  inline void clear_has_pt_y();
+  inline void set_has_prept_x();
+  inline void clear_has_prept_x();
+  inline void set_has_prept_y();
+  inline void clear_has_prept_y();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 pen_type_;
+  ::google::protobuf::int32 pen_color_;
+  ::std::string* pen_size_;
+  ::google::protobuf::int32 pen_trans_;
+  ::google::protobuf::int32 paint_type_;
+  ::std::string* pt_x_;
+  ::std::string* pt_y_;
+  ::std::string* prept_x_;
+  ::std::string* prept_y_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUpdatePenAnderaser* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdateFilling : public ::google::protobuf::Message {
+ public:
+  cUpdateFilling();
+  virtual ~cUpdateFilling();
+
+  cUpdateFilling(const cUpdateFilling& from);
+
+  inline cUpdateFilling& operator=(const cUpdateFilling& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdateFilling& default_instance();
+
+  void Swap(cUpdateFilling* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdateFilling* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdateFilling& from);
+  void MergeFrom(const cUpdateFilling& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string pt_list = 1;
+  inline bool has_pt_list() const;
+  inline void clear_pt_list();
+  static const int kPtListFieldNumber = 1;
+  inline const ::std::string& pt_list() const;
+  inline void set_pt_list(const ::std::string& value);
+  inline void set_pt_list(const char* value);
+  inline void set_pt_list(const char* value, size_t size);
+  inline ::std::string* mutable_pt_list();
+  inline ::std::string* release_pt_list();
+  inline void set_allocated_pt_list(::std::string* pt_list);
+
+  // required int32 trans = 3;
+  inline bool has_trans() const;
+  inline void clear_trans();
+  static const int kTransFieldNumber = 3;
+  inline ::google::protobuf::int32 trans() const;
+  inline void set_trans(::google::protobuf::int32 value);
+
+  // required int32 color = 2;
+  inline bool has_color() const;
+  inline void clear_color();
+  static const int kColorFieldNumber = 2;
+  inline ::google::protobuf::int32 color() const;
+  inline void set_color(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:cUpdateFilling)
+ private:
+  inline void set_has_pt_list();
+  inline void clear_has_pt_list();
+  inline void set_has_trans();
+  inline void clear_has_trans();
+  inline void set_has_color();
+  inline void clear_has_color();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* pt_list_;
+  ::google::protobuf::int32 trans_;
+  ::google::protobuf::int32 color_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdateFilling* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUpdateFilling : public ::google::protobuf::Message {
+ public:
+  sUpdateFilling();
+  virtual ~sUpdateFilling();
+
+  sUpdateFilling(const sUpdateFilling& from);
+
+  inline sUpdateFilling& operator=(const sUpdateFilling& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUpdateFilling& default_instance();
+
+  void Swap(sUpdateFilling* other);
+
+  // implements Message ----------------------------------------------
+
+  sUpdateFilling* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUpdateFilling& from);
+  void MergeFrom(const sUpdateFilling& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string pt_list = 1;
+  inline bool has_pt_list() const;
+  inline void clear_pt_list();
+  static const int kPtListFieldNumber = 1;
+  inline const ::std::string& pt_list() const;
+  inline void set_pt_list(const ::std::string& value);
+  inline void set_pt_list(const char* value);
+  inline void set_pt_list(const char* value, size_t size);
+  inline ::std::string* mutable_pt_list();
+  inline ::std::string* release_pt_list();
+  inline void set_allocated_pt_list(::std::string* pt_list);
+
+  // required int32 trans = 3;
+  inline bool has_trans() const;
+  inline void clear_trans();
+  static const int kTransFieldNumber = 3;
+  inline ::google::protobuf::int32 trans() const;
+  inline void set_trans(::google::protobuf::int32 value);
+
+  // required int32 color = 2;
+  inline bool has_color() const;
+  inline void clear_color();
+  static const int kColorFieldNumber = 2;
+  inline ::google::protobuf::int32 color() const;
+  inline void set_color(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:sUpdateFilling)
+ private:
+  inline void set_has_pt_list();
+  inline void clear_has_pt_list();
+  inline void set_has_trans();
+  inline void clear_has_trans();
+  inline void set_has_color();
+  inline void clear_has_color();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* pt_list_;
+  ::google::protobuf::int32 trans_;
+  ::google::protobuf::int32 color_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUpdateFilling* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdateStamp : public ::google::protobuf::Message {
+ public:
+  cUpdateStamp();
+  virtual ~cUpdateStamp();
+
+  cUpdateStamp(const cUpdateStamp& from);
+
+  inline cUpdateStamp& operator=(const cUpdateStamp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdateStamp& default_instance();
+
+  void Swap(cUpdateStamp* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdateStamp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdateStamp& from);
+  void MergeFrom(const cUpdateStamp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string pic_res = 1;
+  inline bool has_pic_res() const;
+  inline void clear_pic_res();
+  static const int kPicResFieldNumber = 1;
+  inline const ::std::string& pic_res() const;
+  inline void set_pic_res(const ::std::string& value);
+  inline void set_pic_res(const char* value);
+  inline void set_pic_res(const char* value, size_t size);
+  inline ::std::string* mutable_pic_res();
+  inline ::std::string* release_pic_res();
+  inline void set_allocated_pic_res(::std::string* pic_res);
+
+  // required string pt_x = 2;
+  inline bool has_pt_x() const;
+  inline void clear_pt_x();
+  static const int kPtXFieldNumber = 2;
+  inline const ::std::string& pt_x() const;
+  inline void set_pt_x(const ::std::string& value);
+  inline void set_pt_x(const char* value);
+  inline void set_pt_x(const char* value, size_t size);
+  inline ::std::string* mutable_pt_x();
+  inline ::std::string* release_pt_x();
+  inline void set_allocated_pt_x(::std::string* pt_x);
+
+  // required string pt_y = 3;
+  inline bool has_pt_y() const;
+  inline void clear_pt_y();
+  static const int kPtYFieldNumber = 3;
+  inline const ::std::string& pt_y() const;
+  inline void set_pt_y(const ::std::string& value);
+  inline void set_pt_y(const char* value);
+  inline void set_pt_y(const char* value, size_t size);
+  inline ::std::string* mutable_pt_y();
+  inline ::std::string* release_pt_y();
+  inline void set_allocated_pt_y(::std::string* pt_y);
+
+  // @@protoc_insertion_point(class_scope:cUpdateStamp)
+ private:
+  inline void set_has_pic_res();
+  inline void clear_has_pic_res();
+  inline void set_has_pt_x();
+  inline void clear_has_pt_x();
+  inline void set_has_pt_y();
+  inline void clear_has_pt_y();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* pic_res_;
+  ::std::string* pt_x_;
+  ::std::string* pt_y_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdateStamp* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUpdateStamp : public ::google::protobuf::Message {
+ public:
+  sUpdateStamp();
+  virtual ~sUpdateStamp();
+
+  sUpdateStamp(const sUpdateStamp& from);
+
+  inline sUpdateStamp& operator=(const sUpdateStamp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUpdateStamp& default_instance();
+
+  void Swap(sUpdateStamp* other);
+
+  // implements Message ----------------------------------------------
+
+  sUpdateStamp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUpdateStamp& from);
+  void MergeFrom(const sUpdateStamp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string pic_res = 1;
+  inline bool has_pic_res() const;
+  inline void clear_pic_res();
+  static const int kPicResFieldNumber = 1;
+  inline const ::std::string& pic_res() const;
+  inline void set_pic_res(const ::std::string& value);
+  inline void set_pic_res(const char* value);
+  inline void set_pic_res(const char* value, size_t size);
+  inline ::std::string* mutable_pic_res();
+  inline ::std::string* release_pic_res();
+  inline void set_allocated_pic_res(::std::string* pic_res);
+
+  // required string pt_x = 2;
+  inline bool has_pt_x() const;
+  inline void clear_pt_x();
+  static const int kPtXFieldNumber = 2;
+  inline const ::std::string& pt_x() const;
+  inline void set_pt_x(const ::std::string& value);
+  inline void set_pt_x(const char* value);
+  inline void set_pt_x(const char* value, size_t size);
+  inline ::std::string* mutable_pt_x();
+  inline ::std::string* release_pt_x();
+  inline void set_allocated_pt_x(::std::string* pt_x);
+
+  // required string pt_y = 3;
+  inline bool has_pt_y() const;
+  inline void clear_pt_y();
+  static const int kPtYFieldNumber = 3;
+  inline const ::std::string& pt_y() const;
+  inline void set_pt_y(const ::std::string& value);
+  inline void set_pt_y(const char* value);
+  inline void set_pt_y(const char* value, size_t size);
+  inline ::std::string* mutable_pt_y();
+  inline ::std::string* release_pt_y();
+  inline void set_allocated_pt_y(::std::string* pt_y);
+
+  // @@protoc_insertion_point(class_scope:sUpdateStamp)
+ private:
+  inline void set_has_pic_res();
+  inline void clear_has_pic_res();
+  inline void set_has_pt_x();
+  inline void clear_has_pt_x();
+  inline void set_has_pt_y();
+  inline void clear_has_pt_y();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* pic_res_;
+  ::std::string* pt_x_;
+  ::std::string* pt_y_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUpdateStamp* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdateFillPic : public ::google::protobuf::Message {
+ public:
+  cUpdateFillPic();
+  virtual ~cUpdateFillPic();
+
+  cUpdateFillPic(const cUpdateFillPic& from);
+
+  inline cUpdateFillPic& operator=(const cUpdateFillPic& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdateFillPic& default_instance();
+
+  void Swap(cUpdateFillPic* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdateFillPic* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdateFillPic& from);
+  void MergeFrom(const cUpdateFillPic& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string pic_res = 1;
+  inline bool has_pic_res() const;
+  inline void clear_pic_res();
+  static const int kPicResFieldNumber = 1;
+  inline const ::std::string& pic_res() const;
+  inline void set_pic_res(const ::std::string& value);
+  inline void set_pic_res(const char* value);
+  inline void set_pic_res(const char* value, size_t size);
+  inline ::std::string* mutable_pic_res();
+  inline ::std::string* release_pic_res();
+  inline void set_allocated_pic_res(::std::string* pic_res);
+
+  // required string pt_x = 2;
+  inline bool has_pt_x() const;
+  inline void clear_pt_x();
+  static const int kPtXFieldNumber = 2;
+  inline const ::std::string& pt_x() const;
+  inline void set_pt_x(const ::std::string& value);
+  inline void set_pt_x(const char* value);
+  inline void set_pt_x(const char* value, size_t size);
+  inline ::std::string* mutable_pt_x();
+  inline ::std::string* release_pt_x();
+  inline void set_allocated_pt_x(::std::string* pt_x);
+
+  // required string pt_y = 3;
+  inline bool has_pt_y() const;
+  inline void clear_pt_y();
+  static const int kPtYFieldNumber = 3;
+  inline const ::std::string& pt_y() const;
+  inline void set_pt_y(const ::std::string& value);
+  inline void set_pt_y(const char* value);
+  inline void set_pt_y(const char* value, size_t size);
+  inline ::std::string* mutable_pt_y();
+  inline ::std::string* release_pt_y();
+  inline void set_allocated_pt_y(::std::string* pt_y);
+
+  // @@protoc_insertion_point(class_scope:cUpdateFillPic)
+ private:
+  inline void set_has_pic_res();
+  inline void clear_has_pic_res();
+  inline void set_has_pt_x();
+  inline void clear_has_pt_x();
+  inline void set_has_pt_y();
+  inline void clear_has_pt_y();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* pic_res_;
+  ::std::string* pt_x_;
+  ::std::string* pt_y_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdateFillPic* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUpdateFillPic : public ::google::protobuf::Message {
+ public:
+  sUpdateFillPic();
+  virtual ~sUpdateFillPic();
+
+  sUpdateFillPic(const sUpdateFillPic& from);
+
+  inline sUpdateFillPic& operator=(const sUpdateFillPic& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUpdateFillPic& default_instance();
+
+  void Swap(sUpdateFillPic* other);
+
+  // implements Message ----------------------------------------------
+
+  sUpdateFillPic* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUpdateFillPic& from);
+  void MergeFrom(const sUpdateFillPic& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string pic_res = 1;
+  inline bool has_pic_res() const;
+  inline void clear_pic_res();
+  static const int kPicResFieldNumber = 1;
+  inline const ::std::string& pic_res() const;
+  inline void set_pic_res(const ::std::string& value);
+  inline void set_pic_res(const char* value);
+  inline void set_pic_res(const char* value, size_t size);
+  inline ::std::string* mutable_pic_res();
+  inline ::std::string* release_pic_res();
+  inline void set_allocated_pic_res(::std::string* pic_res);
+
+  // required string pt_x = 2;
+  inline bool has_pt_x() const;
+  inline void clear_pt_x();
+  static const int kPtXFieldNumber = 2;
+  inline const ::std::string& pt_x() const;
+  inline void set_pt_x(const ::std::string& value);
+  inline void set_pt_x(const char* value);
+  inline void set_pt_x(const char* value, size_t size);
+  inline ::std::string* mutable_pt_x();
+  inline ::std::string* release_pt_x();
+  inline void set_allocated_pt_x(::std::string* pt_x);
+
+  // required string pt_y = 3;
+  inline bool has_pt_y() const;
+  inline void clear_pt_y();
+  static const int kPtYFieldNumber = 3;
+  inline const ::std::string& pt_y() const;
+  inline void set_pt_y(const ::std::string& value);
+  inline void set_pt_y(const char* value);
+  inline void set_pt_y(const char* value, size_t size);
+  inline ::std::string* mutable_pt_y();
+  inline ::std::string* release_pt_y();
+  inline void set_allocated_pt_y(::std::string* pt_y);
+
+  // @@protoc_insertion_point(class_scope:sUpdateFillPic)
+ private:
+  inline void set_has_pic_res();
+  inline void clear_has_pic_res();
+  inline void set_has_pt_x();
+  inline void clear_has_pt_x();
+  inline void set_has_pt_y();
+  inline void clear_has_pt_y();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* pic_res_;
+  ::std::string* pt_x_;
+  ::std::string* pt_y_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUpdateFillPic* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdateMutex : public ::google::protobuf::Message {
+ public:
+  cUpdateMutex();
+  virtual ~cUpdateMutex();
+
+  cUpdateMutex(const cUpdateMutex& from);
+
+  inline cUpdateMutex& operator=(const cUpdateMutex& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdateMutex& default_instance();
+
+  void Swap(cUpdateMutex* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdateMutex* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdateMutex& from);
+  void MergeFrom(const cUpdateMutex& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 lock = 1;
+  inline bool has_lock() const;
+  inline void clear_lock();
+  static const int kLockFieldNumber = 1;
+  inline ::google::protobuf::int32 lock() const;
+  inline void set_lock(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:cUpdateMutex)
+ private:
+  inline void set_has_lock();
+  inline void clear_has_lock();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 lock_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdateMutex* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUpdateMutex : public ::google::protobuf::Message {
+ public:
+  sUpdateMutex();
+  virtual ~sUpdateMutex();
+
+  sUpdateMutex(const sUpdateMutex& from);
+
+  inline sUpdateMutex& operator=(const sUpdateMutex& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUpdateMutex& default_instance();
+
+  void Swap(sUpdateMutex* other);
+
+  // implements Message ----------------------------------------------
+
+  sUpdateMutex* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUpdateMutex& from);
+  void MergeFrom(const sUpdateMutex& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 result = 1;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 1;
+  inline ::google::protobuf::int32 result() const;
+  inline void set_result(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:sUpdateMutex)
+ private:
+  inline void set_has_result();
+  inline void clear_has_result();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 result_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUpdateMutex* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdateCollage : public ::google::protobuf::Message {
+ public:
+  cUpdateCollage();
+  virtual ~cUpdateCollage();
+
+  cUpdateCollage(const cUpdateCollage& from);
+
+  inline cUpdateCollage& operator=(const cUpdateCollage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdateCollage& default_instance();
+
+  void Swap(cUpdateCollage* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdateCollage* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdateCollage& from);
+  void MergeFrom(const cUpdateCollage& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 id = 9;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 9;
+  inline ::google::protobuf::int32 id() const;
+  inline void set_id(::google::protobuf::int32 value);
+
+  // required string pic_res = 1;
+  inline bool has_pic_res() const;
+  inline void clear_pic_res();
+  static const int kPicResFieldNumber = 1;
+  inline const ::std::string& pic_res() const;
+  inline void set_pic_res(const ::std::string& value);
+  inline void set_pic_res(const char* value);
+  inline void set_pic_res(const char* value, size_t size);
+  inline ::std::string* mutable_pic_res();
+  inline ::std::string* release_pic_res();
+  inline void set_allocated_pic_res(::std::string* pic_res);
+
+  // required int32 pic_type = 2;
+  inline bool has_pic_type() const;
+  inline void clear_pic_type();
+  static const int kPicTypeFieldNumber = 2;
+  inline ::google::protobuf::int32 pic_type() const;
+  inline void set_pic_type(::google::protobuf::int32 value);
+
+  // required string pic_scale = 3;
+  inline bool has_pic_scale() const;
+  inline void clear_pic_scale();
+  static const int kPicScaleFieldNumber = 3;
+  inline const ::std::string& pic_scale() const;
+  inline void set_pic_scale(const ::std::string& value);
+  inline void set_pic_scale(const char* value);
+  inline void set_pic_scale(const char* value, size_t size);
+  inline ::std::string* mutable_pic_scale();
+  inline ::std::string* release_pic_scale();
+  inline void set_allocated_pic_scale(::std::string* pic_scale);
+
+  // required string pic_rotation = 4;
+  inline bool has_pic_rotation() const;
+  inline void clear_pic_rotation();
+  static const int kPicRotationFieldNumber = 4;
+  inline const ::std::string& pic_rotation() const;
+  inline void set_pic_rotation(const ::std::string& value);
+  inline void set_pic_rotation(const char* value);
+  inline void set_pic_rotation(const char* value, size_t size);
+  inline ::std::string* mutable_pic_rotation();
+  inline ::std::string* release_pic_rotation();
+  inline void set_allocated_pic_rotation(::std::string* pic_rotation);
+
+  // required string pt_x = 5;
+  inline bool has_pt_x() const;
+  inline void clear_pt_x();
+  static const int kPtXFieldNumber = 5;
+  inline const ::std::string& pt_x() const;
+  inline void set_pt_x(const ::std::string& value);
+  inline void set_pt_x(const char* value);
+  inline void set_pt_x(const char* value, size_t size);
+  inline ::std::string* mutable_pt_x();
+  inline ::std::string* release_pt_x();
+  inline void set_allocated_pt_x(::std::string* pt_x);
+
+  // required string pt_y = 6;
+  inline bool has_pt_y() const;
+  inline void clear_pt_y();
+  static const int kPtYFieldNumber = 6;
+  inline const ::std::string& pt_y() const;
+  inline void set_pt_y(const ::std::string& value);
+  inline void set_pt_y(const char* value);
+  inline void set_pt_y(const char* value, size_t size);
+  inline ::std::string* mutable_pt_y();
+  inline ::std::string* release_pt_y();
+  inline void set_allocated_pt_y(::std::string* pt_y);
+
+  // required int32 layer = 7;
+  inline bool has_layer() const;
+  inline void clear_layer();
+  static const int kLayerFieldNumber = 7;
+  inline ::google::protobuf::int32 layer() const;
+  inline void set_layer(::google::protobuf::int32 value);
+
+  // required int32 op_type = 8;
+  inline bool has_op_type() const;
+  inline void clear_op_type();
+  static const int kOpTypeFieldNumber = 8;
+  inline ::google::protobuf::int32 op_type() const;
+  inline void set_op_type(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:cUpdateCollage)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_pic_res();
+  inline void clear_has_pic_res();
+  inline void set_has_pic_type();
+  inline void clear_has_pic_type();
+  inline void set_has_pic_scale();
+  inline void clear_has_pic_scale();
+  inline void set_has_pic_rotation();
+  inline void clear_has_pic_rotation();
+  inline void set_has_pt_x();
+  inline void clear_has_pt_x();
+  inline void set_has_pt_y();
+  inline void clear_has_pt_y();
+  inline void set_has_layer();
+  inline void clear_has_layer();
+  inline void set_has_op_type();
+  inline void clear_has_op_type();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* pic_res_;
+  ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 pic_type_;
+  ::std::string* pic_scale_;
+  ::std::string* pic_rotation_;
+  ::std::string* pt_x_;
+  ::std::string* pt_y_;
+  ::google::protobuf::int32 layer_;
+  ::google::protobuf::int32 op_type_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdateCollage* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUpdateCollage : public ::google::protobuf::Message {
+ public:
+  sUpdateCollage();
+  virtual ~sUpdateCollage();
+
+  sUpdateCollage(const sUpdateCollage& from);
+
+  inline sUpdateCollage& operator=(const sUpdateCollage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUpdateCollage& default_instance();
+
+  void Swap(sUpdateCollage* other);
+
+  // implements Message ----------------------------------------------
+
+  sUpdateCollage* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUpdateCollage& from);
+  void MergeFrom(const sUpdateCollage& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 id = 9;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 9;
+  inline ::google::protobuf::int32 id() const;
+  inline void set_id(::google::protobuf::int32 value);
+
+  // required string pic_res = 1;
+  inline bool has_pic_res() const;
+  inline void clear_pic_res();
+  static const int kPicResFieldNumber = 1;
+  inline const ::std::string& pic_res() const;
+  inline void set_pic_res(const ::std::string& value);
+  inline void set_pic_res(const char* value);
+  inline void set_pic_res(const char* value, size_t size);
+  inline ::std::string* mutable_pic_res();
+  inline ::std::string* release_pic_res();
+  inline void set_allocated_pic_res(::std::string* pic_res);
+
+  // required int32 pic_type = 2;
+  inline bool has_pic_type() const;
+  inline void clear_pic_type();
+  static const int kPicTypeFieldNumber = 2;
+  inline ::google::protobuf::int32 pic_type() const;
+  inline void set_pic_type(::google::protobuf::int32 value);
+
+  // required string pic_scale = 3;
+  inline bool has_pic_scale() const;
+  inline void clear_pic_scale();
+  static const int kPicScaleFieldNumber = 3;
+  inline const ::std::string& pic_scale() const;
+  inline void set_pic_scale(const ::std::string& value);
+  inline void set_pic_scale(const char* value);
+  inline void set_pic_scale(const char* value, size_t size);
+  inline ::std::string* mutable_pic_scale();
+  inline ::std::string* release_pic_scale();
+  inline void set_allocated_pic_scale(::std::string* pic_scale);
+
+  // required string pic_rotation = 4;
+  inline bool has_pic_rotation() const;
+  inline void clear_pic_rotation();
+  static const int kPicRotationFieldNumber = 4;
+  inline const ::std::string& pic_rotation() const;
+  inline void set_pic_rotation(const ::std::string& value);
+  inline void set_pic_rotation(const char* value);
+  inline void set_pic_rotation(const char* value, size_t size);
+  inline ::std::string* mutable_pic_rotation();
+  inline ::std::string* release_pic_rotation();
+  inline void set_allocated_pic_rotation(::std::string* pic_rotation);
+
+  // required string pt_x = 5;
+  inline bool has_pt_x() const;
+  inline void clear_pt_x();
+  static const int kPtXFieldNumber = 5;
+  inline const ::std::string& pt_x() const;
+  inline void set_pt_x(const ::std::string& value);
+  inline void set_pt_x(const char* value);
+  inline void set_pt_x(const char* value, size_t size);
+  inline ::std::string* mutable_pt_x();
+  inline ::std::string* release_pt_x();
+  inline void set_allocated_pt_x(::std::string* pt_x);
+
+  // required string pt_y = 6;
+  inline bool has_pt_y() const;
+  inline void clear_pt_y();
+  static const int kPtYFieldNumber = 6;
+  inline const ::std::string& pt_y() const;
+  inline void set_pt_y(const ::std::string& value);
+  inline void set_pt_y(const char* value);
+  inline void set_pt_y(const char* value, size_t size);
+  inline ::std::string* mutable_pt_y();
+  inline ::std::string* release_pt_y();
+  inline void set_allocated_pt_y(::std::string* pt_y);
+
+  // required int32 layer = 7;
+  inline bool has_layer() const;
+  inline void clear_layer();
+  static const int kLayerFieldNumber = 7;
+  inline ::google::protobuf::int32 layer() const;
+  inline void set_layer(::google::protobuf::int32 value);
+
+  // required int32 op_type = 8;
+  inline bool has_op_type() const;
+  inline void clear_op_type();
+  static const int kOpTypeFieldNumber = 8;
+  inline ::google::protobuf::int32 op_type() const;
+  inline void set_op_type(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:sUpdateCollage)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_pic_res();
+  inline void clear_has_pic_res();
+  inline void set_has_pic_type();
+  inline void clear_has_pic_type();
+  inline void set_has_pic_scale();
+  inline void clear_has_pic_scale();
+  inline void set_has_pic_rotation();
+  inline void clear_has_pic_rotation();
+  inline void set_has_pt_x();
+  inline void clear_has_pt_x();
+  inline void set_has_pt_y();
+  inline void clear_has_pt_y();
+  inline void set_has_layer();
+  inline void clear_has_layer();
+  inline void set_has_op_type();
+  inline void clear_has_op_type();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* pic_res_;
+  ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 pic_type_;
+  ::std::string* pic_scale_;
+  ::std::string* pic_rotation_;
+  ::std::string* pt_x_;
+  ::std::string* pt_y_;
+  ::google::protobuf::int32 layer_;
+  ::google::protobuf::int32 op_type_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUpdateCollage* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdateWord : public ::google::protobuf::Message {
+ public:
+  cUpdateWord();
+  virtual ~cUpdateWord();
+
+  cUpdateWord(const cUpdateWord& from);
+
+  inline cUpdateWord& operator=(const cUpdateWord& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdateWord& default_instance();
+
+  void Swap(cUpdateWord* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdateWord* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdateWord& from);
+  void MergeFrom(const cUpdateWord& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 id = 9;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 9;
+  inline ::google::protobuf::int32 id() const;
+  inline void set_id(::google::protobuf::int32 value);
+
+  // required int32 frame_id = 1;
+  inline bool has_frame_id() const;
+  inline void clear_frame_id();
+  static const int kFrameIdFieldNumber = 1;
+  inline ::google::protobuf::int32 frame_id() const;
+  inline void set_frame_id(::google::protobuf::int32 value);
+
+  // required string msg = 2;
+  inline bool has_msg() const;
+  inline void clear_msg();
+  static const int kMsgFieldNumber = 2;
+  inline const ::std::string& msg() const;
+  inline void set_msg(const ::std::string& value);
+  inline void set_msg(const char* value);
+  inline void set_msg(const char* value, size_t size);
+  inline ::std::string* mutable_msg();
+  inline ::std::string* release_msg();
+  inline void set_allocated_msg(::std::string* msg);
+
+  // required int32 front = 3;
+  inline bool has_front() const;
+  inline void clear_front();
+  static const int kFrontFieldNumber = 3;
+  inline ::google::protobuf::int32 front() const;
+  inline void set_front(::google::protobuf::int32 value);
+
+  // required int32 color = 4;
+  inline bool has_color() const;
+  inline void clear_color();
+  static const int kColorFieldNumber = 4;
+  inline ::google::protobuf::int32 color() const;
+  inline void set_color(::google::protobuf::int32 value);
+
+  // required int32 size = 5;
+  inline bool has_size() const;
+  inline void clear_size();
+  static const int kSizeFieldNumber = 5;
+  inline ::google::protobuf::int32 size() const;
+  inline void set_size(::google::protobuf::int32 value);
+
+  // required int32 effect_id = 6;
+  inline bool has_effect_id() const;
+  inline void clear_effect_id();
+  static const int kEffectIdFieldNumber = 6;
+  inline ::google::protobuf::int32 effect_id() const;
+  inline void set_effect_id(::google::protobuf::int32 value);
+
+  // required string frame_x = 7;
+  inline bool has_frame_x() const;
+  inline void clear_frame_x();
+  static const int kFrameXFieldNumber = 7;
+  inline const ::std::string& frame_x() const;
+  inline void set_frame_x(const ::std::string& value);
+  inline void set_frame_x(const char* value);
+  inline void set_frame_x(const char* value, size_t size);
+  inline ::std::string* mutable_frame_x();
+  inline ::std::string* release_frame_x();
+  inline void set_allocated_frame_x(::std::string* frame_x);
+
+  // required string frame_y = 8;
+  inline bool has_frame_y() const;
+  inline void clear_frame_y();
+  static const int kFrameYFieldNumber = 8;
+  inline const ::std::string& frame_y() const;
+  inline void set_frame_y(const ::std::string& value);
+  inline void set_frame_y(const char* value);
+  inline void set_frame_y(const char* value, size_t size);
+  inline ::std::string* mutable_frame_y();
+  inline ::std::string* release_frame_y();
+  inline void set_allocated_frame_y(::std::string* frame_y);
+
+  // @@protoc_insertion_point(class_scope:cUpdateWord)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_frame_id();
+  inline void clear_has_frame_id();
+  inline void set_has_msg();
+  inline void clear_has_msg();
+  inline void set_has_front();
+  inline void clear_has_front();
+  inline void set_has_color();
+  inline void clear_has_color();
+  inline void set_has_size();
+  inline void clear_has_size();
+  inline void set_has_effect_id();
+  inline void clear_has_effect_id();
+  inline void set_has_frame_x();
+  inline void clear_has_frame_x();
+  inline void set_has_frame_y();
+  inline void clear_has_frame_y();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 frame_id_;
+  ::std::string* msg_;
+  ::google::protobuf::int32 front_;
+  ::google::protobuf::int32 color_;
+  ::google::protobuf::int32 size_;
+  ::google::protobuf::int32 effect_id_;
+  ::std::string* frame_x_;
+  ::std::string* frame_y_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdateWord* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUpdateWord : public ::google::protobuf::Message {
+ public:
+  sUpdateWord();
+  virtual ~sUpdateWord();
+
+  sUpdateWord(const sUpdateWord& from);
+
+  inline sUpdateWord& operator=(const sUpdateWord& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUpdateWord& default_instance();
+
+  void Swap(sUpdateWord* other);
+
+  // implements Message ----------------------------------------------
+
+  sUpdateWord* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUpdateWord& from);
+  void MergeFrom(const sUpdateWord& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:sUpdateWord)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUpdateWord* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class cUpdateFrame : public ::google::protobuf::Message {
+ public:
+  cUpdateFrame();
+  virtual ~cUpdateFrame();
+
+  cUpdateFrame(const cUpdateFrame& from);
+
+  inline cUpdateFrame& operator=(const cUpdateFrame& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cUpdateFrame& default_instance();
+
+  void Swap(cUpdateFrame* other);
+
+  // implements Message ----------------------------------------------
+
+  cUpdateFrame* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const cUpdateFrame& from);
+  void MergeFrom(const cUpdateFrame& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 frame_id = 1;
+  inline bool has_frame_id() const;
+  inline void clear_frame_id();
+  static const int kFrameIdFieldNumber = 1;
+  inline ::google::protobuf::int32 frame_id() const;
+  inline void set_frame_id(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:cUpdateFrame)
+ private:
+  inline void set_has_frame_id();
+  inline void clear_has_frame_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 frame_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static cUpdateFrame* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class sUpdateFrame : public ::google::protobuf::Message {
+ public:
+  sUpdateFrame();
+  virtual ~sUpdateFrame();
+
+  sUpdateFrame(const sUpdateFrame& from);
+
+  inline sUpdateFrame& operator=(const sUpdateFrame& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const sUpdateFrame& default_instance();
+
+  void Swap(sUpdateFrame* other);
+
+  // implements Message ----------------------------------------------
+
+  sUpdateFrame* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const sUpdateFrame& from);
+  void MergeFrom(const sUpdateFrame& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 frame_id = 1;
+  inline bool has_frame_id() const;
+  inline void clear_frame_id();
+  static const int kFrameIdFieldNumber = 1;
+  inline ::google::protobuf::int32 frame_id() const;
+  inline void set_frame_id(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:sUpdateFrame)
+ private:
+  inline void set_has_frame_id();
+  inline void clear_has_frame_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 frame_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_AssignDesc_proto_2fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_proto_2fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static sUpdateFrame* default_instance_;
 };
 // ===================================================================
 
@@ -4901,7 +8730,7 @@ inline void cLogin::set_allocated_passwd(::std::string* passwd) {
 
 // sLogin
 
-// required bool result = 1;
+// optional bool result = 2;
 inline bool sLogin::has_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4923,31 +8752,53 @@ inline void sLogin::set_result(bool value) {
   result_ = value;
 }
 
+// optional bool enter_classroom = 3;
+inline bool sLogin::has_enter_classroom() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sLogin::set_has_enter_classroom() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sLogin::clear_has_enter_classroom() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sLogin::clear_enter_classroom() {
+  enter_classroom_ = false;
+  clear_has_enter_classroom();
+}
+inline bool sLogin::enter_classroom() const {
+  return enter_classroom_;
+}
+inline void sLogin::set_enter_classroom(bool value) {
+  set_has_enter_classroom();
+  enter_classroom_ = value;
+}
+
+// optional int32 student_id = 1;
+inline bool sLogin::has_student_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void sLogin::set_has_student_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void sLogin::clear_has_student_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void sLogin::clear_student_id() {
+  student_id_ = 0;
+  clear_has_student_id();
+}
+inline ::google::protobuf::int32 sLogin::student_id() const {
+  return student_id_;
+}
+inline void sLogin::set_student_id(::google::protobuf::int32 value) {
+  set_has_student_id();
+  student_id_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // cLogout
-
-// required int32 common = 1;
-inline bool cLogout::has_common() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void cLogout::set_has_common() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void cLogout::clear_has_common() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void cLogout::clear_common() {
-  common_ = 0;
-  clear_has_common();
-}
-inline ::google::protobuf::int32 cLogout::common() const {
-  return common_;
-}
-inline void cLogout::set_common(::google::protobuf::int32 value) {
-  set_has_common();
-  common_ = value;
-}
 
 // -------------------------------------------------------------------
 
@@ -4975,224 +8826,106 @@ inline void sLogout::set_login_type(::google::protobuf::int32 value) {
   login_type_ = value;
 }
 
-// required string num = 2;
-inline bool sLogout::has_num() const {
+// required int32 id = 2;
+inline bool sLogout::has_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void sLogout::set_has_num() {
+inline void sLogout::set_has_id() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void sLogout::clear_has_num() {
+inline void sLogout::clear_has_id() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void sLogout::clear_num() {
-  if (num_ != &::google::protobuf::internal::kEmptyString) {
-    num_->clear();
-  }
-  clear_has_num();
+inline void sLogout::clear_id() {
+  id_ = 0;
+  clear_has_id();
 }
-inline const ::std::string& sLogout::num() const {
-  return *num_;
+inline ::google::protobuf::int32 sLogout::id() const {
+  return id_;
 }
-inline void sLogout::set_num(const ::std::string& value) {
-  set_has_num();
-  if (num_ == &::google::protobuf::internal::kEmptyString) {
-    num_ = new ::std::string;
-  }
-  num_->assign(value);
-}
-inline void sLogout::set_num(const char* value) {
-  set_has_num();
-  if (num_ == &::google::protobuf::internal::kEmptyString) {
-    num_ = new ::std::string;
-  }
-  num_->assign(value);
-}
-inline void sLogout::set_num(const char* value, size_t size) {
-  set_has_num();
-  if (num_ == &::google::protobuf::internal::kEmptyString) {
-    num_ = new ::std::string;
-  }
-  num_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* sLogout::mutable_num() {
-  set_has_num();
-  if (num_ == &::google::protobuf::internal::kEmptyString) {
-    num_ = new ::std::string;
-  }
-  return num_;
-}
-inline ::std::string* sLogout::release_num() {
-  clear_has_num();
-  if (num_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = num_;
-    num_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void sLogout::set_allocated_num(::std::string* num) {
-  if (num_ != &::google::protobuf::internal::kEmptyString) {
-    delete num_;
-  }
-  if (num) {
-    set_has_num();
-    num_ = num;
-  } else {
-    clear_has_num();
-    num_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
+inline void sLogout::set_id(::google::protobuf::int32 value) {
+  set_has_id();
+  id_ = value;
 }
 
 // -------------------------------------------------------------------
 
 // cGetFuncList
 
-// required string content = 1;
-inline bool cGetFuncList::has_content() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void cGetFuncList::set_has_content() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void cGetFuncList::clear_has_content() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void cGetFuncList::clear_content() {
-  if (content_ != &::google::protobuf::internal::kEmptyString) {
-    content_->clear();
-  }
-  clear_has_content();
-}
-inline const ::std::string& cGetFuncList::content() const {
-  return *content_;
-}
-inline void cGetFuncList::set_content(const ::std::string& value) {
-  set_has_content();
-  if (content_ == &::google::protobuf::internal::kEmptyString) {
-    content_ = new ::std::string;
-  }
-  content_->assign(value);
-}
-inline void cGetFuncList::set_content(const char* value) {
-  set_has_content();
-  if (content_ == &::google::protobuf::internal::kEmptyString) {
-    content_ = new ::std::string;
-  }
-  content_->assign(value);
-}
-inline void cGetFuncList::set_content(const char* value, size_t size) {
-  set_has_content();
-  if (content_ == &::google::protobuf::internal::kEmptyString) {
-    content_ = new ::std::string;
-  }
-  content_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* cGetFuncList::mutable_content() {
-  set_has_content();
-  if (content_ == &::google::protobuf::internal::kEmptyString) {
-    content_ = new ::std::string;
-  }
-  return content_;
-}
-inline ::std::string* cGetFuncList::release_content() {
-  clear_has_content();
-  if (content_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = content_;
-    content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void cGetFuncList::set_allocated_content(::std::string* content) {
-  if (content_ != &::google::protobuf::internal::kEmptyString) {
-    delete content_;
-  }
-  if (content) {
-    set_has_content();
-    content_ = content;
-  } else {
-    clear_has_content();
-    content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
 // -------------------------------------------------------------------
 
-// sGetFuncList
+// FuncNode
 
-// required int32 id = 3;
-inline bool sGetFuncList::has_id() const {
+// required int32 id = 1;
+inline bool FuncNode::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void sGetFuncList::set_has_id() {
+inline void FuncNode::set_has_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void sGetFuncList::clear_has_id() {
+inline void FuncNode::clear_has_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void sGetFuncList::clear_id() {
+inline void FuncNode::clear_id() {
   id_ = 0;
   clear_has_id();
 }
-inline ::google::protobuf::int32 sGetFuncList::id() const {
+inline ::google::protobuf::int32 FuncNode::id() const {
   return id_;
 }
-inline void sGetFuncList::set_id(::google::protobuf::int32 value) {
+inline void FuncNode::set_id(::google::protobuf::int32 value) {
   set_has_id();
   id_ = value;
 }
 
-// required string name = 1;
-inline bool sGetFuncList::has_name() const {
+// required string name = 2;
+inline bool FuncNode::has_name() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void sGetFuncList::set_has_name() {
+inline void FuncNode::set_has_name() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void sGetFuncList::clear_has_name() {
+inline void FuncNode::clear_has_name() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void sGetFuncList::clear_name() {
+inline void FuncNode::clear_name() {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
     name_->clear();
   }
   clear_has_name();
 }
-inline const ::std::string& sGetFuncList::name() const {
+inline const ::std::string& FuncNode::name() const {
   return *name_;
 }
-inline void sGetFuncList::set_name(const ::std::string& value) {
+inline void FuncNode::set_name(const ::std::string& value) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
   }
   name_->assign(value);
 }
-inline void sGetFuncList::set_name(const char* value) {
+inline void FuncNode::set_name(const char* value) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
   }
   name_->assign(value);
 }
-inline void sGetFuncList::set_name(const char* value, size_t size) {
+inline void FuncNode::set_name(const char* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
   }
   name_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* sGetFuncList::mutable_name() {
+inline ::std::string* FuncNode::mutable_name() {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
   }
   return name_;
 }
-inline ::std::string* sGetFuncList::release_name() {
+inline ::std::string* FuncNode::release_name() {
   clear_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -5202,7 +8935,7 @@ inline ::std::string* sGetFuncList::release_name() {
     return temp;
   }
 }
-inline void sGetFuncList::set_allocated_name(::std::string* name) {
+inline void FuncNode::set_allocated_name(::std::string* name) {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
     delete name_;
   }
@@ -5215,54 +8948,54 @@ inline void sGetFuncList::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string res_path = 2;
-inline bool sGetFuncList::has_res_path() const {
+// required string res_path = 3;
+inline bool FuncNode::has_res_path() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void sGetFuncList::set_has_res_path() {
+inline void FuncNode::set_has_res_path() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void sGetFuncList::clear_has_res_path() {
+inline void FuncNode::clear_has_res_path() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void sGetFuncList::clear_res_path() {
+inline void FuncNode::clear_res_path() {
   if (res_path_ != &::google::protobuf::internal::kEmptyString) {
     res_path_->clear();
   }
   clear_has_res_path();
 }
-inline const ::std::string& sGetFuncList::res_path() const {
+inline const ::std::string& FuncNode::res_path() const {
   return *res_path_;
 }
-inline void sGetFuncList::set_res_path(const ::std::string& value) {
+inline void FuncNode::set_res_path(const ::std::string& value) {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   res_path_->assign(value);
 }
-inline void sGetFuncList::set_res_path(const char* value) {
+inline void FuncNode::set_res_path(const char* value) {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   res_path_->assign(value);
 }
-inline void sGetFuncList::set_res_path(const char* value, size_t size) {
+inline void FuncNode::set_res_path(const char* value, size_t size) {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   res_path_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* sGetFuncList::mutable_res_path() {
+inline ::std::string* FuncNode::mutable_res_path() {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   return res_path_;
 }
-inline ::std::string* sGetFuncList::release_res_path() {
+inline ::std::string* FuncNode::release_res_path() {
   clear_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -5272,7 +9005,7 @@ inline ::std::string* sGetFuncList::release_res_path() {
     return temp;
   }
 }
-inline void sGetFuncList::set_allocated_res_path(::std::string* res_path) {
+inline void FuncNode::set_allocated_res_path(::std::string* res_path) {
   if (res_path_ != &::google::protobuf::internal::kEmptyString) {
     delete res_path_;
   }
@@ -5283,6 +9016,35 @@ inline void sGetFuncList::set_allocated_res_path(::std::string* res_path) {
     clear_has_res_path();
     res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// sGetFuncList
+
+// repeated .FuncNode func_list = 1;
+inline int sGetFuncList::func_list_size() const {
+  return func_list_.size();
+}
+inline void sGetFuncList::clear_func_list() {
+  func_list_.Clear();
+}
+inline const ::FuncNode& sGetFuncList::func_list(int index) const {
+  return func_list_.Get(index);
+}
+inline ::FuncNode* sGetFuncList::mutable_func_list(int index) {
+  return func_list_.Mutable(index);
+}
+inline ::FuncNode* sGetFuncList::add_func_list() {
+  return func_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::FuncNode >&
+sGetFuncList::func_list() const {
+  return func_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::FuncNode >*
+sGetFuncList::mutable_func_list() {
+  return &func_list_;
 }
 
 // -------------------------------------------------------------------
@@ -5315,7 +9077,7 @@ inline void cSetFunc::set_func_type(::google::protobuf::int32 value) {
 
 // sSetFunc
 
-// required bool result = 1;
+// optional bool result = 1;
 inline bool sSetFunc::has_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -5367,96 +9129,29 @@ inline void cGetGradeList::set_content(::google::protobuf::int32 value) {
 
 // sGetGradeList
 
-// required int32 grade_id = 1;
-inline bool sGetGradeList::has_grade_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+// repeated .ClassListNode grade_list = 1;
+inline int sGetGradeList::grade_list_size() const {
+  return grade_list_.size();
 }
-inline void sGetGradeList::set_has_grade_id() {
-  _has_bits_[0] |= 0x00000001u;
+inline void sGetGradeList::clear_grade_list() {
+  grade_list_.Clear();
 }
-inline void sGetGradeList::clear_has_grade_id() {
-  _has_bits_[0] &= ~0x00000001u;
+inline const ::ClassListNode& sGetGradeList::grade_list(int index) const {
+  return grade_list_.Get(index);
 }
-inline void sGetGradeList::clear_grade_id() {
-  grade_id_ = 0;
-  clear_has_grade_id();
+inline ::ClassListNode* sGetGradeList::mutable_grade_list(int index) {
+  return grade_list_.Mutable(index);
 }
-inline ::google::protobuf::int32 sGetGradeList::grade_id() const {
-  return grade_id_;
+inline ::ClassListNode* sGetGradeList::add_grade_list() {
+  return grade_list_.Add();
 }
-inline void sGetGradeList::set_grade_id(::google::protobuf::int32 value) {
-  set_has_grade_id();
-  grade_id_ = value;
+inline const ::google::protobuf::RepeatedPtrField< ::ClassListNode >&
+sGetGradeList::grade_list() const {
+  return grade_list_;
 }
-
-// required string grade_name = 2;
-inline bool sGetGradeList::has_grade_name() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void sGetGradeList::set_has_grade_name() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void sGetGradeList::clear_has_grade_name() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void sGetGradeList::clear_grade_name() {
-  if (grade_name_ != &::google::protobuf::internal::kEmptyString) {
-    grade_name_->clear();
-  }
-  clear_has_grade_name();
-}
-inline const ::std::string& sGetGradeList::grade_name() const {
-  return *grade_name_;
-}
-inline void sGetGradeList::set_grade_name(const ::std::string& value) {
-  set_has_grade_name();
-  if (grade_name_ == &::google::protobuf::internal::kEmptyString) {
-    grade_name_ = new ::std::string;
-  }
-  grade_name_->assign(value);
-}
-inline void sGetGradeList::set_grade_name(const char* value) {
-  set_has_grade_name();
-  if (grade_name_ == &::google::protobuf::internal::kEmptyString) {
-    grade_name_ = new ::std::string;
-  }
-  grade_name_->assign(value);
-}
-inline void sGetGradeList::set_grade_name(const char* value, size_t size) {
-  set_has_grade_name();
-  if (grade_name_ == &::google::protobuf::internal::kEmptyString) {
-    grade_name_ = new ::std::string;
-  }
-  grade_name_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* sGetGradeList::mutable_grade_name() {
-  set_has_grade_name();
-  if (grade_name_ == &::google::protobuf::internal::kEmptyString) {
-    grade_name_ = new ::std::string;
-  }
-  return grade_name_;
-}
-inline ::std::string* sGetGradeList::release_grade_name() {
-  clear_has_grade_name();
-  if (grade_name_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = grade_name_;
-    grade_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void sGetGradeList::set_allocated_grade_name(::std::string* grade_name) {
-  if (grade_name_ != &::google::protobuf::internal::kEmptyString) {
-    delete grade_name_;
-  }
-  if (grade_name) {
-    set_has_grade_name();
-    grade_name_ = grade_name;
-  } else {
-    clear_has_grade_name();
-    grade_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
+inline ::google::protobuf::RepeatedPtrField< ::ClassListNode >*
+sGetGradeList::mutable_grade_list() {
+  return &grade_list_;
 }
 
 // -------------------------------------------------------------------
@@ -5487,78 +9182,78 @@ inline void cGetCourseList::set_grade_id(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
-// sGetCourseList
+// CourseNode
 
 // required int32 course_id = 1;
-inline bool sGetCourseList::has_course_id() const {
+inline bool CourseNode::has_course_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void sGetCourseList::set_has_course_id() {
+inline void CourseNode::set_has_course_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void sGetCourseList::clear_has_course_id() {
+inline void CourseNode::clear_has_course_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void sGetCourseList::clear_course_id() {
+inline void CourseNode::clear_course_id() {
   course_id_ = 0;
   clear_has_course_id();
 }
-inline ::google::protobuf::int32 sGetCourseList::course_id() const {
+inline ::google::protobuf::int32 CourseNode::course_id() const {
   return course_id_;
 }
-inline void sGetCourseList::set_course_id(::google::protobuf::int32 value) {
+inline void CourseNode::set_course_id(::google::protobuf::int32 value) {
   set_has_course_id();
   course_id_ = value;
 }
 
 // required string course_name = 2;
-inline bool sGetCourseList::has_course_name() const {
+inline bool CourseNode::has_course_name() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void sGetCourseList::set_has_course_name() {
+inline void CourseNode::set_has_course_name() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void sGetCourseList::clear_has_course_name() {
+inline void CourseNode::clear_has_course_name() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void sGetCourseList::clear_course_name() {
+inline void CourseNode::clear_course_name() {
   if (course_name_ != &::google::protobuf::internal::kEmptyString) {
     course_name_->clear();
   }
   clear_has_course_name();
 }
-inline const ::std::string& sGetCourseList::course_name() const {
+inline const ::std::string& CourseNode::course_name() const {
   return *course_name_;
 }
-inline void sGetCourseList::set_course_name(const ::std::string& value) {
+inline void CourseNode::set_course_name(const ::std::string& value) {
   set_has_course_name();
   if (course_name_ == &::google::protobuf::internal::kEmptyString) {
     course_name_ = new ::std::string;
   }
   course_name_->assign(value);
 }
-inline void sGetCourseList::set_course_name(const char* value) {
+inline void CourseNode::set_course_name(const char* value) {
   set_has_course_name();
   if (course_name_ == &::google::protobuf::internal::kEmptyString) {
     course_name_ = new ::std::string;
   }
   course_name_->assign(value);
 }
-inline void sGetCourseList::set_course_name(const char* value, size_t size) {
+inline void CourseNode::set_course_name(const char* value, size_t size) {
   set_has_course_name();
   if (course_name_ == &::google::protobuf::internal::kEmptyString) {
     course_name_ = new ::std::string;
   }
   course_name_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* sGetCourseList::mutable_course_name() {
+inline ::std::string* CourseNode::mutable_course_name() {
   set_has_course_name();
   if (course_name_ == &::google::protobuf::internal::kEmptyString) {
     course_name_ = new ::std::string;
   }
   return course_name_;
 }
-inline ::std::string* sGetCourseList::release_course_name() {
+inline ::std::string* CourseNode::release_course_name() {
   clear_has_course_name();
   if (course_name_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -5568,7 +9263,7 @@ inline ::std::string* sGetCourseList::release_course_name() {
     return temp;
   }
 }
-inline void sGetCourseList::set_allocated_course_name(::std::string* course_name) {
+inline void CourseNode::set_allocated_course_name(::std::string* course_name) {
   if (course_name_ != &::google::protobuf::internal::kEmptyString) {
     delete course_name_;
   }
@@ -5581,164 +9276,186 @@ inline void sGetCourseList::set_allocated_course_name(::std::string* course_name
   }
 }
 
-// required int32 language = 3;
-inline bool sGetCourseList::has_language() const {
+// required int32 grade_id = 3;
+inline bool CourseNode::has_grade_id() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void sGetCourseList::set_has_language() {
+inline void CourseNode::set_has_grade_id() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void sGetCourseList::clear_has_language() {
+inline void CourseNode::clear_has_grade_id() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void sGetCourseList::clear_language() {
+inline void CourseNode::clear_grade_id() {
+  grade_id_ = 0;
+  clear_has_grade_id();
+}
+inline ::google::protobuf::int32 CourseNode::grade_id() const {
+  return grade_id_;
+}
+inline void CourseNode::set_grade_id(::google::protobuf::int32 value) {
+  set_has_grade_id();
+  grade_id_ = value;
+}
+
+// optional int32 language = 4;
+inline bool CourseNode::has_language() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void CourseNode::set_has_language() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void CourseNode::clear_has_language() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void CourseNode::clear_language() {
   language_ = 0;
   clear_has_language();
 }
-inline ::google::protobuf::int32 sGetCourseList::language() const {
+inline ::google::protobuf::int32 CourseNode::language() const {
   return language_;
 }
-inline void sGetCourseList::set_language(::google::protobuf::int32 value) {
+inline void CourseNode::set_language(::google::protobuf::int32 value) {
   set_has_language();
   language_ = value;
 }
 
-// required int32 art = 4;
-inline bool sGetCourseList::has_art() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+// optional int32 art = 5;
+inline bool CourseNode::has_art() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void sGetCourseList::set_has_art() {
-  _has_bits_[0] |= 0x00000008u;
+inline void CourseNode::set_has_art() {
+  _has_bits_[0] |= 0x00000010u;
 }
-inline void sGetCourseList::clear_has_art() {
-  _has_bits_[0] &= ~0x00000008u;
+inline void CourseNode::clear_has_art() {
+  _has_bits_[0] &= ~0x00000010u;
 }
-inline void sGetCourseList::clear_art() {
+inline void CourseNode::clear_art() {
   art_ = 0;
   clear_has_art();
 }
-inline ::google::protobuf::int32 sGetCourseList::art() const {
+inline ::google::protobuf::int32 CourseNode::art() const {
   return art_;
 }
-inline void sGetCourseList::set_art(::google::protobuf::int32 value) {
+inline void CourseNode::set_art(::google::protobuf::int32 value) {
   set_has_art();
   art_ = value;
 }
 
-// required int32 community = 5;
-inline bool sGetCourseList::has_community() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+// optional int32 community = 6;
+inline bool CourseNode::has_community() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void sGetCourseList::set_has_community() {
-  _has_bits_[0] |= 0x00000010u;
+inline void CourseNode::set_has_community() {
+  _has_bits_[0] |= 0x00000020u;
 }
-inline void sGetCourseList::clear_has_community() {
-  _has_bits_[0] &= ~0x00000010u;
+inline void CourseNode::clear_has_community() {
+  _has_bits_[0] &= ~0x00000020u;
 }
-inline void sGetCourseList::clear_community() {
+inline void CourseNode::clear_community() {
   community_ = 0;
   clear_has_community();
 }
-inline ::google::protobuf::int32 sGetCourseList::community() const {
+inline ::google::protobuf::int32 CourseNode::community() const {
   return community_;
 }
-inline void sGetCourseList::set_community(::google::protobuf::int32 value) {
+inline void CourseNode::set_community(::google::protobuf::int32 value) {
   set_has_community();
   community_ = value;
 }
 
-// required int32 health = 6;
-inline bool sGetCourseList::has_health() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+// optional int32 health = 7;
+inline bool CourseNode::has_health() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void sGetCourseList::set_has_health() {
-  _has_bits_[0] |= 0x00000020u;
+inline void CourseNode::set_has_health() {
+  _has_bits_[0] |= 0x00000040u;
 }
-inline void sGetCourseList::clear_has_health() {
-  _has_bits_[0] &= ~0x00000020u;
+inline void CourseNode::clear_has_health() {
+  _has_bits_[0] &= ~0x00000040u;
 }
-inline void sGetCourseList::clear_health() {
+inline void CourseNode::clear_health() {
   health_ = 0;
   clear_has_health();
 }
-inline ::google::protobuf::int32 sGetCourseList::health() const {
+inline ::google::protobuf::int32 CourseNode::health() const {
   return health_;
 }
-inline void sGetCourseList::set_health(::google::protobuf::int32 value) {
+inline void CourseNode::set_health(::google::protobuf::int32 value) {
   set_has_health();
   health_ = value;
 }
 
-// required int32 science = 7;
-inline bool sGetCourseList::has_science() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+// optional int32 science = 8;
+inline bool CourseNode::has_science() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
-inline void sGetCourseList::set_has_science() {
-  _has_bits_[0] |= 0x00000040u;
+inline void CourseNode::set_has_science() {
+  _has_bits_[0] |= 0x00000080u;
 }
-inline void sGetCourseList::clear_has_science() {
-  _has_bits_[0] &= ~0x00000040u;
+inline void CourseNode::clear_has_science() {
+  _has_bits_[0] &= ~0x00000080u;
 }
-inline void sGetCourseList::clear_science() {
+inline void CourseNode::clear_science() {
   science_ = 0;
   clear_has_science();
 }
-inline ::google::protobuf::int32 sGetCourseList::science() const {
+inline ::google::protobuf::int32 CourseNode::science() const {
   return science_;
 }
-inline void sGetCourseList::set_science(::google::protobuf::int32 value) {
+inline void CourseNode::set_science(::google::protobuf::int32 value) {
   set_has_science();
   science_ = value;
 }
 
-// required string res_path = 8;
-inline bool sGetCourseList::has_res_path() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+// required string res_path = 9;
+inline bool CourseNode::has_res_path() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
 }
-inline void sGetCourseList::set_has_res_path() {
-  _has_bits_[0] |= 0x00000080u;
+inline void CourseNode::set_has_res_path() {
+  _has_bits_[0] |= 0x00000100u;
 }
-inline void sGetCourseList::clear_has_res_path() {
-  _has_bits_[0] &= ~0x00000080u;
+inline void CourseNode::clear_has_res_path() {
+  _has_bits_[0] &= ~0x00000100u;
 }
-inline void sGetCourseList::clear_res_path() {
+inline void CourseNode::clear_res_path() {
   if (res_path_ != &::google::protobuf::internal::kEmptyString) {
     res_path_->clear();
   }
   clear_has_res_path();
 }
-inline const ::std::string& sGetCourseList::res_path() const {
+inline const ::std::string& CourseNode::res_path() const {
   return *res_path_;
 }
-inline void sGetCourseList::set_res_path(const ::std::string& value) {
+inline void CourseNode::set_res_path(const ::std::string& value) {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   res_path_->assign(value);
 }
-inline void sGetCourseList::set_res_path(const char* value) {
+inline void CourseNode::set_res_path(const char* value) {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   res_path_->assign(value);
 }
-inline void sGetCourseList::set_res_path(const char* value, size_t size) {
+inline void CourseNode::set_res_path(const char* value, size_t size) {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   res_path_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* sGetCourseList::mutable_res_path() {
+inline ::std::string* CourseNode::mutable_res_path() {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   return res_path_;
 }
-inline ::std::string* sGetCourseList::release_res_path() {
+inline ::std::string* CourseNode::release_res_path() {
   clear_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -5748,7 +9465,7 @@ inline ::std::string* sGetCourseList::release_res_path() {
     return temp;
   }
 }
-inline void sGetCourseList::set_allocated_res_path(::std::string* res_path) {
+inline void CourseNode::set_allocated_res_path(::std::string* res_path) {
   if (res_path_ != &::google::protobuf::internal::kEmptyString) {
     delete res_path_;
   }
@@ -5761,174 +9478,203 @@ inline void sGetCourseList::set_allocated_res_path(::std::string* res_path) {
   }
 }
 
-// -------------------------------------------------------------------
+// required .CourseNode.CourseType course_type = 10 [default = CT_INVALID];
+inline bool CourseNode::has_course_type() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void CourseNode::set_has_course_type() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void CourseNode::clear_has_course_type() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void CourseNode::clear_course_type() {
+  course_type_ = 1;
+  clear_has_course_type();
+}
+inline ::CourseNode_CourseType CourseNode::course_type() const {
+  return static_cast< ::CourseNode_CourseType >(course_type_);
+}
+inline void CourseNode::set_course_type(::CourseNode_CourseType value) {
+  assert(::CourseNode_CourseType_IsValid(value));
+  set_has_course_type();
+  course_type_ = value;
+}
 
-// cGetContent
-
-// required string common = 1;
-inline bool cGetContent::has_common() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+// optional string xml_path = 11;
+inline bool CourseNode::has_xml_path() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
 }
-inline void cGetContent::set_has_common() {
-  _has_bits_[0] |= 0x00000001u;
+inline void CourseNode::set_has_xml_path() {
+  _has_bits_[0] |= 0x00000400u;
 }
-inline void cGetContent::clear_has_common() {
-  _has_bits_[0] &= ~0x00000001u;
+inline void CourseNode::clear_has_xml_path() {
+  _has_bits_[0] &= ~0x00000400u;
 }
-inline void cGetContent::clear_common() {
-  if (common_ != &::google::protobuf::internal::kEmptyString) {
-    common_->clear();
+inline void CourseNode::clear_xml_path() {
+  if (xml_path_ != &::google::protobuf::internal::kEmptyString) {
+    xml_path_->clear();
   }
-  clear_has_common();
+  clear_has_xml_path();
 }
-inline const ::std::string& cGetContent::common() const {
-  return *common_;
+inline const ::std::string& CourseNode::xml_path() const {
+  return *xml_path_;
 }
-inline void cGetContent::set_common(const ::std::string& value) {
-  set_has_common();
-  if (common_ == &::google::protobuf::internal::kEmptyString) {
-    common_ = new ::std::string;
+inline void CourseNode::set_xml_path(const ::std::string& value) {
+  set_has_xml_path();
+  if (xml_path_ == &::google::protobuf::internal::kEmptyString) {
+    xml_path_ = new ::std::string;
   }
-  common_->assign(value);
+  xml_path_->assign(value);
 }
-inline void cGetContent::set_common(const char* value) {
-  set_has_common();
-  if (common_ == &::google::protobuf::internal::kEmptyString) {
-    common_ = new ::std::string;
+inline void CourseNode::set_xml_path(const char* value) {
+  set_has_xml_path();
+  if (xml_path_ == &::google::protobuf::internal::kEmptyString) {
+    xml_path_ = new ::std::string;
   }
-  common_->assign(value);
+  xml_path_->assign(value);
 }
-inline void cGetContent::set_common(const char* value, size_t size) {
-  set_has_common();
-  if (common_ == &::google::protobuf::internal::kEmptyString) {
-    common_ = new ::std::string;
+inline void CourseNode::set_xml_path(const char* value, size_t size) {
+  set_has_xml_path();
+  if (xml_path_ == &::google::protobuf::internal::kEmptyString) {
+    xml_path_ = new ::std::string;
   }
-  common_->assign(reinterpret_cast<const char*>(value), size);
+  xml_path_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* cGetContent::mutable_common() {
-  set_has_common();
-  if (common_ == &::google::protobuf::internal::kEmptyString) {
-    common_ = new ::std::string;
+inline ::std::string* CourseNode::mutable_xml_path() {
+  set_has_xml_path();
+  if (xml_path_ == &::google::protobuf::internal::kEmptyString) {
+    xml_path_ = new ::std::string;
   }
-  return common_;
+  return xml_path_;
 }
-inline ::std::string* cGetContent::release_common() {
-  clear_has_common();
-  if (common_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* CourseNode::release_xml_path() {
+  clear_has_xml_path();
+  if (xml_path_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = common_;
-    common_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = xml_path_;
+    xml_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void cGetContent::set_allocated_common(::std::string* common) {
-  if (common_ != &::google::protobuf::internal::kEmptyString) {
-    delete common_;
+inline void CourseNode::set_allocated_xml_path(::std::string* xml_path) {
+  if (xml_path_ != &::google::protobuf::internal::kEmptyString) {
+    delete xml_path_;
   }
-  if (common) {
-    set_has_common();
-    common_ = common;
+  if (xml_path) {
+    set_has_xml_path();
+    xml_path_ = xml_path;
   } else {
-    clear_has_common();
-    common_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_xml_path();
+    xml_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
+
+// -------------------------------------------------------------------
+
+// sGetCourseList
+
+// repeated .CourseNode course_list = 1;
+inline int sGetCourseList::course_list_size() const {
+  return course_list_.size();
+}
+inline void sGetCourseList::clear_course_list() {
+  course_list_.Clear();
+}
+inline const ::CourseNode& sGetCourseList::course_list(int index) const {
+  return course_list_.Get(index);
+}
+inline ::CourseNode* sGetCourseList::mutable_course_list(int index) {
+  return course_list_.Mutable(index);
+}
+inline ::CourseNode* sGetCourseList::add_course_list() {
+  return course_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::CourseNode >&
+sGetCourseList::course_list() const {
+  return course_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::CourseNode >*
+sGetCourseList::mutable_course_list() {
+  return &course_list_;
+}
+
+// -------------------------------------------------------------------
+
+// cGetContent
 
 // -------------------------------------------------------------------
 
 // sGetContent
 
-// required bool result = 1;
-inline bool sGetContent::has_result() const {
+// required int32 class_id = 1;
+inline bool sGetContent::has_class_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void sGetContent::set_has_result() {
+inline void sGetContent::set_has_class_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void sGetContent::clear_has_result() {
+inline void sGetContent::clear_has_class_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void sGetContent::clear_result() {
-  result_ = false;
-  clear_has_result();
+inline void sGetContent::clear_class_id() {
+  class_id_ = 0;
+  clear_has_class_id();
 }
-inline bool sGetContent::result() const {
-  return result_;
+inline ::google::protobuf::int32 sGetContent::class_id() const {
+  return class_id_;
 }
-inline void sGetContent::set_result(bool value) {
-  set_has_result();
-  result_ = value;
+inline void sGetContent::set_class_id(::google::protobuf::int32 value) {
+  set_has_class_id();
+  class_id_ = value;
 }
 
-// required string course_list = 2;
-inline bool sGetContent::has_course_list() const {
+// required int32 classroom_id = 2;
+inline bool sGetContent::has_classroom_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void sGetContent::set_has_course_list() {
+inline void sGetContent::set_has_classroom_id() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void sGetContent::clear_has_course_list() {
+inline void sGetContent::clear_has_classroom_id() {
   _has_bits_[0] &= ~0x00000002u;
 }
+inline void sGetContent::clear_classroom_id() {
+  classroom_id_ = 0;
+  clear_has_classroom_id();
+}
+inline ::google::protobuf::int32 sGetContent::classroom_id() const {
+  return classroom_id_;
+}
+inline void sGetContent::set_classroom_id(::google::protobuf::int32 value) {
+  set_has_classroom_id();
+  classroom_id_ = value;
+}
+
+// repeated .ContentNode course_list = 3;
+inline int sGetContent::course_list_size() const {
+  return course_list_.size();
+}
 inline void sGetContent::clear_course_list() {
-  if (course_list_ != &::google::protobuf::internal::kEmptyString) {
-    course_list_->clear();
-  }
-  clear_has_course_list();
+  course_list_.Clear();
 }
-inline const ::std::string& sGetContent::course_list() const {
-  return *course_list_;
+inline const ::ContentNode& sGetContent::course_list(int index) const {
+  return course_list_.Get(index);
 }
-inline void sGetContent::set_course_list(const ::std::string& value) {
-  set_has_course_list();
-  if (course_list_ == &::google::protobuf::internal::kEmptyString) {
-    course_list_ = new ::std::string;
-  }
-  course_list_->assign(value);
+inline ::ContentNode* sGetContent::mutable_course_list(int index) {
+  return course_list_.Mutable(index);
 }
-inline void sGetContent::set_course_list(const char* value) {
-  set_has_course_list();
-  if (course_list_ == &::google::protobuf::internal::kEmptyString) {
-    course_list_ = new ::std::string;
-  }
-  course_list_->assign(value);
+inline ::ContentNode* sGetContent::add_course_list() {
+  return course_list_.Add();
 }
-inline void sGetContent::set_course_list(const char* value, size_t size) {
-  set_has_course_list();
-  if (course_list_ == &::google::protobuf::internal::kEmptyString) {
-    course_list_ = new ::std::string;
-  }
-  course_list_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* sGetContent::mutable_course_list() {
-  set_has_course_list();
-  if (course_list_ == &::google::protobuf::internal::kEmptyString) {
-    course_list_ = new ::std::string;
-  }
+inline const ::google::protobuf::RepeatedPtrField< ::ContentNode >&
+sGetContent::course_list() const {
   return course_list_;
 }
-inline ::std::string* sGetContent::release_course_list() {
-  clear_has_course_list();
-  if (course_list_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = course_list_;
-    course_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void sGetContent::set_allocated_course_list(::std::string* course_list) {
-  if (course_list_ != &::google::protobuf::internal::kEmptyString) {
-    delete course_list_;
-  }
-  if (course_list) {
-    set_has_course_list();
-    course_list_ = course_list;
-  } else {
-    clear_has_course_list();
-    course_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
+inline ::google::protobuf::RepeatedPtrField< ::ContentNode >*
+sGetContent::mutable_course_list() {
+  return &course_list_;
 }
 
 // -------------------------------------------------------------------
@@ -5959,267 +9705,325 @@ inline void cGetClassList::set_grade_id(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
-// sGetClassList
+// ClassListNode
 
-// required int32 class_id = 1;
-inline bool sGetClassList::has_class_id() const {
+// required int32 id = 1;
+inline bool ClassListNode::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void sGetClassList::set_has_class_id() {
+inline void ClassListNode::set_has_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void sGetClassList::clear_has_class_id() {
+inline void ClassListNode::clear_has_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void sGetClassList::clear_class_id() {
-  class_id_ = 0;
-  clear_has_class_id();
+inline void ClassListNode::clear_id() {
+  id_ = 0;
+  clear_has_id();
 }
-inline ::google::protobuf::int32 sGetClassList::class_id() const {
-  return class_id_;
+inline ::google::protobuf::int32 ClassListNode::id() const {
+  return id_;
 }
-inline void sGetClassList::set_class_id(::google::protobuf::int32 value) {
-  set_has_class_id();
-  class_id_ = value;
+inline void ClassListNode::set_id(::google::protobuf::int32 value) {
+  set_has_id();
+  id_ = value;
 }
 
-// required string class_name = 2;
-inline bool sGetClassList::has_class_name() const {
+// required string name = 2;
+inline bool ClassListNode::has_name() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void sGetClassList::set_has_class_name() {
+inline void ClassListNode::set_has_name() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void sGetClassList::clear_has_class_name() {
+inline void ClassListNode::clear_has_name() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void sGetClassList::clear_class_name() {
-  if (class_name_ != &::google::protobuf::internal::kEmptyString) {
-    class_name_->clear();
+inline void ClassListNode::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
   }
-  clear_has_class_name();
+  clear_has_name();
 }
-inline const ::std::string& sGetClassList::class_name() const {
-  return *class_name_;
+inline const ::std::string& ClassListNode::name() const {
+  return *name_;
 }
-inline void sGetClassList::set_class_name(const ::std::string& value) {
-  set_has_class_name();
-  if (class_name_ == &::google::protobuf::internal::kEmptyString) {
-    class_name_ = new ::std::string;
+inline void ClassListNode::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
   }
-  class_name_->assign(value);
+  name_->assign(value);
 }
-inline void sGetClassList::set_class_name(const char* value) {
-  set_has_class_name();
-  if (class_name_ == &::google::protobuf::internal::kEmptyString) {
-    class_name_ = new ::std::string;
+inline void ClassListNode::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
   }
-  class_name_->assign(value);
+  name_->assign(value);
 }
-inline void sGetClassList::set_class_name(const char* value, size_t size) {
-  set_has_class_name();
-  if (class_name_ == &::google::protobuf::internal::kEmptyString) {
-    class_name_ = new ::std::string;
+inline void ClassListNode::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
   }
-  class_name_->assign(reinterpret_cast<const char*>(value), size);
+  name_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* sGetClassList::mutable_class_name() {
-  set_has_class_name();
-  if (class_name_ == &::google::protobuf::internal::kEmptyString) {
-    class_name_ = new ::std::string;
+inline ::std::string* ClassListNode::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
   }
-  return class_name_;
+  return name_;
 }
-inline ::std::string* sGetClassList::release_class_name() {
-  clear_has_class_name();
-  if (class_name_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* ClassListNode::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = class_name_;
-    class_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void sGetClassList::set_allocated_class_name(::std::string* class_name) {
-  if (class_name_ != &::google::protobuf::internal::kEmptyString) {
-    delete class_name_;
+inline void ClassListNode::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
   }
-  if (class_name) {
-    set_has_class_name();
-    class_name_ = class_name;
+  if (name) {
+    set_has_name();
+    name_ = name;
   } else {
-    clear_has_class_name();
-    class_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// optional string res_path = 3;
+inline bool ClassListNode::has_res_path() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void ClassListNode::set_has_res_path() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void ClassListNode::clear_has_res_path() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void ClassListNode::clear_res_path() {
+  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
+    res_path_->clear();
+  }
+  clear_has_res_path();
+}
+inline const ::std::string& ClassListNode::res_path() const {
+  return *res_path_;
+}
+inline void ClassListNode::set_res_path(const ::std::string& value) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(value);
+}
+inline void ClassListNode::set_res_path(const char* value) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(value);
+}
+inline void ClassListNode::set_res_path(const char* value, size_t size) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ClassListNode::mutable_res_path() {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  return res_path_;
+}
+inline ::std::string* ClassListNode::release_res_path() {
+  clear_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = res_path_;
+    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ClassListNode::set_allocated_res_path(::std::string* res_path) {
+  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
+    delete res_path_;
+  }
+  if (res_path) {
+    set_has_res_path();
+    res_path_ = res_path;
+  } else {
+    clear_has_res_path();
+    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// sGetClassList
+
+// repeated .ClassListNode class_list = 1;
+inline int sGetClassList::class_list_size() const {
+  return class_list_.size();
+}
+inline void sGetClassList::clear_class_list() {
+  class_list_.Clear();
+}
+inline const ::ClassListNode& sGetClassList::class_list(int index) const {
+  return class_list_.Get(index);
+}
+inline ::ClassListNode* sGetClassList::mutable_class_list(int index) {
+  return class_list_.Mutable(index);
+}
+inline ::ClassListNode* sGetClassList::add_class_list() {
+  return class_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::ClassListNode >&
+sGetClassList::class_list() const {
+  return class_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::ClassListNode >*
+sGetClassList::mutable_class_list() {
+  return &class_list_;
 }
 
 // -------------------------------------------------------------------
 
 // cGetClassRoomList
 
-// required string content = 1;
-inline bool cGetClassRoomList::has_content() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void cGetClassRoomList::set_has_content() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void cGetClassRoomList::clear_has_content() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void cGetClassRoomList::clear_content() {
-  if (content_ != &::google::protobuf::internal::kEmptyString) {
-    content_->clear();
-  }
-  clear_has_content();
-}
-inline const ::std::string& cGetClassRoomList::content() const {
-  return *content_;
-}
-inline void cGetClassRoomList::set_content(const ::std::string& value) {
-  set_has_content();
-  if (content_ == &::google::protobuf::internal::kEmptyString) {
-    content_ = new ::std::string;
-  }
-  content_->assign(value);
-}
-inline void cGetClassRoomList::set_content(const char* value) {
-  set_has_content();
-  if (content_ == &::google::protobuf::internal::kEmptyString) {
-    content_ = new ::std::string;
-  }
-  content_->assign(value);
-}
-inline void cGetClassRoomList::set_content(const char* value, size_t size) {
-  set_has_content();
-  if (content_ == &::google::protobuf::internal::kEmptyString) {
-    content_ = new ::std::string;
-  }
-  content_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* cGetClassRoomList::mutable_content() {
-  set_has_content();
-  if (content_ == &::google::protobuf::internal::kEmptyString) {
-    content_ = new ::std::string;
-  }
-  return content_;
-}
-inline ::std::string* cGetClassRoomList::release_content() {
-  clear_has_content();
-  if (content_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = content_;
-    content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void cGetClassRoomList::set_allocated_content(::std::string* content) {
-  if (content_ != &::google::protobuf::internal::kEmptyString) {
-    delete content_;
-  }
-  if (content) {
-    set_has_content();
-    content_ = content;
-  } else {
-    clear_has_content();
-    content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
 // -------------------------------------------------------------------
 
 // sGetClassRoomList
 
-// required int32 classroom_id = 1;
-inline bool sGetClassRoomList::has_classroom_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+// repeated .ClassListNode classroom_list = 1;
+inline int sGetClassRoomList::classroom_list_size() const {
+  return classroom_list_.size();
 }
-inline void sGetClassRoomList::set_has_classroom_id() {
-  _has_bits_[0] |= 0x00000001u;
+inline void sGetClassRoomList::clear_classroom_list() {
+  classroom_list_.Clear();
 }
-inline void sGetClassRoomList::clear_has_classroom_id() {
-  _has_bits_[0] &= ~0x00000001u;
+inline const ::ClassListNode& sGetClassRoomList::classroom_list(int index) const {
+  return classroom_list_.Get(index);
 }
-inline void sGetClassRoomList::clear_classroom_id() {
-  classroom_id_ = 0;
-  clear_has_classroom_id();
+inline ::ClassListNode* sGetClassRoomList::mutable_classroom_list(int index) {
+  return classroom_list_.Mutable(index);
 }
-inline ::google::protobuf::int32 sGetClassRoomList::classroom_id() const {
-  return classroom_id_;
+inline ::ClassListNode* sGetClassRoomList::add_classroom_list() {
+  return classroom_list_.Add();
 }
-inline void sGetClassRoomList::set_classroom_id(::google::protobuf::int32 value) {
-  set_has_classroom_id();
-  classroom_id_ = value;
+inline const ::google::protobuf::RepeatedPtrField< ::ClassListNode >&
+sGetClassRoomList::classroom_list() const {
+  return classroom_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::ClassListNode >*
+sGetClassRoomList::mutable_classroom_list() {
+  return &classroom_list_;
 }
 
-// required string classroom_name = 2;
-inline bool sGetClassRoomList::has_classroom_name() const {
+// -------------------------------------------------------------------
+
+// ContentNode
+
+// required int32 course_id = 1;
+inline bool ContentNode::has_course_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ContentNode::set_has_course_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ContentNode::clear_has_course_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ContentNode::clear_course_id() {
+  course_id_ = 0;
+  clear_has_course_id();
+}
+inline ::google::protobuf::int32 ContentNode::course_id() const {
+  return course_id_;
+}
+inline void ContentNode::set_course_id(::google::protobuf::int32 value) {
+  set_has_course_id();
+  course_id_ = value;
+}
+
+// optional string course_xml = 2;
+inline bool ContentNode::has_course_xml() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void sGetClassRoomList::set_has_classroom_name() {
+inline void ContentNode::set_has_course_xml() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void sGetClassRoomList::clear_has_classroom_name() {
+inline void ContentNode::clear_has_course_xml() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void sGetClassRoomList::clear_classroom_name() {
-  if (classroom_name_ != &::google::protobuf::internal::kEmptyString) {
-    classroom_name_->clear();
+inline void ContentNode::clear_course_xml() {
+  if (course_xml_ != &::google::protobuf::internal::kEmptyString) {
+    course_xml_->clear();
   }
-  clear_has_classroom_name();
+  clear_has_course_xml();
 }
-inline const ::std::string& sGetClassRoomList::classroom_name() const {
-  return *classroom_name_;
+inline const ::std::string& ContentNode::course_xml() const {
+  return *course_xml_;
 }
-inline void sGetClassRoomList::set_classroom_name(const ::std::string& value) {
-  set_has_classroom_name();
-  if (classroom_name_ == &::google::protobuf::internal::kEmptyString) {
-    classroom_name_ = new ::std::string;
+inline void ContentNode::set_course_xml(const ::std::string& value) {
+  set_has_course_xml();
+  if (course_xml_ == &::google::protobuf::internal::kEmptyString) {
+    course_xml_ = new ::std::string;
   }
-  classroom_name_->assign(value);
+  course_xml_->assign(value);
 }
-inline void sGetClassRoomList::set_classroom_name(const char* value) {
-  set_has_classroom_name();
-  if (classroom_name_ == &::google::protobuf::internal::kEmptyString) {
-    classroom_name_ = new ::std::string;
+inline void ContentNode::set_course_xml(const char* value) {
+  set_has_course_xml();
+  if (course_xml_ == &::google::protobuf::internal::kEmptyString) {
+    course_xml_ = new ::std::string;
   }
-  classroom_name_->assign(value);
+  course_xml_->assign(value);
 }
-inline void sGetClassRoomList::set_classroom_name(const char* value, size_t size) {
-  set_has_classroom_name();
-  if (classroom_name_ == &::google::protobuf::internal::kEmptyString) {
-    classroom_name_ = new ::std::string;
+inline void ContentNode::set_course_xml(const char* value, size_t size) {
+  set_has_course_xml();
+  if (course_xml_ == &::google::protobuf::internal::kEmptyString) {
+    course_xml_ = new ::std::string;
   }
-  classroom_name_->assign(reinterpret_cast<const char*>(value), size);
+  course_xml_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* sGetClassRoomList::mutable_classroom_name() {
-  set_has_classroom_name();
-  if (classroom_name_ == &::google::protobuf::internal::kEmptyString) {
-    classroom_name_ = new ::std::string;
+inline ::std::string* ContentNode::mutable_course_xml() {
+  set_has_course_xml();
+  if (course_xml_ == &::google::protobuf::internal::kEmptyString) {
+    course_xml_ = new ::std::string;
   }
-  return classroom_name_;
+  return course_xml_;
 }
-inline ::std::string* sGetClassRoomList::release_classroom_name() {
-  clear_has_classroom_name();
-  if (classroom_name_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* ContentNode::release_course_xml() {
+  clear_has_course_xml();
+  if (course_xml_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = classroom_name_;
-    classroom_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = course_xml_;
+    course_xml_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void sGetClassRoomList::set_allocated_classroom_name(::std::string* classroom_name) {
-  if (classroom_name_ != &::google::protobuf::internal::kEmptyString) {
-    delete classroom_name_;
+inline void ContentNode::set_allocated_course_xml(::std::string* course_xml) {
+  if (course_xml_ != &::google::protobuf::internal::kEmptyString) {
+    delete course_xml_;
   }
-  if (classroom_name) {
-    set_has_classroom_name();
-    classroom_name_ = classroom_name;
+  if (course_xml) {
+    set_has_course_xml();
+    course_xml_ = course_xml;
   } else {
-    clear_has_classroom_name();
-    classroom_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_course_xml();
+    course_xml_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
@@ -6271,81 +10075,36 @@ inline void cSetContent::set_classroom_id(::google::protobuf::int32 value) {
   classroom_id_ = value;
 }
 
-// required string course_list = 3;
-inline bool cSetContent::has_course_list() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void cSetContent::set_has_course_list() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void cSetContent::clear_has_course_list() {
-  _has_bits_[0] &= ~0x00000004u;
+// repeated .ContentNode course_list = 3;
+inline int cSetContent::course_list_size() const {
+  return course_list_.size();
 }
 inline void cSetContent::clear_course_list() {
-  if (course_list_ != &::google::protobuf::internal::kEmptyString) {
-    course_list_->clear();
-  }
-  clear_has_course_list();
+  course_list_.Clear();
 }
-inline const ::std::string& cSetContent::course_list() const {
-  return *course_list_;
+inline const ::ContentNode& cSetContent::course_list(int index) const {
+  return course_list_.Get(index);
 }
-inline void cSetContent::set_course_list(const ::std::string& value) {
-  set_has_course_list();
-  if (course_list_ == &::google::protobuf::internal::kEmptyString) {
-    course_list_ = new ::std::string;
-  }
-  course_list_->assign(value);
+inline ::ContentNode* cSetContent::mutable_course_list(int index) {
+  return course_list_.Mutable(index);
 }
-inline void cSetContent::set_course_list(const char* value) {
-  set_has_course_list();
-  if (course_list_ == &::google::protobuf::internal::kEmptyString) {
-    course_list_ = new ::std::string;
-  }
-  course_list_->assign(value);
+inline ::ContentNode* cSetContent::add_course_list() {
+  return course_list_.Add();
 }
-inline void cSetContent::set_course_list(const char* value, size_t size) {
-  set_has_course_list();
-  if (course_list_ == &::google::protobuf::internal::kEmptyString) {
-    course_list_ = new ::std::string;
-  }
-  course_list_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* cSetContent::mutable_course_list() {
-  set_has_course_list();
-  if (course_list_ == &::google::protobuf::internal::kEmptyString) {
-    course_list_ = new ::std::string;
-  }
+inline const ::google::protobuf::RepeatedPtrField< ::ContentNode >&
+cSetContent::course_list() const {
   return course_list_;
 }
-inline ::std::string* cSetContent::release_course_list() {
-  clear_has_course_list();
-  if (course_list_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = course_list_;
-    course_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void cSetContent::set_allocated_course_list(::std::string* course_list) {
-  if (course_list_ != &::google::protobuf::internal::kEmptyString) {
-    delete course_list_;
-  }
-  if (course_list) {
-    set_has_course_list();
-    course_list_ = course_list;
-  } else {
-    clear_has_course_list();
-    course_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
+inline ::google::protobuf::RepeatedPtrField< ::ContentNode >*
+cSetContent::mutable_course_list() {
+  return &course_list_;
 }
 
 // -------------------------------------------------------------------
 
 // sSetContent
 
-// required bool result = 1;
+// optional bool result = 1;
 inline bool sSetContent::has_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -6439,6 +10198,40 @@ inline void sSetContent::set_allocated_msg(::std::string* msg) {
 
 // -------------------------------------------------------------------
 
+// sCourseware
+
+// required int32 course_id = 1;
+inline bool sCourseware::has_course_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sCourseware::set_has_course_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sCourseware::clear_has_course_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sCourseware::clear_course_id() {
+  course_id_ = 0;
+  clear_has_course_id();
+}
+inline ::google::protobuf::int32 sCourseware::course_id() const {
+  return course_id_;
+}
+inline void sCourseware::set_course_id(::google::protobuf::int32 value) {
+  set_has_course_id();
+  course_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// cClassOver
+
+// -------------------------------------------------------------------
+
+// sClassOver
+
+// -------------------------------------------------------------------
+
 // cGetStudentList
 
 // required int32 class_id = 1;
@@ -6465,78 +10258,78 @@ inline void cGetStudentList::set_class_id(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
-// sGetStudentList
+// StudentListNode
 
 // required int32 id = 1;
-inline bool sGetStudentList::has_id() const {
+inline bool StudentListNode::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void sGetStudentList::set_has_id() {
+inline void StudentListNode::set_has_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void sGetStudentList::clear_has_id() {
+inline void StudentListNode::clear_has_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void sGetStudentList::clear_id() {
+inline void StudentListNode::clear_id() {
   id_ = 0;
   clear_has_id();
 }
-inline ::google::protobuf::int32 sGetStudentList::id() const {
+inline ::google::protobuf::int32 StudentListNode::id() const {
   return id_;
 }
-inline void sGetStudentList::set_id(::google::protobuf::int32 value) {
+inline void StudentListNode::set_id(::google::protobuf::int32 value) {
   set_has_id();
   id_ = value;
 }
 
 // required string name = 2;
-inline bool sGetStudentList::has_name() const {
+inline bool StudentListNode::has_name() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void sGetStudentList::set_has_name() {
+inline void StudentListNode::set_has_name() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void sGetStudentList::clear_has_name() {
+inline void StudentListNode::clear_has_name() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void sGetStudentList::clear_name() {
+inline void StudentListNode::clear_name() {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
     name_->clear();
   }
   clear_has_name();
 }
-inline const ::std::string& sGetStudentList::name() const {
+inline const ::std::string& StudentListNode::name() const {
   return *name_;
 }
-inline void sGetStudentList::set_name(const ::std::string& value) {
+inline void StudentListNode::set_name(const ::std::string& value) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
   }
   name_->assign(value);
 }
-inline void sGetStudentList::set_name(const char* value) {
+inline void StudentListNode::set_name(const char* value) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
   }
   name_->assign(value);
 }
-inline void sGetStudentList::set_name(const char* value, size_t size) {
+inline void StudentListNode::set_name(const char* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
   }
   name_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* sGetStudentList::mutable_name() {
+inline ::std::string* StudentListNode::mutable_name() {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
   }
   return name_;
 }
-inline ::std::string* sGetStudentList::release_name() {
+inline ::std::string* StudentListNode::release_name() {
   clear_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -6546,7 +10339,7 @@ inline ::std::string* sGetStudentList::release_name() {
     return temp;
   }
 }
-inline void sGetStudentList::set_allocated_name(::std::string* name) {
+inline void StudentListNode::set_allocated_name(::std::string* name) {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
     delete name_;
   }
@@ -6559,54 +10352,54 @@ inline void sGetStudentList::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string res_path = 3;
-inline bool sGetStudentList::has_res_path() const {
+// optional string res_path = 3;
+inline bool StudentListNode::has_res_path() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void sGetStudentList::set_has_res_path() {
+inline void StudentListNode::set_has_res_path() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void sGetStudentList::clear_has_res_path() {
+inline void StudentListNode::clear_has_res_path() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void sGetStudentList::clear_res_path() {
+inline void StudentListNode::clear_res_path() {
   if (res_path_ != &::google::protobuf::internal::kEmptyString) {
     res_path_->clear();
   }
   clear_has_res_path();
 }
-inline const ::std::string& sGetStudentList::res_path() const {
+inline const ::std::string& StudentListNode::res_path() const {
   return *res_path_;
 }
-inline void sGetStudentList::set_res_path(const ::std::string& value) {
+inline void StudentListNode::set_res_path(const ::std::string& value) {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   res_path_->assign(value);
 }
-inline void sGetStudentList::set_res_path(const char* value) {
+inline void StudentListNode::set_res_path(const char* value) {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   res_path_->assign(value);
 }
-inline void sGetStudentList::set_res_path(const char* value, size_t size) {
+inline void StudentListNode::set_res_path(const char* value, size_t size) {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   res_path_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* sGetStudentList::mutable_res_path() {
+inline ::std::string* StudentListNode::mutable_res_path() {
   set_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     res_path_ = new ::std::string;
   }
   return res_path_;
 }
-inline ::std::string* sGetStudentList::release_res_path() {
+inline ::std::string* StudentListNode::release_res_path() {
   clear_has_res_path();
   if (res_path_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -6616,7 +10409,7 @@ inline ::std::string* sGetStudentList::release_res_path() {
     return temp;
   }
 }
-inline void sGetStudentList::set_allocated_res_path(::std::string* res_path) {
+inline void StudentListNode::set_allocated_res_path(::std::string* res_path) {
   if (res_path_ != &::google::protobuf::internal::kEmptyString) {
     delete res_path_;
   }
@@ -6627,6 +10420,35 @@ inline void sGetStudentList::set_allocated_res_path(::std::string* res_path) {
     clear_has_res_path();
     res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// sGetStudentList
+
+// repeated .StudentListNode student_list = 1;
+inline int sGetStudentList::student_list_size() const {
+  return student_list_.size();
+}
+inline void sGetStudentList::clear_student_list() {
+  student_list_.Clear();
+}
+inline const ::StudentListNode& sGetStudentList::student_list(int index) const {
+  return student_list_.Get(index);
+}
+inline ::StudentListNode* sGetStudentList::mutable_student_list(int index) {
+  return student_list_.Mutable(index);
+}
+inline ::StudentListNode* sGetStudentList::add_student_list() {
+  return student_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::StudentListNode >&
+sGetStudentList::student_list() const {
+  return student_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::StudentListNode >*
+sGetStudentList::mutable_student_list() {
+  return &student_list_;
 }
 
 // -------------------------------------------------------------------
@@ -6659,26 +10481,29 @@ inline void cGetActiveStudentList::set_class_id(::google::protobuf::int32 value)
 
 // sGetActiveStudentList
 
-// required int32 id = 1;
-inline bool sGetActiveStudentList::has_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+// repeated int32 student_list = 1;
+inline int sGetActiveStudentList::student_list_size() const {
+  return student_list_.size();
 }
-inline void sGetActiveStudentList::set_has_id() {
-  _has_bits_[0] |= 0x00000001u;
+inline void sGetActiveStudentList::clear_student_list() {
+  student_list_.Clear();
 }
-inline void sGetActiveStudentList::clear_has_id() {
-  _has_bits_[0] &= ~0x00000001u;
+inline ::google::protobuf::int32 sGetActiveStudentList::student_list(int index) const {
+  return student_list_.Get(index);
 }
-inline void sGetActiveStudentList::clear_id() {
-  id_ = 0;
-  clear_has_id();
+inline void sGetActiveStudentList::set_student_list(int index, ::google::protobuf::int32 value) {
+  student_list_.Set(index, value);
 }
-inline ::google::protobuf::int32 sGetActiveStudentList::id() const {
-  return id_;
+inline void sGetActiveStudentList::add_student_list(::google::protobuf::int32 value) {
+  student_list_.Add(value);
 }
-inline void sGetActiveStudentList::set_id(::google::protobuf::int32 value) {
-  set_has_id();
-  id_ = value;
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+sGetActiveStudentList::student_list() const {
+  return student_list_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+sGetActiveStudentList::mutable_student_list() {
+  return &student_list_;
 }
 
 // -------------------------------------------------------------------
@@ -7039,85 +10864,15 @@ inline void sGetStudentInfo::set_allocated_race(::std::string* race) {
   }
 }
 
-// required string birthday = 6;
-inline bool sGetStudentInfo::has_birthday() const {
+// required string native = 6;
+inline bool sGetStudentInfo::has_native() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void sGetStudentInfo::set_has_birthday() {
+inline void sGetStudentInfo::set_has_native() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void sGetStudentInfo::clear_has_birthday() {
-  _has_bits_[0] &= ~0x00000020u;
-}
-inline void sGetStudentInfo::clear_birthday() {
-  if (birthday_ != &::google::protobuf::internal::kEmptyString) {
-    birthday_->clear();
-  }
-  clear_has_birthday();
-}
-inline const ::std::string& sGetStudentInfo::birthday() const {
-  return *birthday_;
-}
-inline void sGetStudentInfo::set_birthday(const ::std::string& value) {
-  set_has_birthday();
-  if (birthday_ == &::google::protobuf::internal::kEmptyString) {
-    birthday_ = new ::std::string;
-  }
-  birthday_->assign(value);
-}
-inline void sGetStudentInfo::set_birthday(const char* value) {
-  set_has_birthday();
-  if (birthday_ == &::google::protobuf::internal::kEmptyString) {
-    birthday_ = new ::std::string;
-  }
-  birthday_->assign(value);
-}
-inline void sGetStudentInfo::set_birthday(const char* value, size_t size) {
-  set_has_birthday();
-  if (birthday_ == &::google::protobuf::internal::kEmptyString) {
-    birthday_ = new ::std::string;
-  }
-  birthday_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* sGetStudentInfo::mutable_birthday() {
-  set_has_birthday();
-  if (birthday_ == &::google::protobuf::internal::kEmptyString) {
-    birthday_ = new ::std::string;
-  }
-  return birthday_;
-}
-inline ::std::string* sGetStudentInfo::release_birthday() {
-  clear_has_birthday();
-  if (birthday_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = birthday_;
-    birthday_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void sGetStudentInfo::set_allocated_birthday(::std::string* birthday) {
-  if (birthday_ != &::google::protobuf::internal::kEmptyString) {
-    delete birthday_;
-  }
-  if (birthday) {
-    set_has_birthday();
-    birthday_ = birthday;
-  } else {
-    clear_has_birthday();
-    birthday_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// required string native = 7;
-inline bool sGetStudentInfo::has_native() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
-}
-inline void sGetStudentInfo::set_has_native() {
-  _has_bits_[0] |= 0x00000040u;
-}
 inline void sGetStudentInfo::clear_has_native() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void sGetStudentInfo::clear_native() {
   if (native_ != &::google::protobuf::internal::kEmptyString) {
@@ -7177,6 +10932,28 @@ inline void sGetStudentInfo::set_allocated_native(::std::string* native) {
     clear_has_native();
     native_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// required int32 class_id = 7;
+inline bool sGetStudentInfo::has_class_id() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void sGetStudentInfo::set_has_class_id() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void sGetStudentInfo::clear_has_class_id() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void sGetStudentInfo::clear_class_id() {
+  class_id_ = 0;
+  clear_has_class_id();
+}
+inline ::google::protobuf::int32 sGetStudentInfo::class_id() const {
+  return class_id_;
+}
+inline void sGetStudentInfo::set_class_id(::google::protobuf::int32 value) {
+  set_has_class_id();
+  class_id_ = value;
 }
 
 // required string class_name = 8;
@@ -7793,6 +11570,32 @@ inline void sGetTeacherInfo::set_allocated_school_name(::std::string* school_nam
 
 // -------------------------------------------------------------------
 
+// PeerGroup
+
+// required int32 student_id = 1;
+inline bool PeerGroup::has_student_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PeerGroup::set_has_student_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PeerGroup::clear_has_student_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PeerGroup::clear_student_id() {
+  student_id_ = 0;
+  clear_has_student_id();
+}
+inline ::google::protobuf::int32 PeerGroup::student_id() const {
+  return student_id_;
+}
+inline void PeerGroup::set_student_id(::google::protobuf::int32 value) {
+  set_has_student_id();
+  student_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // cSetGroup
 
 // required int32 group_id = 1;
@@ -7887,103 +11690,36 @@ inline void cSetGroup::set_allocated_group_name(::std::string* group_name) {
   }
 }
 
-// required int32 student_cnt = 4;
-inline bool cSetGroup::has_student_cnt() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void cSetGroup::set_has_student_cnt() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void cSetGroup::clear_has_student_cnt() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void cSetGroup::clear_student_cnt() {
-  student_cnt_ = 0;
-  clear_has_student_cnt();
-}
-inline ::google::protobuf::int32 cSetGroup::student_cnt() const {
-  return student_cnt_;
-}
-inline void cSetGroup::set_student_cnt(::google::protobuf::int32 value) {
-  set_has_student_cnt();
-  student_cnt_ = value;
-}
-
-// required string student_list = 3;
-inline bool cSetGroup::has_student_list() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void cSetGroup::set_has_student_list() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void cSetGroup::clear_has_student_list() {
-  _has_bits_[0] &= ~0x00000008u;
+// repeated .PeerGroup student_list = 3;
+inline int cSetGroup::student_list_size() const {
+  return student_list_.size();
 }
 inline void cSetGroup::clear_student_list() {
-  if (student_list_ != &::google::protobuf::internal::kEmptyString) {
-    student_list_->clear();
-  }
-  clear_has_student_list();
+  student_list_.Clear();
 }
-inline const ::std::string& cSetGroup::student_list() const {
-  return *student_list_;
+inline const ::PeerGroup& cSetGroup::student_list(int index) const {
+  return student_list_.Get(index);
 }
-inline void cSetGroup::set_student_list(const ::std::string& value) {
-  set_has_student_list();
-  if (student_list_ == &::google::protobuf::internal::kEmptyString) {
-    student_list_ = new ::std::string;
-  }
-  student_list_->assign(value);
+inline ::PeerGroup* cSetGroup::mutable_student_list(int index) {
+  return student_list_.Mutable(index);
 }
-inline void cSetGroup::set_student_list(const char* value) {
-  set_has_student_list();
-  if (student_list_ == &::google::protobuf::internal::kEmptyString) {
-    student_list_ = new ::std::string;
-  }
-  student_list_->assign(value);
+inline ::PeerGroup* cSetGroup::add_student_list() {
+  return student_list_.Add();
 }
-inline void cSetGroup::set_student_list(const char* value, size_t size) {
-  set_has_student_list();
-  if (student_list_ == &::google::protobuf::internal::kEmptyString) {
-    student_list_ = new ::std::string;
-  }
-  student_list_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* cSetGroup::mutable_student_list() {
-  set_has_student_list();
-  if (student_list_ == &::google::protobuf::internal::kEmptyString) {
-    student_list_ = new ::std::string;
-  }
+inline const ::google::protobuf::RepeatedPtrField< ::PeerGroup >&
+cSetGroup::student_list() const {
   return student_list_;
 }
-inline ::std::string* cSetGroup::release_student_list() {
-  clear_has_student_list();
-  if (student_list_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = student_list_;
-    student_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void cSetGroup::set_allocated_student_list(::std::string* student_list) {
-  if (student_list_ != &::google::protobuf::internal::kEmptyString) {
-    delete student_list_;
-  }
-  if (student_list) {
-    set_has_student_list();
-    student_list_ = student_list;
-  } else {
-    clear_has_student_list();
-    student_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
+inline ::google::protobuf::RepeatedPtrField< ::PeerGroup >*
+cSetGroup::mutable_student_list() {
+  return &student_list_;
 }
 
 // -------------------------------------------------------------------
 
 // sSetGroup
 
-// required bool result = 1;
+// required int32 result = 2;
 inline bool sSetGroup::has_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -7994,18 +11730,18 @@ inline void sSetGroup::clear_has_result() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void sSetGroup::clear_result() {
-  result_ = false;
+  result_ = 0;
   clear_has_result();
 }
-inline bool sSetGroup::result() const {
+inline ::google::protobuf::int32 sSetGroup::result() const {
   return result_;
 }
-inline void sSetGroup::set_result(bool value) {
+inline void sSetGroup::set_result(::google::protobuf::int32 value) {
   set_has_result();
   result_ = value;
 }
 
-// required string msg = 2;
+// required string msg = 1;
 inline bool sSetGroup::has_msg() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -8077,7 +11813,254 @@ inline void sSetGroup::set_allocated_msg(::std::string* msg) {
 
 // -------------------------------------------------------------------
 
+// cRelay
+
+// -------------------------------------------------------------------
+
+// sRelay
+
+// required int32 student_id = 1;
+inline bool sRelay::has_student_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sRelay::set_has_student_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sRelay::clear_has_student_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sRelay::clear_student_id() {
+  student_id_ = 0;
+  clear_has_student_id();
+}
+inline ::google::protobuf::int32 sRelay::student_id() const {
+  return student_id_;
+}
+inline void sRelay::set_student_id(::google::protobuf::int32 value) {
+  set_has_student_id();
+  student_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// bookNode
+
+// required int32 book_id = 1;
+inline bool bookNode::has_book_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void bookNode::set_has_book_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void bookNode::clear_has_book_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void bookNode::clear_book_id() {
+  book_id_ = 0;
+  clear_has_book_id();
+}
+inline ::google::protobuf::int32 bookNode::book_id() const {
+  return book_id_;
+}
+inline void bookNode::set_book_id(::google::protobuf::int32 value) {
+  set_has_book_id();
+  book_id_ = value;
+}
+
+// required string book_name = 2;
+inline bool bookNode::has_book_name() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void bookNode::set_has_book_name() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void bookNode::clear_has_book_name() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void bookNode::clear_book_name() {
+  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
+    book_name_->clear();
+  }
+  clear_has_book_name();
+}
+inline const ::std::string& bookNode::book_name() const {
+  return *book_name_;
+}
+inline void bookNode::set_book_name(const ::std::string& value) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(value);
+}
+inline void bookNode::set_book_name(const char* value) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(value);
+}
+inline void bookNode::set_book_name(const char* value, size_t size) {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  book_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* bookNode::mutable_book_name() {
+  set_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    book_name_ = new ::std::string;
+  }
+  return book_name_;
+}
+inline ::std::string* bookNode::release_book_name() {
+  clear_has_book_name();
+  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = book_name_;
+    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void bookNode::set_allocated_book_name(::std::string* book_name) {
+  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete book_name_;
+  }
+  if (book_name) {
+    set_has_book_name();
+    book_name_ = book_name;
+  } else {
+    clear_has_book_name();
+    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 book_type = 4;
+inline bool bookNode::has_book_type() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void bookNode::set_has_book_type() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void bookNode::clear_has_book_type() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void bookNode::clear_book_type() {
+  book_type_ = 0;
+  clear_has_book_type();
+}
+inline ::google::protobuf::int32 bookNode::book_type() const {
+  return book_type_;
+}
+inline void bookNode::set_book_type(::google::protobuf::int32 value) {
+  set_has_book_type();
+  book_type_ = value;
+}
+
+// required string res_path = 3;
+inline bool bookNode::has_res_path() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void bookNode::set_has_res_path() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void bookNode::clear_has_res_path() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void bookNode::clear_res_path() {
+  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
+    res_path_->clear();
+  }
+  clear_has_res_path();
+}
+inline const ::std::string& bookNode::res_path() const {
+  return *res_path_;
+}
+inline void bookNode::set_res_path(const ::std::string& value) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(value);
+}
+inline void bookNode::set_res_path(const char* value) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(value);
+}
+inline void bookNode::set_res_path(const char* value, size_t size) {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  res_path_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* bookNode::mutable_res_path() {
+  set_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    res_path_ = new ::std::string;
+  }
+  return res_path_;
+}
+inline ::std::string* bookNode::release_res_path() {
+  clear_has_res_path();
+  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = res_path_;
+    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void bookNode::set_allocated_res_path(::std::string* res_path) {
+  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
+    delete res_path_;
+  }
+  if (res_path) {
+    set_has_res_path();
+    res_path_ = res_path;
+  } else {
+    clear_has_res_path();
+    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
 // cGetPersonalBooksList
+
+// -------------------------------------------------------------------
+
+// sGetPersonalBooksList
+
+// repeated .bookNode book_list = 1;
+inline int sGetPersonalBooksList::book_list_size() const {
+  return book_list_.size();
+}
+inline void sGetPersonalBooksList::clear_book_list() {
+  book_list_.Clear();
+}
+inline const ::bookNode& sGetPersonalBooksList::book_list(int index) const {
+  return book_list_.Get(index);
+}
+inline ::bookNode* sGetPersonalBooksList::mutable_book_list(int index) {
+  return book_list_.Mutable(index);
+}
+inline ::bookNode* sGetPersonalBooksList::add_book_list() {
+  return book_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::bookNode >&
+sGetPersonalBooksList::book_list() const {
+  return book_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::bookNode >*
+sGetPersonalBooksList::mutable_book_list() {
+  return &book_list_;
+}
 
 // -------------------------------------------------------------------
 
@@ -8159,382 +12142,35 @@ inline void sGetServerAddr::set_allocated_serv_addr(::std::string* serv_addr) {
 
 // -------------------------------------------------------------------
 
-// sGetPersonalBooksList
-
-// required int32 book_id = 1;
-inline bool sGetPersonalBooksList::has_book_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void sGetPersonalBooksList::set_has_book_id() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void sGetPersonalBooksList::clear_has_book_id() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void sGetPersonalBooksList::clear_book_id() {
-  book_id_ = 0;
-  clear_has_book_id();
-}
-inline ::google::protobuf::int32 sGetPersonalBooksList::book_id() const {
-  return book_id_;
-}
-inline void sGetPersonalBooksList::set_book_id(::google::protobuf::int32 value) {
-  set_has_book_id();
-  book_id_ = value;
-}
-
-// required string book_name = 2;
-inline bool sGetPersonalBooksList::has_book_name() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void sGetPersonalBooksList::set_has_book_name() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void sGetPersonalBooksList::clear_has_book_name() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void sGetPersonalBooksList::clear_book_name() {
-  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
-    book_name_->clear();
-  }
-  clear_has_book_name();
-}
-inline const ::std::string& sGetPersonalBooksList::book_name() const {
-  return *book_name_;
-}
-inline void sGetPersonalBooksList::set_book_name(const ::std::string& value) {
-  set_has_book_name();
-  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
-    book_name_ = new ::std::string;
-  }
-  book_name_->assign(value);
-}
-inline void sGetPersonalBooksList::set_book_name(const char* value) {
-  set_has_book_name();
-  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
-    book_name_ = new ::std::string;
-  }
-  book_name_->assign(value);
-}
-inline void sGetPersonalBooksList::set_book_name(const char* value, size_t size) {
-  set_has_book_name();
-  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
-    book_name_ = new ::std::string;
-  }
-  book_name_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* sGetPersonalBooksList::mutable_book_name() {
-  set_has_book_name();
-  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
-    book_name_ = new ::std::string;
-  }
-  return book_name_;
-}
-inline ::std::string* sGetPersonalBooksList::release_book_name() {
-  clear_has_book_name();
-  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = book_name_;
-    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void sGetPersonalBooksList::set_allocated_book_name(::std::string* book_name) {
-  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
-    delete book_name_;
-  }
-  if (book_name) {
-    set_has_book_name();
-    book_name_ = book_name;
-  } else {
-    clear_has_book_name();
-    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// required int32 book_type = 4;
-inline bool sGetPersonalBooksList::has_book_type() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void sGetPersonalBooksList::set_has_book_type() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void sGetPersonalBooksList::clear_has_book_type() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void sGetPersonalBooksList::clear_book_type() {
-  book_type_ = 0;
-  clear_has_book_type();
-}
-inline ::google::protobuf::int32 sGetPersonalBooksList::book_type() const {
-  return book_type_;
-}
-inline void sGetPersonalBooksList::set_book_type(::google::protobuf::int32 value) {
-  set_has_book_type();
-  book_type_ = value;
-}
-
-// required string res_path = 3;
-inline bool sGetPersonalBooksList::has_res_path() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void sGetPersonalBooksList::set_has_res_path() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void sGetPersonalBooksList::clear_has_res_path() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void sGetPersonalBooksList::clear_res_path() {
-  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
-    res_path_->clear();
-  }
-  clear_has_res_path();
-}
-inline const ::std::string& sGetPersonalBooksList::res_path() const {
-  return *res_path_;
-}
-inline void sGetPersonalBooksList::set_res_path(const ::std::string& value) {
-  set_has_res_path();
-  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
-    res_path_ = new ::std::string;
-  }
-  res_path_->assign(value);
-}
-inline void sGetPersonalBooksList::set_res_path(const char* value) {
-  set_has_res_path();
-  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
-    res_path_ = new ::std::string;
-  }
-  res_path_->assign(value);
-}
-inline void sGetPersonalBooksList::set_res_path(const char* value, size_t size) {
-  set_has_res_path();
-  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
-    res_path_ = new ::std::string;
-  }
-  res_path_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* sGetPersonalBooksList::mutable_res_path() {
-  set_has_res_path();
-  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
-    res_path_ = new ::std::string;
-  }
-  return res_path_;
-}
-inline ::std::string* sGetPersonalBooksList::release_res_path() {
-  clear_has_res_path();
-  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = res_path_;
-    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void sGetPersonalBooksList::set_allocated_res_path(::std::string* res_path) {
-  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
-    delete res_path_;
-  }
-  if (res_path) {
-    set_has_res_path();
-    res_path_ = res_path;
-  } else {
-    clear_has_res_path();
-    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// -------------------------------------------------------------------
-
 // cGetPublicBooksList
 
 // -------------------------------------------------------------------
 
 // sGetPublicBooksList
 
-// required int32 book_id = 1;
-inline bool sGetPublicBooksList::has_book_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+// repeated .bookNode book_list = 1;
+inline int sGetPublicBooksList::book_list_size() const {
+  return book_list_.size();
 }
-inline void sGetPublicBooksList::set_has_book_id() {
-  _has_bits_[0] |= 0x00000001u;
+inline void sGetPublicBooksList::clear_book_list() {
+  book_list_.Clear();
 }
-inline void sGetPublicBooksList::clear_has_book_id() {
-  _has_bits_[0] &= ~0x00000001u;
+inline const ::bookNode& sGetPublicBooksList::book_list(int index) const {
+  return book_list_.Get(index);
 }
-inline void sGetPublicBooksList::clear_book_id() {
-  book_id_ = 0;
-  clear_has_book_id();
+inline ::bookNode* sGetPublicBooksList::mutable_book_list(int index) {
+  return book_list_.Mutable(index);
 }
-inline ::google::protobuf::int32 sGetPublicBooksList::book_id() const {
-  return book_id_;
+inline ::bookNode* sGetPublicBooksList::add_book_list() {
+  return book_list_.Add();
 }
-inline void sGetPublicBooksList::set_book_id(::google::protobuf::int32 value) {
-  set_has_book_id();
-  book_id_ = value;
+inline const ::google::protobuf::RepeatedPtrField< ::bookNode >&
+sGetPublicBooksList::book_list() const {
+  return book_list_;
 }
-
-// required string book_name = 2;
-inline bool sGetPublicBooksList::has_book_name() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void sGetPublicBooksList::set_has_book_name() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void sGetPublicBooksList::clear_has_book_name() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void sGetPublicBooksList::clear_book_name() {
-  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
-    book_name_->clear();
-  }
-  clear_has_book_name();
-}
-inline const ::std::string& sGetPublicBooksList::book_name() const {
-  return *book_name_;
-}
-inline void sGetPublicBooksList::set_book_name(const ::std::string& value) {
-  set_has_book_name();
-  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
-    book_name_ = new ::std::string;
-  }
-  book_name_->assign(value);
-}
-inline void sGetPublicBooksList::set_book_name(const char* value) {
-  set_has_book_name();
-  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
-    book_name_ = new ::std::string;
-  }
-  book_name_->assign(value);
-}
-inline void sGetPublicBooksList::set_book_name(const char* value, size_t size) {
-  set_has_book_name();
-  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
-    book_name_ = new ::std::string;
-  }
-  book_name_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* sGetPublicBooksList::mutable_book_name() {
-  set_has_book_name();
-  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
-    book_name_ = new ::std::string;
-  }
-  return book_name_;
-}
-inline ::std::string* sGetPublicBooksList::release_book_name() {
-  clear_has_book_name();
-  if (book_name_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = book_name_;
-    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void sGetPublicBooksList::set_allocated_book_name(::std::string* book_name) {
-  if (book_name_ != &::google::protobuf::internal::kEmptyString) {
-    delete book_name_;
-  }
-  if (book_name) {
-    set_has_book_name();
-    book_name_ = book_name;
-  } else {
-    clear_has_book_name();
-    book_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// required int32 book_type = 4;
-inline bool sGetPublicBooksList::has_book_type() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void sGetPublicBooksList::set_has_book_type() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void sGetPublicBooksList::clear_has_book_type() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void sGetPublicBooksList::clear_book_type() {
-  book_type_ = 0;
-  clear_has_book_type();
-}
-inline ::google::protobuf::int32 sGetPublicBooksList::book_type() const {
-  return book_type_;
-}
-inline void sGetPublicBooksList::set_book_type(::google::protobuf::int32 value) {
-  set_has_book_type();
-  book_type_ = value;
-}
-
-// required string res_path = 3;
-inline bool sGetPublicBooksList::has_res_path() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void sGetPublicBooksList::set_has_res_path() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void sGetPublicBooksList::clear_has_res_path() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void sGetPublicBooksList::clear_res_path() {
-  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
-    res_path_->clear();
-  }
-  clear_has_res_path();
-}
-inline const ::std::string& sGetPublicBooksList::res_path() const {
-  return *res_path_;
-}
-inline void sGetPublicBooksList::set_res_path(const ::std::string& value) {
-  set_has_res_path();
-  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
-    res_path_ = new ::std::string;
-  }
-  res_path_->assign(value);
-}
-inline void sGetPublicBooksList::set_res_path(const char* value) {
-  set_has_res_path();
-  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
-    res_path_ = new ::std::string;
-  }
-  res_path_->assign(value);
-}
-inline void sGetPublicBooksList::set_res_path(const char* value, size_t size) {
-  set_has_res_path();
-  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
-    res_path_ = new ::std::string;
-  }
-  res_path_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* sGetPublicBooksList::mutable_res_path() {
-  set_has_res_path();
-  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
-    res_path_ = new ::std::string;
-  }
-  return res_path_;
-}
-inline ::std::string* sGetPublicBooksList::release_res_path() {
-  clear_has_res_path();
-  if (res_path_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = res_path_;
-    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void sGetPublicBooksList::set_allocated_res_path(::std::string* res_path) {
-  if (res_path_ != &::google::protobuf::internal::kEmptyString) {
-    delete res_path_;
-  }
-  if (res_path) {
-    set_has_res_path();
-    res_path_ = res_path;
-  } else {
-    clear_has_res_path();
-    res_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
+inline ::google::protobuf::RepeatedPtrField< ::bookNode >*
+sGetPublicBooksList::mutable_book_list() {
+  return &book_list_;
 }
 
 // -------------------------------------------------------------------
@@ -8909,7 +12545,7 @@ inline void cUploadBook::set_allocated_res_path(::std::string* res_path) {
 
 // sUploadBook
 
-// required bool result = 1;
+// required int32 result = 2;
 inline bool sUploadBook::has_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -8920,18 +12556,18 @@ inline void sUploadBook::clear_has_result() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void sUploadBook::clear_result() {
-  result_ = false;
+  result_ = 0;
   clear_has_result();
 }
-inline bool sUploadBook::result() const {
+inline ::google::protobuf::int32 sUploadBook::result() const {
   return result_;
 }
-inline void sUploadBook::set_result(bool value) {
+inline void sUploadBook::set_result(::google::protobuf::int32 value) {
   set_has_result();
   result_ = value;
 }
 
-// required string msg = 2;
+// required string msg = 1;
 inline bool sUploadBook::has_msg() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -9031,15 +12667,37 @@ inline void cDownloadFromPersonal::set_book_id(::google::protobuf::int32 value) 
 
 // sDownloadFromPersonal
 
-// required string down_addr = 1;
-inline bool sDownloadFromPersonal::has_down_addr() const {
+// optional bool result = 1;
+inline bool sDownloadFromPersonal::has_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void sDownloadFromPersonal::set_has_down_addr() {
+inline void sDownloadFromPersonal::set_has_result() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void sDownloadFromPersonal::clear_has_down_addr() {
+inline void sDownloadFromPersonal::clear_has_result() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void sDownloadFromPersonal::clear_result() {
+  result_ = false;
+  clear_has_result();
+}
+inline bool sDownloadFromPersonal::result() const {
+  return result_;
+}
+inline void sDownloadFromPersonal::set_result(bool value) {
+  set_has_result();
+  result_ = value;
+}
+
+// required string down_addr = 2;
+inline bool sDownloadFromPersonal::has_down_addr() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sDownloadFromPersonal::set_has_down_addr() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sDownloadFromPersonal::clear_has_down_addr() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void sDownloadFromPersonal::clear_down_addr() {
   if (down_addr_ != &::google::protobuf::internal::kEmptyString) {
@@ -9131,15 +12789,37 @@ inline void cDownloadFromPublic::set_book_id(::google::protobuf::int32 value) {
 
 // sDownloadFromPublic
 
-// required string down_addr = 1;
-inline bool sDownloadFromPublic::has_down_addr() const {
+// optional bool result = 2;
+inline bool sDownloadFromPublic::has_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void sDownloadFromPublic::set_has_down_addr() {
+inline void sDownloadFromPublic::set_has_result() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void sDownloadFromPublic::clear_has_down_addr() {
+inline void sDownloadFromPublic::clear_has_result() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void sDownloadFromPublic::clear_result() {
+  result_ = false;
+  clear_has_result();
+}
+inline bool sDownloadFromPublic::result() const {
+  return result_;
+}
+inline void sDownloadFromPublic::set_result(bool value) {
+  set_has_result();
+  result_ = value;
+}
+
+// required string down_addr = 1;
+inline bool sDownloadFromPublic::has_down_addr() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sDownloadFromPublic::set_has_down_addr() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sDownloadFromPublic::clear_has_down_addr() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void sDownloadFromPublic::clear_down_addr() {
   if (down_addr_ != &::google::protobuf::internal::kEmptyString) {
@@ -9301,7 +12981,7 @@ inline void cTransferBook::set_allocated_account(::std::string* account) {
 
 // sTransferBook
 
-// required bool result = 1;
+// required int32 result = 2;
 inline bool sTransferBook::has_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -9312,18 +12992,18 @@ inline void sTransferBook::clear_has_result() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void sTransferBook::clear_result() {
-  result_ = false;
+  result_ = 0;
   clear_has_result();
 }
-inline bool sTransferBook::result() const {
+inline ::google::protobuf::int32 sTransferBook::result() const {
   return result_;
 }
-inline void sTransferBook::set_result(bool value) {
+inline void sTransferBook::set_result(::google::protobuf::int32 value) {
   set_has_result();
   result_ = value;
 }
 
-// required string msg = 2;
+// required string msg = 1;
 inline bool sTransferBook::has_msg() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -9423,7 +13103,7 @@ inline void cPublish::set_book_id(::google::protobuf::int32 value) {
 
 // sPublish
 
-// required bool result = 1;
+// required int32 result = 2;
 inline bool sPublish::has_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -9434,18 +13114,18 @@ inline void sPublish::clear_has_result() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void sPublish::clear_result() {
-  result_ = false;
+  result_ = 0;
   clear_has_result();
 }
-inline bool sPublish::result() const {
+inline ::google::protobuf::int32 sPublish::result() const {
   return result_;
 }
-inline void sPublish::set_result(bool value) {
+inline void sPublish::set_result(::google::protobuf::int32 value) {
   set_has_result();
   result_ = value;
 }
 
-// required string msg = 2;
+// required string msg = 1;
 inline bool sPublish::has_msg() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -9515,6 +13195,4359 @@ inline void sPublish::set_allocated_msg(::std::string* msg) {
   }
 }
 
+// -------------------------------------------------------------------
+
+// cUpdateDrawSet
+
+// optional bool facsimile = 1;
+inline bool cUpdateDrawSet::has_facsimile() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUpdateDrawSet::set_has_facsimile() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUpdateDrawSet::clear_has_facsimile() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUpdateDrawSet::clear_facsimile() {
+  facsimile_ = false;
+  clear_has_facsimile();
+}
+inline bool cUpdateDrawSet::facsimile() const {
+  return facsimile_;
+}
+inline void cUpdateDrawSet::set_facsimile(bool value) {
+  set_has_facsimile();
+  facsimile_ = value;
+}
+
+// optional bool puzzle = 2;
+inline bool cUpdateDrawSet::has_puzzle() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cUpdateDrawSet::set_has_puzzle() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cUpdateDrawSet::clear_has_puzzle() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cUpdateDrawSet::clear_puzzle() {
+  puzzle_ = false;
+  clear_has_puzzle();
+}
+inline bool cUpdateDrawSet::puzzle() const {
+  return puzzle_;
+}
+inline void cUpdateDrawSet::set_puzzle(bool value) {
+  set_has_puzzle();
+  puzzle_ = value;
+}
+
+// optional bool frame = 3;
+inline bool cUpdateDrawSet::has_frame() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void cUpdateDrawSet::set_has_frame() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void cUpdateDrawSet::clear_has_frame() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void cUpdateDrawSet::clear_frame() {
+  frame_ = false;
+  clear_has_frame();
+}
+inline bool cUpdateDrawSet::frame() const {
+  return frame_;
+}
+inline void cUpdateDrawSet::set_frame(bool value) {
+  set_has_frame();
+  frame_ = value;
+}
+
+// optional bool record = 4;
+inline bool cUpdateDrawSet::has_record() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void cUpdateDrawSet::set_has_record() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void cUpdateDrawSet::clear_has_record() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void cUpdateDrawSet::clear_record() {
+  record_ = false;
+  clear_has_record();
+}
+inline bool cUpdateDrawSet::record() const {
+  return record_;
+}
+inline void cUpdateDrawSet::set_record(bool value) {
+  set_has_record();
+  record_ = value;
+}
+
+// optional bool world = 5;
+inline bool cUpdateDrawSet::has_world() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void cUpdateDrawSet::set_has_world() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void cUpdateDrawSet::clear_has_world() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void cUpdateDrawSet::clear_world() {
+  world_ = false;
+  clear_has_world();
+}
+inline bool cUpdateDrawSet::world() const {
+  return world_;
+}
+inline void cUpdateDrawSet::set_world(bool value) {
+  set_has_world();
+  world_ = value;
+}
+
+// repeated string paper_name = 6;
+inline int cUpdateDrawSet::paper_name_size() const {
+  return paper_name_.size();
+}
+inline void cUpdateDrawSet::clear_paper_name() {
+  paper_name_.Clear();
+}
+inline const ::std::string& cUpdateDrawSet::paper_name(int index) const {
+  return paper_name_.Get(index);
+}
+inline ::std::string* cUpdateDrawSet::mutable_paper_name(int index) {
+  return paper_name_.Mutable(index);
+}
+inline void cUpdateDrawSet::set_paper_name(int index, const ::std::string& value) {
+  paper_name_.Mutable(index)->assign(value);
+}
+inline void cUpdateDrawSet::set_paper_name(int index, const char* value) {
+  paper_name_.Mutable(index)->assign(value);
+}
+inline void cUpdateDrawSet::set_paper_name(int index, const char* value, size_t size) {
+  paper_name_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateDrawSet::add_paper_name() {
+  return paper_name_.Add();
+}
+inline void cUpdateDrawSet::add_paper_name(const ::std::string& value) {
+  paper_name_.Add()->assign(value);
+}
+inline void cUpdateDrawSet::add_paper_name(const char* value) {
+  paper_name_.Add()->assign(value);
+}
+inline void cUpdateDrawSet::add_paper_name(const char* value, size_t size) {
+  paper_name_.Add()->assign(reinterpret_cast<const char*>(value), size);
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+cUpdateDrawSet::paper_name() const {
+  return paper_name_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+cUpdateDrawSet::mutable_paper_name() {
+  return &paper_name_;
+}
+
+// repeated int32 pen_id = 7;
+inline int cUpdateDrawSet::pen_id_size() const {
+  return pen_id_.size();
+}
+inline void cUpdateDrawSet::clear_pen_id() {
+  pen_id_.Clear();
+}
+inline ::google::protobuf::int32 cUpdateDrawSet::pen_id(int index) const {
+  return pen_id_.Get(index);
+}
+inline void cUpdateDrawSet::set_pen_id(int index, ::google::protobuf::int32 value) {
+  pen_id_.Set(index, value);
+}
+inline void cUpdateDrawSet::add_pen_id(::google::protobuf::int32 value) {
+  pen_id_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+cUpdateDrawSet::pen_id() const {
+  return pen_id_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+cUpdateDrawSet::mutable_pen_id() {
+  return &pen_id_;
+}
+
+// -------------------------------------------------------------------
+
+// cUpdateDrawInfo
+
+// -------------------------------------------------------------------
+
+// sUpdateDrawInfo
+
+// -------------------------------------------------------------------
+
+// cUpdateBackground
+
+// required int32 paper_id = 1;
+inline bool cUpdateBackground::has_paper_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUpdateBackground::set_has_paper_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUpdateBackground::clear_has_paper_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUpdateBackground::clear_paper_id() {
+  paper_id_ = 0;
+  clear_has_paper_id();
+}
+inline ::google::protobuf::int32 cUpdateBackground::paper_id() const {
+  return paper_id_;
+}
+inline void cUpdateBackground::set_paper_id(::google::protobuf::int32 value) {
+  set_has_paper_id();
+  paper_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// sUpdateBackground
+
+// required int32 paper_id = 1;
+inline bool sUpdateBackground::has_paper_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sUpdateBackground::set_has_paper_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sUpdateBackground::clear_has_paper_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sUpdateBackground::clear_paper_id() {
+  paper_id_ = 0;
+  clear_has_paper_id();
+}
+inline ::google::protobuf::int32 sUpdateBackground::paper_id() const {
+  return paper_id_;
+}
+inline void sUpdateBackground::set_paper_id(::google::protobuf::int32 value) {
+  set_has_paper_id();
+  paper_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// cUpdateCopyIntoPaint
+
+// required int32 pic_id = 1;
+inline bool cUpdateCopyIntoPaint::has_pic_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUpdateCopyIntoPaint::set_has_pic_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUpdateCopyIntoPaint::clear_has_pic_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUpdateCopyIntoPaint::clear_pic_id() {
+  pic_id_ = 0;
+  clear_has_pic_id();
+}
+inline ::google::protobuf::int32 cUpdateCopyIntoPaint::pic_id() const {
+  return pic_id_;
+}
+inline void cUpdateCopyIntoPaint::set_pic_id(::google::protobuf::int32 value) {
+  set_has_pic_id();
+  pic_id_ = value;
+}
+
+// required string pic_res = 2;
+inline bool cUpdateCopyIntoPaint::has_pic_res() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cUpdateCopyIntoPaint::set_has_pic_res() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cUpdateCopyIntoPaint::clear_has_pic_res() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cUpdateCopyIntoPaint::clear_pic_res() {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    pic_res_->clear();
+  }
+  clear_has_pic_res();
+}
+inline const ::std::string& cUpdateCopyIntoPaint::pic_res() const {
+  return *pic_res_;
+}
+inline void cUpdateCopyIntoPaint::set_pic_res(const ::std::string& value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void cUpdateCopyIntoPaint::set_pic_res(const char* value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void cUpdateCopyIntoPaint::set_pic_res(const char* value, size_t size) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateCopyIntoPaint::mutable_pic_res() {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  return pic_res_;
+}
+inline ::std::string* cUpdateCopyIntoPaint::release_pic_res() {
+  clear_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_res_;
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateCopyIntoPaint::set_allocated_pic_res(::std::string* pic_res) {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_res_;
+  }
+  if (pic_res) {
+    set_has_pic_res();
+    pic_res_ = pic_res;
+  } else {
+    clear_has_pic_res();
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pic_scale = 3;
+inline bool cUpdateCopyIntoPaint::has_pic_scale() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void cUpdateCopyIntoPaint::set_has_pic_scale() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void cUpdateCopyIntoPaint::clear_has_pic_scale() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void cUpdateCopyIntoPaint::clear_pic_scale() {
+  if (pic_scale_ != &::google::protobuf::internal::kEmptyString) {
+    pic_scale_->clear();
+  }
+  clear_has_pic_scale();
+}
+inline const ::std::string& cUpdateCopyIntoPaint::pic_scale() const {
+  return *pic_scale_;
+}
+inline void cUpdateCopyIntoPaint::set_pic_scale(const ::std::string& value) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(value);
+}
+inline void cUpdateCopyIntoPaint::set_pic_scale(const char* value) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(value);
+}
+inline void cUpdateCopyIntoPaint::set_pic_scale(const char* value, size_t size) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateCopyIntoPaint::mutable_pic_scale() {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  return pic_scale_;
+}
+inline ::std::string* cUpdateCopyIntoPaint::release_pic_scale() {
+  clear_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_scale_;
+    pic_scale_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateCopyIntoPaint::set_allocated_pic_scale(::std::string* pic_scale) {
+  if (pic_scale_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_scale_;
+  }
+  if (pic_scale) {
+    set_has_pic_scale();
+    pic_scale_ = pic_scale;
+  } else {
+    clear_has_pic_scale();
+    pic_scale_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pic_rotation = 4;
+inline bool cUpdateCopyIntoPaint::has_pic_rotation() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void cUpdateCopyIntoPaint::set_has_pic_rotation() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void cUpdateCopyIntoPaint::clear_has_pic_rotation() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void cUpdateCopyIntoPaint::clear_pic_rotation() {
+  if (pic_rotation_ != &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_->clear();
+  }
+  clear_has_pic_rotation();
+}
+inline const ::std::string& cUpdateCopyIntoPaint::pic_rotation() const {
+  return *pic_rotation_;
+}
+inline void cUpdateCopyIntoPaint::set_pic_rotation(const ::std::string& value) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(value);
+}
+inline void cUpdateCopyIntoPaint::set_pic_rotation(const char* value) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(value);
+}
+inline void cUpdateCopyIntoPaint::set_pic_rotation(const char* value, size_t size) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateCopyIntoPaint::mutable_pic_rotation() {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  return pic_rotation_;
+}
+inline ::std::string* cUpdateCopyIntoPaint::release_pic_rotation() {
+  clear_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_rotation_;
+    pic_rotation_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateCopyIntoPaint::set_allocated_pic_rotation(::std::string* pic_rotation) {
+  if (pic_rotation_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_rotation_;
+  }
+  if (pic_rotation) {
+    set_has_pic_rotation();
+    pic_rotation_ = pic_rotation;
+  } else {
+    clear_has_pic_rotation();
+    pic_rotation_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_x = 5;
+inline bool cUpdateCopyIntoPaint::has_pt_x() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void cUpdateCopyIntoPaint::set_has_pt_x() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void cUpdateCopyIntoPaint::clear_has_pt_x() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void cUpdateCopyIntoPaint::clear_pt_x() {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    pt_x_->clear();
+  }
+  clear_has_pt_x();
+}
+inline const ::std::string& cUpdateCopyIntoPaint::pt_x() const {
+  return *pt_x_;
+}
+inline void cUpdateCopyIntoPaint::set_pt_x(const ::std::string& value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void cUpdateCopyIntoPaint::set_pt_x(const char* value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void cUpdateCopyIntoPaint::set_pt_x(const char* value, size_t size) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateCopyIntoPaint::mutable_pt_x() {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  return pt_x_;
+}
+inline ::std::string* cUpdateCopyIntoPaint::release_pt_x() {
+  clear_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_x_;
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateCopyIntoPaint::set_allocated_pt_x(::std::string* pt_x) {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_x_;
+  }
+  if (pt_x) {
+    set_has_pt_x();
+    pt_x_ = pt_x;
+  } else {
+    clear_has_pt_x();
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_y = 6;
+inline bool cUpdateCopyIntoPaint::has_pt_y() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void cUpdateCopyIntoPaint::set_has_pt_y() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void cUpdateCopyIntoPaint::clear_has_pt_y() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void cUpdateCopyIntoPaint::clear_pt_y() {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    pt_y_->clear();
+  }
+  clear_has_pt_y();
+}
+inline const ::std::string& cUpdateCopyIntoPaint::pt_y() const {
+  return *pt_y_;
+}
+inline void cUpdateCopyIntoPaint::set_pt_y(const ::std::string& value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void cUpdateCopyIntoPaint::set_pt_y(const char* value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void cUpdateCopyIntoPaint::set_pt_y(const char* value, size_t size) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateCopyIntoPaint::mutable_pt_y() {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  return pt_y_;
+}
+inline ::std::string* cUpdateCopyIntoPaint::release_pt_y() {
+  clear_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_y_;
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateCopyIntoPaint::set_allocated_pt_y(::std::string* pt_y) {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_y_;
+  }
+  if (pt_y) {
+    set_has_pt_y();
+    pt_y_ = pt_y;
+  } else {
+    clear_has_pt_y();
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 op_type = 7;
+inline bool cUpdateCopyIntoPaint::has_op_type() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void cUpdateCopyIntoPaint::set_has_op_type() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void cUpdateCopyIntoPaint::clear_has_op_type() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void cUpdateCopyIntoPaint::clear_op_type() {
+  op_type_ = 0;
+  clear_has_op_type();
+}
+inline ::google::protobuf::int32 cUpdateCopyIntoPaint::op_type() const {
+  return op_type_;
+}
+inline void cUpdateCopyIntoPaint::set_op_type(::google::protobuf::int32 value) {
+  set_has_op_type();
+  op_type_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// sUpdateCopyIntoPaint
+
+// required int32 pic_id = 1;
+inline bool sUpdateCopyIntoPaint::has_pic_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sUpdateCopyIntoPaint::set_has_pic_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sUpdateCopyIntoPaint::clear_has_pic_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sUpdateCopyIntoPaint::clear_pic_id() {
+  pic_id_ = 0;
+  clear_has_pic_id();
+}
+inline ::google::protobuf::int32 sUpdateCopyIntoPaint::pic_id() const {
+  return pic_id_;
+}
+inline void sUpdateCopyIntoPaint::set_pic_id(::google::protobuf::int32 value) {
+  set_has_pic_id();
+  pic_id_ = value;
+}
+
+// required string pic_res = 2;
+inline bool sUpdateCopyIntoPaint::has_pic_res() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sUpdateCopyIntoPaint::set_has_pic_res() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sUpdateCopyIntoPaint::clear_has_pic_res() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sUpdateCopyIntoPaint::clear_pic_res() {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    pic_res_->clear();
+  }
+  clear_has_pic_res();
+}
+inline const ::std::string& sUpdateCopyIntoPaint::pic_res() const {
+  return *pic_res_;
+}
+inline void sUpdateCopyIntoPaint::set_pic_res(const ::std::string& value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void sUpdateCopyIntoPaint::set_pic_res(const char* value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void sUpdateCopyIntoPaint::set_pic_res(const char* value, size_t size) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateCopyIntoPaint::mutable_pic_res() {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  return pic_res_;
+}
+inline ::std::string* sUpdateCopyIntoPaint::release_pic_res() {
+  clear_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_res_;
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateCopyIntoPaint::set_allocated_pic_res(::std::string* pic_res) {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_res_;
+  }
+  if (pic_res) {
+    set_has_pic_res();
+    pic_res_ = pic_res;
+  } else {
+    clear_has_pic_res();
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pic_scale = 3;
+inline bool sUpdateCopyIntoPaint::has_pic_scale() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void sUpdateCopyIntoPaint::set_has_pic_scale() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void sUpdateCopyIntoPaint::clear_has_pic_scale() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void sUpdateCopyIntoPaint::clear_pic_scale() {
+  if (pic_scale_ != &::google::protobuf::internal::kEmptyString) {
+    pic_scale_->clear();
+  }
+  clear_has_pic_scale();
+}
+inline const ::std::string& sUpdateCopyIntoPaint::pic_scale() const {
+  return *pic_scale_;
+}
+inline void sUpdateCopyIntoPaint::set_pic_scale(const ::std::string& value) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(value);
+}
+inline void sUpdateCopyIntoPaint::set_pic_scale(const char* value) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(value);
+}
+inline void sUpdateCopyIntoPaint::set_pic_scale(const char* value, size_t size) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateCopyIntoPaint::mutable_pic_scale() {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  return pic_scale_;
+}
+inline ::std::string* sUpdateCopyIntoPaint::release_pic_scale() {
+  clear_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_scale_;
+    pic_scale_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateCopyIntoPaint::set_allocated_pic_scale(::std::string* pic_scale) {
+  if (pic_scale_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_scale_;
+  }
+  if (pic_scale) {
+    set_has_pic_scale();
+    pic_scale_ = pic_scale;
+  } else {
+    clear_has_pic_scale();
+    pic_scale_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pic_rotation = 4;
+inline bool sUpdateCopyIntoPaint::has_pic_rotation() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void sUpdateCopyIntoPaint::set_has_pic_rotation() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void sUpdateCopyIntoPaint::clear_has_pic_rotation() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void sUpdateCopyIntoPaint::clear_pic_rotation() {
+  if (pic_rotation_ != &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_->clear();
+  }
+  clear_has_pic_rotation();
+}
+inline const ::std::string& sUpdateCopyIntoPaint::pic_rotation() const {
+  return *pic_rotation_;
+}
+inline void sUpdateCopyIntoPaint::set_pic_rotation(const ::std::string& value) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(value);
+}
+inline void sUpdateCopyIntoPaint::set_pic_rotation(const char* value) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(value);
+}
+inline void sUpdateCopyIntoPaint::set_pic_rotation(const char* value, size_t size) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateCopyIntoPaint::mutable_pic_rotation() {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  return pic_rotation_;
+}
+inline ::std::string* sUpdateCopyIntoPaint::release_pic_rotation() {
+  clear_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_rotation_;
+    pic_rotation_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateCopyIntoPaint::set_allocated_pic_rotation(::std::string* pic_rotation) {
+  if (pic_rotation_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_rotation_;
+  }
+  if (pic_rotation) {
+    set_has_pic_rotation();
+    pic_rotation_ = pic_rotation;
+  } else {
+    clear_has_pic_rotation();
+    pic_rotation_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_x = 5;
+inline bool sUpdateCopyIntoPaint::has_pt_x() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void sUpdateCopyIntoPaint::set_has_pt_x() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void sUpdateCopyIntoPaint::clear_has_pt_x() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void sUpdateCopyIntoPaint::clear_pt_x() {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    pt_x_->clear();
+  }
+  clear_has_pt_x();
+}
+inline const ::std::string& sUpdateCopyIntoPaint::pt_x() const {
+  return *pt_x_;
+}
+inline void sUpdateCopyIntoPaint::set_pt_x(const ::std::string& value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void sUpdateCopyIntoPaint::set_pt_x(const char* value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void sUpdateCopyIntoPaint::set_pt_x(const char* value, size_t size) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateCopyIntoPaint::mutable_pt_x() {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  return pt_x_;
+}
+inline ::std::string* sUpdateCopyIntoPaint::release_pt_x() {
+  clear_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_x_;
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateCopyIntoPaint::set_allocated_pt_x(::std::string* pt_x) {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_x_;
+  }
+  if (pt_x) {
+    set_has_pt_x();
+    pt_x_ = pt_x;
+  } else {
+    clear_has_pt_x();
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_y = 6;
+inline bool sUpdateCopyIntoPaint::has_pt_y() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void sUpdateCopyIntoPaint::set_has_pt_y() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void sUpdateCopyIntoPaint::clear_has_pt_y() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void sUpdateCopyIntoPaint::clear_pt_y() {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    pt_y_->clear();
+  }
+  clear_has_pt_y();
+}
+inline const ::std::string& sUpdateCopyIntoPaint::pt_y() const {
+  return *pt_y_;
+}
+inline void sUpdateCopyIntoPaint::set_pt_y(const ::std::string& value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void sUpdateCopyIntoPaint::set_pt_y(const char* value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void sUpdateCopyIntoPaint::set_pt_y(const char* value, size_t size) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateCopyIntoPaint::mutable_pt_y() {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  return pt_y_;
+}
+inline ::std::string* sUpdateCopyIntoPaint::release_pt_y() {
+  clear_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_y_;
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateCopyIntoPaint::set_allocated_pt_y(::std::string* pt_y) {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_y_;
+  }
+  if (pt_y) {
+    set_has_pt_y();
+    pt_y_ = pt_y;
+  } else {
+    clear_has_pt_y();
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 op_type = 7;
+inline bool sUpdateCopyIntoPaint::has_op_type() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void sUpdateCopyIntoPaint::set_has_op_type() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void sUpdateCopyIntoPaint::clear_has_op_type() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void sUpdateCopyIntoPaint::clear_op_type() {
+  op_type_ = 0;
+  clear_has_op_type();
+}
+inline ::google::protobuf::int32 sUpdateCopyIntoPaint::op_type() const {
+  return op_type_;
+}
+inline void sUpdateCopyIntoPaint::set_op_type(::google::protobuf::int32 value) {
+  set_has_op_type();
+  op_type_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// cUpdatePenAnderaser
+
+// required int32 pen_type = 1;
+inline bool cUpdatePenAnderaser::has_pen_type() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUpdatePenAnderaser::set_has_pen_type() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUpdatePenAnderaser::clear_has_pen_type() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUpdatePenAnderaser::clear_pen_type() {
+  pen_type_ = 0;
+  clear_has_pen_type();
+}
+inline ::google::protobuf::int32 cUpdatePenAnderaser::pen_type() const {
+  return pen_type_;
+}
+inline void cUpdatePenAnderaser::set_pen_type(::google::protobuf::int32 value) {
+  set_has_pen_type();
+  pen_type_ = value;
+}
+
+// required int32 pen_color = 2;
+inline bool cUpdatePenAnderaser::has_pen_color() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cUpdatePenAnderaser::set_has_pen_color() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cUpdatePenAnderaser::clear_has_pen_color() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cUpdatePenAnderaser::clear_pen_color() {
+  pen_color_ = 0;
+  clear_has_pen_color();
+}
+inline ::google::protobuf::int32 cUpdatePenAnderaser::pen_color() const {
+  return pen_color_;
+}
+inline void cUpdatePenAnderaser::set_pen_color(::google::protobuf::int32 value) {
+  set_has_pen_color();
+  pen_color_ = value;
+}
+
+// required string pen_size = 3;
+inline bool cUpdatePenAnderaser::has_pen_size() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void cUpdatePenAnderaser::set_has_pen_size() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void cUpdatePenAnderaser::clear_has_pen_size() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void cUpdatePenAnderaser::clear_pen_size() {
+  if (pen_size_ != &::google::protobuf::internal::kEmptyString) {
+    pen_size_->clear();
+  }
+  clear_has_pen_size();
+}
+inline const ::std::string& cUpdatePenAnderaser::pen_size() const {
+  return *pen_size_;
+}
+inline void cUpdatePenAnderaser::set_pen_size(const ::std::string& value) {
+  set_has_pen_size();
+  if (pen_size_ == &::google::protobuf::internal::kEmptyString) {
+    pen_size_ = new ::std::string;
+  }
+  pen_size_->assign(value);
+}
+inline void cUpdatePenAnderaser::set_pen_size(const char* value) {
+  set_has_pen_size();
+  if (pen_size_ == &::google::protobuf::internal::kEmptyString) {
+    pen_size_ = new ::std::string;
+  }
+  pen_size_->assign(value);
+}
+inline void cUpdatePenAnderaser::set_pen_size(const char* value, size_t size) {
+  set_has_pen_size();
+  if (pen_size_ == &::google::protobuf::internal::kEmptyString) {
+    pen_size_ = new ::std::string;
+  }
+  pen_size_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdatePenAnderaser::mutable_pen_size() {
+  set_has_pen_size();
+  if (pen_size_ == &::google::protobuf::internal::kEmptyString) {
+    pen_size_ = new ::std::string;
+  }
+  return pen_size_;
+}
+inline ::std::string* cUpdatePenAnderaser::release_pen_size() {
+  clear_has_pen_size();
+  if (pen_size_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pen_size_;
+    pen_size_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdatePenAnderaser::set_allocated_pen_size(::std::string* pen_size) {
+  if (pen_size_ != &::google::protobuf::internal::kEmptyString) {
+    delete pen_size_;
+  }
+  if (pen_size) {
+    set_has_pen_size();
+    pen_size_ = pen_size;
+  } else {
+    clear_has_pen_size();
+    pen_size_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 pen_trans = 4;
+inline bool cUpdatePenAnderaser::has_pen_trans() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void cUpdatePenAnderaser::set_has_pen_trans() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void cUpdatePenAnderaser::clear_has_pen_trans() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void cUpdatePenAnderaser::clear_pen_trans() {
+  pen_trans_ = 0;
+  clear_has_pen_trans();
+}
+inline ::google::protobuf::int32 cUpdatePenAnderaser::pen_trans() const {
+  return pen_trans_;
+}
+inline void cUpdatePenAnderaser::set_pen_trans(::google::protobuf::int32 value) {
+  set_has_pen_trans();
+  pen_trans_ = value;
+}
+
+// required int32 paint_type = 5;
+inline bool cUpdatePenAnderaser::has_paint_type() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void cUpdatePenAnderaser::set_has_paint_type() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void cUpdatePenAnderaser::clear_has_paint_type() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void cUpdatePenAnderaser::clear_paint_type() {
+  paint_type_ = 0;
+  clear_has_paint_type();
+}
+inline ::google::protobuf::int32 cUpdatePenAnderaser::paint_type() const {
+  return paint_type_;
+}
+inline void cUpdatePenAnderaser::set_paint_type(::google::protobuf::int32 value) {
+  set_has_paint_type();
+  paint_type_ = value;
+}
+
+// required string pt_x = 6;
+inline bool cUpdatePenAnderaser::has_pt_x() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void cUpdatePenAnderaser::set_has_pt_x() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void cUpdatePenAnderaser::clear_has_pt_x() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void cUpdatePenAnderaser::clear_pt_x() {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    pt_x_->clear();
+  }
+  clear_has_pt_x();
+}
+inline const ::std::string& cUpdatePenAnderaser::pt_x() const {
+  return *pt_x_;
+}
+inline void cUpdatePenAnderaser::set_pt_x(const ::std::string& value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void cUpdatePenAnderaser::set_pt_x(const char* value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void cUpdatePenAnderaser::set_pt_x(const char* value, size_t size) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdatePenAnderaser::mutable_pt_x() {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  return pt_x_;
+}
+inline ::std::string* cUpdatePenAnderaser::release_pt_x() {
+  clear_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_x_;
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdatePenAnderaser::set_allocated_pt_x(::std::string* pt_x) {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_x_;
+  }
+  if (pt_x) {
+    set_has_pt_x();
+    pt_x_ = pt_x;
+  } else {
+    clear_has_pt_x();
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_y = 7;
+inline bool cUpdatePenAnderaser::has_pt_y() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void cUpdatePenAnderaser::set_has_pt_y() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void cUpdatePenAnderaser::clear_has_pt_y() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void cUpdatePenAnderaser::clear_pt_y() {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    pt_y_->clear();
+  }
+  clear_has_pt_y();
+}
+inline const ::std::string& cUpdatePenAnderaser::pt_y() const {
+  return *pt_y_;
+}
+inline void cUpdatePenAnderaser::set_pt_y(const ::std::string& value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void cUpdatePenAnderaser::set_pt_y(const char* value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void cUpdatePenAnderaser::set_pt_y(const char* value, size_t size) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdatePenAnderaser::mutable_pt_y() {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  return pt_y_;
+}
+inline ::std::string* cUpdatePenAnderaser::release_pt_y() {
+  clear_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_y_;
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdatePenAnderaser::set_allocated_pt_y(::std::string* pt_y) {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_y_;
+  }
+  if (pt_y) {
+    set_has_pt_y();
+    pt_y_ = pt_y;
+  } else {
+    clear_has_pt_y();
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string prept_x = 8;
+inline bool cUpdatePenAnderaser::has_prept_x() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void cUpdatePenAnderaser::set_has_prept_x() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void cUpdatePenAnderaser::clear_has_prept_x() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void cUpdatePenAnderaser::clear_prept_x() {
+  if (prept_x_ != &::google::protobuf::internal::kEmptyString) {
+    prept_x_->clear();
+  }
+  clear_has_prept_x();
+}
+inline const ::std::string& cUpdatePenAnderaser::prept_x() const {
+  return *prept_x_;
+}
+inline void cUpdatePenAnderaser::set_prept_x(const ::std::string& value) {
+  set_has_prept_x();
+  if (prept_x_ == &::google::protobuf::internal::kEmptyString) {
+    prept_x_ = new ::std::string;
+  }
+  prept_x_->assign(value);
+}
+inline void cUpdatePenAnderaser::set_prept_x(const char* value) {
+  set_has_prept_x();
+  if (prept_x_ == &::google::protobuf::internal::kEmptyString) {
+    prept_x_ = new ::std::string;
+  }
+  prept_x_->assign(value);
+}
+inline void cUpdatePenAnderaser::set_prept_x(const char* value, size_t size) {
+  set_has_prept_x();
+  if (prept_x_ == &::google::protobuf::internal::kEmptyString) {
+    prept_x_ = new ::std::string;
+  }
+  prept_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdatePenAnderaser::mutable_prept_x() {
+  set_has_prept_x();
+  if (prept_x_ == &::google::protobuf::internal::kEmptyString) {
+    prept_x_ = new ::std::string;
+  }
+  return prept_x_;
+}
+inline ::std::string* cUpdatePenAnderaser::release_prept_x() {
+  clear_has_prept_x();
+  if (prept_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = prept_x_;
+    prept_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdatePenAnderaser::set_allocated_prept_x(::std::string* prept_x) {
+  if (prept_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete prept_x_;
+  }
+  if (prept_x) {
+    set_has_prept_x();
+    prept_x_ = prept_x;
+  } else {
+    clear_has_prept_x();
+    prept_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string prept_y = 9;
+inline bool cUpdatePenAnderaser::has_prept_y() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void cUpdatePenAnderaser::set_has_prept_y() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void cUpdatePenAnderaser::clear_has_prept_y() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void cUpdatePenAnderaser::clear_prept_y() {
+  if (prept_y_ != &::google::protobuf::internal::kEmptyString) {
+    prept_y_->clear();
+  }
+  clear_has_prept_y();
+}
+inline const ::std::string& cUpdatePenAnderaser::prept_y() const {
+  return *prept_y_;
+}
+inline void cUpdatePenAnderaser::set_prept_y(const ::std::string& value) {
+  set_has_prept_y();
+  if (prept_y_ == &::google::protobuf::internal::kEmptyString) {
+    prept_y_ = new ::std::string;
+  }
+  prept_y_->assign(value);
+}
+inline void cUpdatePenAnderaser::set_prept_y(const char* value) {
+  set_has_prept_y();
+  if (prept_y_ == &::google::protobuf::internal::kEmptyString) {
+    prept_y_ = new ::std::string;
+  }
+  prept_y_->assign(value);
+}
+inline void cUpdatePenAnderaser::set_prept_y(const char* value, size_t size) {
+  set_has_prept_y();
+  if (prept_y_ == &::google::protobuf::internal::kEmptyString) {
+    prept_y_ = new ::std::string;
+  }
+  prept_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdatePenAnderaser::mutable_prept_y() {
+  set_has_prept_y();
+  if (prept_y_ == &::google::protobuf::internal::kEmptyString) {
+    prept_y_ = new ::std::string;
+  }
+  return prept_y_;
+}
+inline ::std::string* cUpdatePenAnderaser::release_prept_y() {
+  clear_has_prept_y();
+  if (prept_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = prept_y_;
+    prept_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdatePenAnderaser::set_allocated_prept_y(::std::string* prept_y) {
+  if (prept_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete prept_y_;
+  }
+  if (prept_y) {
+    set_has_prept_y();
+    prept_y_ = prept_y;
+  } else {
+    clear_has_prept_y();
+    prept_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// sUpdatePenAnderaser
+
+// required int32 pen_type = 1;
+inline bool sUpdatePenAnderaser::has_pen_type() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sUpdatePenAnderaser::set_has_pen_type() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sUpdatePenAnderaser::clear_has_pen_type() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sUpdatePenAnderaser::clear_pen_type() {
+  pen_type_ = 0;
+  clear_has_pen_type();
+}
+inline ::google::protobuf::int32 sUpdatePenAnderaser::pen_type() const {
+  return pen_type_;
+}
+inline void sUpdatePenAnderaser::set_pen_type(::google::protobuf::int32 value) {
+  set_has_pen_type();
+  pen_type_ = value;
+}
+
+// required int32 pen_color = 2;
+inline bool sUpdatePenAnderaser::has_pen_color() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sUpdatePenAnderaser::set_has_pen_color() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sUpdatePenAnderaser::clear_has_pen_color() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sUpdatePenAnderaser::clear_pen_color() {
+  pen_color_ = 0;
+  clear_has_pen_color();
+}
+inline ::google::protobuf::int32 sUpdatePenAnderaser::pen_color() const {
+  return pen_color_;
+}
+inline void sUpdatePenAnderaser::set_pen_color(::google::protobuf::int32 value) {
+  set_has_pen_color();
+  pen_color_ = value;
+}
+
+// required string pen_size = 3;
+inline bool sUpdatePenAnderaser::has_pen_size() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void sUpdatePenAnderaser::set_has_pen_size() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void sUpdatePenAnderaser::clear_has_pen_size() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void sUpdatePenAnderaser::clear_pen_size() {
+  if (pen_size_ != &::google::protobuf::internal::kEmptyString) {
+    pen_size_->clear();
+  }
+  clear_has_pen_size();
+}
+inline const ::std::string& sUpdatePenAnderaser::pen_size() const {
+  return *pen_size_;
+}
+inline void sUpdatePenAnderaser::set_pen_size(const ::std::string& value) {
+  set_has_pen_size();
+  if (pen_size_ == &::google::protobuf::internal::kEmptyString) {
+    pen_size_ = new ::std::string;
+  }
+  pen_size_->assign(value);
+}
+inline void sUpdatePenAnderaser::set_pen_size(const char* value) {
+  set_has_pen_size();
+  if (pen_size_ == &::google::protobuf::internal::kEmptyString) {
+    pen_size_ = new ::std::string;
+  }
+  pen_size_->assign(value);
+}
+inline void sUpdatePenAnderaser::set_pen_size(const char* value, size_t size) {
+  set_has_pen_size();
+  if (pen_size_ == &::google::protobuf::internal::kEmptyString) {
+    pen_size_ = new ::std::string;
+  }
+  pen_size_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdatePenAnderaser::mutable_pen_size() {
+  set_has_pen_size();
+  if (pen_size_ == &::google::protobuf::internal::kEmptyString) {
+    pen_size_ = new ::std::string;
+  }
+  return pen_size_;
+}
+inline ::std::string* sUpdatePenAnderaser::release_pen_size() {
+  clear_has_pen_size();
+  if (pen_size_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pen_size_;
+    pen_size_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdatePenAnderaser::set_allocated_pen_size(::std::string* pen_size) {
+  if (pen_size_ != &::google::protobuf::internal::kEmptyString) {
+    delete pen_size_;
+  }
+  if (pen_size) {
+    set_has_pen_size();
+    pen_size_ = pen_size;
+  } else {
+    clear_has_pen_size();
+    pen_size_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 pen_trans = 4;
+inline bool sUpdatePenAnderaser::has_pen_trans() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void sUpdatePenAnderaser::set_has_pen_trans() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void sUpdatePenAnderaser::clear_has_pen_trans() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void sUpdatePenAnderaser::clear_pen_trans() {
+  pen_trans_ = 0;
+  clear_has_pen_trans();
+}
+inline ::google::protobuf::int32 sUpdatePenAnderaser::pen_trans() const {
+  return pen_trans_;
+}
+inline void sUpdatePenAnderaser::set_pen_trans(::google::protobuf::int32 value) {
+  set_has_pen_trans();
+  pen_trans_ = value;
+}
+
+// required int32 paint_type = 5;
+inline bool sUpdatePenAnderaser::has_paint_type() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void sUpdatePenAnderaser::set_has_paint_type() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void sUpdatePenAnderaser::clear_has_paint_type() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void sUpdatePenAnderaser::clear_paint_type() {
+  paint_type_ = 0;
+  clear_has_paint_type();
+}
+inline ::google::protobuf::int32 sUpdatePenAnderaser::paint_type() const {
+  return paint_type_;
+}
+inline void sUpdatePenAnderaser::set_paint_type(::google::protobuf::int32 value) {
+  set_has_paint_type();
+  paint_type_ = value;
+}
+
+// required string pt_x = 6;
+inline bool sUpdatePenAnderaser::has_pt_x() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void sUpdatePenAnderaser::set_has_pt_x() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void sUpdatePenAnderaser::clear_has_pt_x() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void sUpdatePenAnderaser::clear_pt_x() {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    pt_x_->clear();
+  }
+  clear_has_pt_x();
+}
+inline const ::std::string& sUpdatePenAnderaser::pt_x() const {
+  return *pt_x_;
+}
+inline void sUpdatePenAnderaser::set_pt_x(const ::std::string& value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void sUpdatePenAnderaser::set_pt_x(const char* value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void sUpdatePenAnderaser::set_pt_x(const char* value, size_t size) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdatePenAnderaser::mutable_pt_x() {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  return pt_x_;
+}
+inline ::std::string* sUpdatePenAnderaser::release_pt_x() {
+  clear_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_x_;
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdatePenAnderaser::set_allocated_pt_x(::std::string* pt_x) {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_x_;
+  }
+  if (pt_x) {
+    set_has_pt_x();
+    pt_x_ = pt_x;
+  } else {
+    clear_has_pt_x();
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_y = 7;
+inline bool sUpdatePenAnderaser::has_pt_y() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void sUpdatePenAnderaser::set_has_pt_y() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void sUpdatePenAnderaser::clear_has_pt_y() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void sUpdatePenAnderaser::clear_pt_y() {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    pt_y_->clear();
+  }
+  clear_has_pt_y();
+}
+inline const ::std::string& sUpdatePenAnderaser::pt_y() const {
+  return *pt_y_;
+}
+inline void sUpdatePenAnderaser::set_pt_y(const ::std::string& value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void sUpdatePenAnderaser::set_pt_y(const char* value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void sUpdatePenAnderaser::set_pt_y(const char* value, size_t size) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdatePenAnderaser::mutable_pt_y() {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  return pt_y_;
+}
+inline ::std::string* sUpdatePenAnderaser::release_pt_y() {
+  clear_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_y_;
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdatePenAnderaser::set_allocated_pt_y(::std::string* pt_y) {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_y_;
+  }
+  if (pt_y) {
+    set_has_pt_y();
+    pt_y_ = pt_y;
+  } else {
+    clear_has_pt_y();
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string prept_x = 8;
+inline bool sUpdatePenAnderaser::has_prept_x() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void sUpdatePenAnderaser::set_has_prept_x() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void sUpdatePenAnderaser::clear_has_prept_x() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void sUpdatePenAnderaser::clear_prept_x() {
+  if (prept_x_ != &::google::protobuf::internal::kEmptyString) {
+    prept_x_->clear();
+  }
+  clear_has_prept_x();
+}
+inline const ::std::string& sUpdatePenAnderaser::prept_x() const {
+  return *prept_x_;
+}
+inline void sUpdatePenAnderaser::set_prept_x(const ::std::string& value) {
+  set_has_prept_x();
+  if (prept_x_ == &::google::protobuf::internal::kEmptyString) {
+    prept_x_ = new ::std::string;
+  }
+  prept_x_->assign(value);
+}
+inline void sUpdatePenAnderaser::set_prept_x(const char* value) {
+  set_has_prept_x();
+  if (prept_x_ == &::google::protobuf::internal::kEmptyString) {
+    prept_x_ = new ::std::string;
+  }
+  prept_x_->assign(value);
+}
+inline void sUpdatePenAnderaser::set_prept_x(const char* value, size_t size) {
+  set_has_prept_x();
+  if (prept_x_ == &::google::protobuf::internal::kEmptyString) {
+    prept_x_ = new ::std::string;
+  }
+  prept_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdatePenAnderaser::mutable_prept_x() {
+  set_has_prept_x();
+  if (prept_x_ == &::google::protobuf::internal::kEmptyString) {
+    prept_x_ = new ::std::string;
+  }
+  return prept_x_;
+}
+inline ::std::string* sUpdatePenAnderaser::release_prept_x() {
+  clear_has_prept_x();
+  if (prept_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = prept_x_;
+    prept_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdatePenAnderaser::set_allocated_prept_x(::std::string* prept_x) {
+  if (prept_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete prept_x_;
+  }
+  if (prept_x) {
+    set_has_prept_x();
+    prept_x_ = prept_x;
+  } else {
+    clear_has_prept_x();
+    prept_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string prept_y = 9;
+inline bool sUpdatePenAnderaser::has_prept_y() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void sUpdatePenAnderaser::set_has_prept_y() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void sUpdatePenAnderaser::clear_has_prept_y() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void sUpdatePenAnderaser::clear_prept_y() {
+  if (prept_y_ != &::google::protobuf::internal::kEmptyString) {
+    prept_y_->clear();
+  }
+  clear_has_prept_y();
+}
+inline const ::std::string& sUpdatePenAnderaser::prept_y() const {
+  return *prept_y_;
+}
+inline void sUpdatePenAnderaser::set_prept_y(const ::std::string& value) {
+  set_has_prept_y();
+  if (prept_y_ == &::google::protobuf::internal::kEmptyString) {
+    prept_y_ = new ::std::string;
+  }
+  prept_y_->assign(value);
+}
+inline void sUpdatePenAnderaser::set_prept_y(const char* value) {
+  set_has_prept_y();
+  if (prept_y_ == &::google::protobuf::internal::kEmptyString) {
+    prept_y_ = new ::std::string;
+  }
+  prept_y_->assign(value);
+}
+inline void sUpdatePenAnderaser::set_prept_y(const char* value, size_t size) {
+  set_has_prept_y();
+  if (prept_y_ == &::google::protobuf::internal::kEmptyString) {
+    prept_y_ = new ::std::string;
+  }
+  prept_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdatePenAnderaser::mutable_prept_y() {
+  set_has_prept_y();
+  if (prept_y_ == &::google::protobuf::internal::kEmptyString) {
+    prept_y_ = new ::std::string;
+  }
+  return prept_y_;
+}
+inline ::std::string* sUpdatePenAnderaser::release_prept_y() {
+  clear_has_prept_y();
+  if (prept_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = prept_y_;
+    prept_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdatePenAnderaser::set_allocated_prept_y(::std::string* prept_y) {
+  if (prept_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete prept_y_;
+  }
+  if (prept_y) {
+    set_has_prept_y();
+    prept_y_ = prept_y;
+  } else {
+    clear_has_prept_y();
+    prept_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// cUpdateFilling
+
+// required string pt_list = 1;
+inline bool cUpdateFilling::has_pt_list() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUpdateFilling::set_has_pt_list() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUpdateFilling::clear_has_pt_list() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUpdateFilling::clear_pt_list() {
+  if (pt_list_ != &::google::protobuf::internal::kEmptyString) {
+    pt_list_->clear();
+  }
+  clear_has_pt_list();
+}
+inline const ::std::string& cUpdateFilling::pt_list() const {
+  return *pt_list_;
+}
+inline void cUpdateFilling::set_pt_list(const ::std::string& value) {
+  set_has_pt_list();
+  if (pt_list_ == &::google::protobuf::internal::kEmptyString) {
+    pt_list_ = new ::std::string;
+  }
+  pt_list_->assign(value);
+}
+inline void cUpdateFilling::set_pt_list(const char* value) {
+  set_has_pt_list();
+  if (pt_list_ == &::google::protobuf::internal::kEmptyString) {
+    pt_list_ = new ::std::string;
+  }
+  pt_list_->assign(value);
+}
+inline void cUpdateFilling::set_pt_list(const char* value, size_t size) {
+  set_has_pt_list();
+  if (pt_list_ == &::google::protobuf::internal::kEmptyString) {
+    pt_list_ = new ::std::string;
+  }
+  pt_list_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateFilling::mutable_pt_list() {
+  set_has_pt_list();
+  if (pt_list_ == &::google::protobuf::internal::kEmptyString) {
+    pt_list_ = new ::std::string;
+  }
+  return pt_list_;
+}
+inline ::std::string* cUpdateFilling::release_pt_list() {
+  clear_has_pt_list();
+  if (pt_list_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_list_;
+    pt_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateFilling::set_allocated_pt_list(::std::string* pt_list) {
+  if (pt_list_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_list_;
+  }
+  if (pt_list) {
+    set_has_pt_list();
+    pt_list_ = pt_list;
+  } else {
+    clear_has_pt_list();
+    pt_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 trans = 3;
+inline bool cUpdateFilling::has_trans() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cUpdateFilling::set_has_trans() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cUpdateFilling::clear_has_trans() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cUpdateFilling::clear_trans() {
+  trans_ = 0;
+  clear_has_trans();
+}
+inline ::google::protobuf::int32 cUpdateFilling::trans() const {
+  return trans_;
+}
+inline void cUpdateFilling::set_trans(::google::protobuf::int32 value) {
+  set_has_trans();
+  trans_ = value;
+}
+
+// required int32 color = 2;
+inline bool cUpdateFilling::has_color() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void cUpdateFilling::set_has_color() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void cUpdateFilling::clear_has_color() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void cUpdateFilling::clear_color() {
+  color_ = 0;
+  clear_has_color();
+}
+inline ::google::protobuf::int32 cUpdateFilling::color() const {
+  return color_;
+}
+inline void cUpdateFilling::set_color(::google::protobuf::int32 value) {
+  set_has_color();
+  color_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// sUpdateFilling
+
+// required string pt_list = 1;
+inline bool sUpdateFilling::has_pt_list() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sUpdateFilling::set_has_pt_list() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sUpdateFilling::clear_has_pt_list() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sUpdateFilling::clear_pt_list() {
+  if (pt_list_ != &::google::protobuf::internal::kEmptyString) {
+    pt_list_->clear();
+  }
+  clear_has_pt_list();
+}
+inline const ::std::string& sUpdateFilling::pt_list() const {
+  return *pt_list_;
+}
+inline void sUpdateFilling::set_pt_list(const ::std::string& value) {
+  set_has_pt_list();
+  if (pt_list_ == &::google::protobuf::internal::kEmptyString) {
+    pt_list_ = new ::std::string;
+  }
+  pt_list_->assign(value);
+}
+inline void sUpdateFilling::set_pt_list(const char* value) {
+  set_has_pt_list();
+  if (pt_list_ == &::google::protobuf::internal::kEmptyString) {
+    pt_list_ = new ::std::string;
+  }
+  pt_list_->assign(value);
+}
+inline void sUpdateFilling::set_pt_list(const char* value, size_t size) {
+  set_has_pt_list();
+  if (pt_list_ == &::google::protobuf::internal::kEmptyString) {
+    pt_list_ = new ::std::string;
+  }
+  pt_list_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateFilling::mutable_pt_list() {
+  set_has_pt_list();
+  if (pt_list_ == &::google::protobuf::internal::kEmptyString) {
+    pt_list_ = new ::std::string;
+  }
+  return pt_list_;
+}
+inline ::std::string* sUpdateFilling::release_pt_list() {
+  clear_has_pt_list();
+  if (pt_list_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_list_;
+    pt_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateFilling::set_allocated_pt_list(::std::string* pt_list) {
+  if (pt_list_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_list_;
+  }
+  if (pt_list) {
+    set_has_pt_list();
+    pt_list_ = pt_list;
+  } else {
+    clear_has_pt_list();
+    pt_list_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 trans = 3;
+inline bool sUpdateFilling::has_trans() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sUpdateFilling::set_has_trans() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sUpdateFilling::clear_has_trans() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sUpdateFilling::clear_trans() {
+  trans_ = 0;
+  clear_has_trans();
+}
+inline ::google::protobuf::int32 sUpdateFilling::trans() const {
+  return trans_;
+}
+inline void sUpdateFilling::set_trans(::google::protobuf::int32 value) {
+  set_has_trans();
+  trans_ = value;
+}
+
+// required int32 color = 2;
+inline bool sUpdateFilling::has_color() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void sUpdateFilling::set_has_color() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void sUpdateFilling::clear_has_color() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void sUpdateFilling::clear_color() {
+  color_ = 0;
+  clear_has_color();
+}
+inline ::google::protobuf::int32 sUpdateFilling::color() const {
+  return color_;
+}
+inline void sUpdateFilling::set_color(::google::protobuf::int32 value) {
+  set_has_color();
+  color_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// cUpdateStamp
+
+// required string pic_res = 1;
+inline bool cUpdateStamp::has_pic_res() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUpdateStamp::set_has_pic_res() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUpdateStamp::clear_has_pic_res() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUpdateStamp::clear_pic_res() {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    pic_res_->clear();
+  }
+  clear_has_pic_res();
+}
+inline const ::std::string& cUpdateStamp::pic_res() const {
+  return *pic_res_;
+}
+inline void cUpdateStamp::set_pic_res(const ::std::string& value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void cUpdateStamp::set_pic_res(const char* value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void cUpdateStamp::set_pic_res(const char* value, size_t size) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateStamp::mutable_pic_res() {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  return pic_res_;
+}
+inline ::std::string* cUpdateStamp::release_pic_res() {
+  clear_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_res_;
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateStamp::set_allocated_pic_res(::std::string* pic_res) {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_res_;
+  }
+  if (pic_res) {
+    set_has_pic_res();
+    pic_res_ = pic_res;
+  } else {
+    clear_has_pic_res();
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_x = 2;
+inline bool cUpdateStamp::has_pt_x() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cUpdateStamp::set_has_pt_x() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cUpdateStamp::clear_has_pt_x() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cUpdateStamp::clear_pt_x() {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    pt_x_->clear();
+  }
+  clear_has_pt_x();
+}
+inline const ::std::string& cUpdateStamp::pt_x() const {
+  return *pt_x_;
+}
+inline void cUpdateStamp::set_pt_x(const ::std::string& value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void cUpdateStamp::set_pt_x(const char* value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void cUpdateStamp::set_pt_x(const char* value, size_t size) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateStamp::mutable_pt_x() {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  return pt_x_;
+}
+inline ::std::string* cUpdateStamp::release_pt_x() {
+  clear_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_x_;
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateStamp::set_allocated_pt_x(::std::string* pt_x) {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_x_;
+  }
+  if (pt_x) {
+    set_has_pt_x();
+    pt_x_ = pt_x;
+  } else {
+    clear_has_pt_x();
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_y = 3;
+inline bool cUpdateStamp::has_pt_y() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void cUpdateStamp::set_has_pt_y() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void cUpdateStamp::clear_has_pt_y() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void cUpdateStamp::clear_pt_y() {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    pt_y_->clear();
+  }
+  clear_has_pt_y();
+}
+inline const ::std::string& cUpdateStamp::pt_y() const {
+  return *pt_y_;
+}
+inline void cUpdateStamp::set_pt_y(const ::std::string& value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void cUpdateStamp::set_pt_y(const char* value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void cUpdateStamp::set_pt_y(const char* value, size_t size) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateStamp::mutable_pt_y() {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  return pt_y_;
+}
+inline ::std::string* cUpdateStamp::release_pt_y() {
+  clear_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_y_;
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateStamp::set_allocated_pt_y(::std::string* pt_y) {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_y_;
+  }
+  if (pt_y) {
+    set_has_pt_y();
+    pt_y_ = pt_y;
+  } else {
+    clear_has_pt_y();
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// sUpdateStamp
+
+// required string pic_res = 1;
+inline bool sUpdateStamp::has_pic_res() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sUpdateStamp::set_has_pic_res() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sUpdateStamp::clear_has_pic_res() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sUpdateStamp::clear_pic_res() {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    pic_res_->clear();
+  }
+  clear_has_pic_res();
+}
+inline const ::std::string& sUpdateStamp::pic_res() const {
+  return *pic_res_;
+}
+inline void sUpdateStamp::set_pic_res(const ::std::string& value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void sUpdateStamp::set_pic_res(const char* value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void sUpdateStamp::set_pic_res(const char* value, size_t size) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateStamp::mutable_pic_res() {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  return pic_res_;
+}
+inline ::std::string* sUpdateStamp::release_pic_res() {
+  clear_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_res_;
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateStamp::set_allocated_pic_res(::std::string* pic_res) {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_res_;
+  }
+  if (pic_res) {
+    set_has_pic_res();
+    pic_res_ = pic_res;
+  } else {
+    clear_has_pic_res();
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_x = 2;
+inline bool sUpdateStamp::has_pt_x() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sUpdateStamp::set_has_pt_x() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sUpdateStamp::clear_has_pt_x() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sUpdateStamp::clear_pt_x() {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    pt_x_->clear();
+  }
+  clear_has_pt_x();
+}
+inline const ::std::string& sUpdateStamp::pt_x() const {
+  return *pt_x_;
+}
+inline void sUpdateStamp::set_pt_x(const ::std::string& value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void sUpdateStamp::set_pt_x(const char* value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void sUpdateStamp::set_pt_x(const char* value, size_t size) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateStamp::mutable_pt_x() {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  return pt_x_;
+}
+inline ::std::string* sUpdateStamp::release_pt_x() {
+  clear_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_x_;
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateStamp::set_allocated_pt_x(::std::string* pt_x) {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_x_;
+  }
+  if (pt_x) {
+    set_has_pt_x();
+    pt_x_ = pt_x;
+  } else {
+    clear_has_pt_x();
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_y = 3;
+inline bool sUpdateStamp::has_pt_y() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void sUpdateStamp::set_has_pt_y() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void sUpdateStamp::clear_has_pt_y() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void sUpdateStamp::clear_pt_y() {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    pt_y_->clear();
+  }
+  clear_has_pt_y();
+}
+inline const ::std::string& sUpdateStamp::pt_y() const {
+  return *pt_y_;
+}
+inline void sUpdateStamp::set_pt_y(const ::std::string& value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void sUpdateStamp::set_pt_y(const char* value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void sUpdateStamp::set_pt_y(const char* value, size_t size) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateStamp::mutable_pt_y() {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  return pt_y_;
+}
+inline ::std::string* sUpdateStamp::release_pt_y() {
+  clear_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_y_;
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateStamp::set_allocated_pt_y(::std::string* pt_y) {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_y_;
+  }
+  if (pt_y) {
+    set_has_pt_y();
+    pt_y_ = pt_y;
+  } else {
+    clear_has_pt_y();
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// cUpdateFillPic
+
+// required string pic_res = 1;
+inline bool cUpdateFillPic::has_pic_res() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUpdateFillPic::set_has_pic_res() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUpdateFillPic::clear_has_pic_res() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUpdateFillPic::clear_pic_res() {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    pic_res_->clear();
+  }
+  clear_has_pic_res();
+}
+inline const ::std::string& cUpdateFillPic::pic_res() const {
+  return *pic_res_;
+}
+inline void cUpdateFillPic::set_pic_res(const ::std::string& value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void cUpdateFillPic::set_pic_res(const char* value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void cUpdateFillPic::set_pic_res(const char* value, size_t size) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateFillPic::mutable_pic_res() {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  return pic_res_;
+}
+inline ::std::string* cUpdateFillPic::release_pic_res() {
+  clear_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_res_;
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateFillPic::set_allocated_pic_res(::std::string* pic_res) {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_res_;
+  }
+  if (pic_res) {
+    set_has_pic_res();
+    pic_res_ = pic_res;
+  } else {
+    clear_has_pic_res();
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_x = 2;
+inline bool cUpdateFillPic::has_pt_x() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cUpdateFillPic::set_has_pt_x() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cUpdateFillPic::clear_has_pt_x() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cUpdateFillPic::clear_pt_x() {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    pt_x_->clear();
+  }
+  clear_has_pt_x();
+}
+inline const ::std::string& cUpdateFillPic::pt_x() const {
+  return *pt_x_;
+}
+inline void cUpdateFillPic::set_pt_x(const ::std::string& value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void cUpdateFillPic::set_pt_x(const char* value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void cUpdateFillPic::set_pt_x(const char* value, size_t size) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateFillPic::mutable_pt_x() {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  return pt_x_;
+}
+inline ::std::string* cUpdateFillPic::release_pt_x() {
+  clear_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_x_;
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateFillPic::set_allocated_pt_x(::std::string* pt_x) {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_x_;
+  }
+  if (pt_x) {
+    set_has_pt_x();
+    pt_x_ = pt_x;
+  } else {
+    clear_has_pt_x();
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_y = 3;
+inline bool cUpdateFillPic::has_pt_y() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void cUpdateFillPic::set_has_pt_y() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void cUpdateFillPic::clear_has_pt_y() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void cUpdateFillPic::clear_pt_y() {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    pt_y_->clear();
+  }
+  clear_has_pt_y();
+}
+inline const ::std::string& cUpdateFillPic::pt_y() const {
+  return *pt_y_;
+}
+inline void cUpdateFillPic::set_pt_y(const ::std::string& value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void cUpdateFillPic::set_pt_y(const char* value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void cUpdateFillPic::set_pt_y(const char* value, size_t size) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateFillPic::mutable_pt_y() {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  return pt_y_;
+}
+inline ::std::string* cUpdateFillPic::release_pt_y() {
+  clear_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_y_;
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateFillPic::set_allocated_pt_y(::std::string* pt_y) {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_y_;
+  }
+  if (pt_y) {
+    set_has_pt_y();
+    pt_y_ = pt_y;
+  } else {
+    clear_has_pt_y();
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// sUpdateFillPic
+
+// required string pic_res = 1;
+inline bool sUpdateFillPic::has_pic_res() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sUpdateFillPic::set_has_pic_res() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sUpdateFillPic::clear_has_pic_res() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sUpdateFillPic::clear_pic_res() {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    pic_res_->clear();
+  }
+  clear_has_pic_res();
+}
+inline const ::std::string& sUpdateFillPic::pic_res() const {
+  return *pic_res_;
+}
+inline void sUpdateFillPic::set_pic_res(const ::std::string& value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void sUpdateFillPic::set_pic_res(const char* value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void sUpdateFillPic::set_pic_res(const char* value, size_t size) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateFillPic::mutable_pic_res() {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  return pic_res_;
+}
+inline ::std::string* sUpdateFillPic::release_pic_res() {
+  clear_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_res_;
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateFillPic::set_allocated_pic_res(::std::string* pic_res) {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_res_;
+  }
+  if (pic_res) {
+    set_has_pic_res();
+    pic_res_ = pic_res;
+  } else {
+    clear_has_pic_res();
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_x = 2;
+inline bool sUpdateFillPic::has_pt_x() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sUpdateFillPic::set_has_pt_x() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sUpdateFillPic::clear_has_pt_x() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sUpdateFillPic::clear_pt_x() {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    pt_x_->clear();
+  }
+  clear_has_pt_x();
+}
+inline const ::std::string& sUpdateFillPic::pt_x() const {
+  return *pt_x_;
+}
+inline void sUpdateFillPic::set_pt_x(const ::std::string& value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void sUpdateFillPic::set_pt_x(const char* value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void sUpdateFillPic::set_pt_x(const char* value, size_t size) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateFillPic::mutable_pt_x() {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  return pt_x_;
+}
+inline ::std::string* sUpdateFillPic::release_pt_x() {
+  clear_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_x_;
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateFillPic::set_allocated_pt_x(::std::string* pt_x) {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_x_;
+  }
+  if (pt_x) {
+    set_has_pt_x();
+    pt_x_ = pt_x;
+  } else {
+    clear_has_pt_x();
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_y = 3;
+inline bool sUpdateFillPic::has_pt_y() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void sUpdateFillPic::set_has_pt_y() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void sUpdateFillPic::clear_has_pt_y() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void sUpdateFillPic::clear_pt_y() {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    pt_y_->clear();
+  }
+  clear_has_pt_y();
+}
+inline const ::std::string& sUpdateFillPic::pt_y() const {
+  return *pt_y_;
+}
+inline void sUpdateFillPic::set_pt_y(const ::std::string& value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void sUpdateFillPic::set_pt_y(const char* value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void sUpdateFillPic::set_pt_y(const char* value, size_t size) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateFillPic::mutable_pt_y() {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  return pt_y_;
+}
+inline ::std::string* sUpdateFillPic::release_pt_y() {
+  clear_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_y_;
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateFillPic::set_allocated_pt_y(::std::string* pt_y) {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_y_;
+  }
+  if (pt_y) {
+    set_has_pt_y();
+    pt_y_ = pt_y;
+  } else {
+    clear_has_pt_y();
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// cUpdateMutex
+
+// required int32 lock = 1;
+inline bool cUpdateMutex::has_lock() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUpdateMutex::set_has_lock() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUpdateMutex::clear_has_lock() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUpdateMutex::clear_lock() {
+  lock_ = 0;
+  clear_has_lock();
+}
+inline ::google::protobuf::int32 cUpdateMutex::lock() const {
+  return lock_;
+}
+inline void cUpdateMutex::set_lock(::google::protobuf::int32 value) {
+  set_has_lock();
+  lock_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// sUpdateMutex
+
+// required int32 result = 1;
+inline bool sUpdateMutex::has_result() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sUpdateMutex::set_has_result() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sUpdateMutex::clear_has_result() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sUpdateMutex::clear_result() {
+  result_ = 0;
+  clear_has_result();
+}
+inline ::google::protobuf::int32 sUpdateMutex::result() const {
+  return result_;
+}
+inline void sUpdateMutex::set_result(::google::protobuf::int32 value) {
+  set_has_result();
+  result_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// cUpdateCollage
+
+// required int32 id = 9;
+inline bool cUpdateCollage::has_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUpdateCollage::set_has_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUpdateCollage::clear_has_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUpdateCollage::clear_id() {
+  id_ = 0;
+  clear_has_id();
+}
+inline ::google::protobuf::int32 cUpdateCollage::id() const {
+  return id_;
+}
+inline void cUpdateCollage::set_id(::google::protobuf::int32 value) {
+  set_has_id();
+  id_ = value;
+}
+
+// required string pic_res = 1;
+inline bool cUpdateCollage::has_pic_res() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cUpdateCollage::set_has_pic_res() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cUpdateCollage::clear_has_pic_res() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cUpdateCollage::clear_pic_res() {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    pic_res_->clear();
+  }
+  clear_has_pic_res();
+}
+inline const ::std::string& cUpdateCollage::pic_res() const {
+  return *pic_res_;
+}
+inline void cUpdateCollage::set_pic_res(const ::std::string& value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void cUpdateCollage::set_pic_res(const char* value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void cUpdateCollage::set_pic_res(const char* value, size_t size) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateCollage::mutable_pic_res() {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  return pic_res_;
+}
+inline ::std::string* cUpdateCollage::release_pic_res() {
+  clear_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_res_;
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateCollage::set_allocated_pic_res(::std::string* pic_res) {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_res_;
+  }
+  if (pic_res) {
+    set_has_pic_res();
+    pic_res_ = pic_res;
+  } else {
+    clear_has_pic_res();
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 pic_type = 2;
+inline bool cUpdateCollage::has_pic_type() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void cUpdateCollage::set_has_pic_type() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void cUpdateCollage::clear_has_pic_type() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void cUpdateCollage::clear_pic_type() {
+  pic_type_ = 0;
+  clear_has_pic_type();
+}
+inline ::google::protobuf::int32 cUpdateCollage::pic_type() const {
+  return pic_type_;
+}
+inline void cUpdateCollage::set_pic_type(::google::protobuf::int32 value) {
+  set_has_pic_type();
+  pic_type_ = value;
+}
+
+// required string pic_scale = 3;
+inline bool cUpdateCollage::has_pic_scale() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void cUpdateCollage::set_has_pic_scale() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void cUpdateCollage::clear_has_pic_scale() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void cUpdateCollage::clear_pic_scale() {
+  if (pic_scale_ != &::google::protobuf::internal::kEmptyString) {
+    pic_scale_->clear();
+  }
+  clear_has_pic_scale();
+}
+inline const ::std::string& cUpdateCollage::pic_scale() const {
+  return *pic_scale_;
+}
+inline void cUpdateCollage::set_pic_scale(const ::std::string& value) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(value);
+}
+inline void cUpdateCollage::set_pic_scale(const char* value) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(value);
+}
+inline void cUpdateCollage::set_pic_scale(const char* value, size_t size) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateCollage::mutable_pic_scale() {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  return pic_scale_;
+}
+inline ::std::string* cUpdateCollage::release_pic_scale() {
+  clear_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_scale_;
+    pic_scale_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateCollage::set_allocated_pic_scale(::std::string* pic_scale) {
+  if (pic_scale_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_scale_;
+  }
+  if (pic_scale) {
+    set_has_pic_scale();
+    pic_scale_ = pic_scale;
+  } else {
+    clear_has_pic_scale();
+    pic_scale_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pic_rotation = 4;
+inline bool cUpdateCollage::has_pic_rotation() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void cUpdateCollage::set_has_pic_rotation() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void cUpdateCollage::clear_has_pic_rotation() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void cUpdateCollage::clear_pic_rotation() {
+  if (pic_rotation_ != &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_->clear();
+  }
+  clear_has_pic_rotation();
+}
+inline const ::std::string& cUpdateCollage::pic_rotation() const {
+  return *pic_rotation_;
+}
+inline void cUpdateCollage::set_pic_rotation(const ::std::string& value) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(value);
+}
+inline void cUpdateCollage::set_pic_rotation(const char* value) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(value);
+}
+inline void cUpdateCollage::set_pic_rotation(const char* value, size_t size) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateCollage::mutable_pic_rotation() {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  return pic_rotation_;
+}
+inline ::std::string* cUpdateCollage::release_pic_rotation() {
+  clear_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_rotation_;
+    pic_rotation_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateCollage::set_allocated_pic_rotation(::std::string* pic_rotation) {
+  if (pic_rotation_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_rotation_;
+  }
+  if (pic_rotation) {
+    set_has_pic_rotation();
+    pic_rotation_ = pic_rotation;
+  } else {
+    clear_has_pic_rotation();
+    pic_rotation_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_x = 5;
+inline bool cUpdateCollage::has_pt_x() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void cUpdateCollage::set_has_pt_x() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void cUpdateCollage::clear_has_pt_x() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void cUpdateCollage::clear_pt_x() {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    pt_x_->clear();
+  }
+  clear_has_pt_x();
+}
+inline const ::std::string& cUpdateCollage::pt_x() const {
+  return *pt_x_;
+}
+inline void cUpdateCollage::set_pt_x(const ::std::string& value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void cUpdateCollage::set_pt_x(const char* value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void cUpdateCollage::set_pt_x(const char* value, size_t size) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateCollage::mutable_pt_x() {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  return pt_x_;
+}
+inline ::std::string* cUpdateCollage::release_pt_x() {
+  clear_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_x_;
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateCollage::set_allocated_pt_x(::std::string* pt_x) {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_x_;
+  }
+  if (pt_x) {
+    set_has_pt_x();
+    pt_x_ = pt_x;
+  } else {
+    clear_has_pt_x();
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_y = 6;
+inline bool cUpdateCollage::has_pt_y() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void cUpdateCollage::set_has_pt_y() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void cUpdateCollage::clear_has_pt_y() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void cUpdateCollage::clear_pt_y() {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    pt_y_->clear();
+  }
+  clear_has_pt_y();
+}
+inline const ::std::string& cUpdateCollage::pt_y() const {
+  return *pt_y_;
+}
+inline void cUpdateCollage::set_pt_y(const ::std::string& value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void cUpdateCollage::set_pt_y(const char* value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void cUpdateCollage::set_pt_y(const char* value, size_t size) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateCollage::mutable_pt_y() {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  return pt_y_;
+}
+inline ::std::string* cUpdateCollage::release_pt_y() {
+  clear_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_y_;
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateCollage::set_allocated_pt_y(::std::string* pt_y) {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_y_;
+  }
+  if (pt_y) {
+    set_has_pt_y();
+    pt_y_ = pt_y;
+  } else {
+    clear_has_pt_y();
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 layer = 7;
+inline bool cUpdateCollage::has_layer() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void cUpdateCollage::set_has_layer() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void cUpdateCollage::clear_has_layer() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void cUpdateCollage::clear_layer() {
+  layer_ = 0;
+  clear_has_layer();
+}
+inline ::google::protobuf::int32 cUpdateCollage::layer() const {
+  return layer_;
+}
+inline void cUpdateCollage::set_layer(::google::protobuf::int32 value) {
+  set_has_layer();
+  layer_ = value;
+}
+
+// required int32 op_type = 8;
+inline bool cUpdateCollage::has_op_type() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void cUpdateCollage::set_has_op_type() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void cUpdateCollage::clear_has_op_type() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void cUpdateCollage::clear_op_type() {
+  op_type_ = 0;
+  clear_has_op_type();
+}
+inline ::google::protobuf::int32 cUpdateCollage::op_type() const {
+  return op_type_;
+}
+inline void cUpdateCollage::set_op_type(::google::protobuf::int32 value) {
+  set_has_op_type();
+  op_type_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// sUpdateCollage
+
+// required int32 id = 9;
+inline bool sUpdateCollage::has_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sUpdateCollage::set_has_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sUpdateCollage::clear_has_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sUpdateCollage::clear_id() {
+  id_ = 0;
+  clear_has_id();
+}
+inline ::google::protobuf::int32 sUpdateCollage::id() const {
+  return id_;
+}
+inline void sUpdateCollage::set_id(::google::protobuf::int32 value) {
+  set_has_id();
+  id_ = value;
+}
+
+// required string pic_res = 1;
+inline bool sUpdateCollage::has_pic_res() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void sUpdateCollage::set_has_pic_res() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void sUpdateCollage::clear_has_pic_res() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void sUpdateCollage::clear_pic_res() {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    pic_res_->clear();
+  }
+  clear_has_pic_res();
+}
+inline const ::std::string& sUpdateCollage::pic_res() const {
+  return *pic_res_;
+}
+inline void sUpdateCollage::set_pic_res(const ::std::string& value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void sUpdateCollage::set_pic_res(const char* value) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(value);
+}
+inline void sUpdateCollage::set_pic_res(const char* value, size_t size) {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  pic_res_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateCollage::mutable_pic_res() {
+  set_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    pic_res_ = new ::std::string;
+  }
+  return pic_res_;
+}
+inline ::std::string* sUpdateCollage::release_pic_res() {
+  clear_has_pic_res();
+  if (pic_res_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_res_;
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateCollage::set_allocated_pic_res(::std::string* pic_res) {
+  if (pic_res_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_res_;
+  }
+  if (pic_res) {
+    set_has_pic_res();
+    pic_res_ = pic_res;
+  } else {
+    clear_has_pic_res();
+    pic_res_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 pic_type = 2;
+inline bool sUpdateCollage::has_pic_type() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void sUpdateCollage::set_has_pic_type() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void sUpdateCollage::clear_has_pic_type() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void sUpdateCollage::clear_pic_type() {
+  pic_type_ = 0;
+  clear_has_pic_type();
+}
+inline ::google::protobuf::int32 sUpdateCollage::pic_type() const {
+  return pic_type_;
+}
+inline void sUpdateCollage::set_pic_type(::google::protobuf::int32 value) {
+  set_has_pic_type();
+  pic_type_ = value;
+}
+
+// required string pic_scale = 3;
+inline bool sUpdateCollage::has_pic_scale() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void sUpdateCollage::set_has_pic_scale() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void sUpdateCollage::clear_has_pic_scale() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void sUpdateCollage::clear_pic_scale() {
+  if (pic_scale_ != &::google::protobuf::internal::kEmptyString) {
+    pic_scale_->clear();
+  }
+  clear_has_pic_scale();
+}
+inline const ::std::string& sUpdateCollage::pic_scale() const {
+  return *pic_scale_;
+}
+inline void sUpdateCollage::set_pic_scale(const ::std::string& value) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(value);
+}
+inline void sUpdateCollage::set_pic_scale(const char* value) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(value);
+}
+inline void sUpdateCollage::set_pic_scale(const char* value, size_t size) {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  pic_scale_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateCollage::mutable_pic_scale() {
+  set_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    pic_scale_ = new ::std::string;
+  }
+  return pic_scale_;
+}
+inline ::std::string* sUpdateCollage::release_pic_scale() {
+  clear_has_pic_scale();
+  if (pic_scale_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_scale_;
+    pic_scale_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateCollage::set_allocated_pic_scale(::std::string* pic_scale) {
+  if (pic_scale_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_scale_;
+  }
+  if (pic_scale) {
+    set_has_pic_scale();
+    pic_scale_ = pic_scale;
+  } else {
+    clear_has_pic_scale();
+    pic_scale_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pic_rotation = 4;
+inline bool sUpdateCollage::has_pic_rotation() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void sUpdateCollage::set_has_pic_rotation() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void sUpdateCollage::clear_has_pic_rotation() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void sUpdateCollage::clear_pic_rotation() {
+  if (pic_rotation_ != &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_->clear();
+  }
+  clear_has_pic_rotation();
+}
+inline const ::std::string& sUpdateCollage::pic_rotation() const {
+  return *pic_rotation_;
+}
+inline void sUpdateCollage::set_pic_rotation(const ::std::string& value) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(value);
+}
+inline void sUpdateCollage::set_pic_rotation(const char* value) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(value);
+}
+inline void sUpdateCollage::set_pic_rotation(const char* value, size_t size) {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  pic_rotation_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateCollage::mutable_pic_rotation() {
+  set_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    pic_rotation_ = new ::std::string;
+  }
+  return pic_rotation_;
+}
+inline ::std::string* sUpdateCollage::release_pic_rotation() {
+  clear_has_pic_rotation();
+  if (pic_rotation_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pic_rotation_;
+    pic_rotation_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateCollage::set_allocated_pic_rotation(::std::string* pic_rotation) {
+  if (pic_rotation_ != &::google::protobuf::internal::kEmptyString) {
+    delete pic_rotation_;
+  }
+  if (pic_rotation) {
+    set_has_pic_rotation();
+    pic_rotation_ = pic_rotation;
+  } else {
+    clear_has_pic_rotation();
+    pic_rotation_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_x = 5;
+inline bool sUpdateCollage::has_pt_x() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void sUpdateCollage::set_has_pt_x() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void sUpdateCollage::clear_has_pt_x() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void sUpdateCollage::clear_pt_x() {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    pt_x_->clear();
+  }
+  clear_has_pt_x();
+}
+inline const ::std::string& sUpdateCollage::pt_x() const {
+  return *pt_x_;
+}
+inline void sUpdateCollage::set_pt_x(const ::std::string& value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void sUpdateCollage::set_pt_x(const char* value) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(value);
+}
+inline void sUpdateCollage::set_pt_x(const char* value, size_t size) {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  pt_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateCollage::mutable_pt_x() {
+  set_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    pt_x_ = new ::std::string;
+  }
+  return pt_x_;
+}
+inline ::std::string* sUpdateCollage::release_pt_x() {
+  clear_has_pt_x();
+  if (pt_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_x_;
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateCollage::set_allocated_pt_x(::std::string* pt_x) {
+  if (pt_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_x_;
+  }
+  if (pt_x) {
+    set_has_pt_x();
+    pt_x_ = pt_x;
+  } else {
+    clear_has_pt_x();
+    pt_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string pt_y = 6;
+inline bool sUpdateCollage::has_pt_y() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void sUpdateCollage::set_has_pt_y() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void sUpdateCollage::clear_has_pt_y() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void sUpdateCollage::clear_pt_y() {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    pt_y_->clear();
+  }
+  clear_has_pt_y();
+}
+inline const ::std::string& sUpdateCollage::pt_y() const {
+  return *pt_y_;
+}
+inline void sUpdateCollage::set_pt_y(const ::std::string& value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void sUpdateCollage::set_pt_y(const char* value) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(value);
+}
+inline void sUpdateCollage::set_pt_y(const char* value, size_t size) {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  pt_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* sUpdateCollage::mutable_pt_y() {
+  set_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    pt_y_ = new ::std::string;
+  }
+  return pt_y_;
+}
+inline ::std::string* sUpdateCollage::release_pt_y() {
+  clear_has_pt_y();
+  if (pt_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pt_y_;
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void sUpdateCollage::set_allocated_pt_y(::std::string* pt_y) {
+  if (pt_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete pt_y_;
+  }
+  if (pt_y) {
+    set_has_pt_y();
+    pt_y_ = pt_y;
+  } else {
+    clear_has_pt_y();
+    pt_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 layer = 7;
+inline bool sUpdateCollage::has_layer() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void sUpdateCollage::set_has_layer() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void sUpdateCollage::clear_has_layer() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void sUpdateCollage::clear_layer() {
+  layer_ = 0;
+  clear_has_layer();
+}
+inline ::google::protobuf::int32 sUpdateCollage::layer() const {
+  return layer_;
+}
+inline void sUpdateCollage::set_layer(::google::protobuf::int32 value) {
+  set_has_layer();
+  layer_ = value;
+}
+
+// required int32 op_type = 8;
+inline bool sUpdateCollage::has_op_type() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void sUpdateCollage::set_has_op_type() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void sUpdateCollage::clear_has_op_type() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void sUpdateCollage::clear_op_type() {
+  op_type_ = 0;
+  clear_has_op_type();
+}
+inline ::google::protobuf::int32 sUpdateCollage::op_type() const {
+  return op_type_;
+}
+inline void sUpdateCollage::set_op_type(::google::protobuf::int32 value) {
+  set_has_op_type();
+  op_type_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// cUpdateWord
+
+// required int32 id = 9;
+inline bool cUpdateWord::has_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUpdateWord::set_has_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUpdateWord::clear_has_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUpdateWord::clear_id() {
+  id_ = 0;
+  clear_has_id();
+}
+inline ::google::protobuf::int32 cUpdateWord::id() const {
+  return id_;
+}
+inline void cUpdateWord::set_id(::google::protobuf::int32 value) {
+  set_has_id();
+  id_ = value;
+}
+
+// required int32 frame_id = 1;
+inline bool cUpdateWord::has_frame_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cUpdateWord::set_has_frame_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cUpdateWord::clear_has_frame_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cUpdateWord::clear_frame_id() {
+  frame_id_ = 0;
+  clear_has_frame_id();
+}
+inline ::google::protobuf::int32 cUpdateWord::frame_id() const {
+  return frame_id_;
+}
+inline void cUpdateWord::set_frame_id(::google::protobuf::int32 value) {
+  set_has_frame_id();
+  frame_id_ = value;
+}
+
+// required string msg = 2;
+inline bool cUpdateWord::has_msg() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void cUpdateWord::set_has_msg() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void cUpdateWord::clear_has_msg() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void cUpdateWord::clear_msg() {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    msg_->clear();
+  }
+  clear_has_msg();
+}
+inline const ::std::string& cUpdateWord::msg() const {
+  return *msg_;
+}
+inline void cUpdateWord::set_msg(const ::std::string& value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void cUpdateWord::set_msg(const char* value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void cUpdateWord::set_msg(const char* value, size_t size) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateWord::mutable_msg() {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  return msg_;
+}
+inline ::std::string* cUpdateWord::release_msg() {
+  clear_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msg_;
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateWord::set_allocated_msg(::std::string* msg) {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    delete msg_;
+  }
+  if (msg) {
+    set_has_msg();
+    msg_ = msg;
+  } else {
+    clear_has_msg();
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 front = 3;
+inline bool cUpdateWord::has_front() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void cUpdateWord::set_has_front() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void cUpdateWord::clear_has_front() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void cUpdateWord::clear_front() {
+  front_ = 0;
+  clear_has_front();
+}
+inline ::google::protobuf::int32 cUpdateWord::front() const {
+  return front_;
+}
+inline void cUpdateWord::set_front(::google::protobuf::int32 value) {
+  set_has_front();
+  front_ = value;
+}
+
+// required int32 color = 4;
+inline bool cUpdateWord::has_color() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void cUpdateWord::set_has_color() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void cUpdateWord::clear_has_color() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void cUpdateWord::clear_color() {
+  color_ = 0;
+  clear_has_color();
+}
+inline ::google::protobuf::int32 cUpdateWord::color() const {
+  return color_;
+}
+inline void cUpdateWord::set_color(::google::protobuf::int32 value) {
+  set_has_color();
+  color_ = value;
+}
+
+// required int32 size = 5;
+inline bool cUpdateWord::has_size() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void cUpdateWord::set_has_size() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void cUpdateWord::clear_has_size() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void cUpdateWord::clear_size() {
+  size_ = 0;
+  clear_has_size();
+}
+inline ::google::protobuf::int32 cUpdateWord::size() const {
+  return size_;
+}
+inline void cUpdateWord::set_size(::google::protobuf::int32 value) {
+  set_has_size();
+  size_ = value;
+}
+
+// required int32 effect_id = 6;
+inline bool cUpdateWord::has_effect_id() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void cUpdateWord::set_has_effect_id() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void cUpdateWord::clear_has_effect_id() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void cUpdateWord::clear_effect_id() {
+  effect_id_ = 0;
+  clear_has_effect_id();
+}
+inline ::google::protobuf::int32 cUpdateWord::effect_id() const {
+  return effect_id_;
+}
+inline void cUpdateWord::set_effect_id(::google::protobuf::int32 value) {
+  set_has_effect_id();
+  effect_id_ = value;
+}
+
+// required string frame_x = 7;
+inline bool cUpdateWord::has_frame_x() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void cUpdateWord::set_has_frame_x() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void cUpdateWord::clear_has_frame_x() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void cUpdateWord::clear_frame_x() {
+  if (frame_x_ != &::google::protobuf::internal::kEmptyString) {
+    frame_x_->clear();
+  }
+  clear_has_frame_x();
+}
+inline const ::std::string& cUpdateWord::frame_x() const {
+  return *frame_x_;
+}
+inline void cUpdateWord::set_frame_x(const ::std::string& value) {
+  set_has_frame_x();
+  if (frame_x_ == &::google::protobuf::internal::kEmptyString) {
+    frame_x_ = new ::std::string;
+  }
+  frame_x_->assign(value);
+}
+inline void cUpdateWord::set_frame_x(const char* value) {
+  set_has_frame_x();
+  if (frame_x_ == &::google::protobuf::internal::kEmptyString) {
+    frame_x_ = new ::std::string;
+  }
+  frame_x_->assign(value);
+}
+inline void cUpdateWord::set_frame_x(const char* value, size_t size) {
+  set_has_frame_x();
+  if (frame_x_ == &::google::protobuf::internal::kEmptyString) {
+    frame_x_ = new ::std::string;
+  }
+  frame_x_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateWord::mutable_frame_x() {
+  set_has_frame_x();
+  if (frame_x_ == &::google::protobuf::internal::kEmptyString) {
+    frame_x_ = new ::std::string;
+  }
+  return frame_x_;
+}
+inline ::std::string* cUpdateWord::release_frame_x() {
+  clear_has_frame_x();
+  if (frame_x_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = frame_x_;
+    frame_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateWord::set_allocated_frame_x(::std::string* frame_x) {
+  if (frame_x_ != &::google::protobuf::internal::kEmptyString) {
+    delete frame_x_;
+  }
+  if (frame_x) {
+    set_has_frame_x();
+    frame_x_ = frame_x;
+  } else {
+    clear_has_frame_x();
+    frame_x_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string frame_y = 8;
+inline bool cUpdateWord::has_frame_y() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void cUpdateWord::set_has_frame_y() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void cUpdateWord::clear_has_frame_y() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void cUpdateWord::clear_frame_y() {
+  if (frame_y_ != &::google::protobuf::internal::kEmptyString) {
+    frame_y_->clear();
+  }
+  clear_has_frame_y();
+}
+inline const ::std::string& cUpdateWord::frame_y() const {
+  return *frame_y_;
+}
+inline void cUpdateWord::set_frame_y(const ::std::string& value) {
+  set_has_frame_y();
+  if (frame_y_ == &::google::protobuf::internal::kEmptyString) {
+    frame_y_ = new ::std::string;
+  }
+  frame_y_->assign(value);
+}
+inline void cUpdateWord::set_frame_y(const char* value) {
+  set_has_frame_y();
+  if (frame_y_ == &::google::protobuf::internal::kEmptyString) {
+    frame_y_ = new ::std::string;
+  }
+  frame_y_->assign(value);
+}
+inline void cUpdateWord::set_frame_y(const char* value, size_t size) {
+  set_has_frame_y();
+  if (frame_y_ == &::google::protobuf::internal::kEmptyString) {
+    frame_y_ = new ::std::string;
+  }
+  frame_y_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* cUpdateWord::mutable_frame_y() {
+  set_has_frame_y();
+  if (frame_y_ == &::google::protobuf::internal::kEmptyString) {
+    frame_y_ = new ::std::string;
+  }
+  return frame_y_;
+}
+inline ::std::string* cUpdateWord::release_frame_y() {
+  clear_has_frame_y();
+  if (frame_y_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = frame_y_;
+    frame_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void cUpdateWord::set_allocated_frame_y(::std::string* frame_y) {
+  if (frame_y_ != &::google::protobuf::internal::kEmptyString) {
+    delete frame_y_;
+  }
+  if (frame_y) {
+    set_has_frame_y();
+    frame_y_ = frame_y;
+  } else {
+    clear_has_frame_y();
+    frame_y_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// sUpdateWord
+
+// -------------------------------------------------------------------
+
+// cUpdateFrame
+
+// required int32 frame_id = 1;
+inline bool cUpdateFrame::has_frame_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cUpdateFrame::set_has_frame_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cUpdateFrame::clear_has_frame_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cUpdateFrame::clear_frame_id() {
+  frame_id_ = 0;
+  clear_has_frame_id();
+}
+inline ::google::protobuf::int32 cUpdateFrame::frame_id() const {
+  return frame_id_;
+}
+inline void cUpdateFrame::set_frame_id(::google::protobuf::int32 value) {
+  set_has_frame_id();
+  frame_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// sUpdateFrame
+
+// required int32 frame_id = 1;
+inline bool sUpdateFrame::has_frame_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void sUpdateFrame::set_has_frame_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void sUpdateFrame::clear_has_frame_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void sUpdateFrame::clear_frame_id() {
+  frame_id_ = 0;
+  clear_has_frame_id();
+}
+inline ::google::protobuf::int32 sUpdateFrame::frame_id() const {
+  return frame_id_;
+}
+inline void sUpdateFrame::set_frame_id(::google::protobuf::int32 value) {
+  set_has_frame_id();
+  frame_id_ = value;
+}
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -9522,6 +17555,10 @@ inline void sPublish::set_allocated_msg(::std::string* msg) {
 namespace google {
 namespace protobuf {
 
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::CourseNode_CourseType>() {
+  return ::CourseNode_CourseType_descriptor();
+}
 
 }  // namespace google
 }  // namespace protobuf

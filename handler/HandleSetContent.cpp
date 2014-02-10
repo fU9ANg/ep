@@ -30,12 +30,14 @@ void CHandleMessage::handleSetContent (Buf* p)
 
         const epUser* user = EPMANAGER->getUserByFd(p->getfd());
         if (NULL == user) {
+                printf("[DEBUG] %s : NULL == pUser\n", __func__);
                 SINGLE->bufpool.free(p);
                 return;
         }
 
         const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(user);
         if (NULL == pTeacher) {
+                printf("[DEBUG] %s : NULL == pTeacher\n", __func__);
                 SINGLE->bufpool.free(p);
                 return;
         }
@@ -53,18 +55,26 @@ void CHandleMessage::handleSetContent (Buf* p)
         sSetContent tmp;
         epClassroom* pClassroom = EPMANAGER->getClassroomById(sc.classroom_id());
         if (NULL != pClassroom) { // 该教室已经占用。
-                tmp.set_result(false);
+                printf("[DEBUG] CHandleMessage::handleSetContent : NULL != pClassroom\n");
+                tmp.set_result(FALSE);
                 tmp.set_msg("该教室已经被使用！");
-                SINGLE->sendqueue.enqueue(packet(ST_SetContent, tmp, p->getfd()));
+                Buf* pBuf = packet(ST_SetContent, tmp, p->getfd());
+                if (NULL != pBuf) {
+                        SINGLE->sendqueue.enqueue(pBuf);
+                }
                 SINGLE->bufpool.free(p);
                 return;
         }
 
         epClass* pClass = EPMANAGER->getClassById(sc.class_id());
         if (NULL != pClass) { // 该班已经在上课了。
-                tmp.set_result(false);
+                printf("[DEBUG] CHandleMessage::handleSetContent : NULL != pClass\n");
+                tmp.set_result(FALSE);
                 tmp.set_msg("该班已经在上课了！");
-                SINGLE->sendqueue.enqueue(packet(ST_SetContent, tmp, p->getfd()));
+                Buf* pBuf = packet(ST_SetContent, tmp, p->getfd());
+                if (NULL != pBuf) {
+                        SINGLE->sendqueue.enqueue(pBuf);
+                }
                 SINGLE->bufpool.free(p);
                 return;
         }
@@ -73,29 +83,45 @@ void CHandleMessage::handleSetContent (Buf* p)
         // TODO : add whiteboard into classroom
 
         pClassroom = new epClassroom();
-        pClassroom->setTeacher(pTeacher);
+        pClassroom->teacher_ = const_cast<epTeacher*>(pTeacher);
         EPMANAGER->removeUserByFd(p->getfd());
 
         pClass     = new epClass();
-        pClass->setId(sc.class_id());
+        pClass->id_= sc.class_id();
+        printf("[DEBUG] CHandleMessage::handleSetContent : class id = %d\n", pClass->id_);
         pClassroom->insertClass(pClass);
 
         // insert classroom
-        pClassroom->setId(sc.classroom_id());
+        pClassroom->id_ = sc.classroom_id();
         EPMANAGER->insertClassroom(pClassroom);
 
         EPMANAGER->insertStudentFromUserIntoClassroom(classroom_id);
+
+        /*
+        Buf* pBuf_startClass = packet(ST_StartClass, p->getfd());
+        if (NULL != pBuf_startClass) {
+                pClass->sendtoAllStudent(pBuf_startClass);
+        }
+        */
+
+        // 点亮学生端的功能选项的教室。
+        Buf* pBuf_EnableClassroom = packet(ST_EnableClassroom, p->getfd());
+        CHECK_BUF(pBuf_EnableClassroom, p);
+        EPMANAGER->sendtoClassFromUser(pBuf_EnableClassroom, sc.class_id());
 
         tmp.set_result(true);
         tmp.set_msg("课程设置成功。！");
 #ifdef __DEBUG_DUMP__
         EPMANAGER->dumpClassroom();
 #endif
-        Buf* pBuf = packet(ST_SetContent, tmp, p->getfd());
-        if (NULL != pBuf) {
-                SINGLE->sendqueue.enqueue(pBuf);
-                SINGLE->bufpool.free(p);
-        }
 
+        // 保存课程列表。
+        pClassroom->courseList_ = ((char*)p->ptr() + MSG_HEAD_LEN + sizeof(int));
+
+        Buf* pBuf = packet(ST_SetContent, tmp, p->getfd());
+        CHECK_BUF(pBuf, p);
+        SINGLE->sendqueue.enqueue(pBuf);
+
+        SINGLE->bufpool.free(p);
         return;
 }

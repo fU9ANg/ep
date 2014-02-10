@@ -17,7 +17,19 @@
  */
 class epHeadmaster : public epPerson, public epUser {
 public :
-private :
+        bool init(const std::string&, const std::string&);
+        /**
+         * @name Just for debug
+         * @{ */
+        virtual void dump(void);
+        /**  @} */
+
+        int schoolId_;
+        std::string schoolName_;
+        /**
+         * @brief 园长编号。
+         */
+        std::string headmasterNum_;
 };
 
 #endif // __EPHEADMASTER_H__

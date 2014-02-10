@@ -6,71 +6,91 @@
 #include "../database.h"
 #include "../global_functions.h"
 #include "../message/proto/protocol.pb.h"
+#include "../netdef.h"
 
 #include "../content/epManager.h"
 #include "../content/epGroup.h"
 
 void CHandleMessage::handleSetGroup (Buf* p) {
 #ifdef __DEBUG_HANDLE_HEAD_
-        cout << "CT_GetSetGroup\n";
+        cout << "CT_SetGroup\n";
 #endif
 
         // 该FD必须处于上课状态。
         epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
         if (NULL == pClassroom) {
+                printf("[DEBUG] %s : NULL == pClassroom\n", __func__);
                 SINGLE->bufpool.free(p);
                 return;
         }
 
-        bool result = true;
-        std::string msg;
-        cSetGroup sg;
-        int cnt = unpacket_cnt(p);
-        int i = 0;
-        epGroup* pGroup = NULL;
-        for (; i<cnt && result; ++i) {
-                if (!unpacket(p, sg, i)) { // unpacket fail!!!
-                        result = false;
-                        msg = sg.group_id() + "组信息的数据包有问题。";
+        int result = TRUE;
+        std::string msg = "success!";
+
+        epGroup* pGroup = new epGroup();
+        if (NULL == pGroup) {
+                printf("[DEBUG] %s : NULL == pGroup\n", __func__);
+                result = FALSE;
+                msg = "fail!";
+                SINGLE->bufpool.free(p);
+                return;
+        }
+
+        /*
+        pGroup->id_ = *(int*)((char*)p->ptr() + MSG_HEAD_LEN);
+        pGroup->name_ = (char*)p->ptr() + MSG_HEAD_LEN + sizeof(int);
+
+        int student_id = 0;
+        epStudent* pStudent = NULL;
+        int cnt = *(int*)((char*)p->ptr() + MSG_HEAD_LEN + sizeof(int) + GROUP_NAME_LEN);
+        printf("[DEBUG] CHandleMessage::handleSetGroup : cnt = %d\n", cnt);
+        char* pc = (char*)p->ptr() + MSG_HEAD_LEN + sizeof(int) + GROUP_NAME_LEN + sizeof(int);
+        for (int i=0; i<cnt; ++i) {
+                student_id = *(int*)(pc+sizeof(int)*i);
+                printf("[DEBUG] CHandleMessage::handleSetGroup : student_id  = %d\n", student_id);
+                pStudent = const_cast<epStudent*>(pClassroom->getStudentById(student_id));
+                if (NULL != pStudent){
+                        printf("[DEBUG] CHandleMessage::handleSetGroup : NULL != pStudent\n");
+                        pGroup->insertStudent(pStudent->fd_, pStudent);
+                } else {
+                        printf("[DEBUG] CHandleMessage::handleSetGroup : NULL == pStudent\n");
+                        result = FALSE;
+                        // msg = pGroup->getId() + "组的" + *(int*)(pc+i*sizeof(int)) + std::string("号学生不在该上课的教室中。");
+                        msg = "====fail!";
                         break;
                 }
 
-                pGroup = new epGroup();
-                if (NULL == pGroup) {
-                        result = false;
-                        msg = "内存分配失败！";
-                        break;
-                }
+        }
+        */
 
-                pGroup->setId(sg.group_id());
-                pGroup->setName(sg.group_name());
-                int student_cnt = sg.student_cnt();
-                char* pc = const_cast<char*>(sg.student_list().c_str());
-                epStudent* pStudent = NULL;
-                for(int j=0; j<student_cnt; ++j) {
-                        pStudent = const_cast<epStudent*>(pClassroom->getStudentById(*(int*)(pc+j)));
-                        if (NULL != pStudent) {
-                                pGroup->insertStudent(pStudent->getFd(), pStudent);
-                        } else {
-                                result = false;
-                                msg = sg.group_id() + "组的" + *(int*)(pc+j) + std::string("号学生不在该上课的教室中。");
-                                break;
-                        }
-                }
-
-                if (result && !pClassroom->insertGroup(pGroup)) {
-                        result = false;
-                        msg = "将组加入教室时失败！";
+        cSetGroup csg;
+        unpacket(p, csg);
+        pGroup->id_ = csg.group_id();
+        printf("[DEBUG] CHandleMessage::handleSetGroup : group id = %d\n", pGroup->id_);
+        pGroup->name_ = csg.group_name();
+        PeerGroup pg;
+        epStudent* pStudent = NULL;
+        for (int i=0; i<csg.student_list_size(); ++i) {
+                pg = csg.student_list(i);
+                int student_id = pg.student_id();
+                printf("[DEBUG] CHandleMessage::handleSetGroup : student_id  = %d\n", student_id);
+                pStudent = const_cast<epStudent*>(pClassroom->getStudentById(student_id));
+                if (NULL != pStudent){
+                        printf("[DEBUG] CHandleMessage::handleSetGroup : NULL != pStudent\n");
+                        pGroup->insertStudent(pStudent->fd_, pStudent);
+                } else {
+                        printf("[DEBUG] CHandleMessage::handleSetGroup : NULL == pStudent\n");
+                        result = FALSE;
+                        // msg = pGroup->getId() + "组的" + *(int*)(pc+i*sizeof(int)) + std::string("号学生不在该上课的教室中。");
+                        msg = "====fail!";
                         break;
                 }
         }
 
-        if (i == cnt) {
-                result = true;
-                msg = "分组成功。";
-        }
+        pClassroom->insertGroup(pGroup);
 
         if (!result) { // 分组失败，将之前可能的分组清除。
+                printf("[DEBUG] CHandleMessage::handleSetGroup : result = %s\n", result ? "true" : "false");
                 pClassroom->deleteAllGroup();
         }
 
@@ -83,4 +103,5 @@ void CHandleMessage::handleSetGroup (Buf* p) {
                 SINGLE->sendqueue.enqueue(pBuf);
         }
         SINGLE->bufpool.free(p);
+        return;
 }

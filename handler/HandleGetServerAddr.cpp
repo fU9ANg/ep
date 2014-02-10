@@ -2,4 +2,6 @@
 
 void
 CHandleMessage::handleGetServerAddr(Buf* p) {
+        SINGLE->bufpool.free(p);
+        return;
 }

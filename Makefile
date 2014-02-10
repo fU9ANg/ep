@@ -18,7 +18,11 @@ CC      = ccache cc
 CFLAGS  = -Wall -Werror
 
 # flags of buildhouse
-BHFLAGS	= 
+BHFLAGS	= \
+	  -D__DEBUG_DUMP__ \
+	  -D__DEBUG_HANDLE_HEAD_ \
+	  -D__DEBUG__
+
 #-D_BUILD_HOUSE_GMAE
 
 # is debug? (for development)
@@ -27,6 +31,7 @@ CDEBUG  = -g -DDEBUG
 # macro
 CMACRO	= 
 #-D_OLD_MAKEHOUSE_GAME
+
 
 # objects
 OBJS    = 	main.o \
@@ -40,9 +45,16 @@ OBJS    = 	main.o \
 		RecvTask.o \
 		AuthTask.o \
 		ProcessManager.o \
+		DestroyClassroomTask.o \
+		\
+		aes/aes_cbc.o \
+		aes/aes_core.o \
+		aes/AESEncrypt.o \
+		aes/cbc128.o \
 		\
 		content/LoginCheck.o \
 		content/epManager.o \
+		content/epBase.o \
 		content/epSchool.o \
 		content/epClassroom.o \
 		content/epClass.o \
@@ -52,11 +64,14 @@ OBJS    = 	main.o \
 		content/epTeacher.o \
 		content/epStudent.o \
 		content/epWhiteBoard.o \
+		content/epParents.o \
+		content/epHeadmaster.o \
 		\
 		handler/HandleMessage.o \
 		handler/HandleSystem.o \
 		handler/HandleLogin.o \
 		handler/HandleLogout.o \
+		handler/HandleEnableClassroom.o \
 		handler/HandleSetFunc.o \
 		handler/HandleSetContent.o \
 		handler/HandleGetClassList.o \
@@ -68,8 +83,29 @@ OBJS    = 	main.o \
 		handler/HandleGetFuncList.o \
 		handler/HandleGetTeacherInfo.o \
 		handler/HandleStartClass.o \
+		handler/HandleGetActiveStudentList.o \
+		handler/HandleGetActiveStudentList_1.o \
+		handler/HandleGetContent.o \
+		handler/HandleSetGroup.o \
+		handler/HandleRelay.o \
+		handler/HandleGetPersonalBooksList.o \
+		handler/HandleGetPublicBooksList.o \
+		handler/HandleGetServerAddr.o \
+		handler/HandleUploadBook.o \
+		handler/HandleDownloadFromPersonal.o \
+		handler/HandleDownloadFromPublic.o \
+		handler/HandleTransferBook.o \
+		handler/HandlePublish.o \
+		handler/HandleUpdateMutex.o \
+		handler/HandleUpdateGroupDrawMsg.o \
+		handler/HandleClassOver.o \
+		handler/HandleCourseware.o \
+		handler/HandleUpdateDrawSet.o \
 		\
 		message/proto/protocol.pb.o
+
+RMOBJS	= cscope.* \
+	  tags
 
 # binary
 BIN	    = epServer
@@ -79,9 +115,10 @@ INC	    = -I. -I./includes -I./handler -I./content -I./message
 
 # for Linker
 LINK        = libs/libev.a libs/libglog.a libs/liblua52.so libs/libmysqlcppconn.so -lprotobuf
-#LINK        = -lev -lglog -lmysqlcppconn -llua5.2
+#LINK        = libs/libev.a libs/libglog.a libs/libmysqlcppconn.so -lprotobuf -llua
+#LINK        = -lev -lglog -lmysqlcppconn -llua52 -lprotobuf -lpthread
 # rock..
-all	: clean precompile_protobuf $(BIN)
+all	: precompile_protobuf $(BIN)
 
 precompile_protobuf	:
 	$(PROTOC) $(PBFLAGS)=$(PBDST) $(PBSRC)/*
@@ -100,4 +137,4 @@ $(BIN):$(OBJS)
 .PHONY: clean
 
 clean:
-	-rm -rf $(OBJS) $(BIN) *~ logs .lock
+	-rm -rf $(OBJS) $(RMOBJS) $(BIN) *~ logs .lock

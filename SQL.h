@@ -9,12 +9,23 @@
 #ifndef _SQL_H_
 #define _SQL_H_
 
+// TEST
+//INSERT INTO func VALUES (5,'办公室','2.png')
+#define TST_INSERT "INSERT INTO func VALUES (?,?,?)"
+
+#define XXX     ""
+
 // 学生表操作SQL
+#define SQL_GET_STU_INFO_BY_ID                      \
+"SELECT s.number, s.student_id AS student_id, s.first_name AS first_name, s.last_name AS last_name, s.sex, s.age, s.birthday, s.account AS account, s.password AS password, n.province AS native_name, r.race_name AS race_name, cl.class_id, cl.class_name FROM student AS s, race AS r, native_place AS n, class AS cl where s.class_id=cl.class_id AND r.race_id=s.race_id AND s.native_place_id=n.native_id AND s.student_id=?"        
 #define SQL_GET_STU_INFO_BY_NUM                     \
-"SELECT s.student_id AS student_id, s.first_name AS first_name, s.last_name AS last_name, s.account AS account, s.password AS password FROM student AS s WHERE s.number=?"
+"SELECT s.number, s.student_id AS student_id, s.first_name AS first_name, s.last_name AS last_name, s.sex, s.age, s.birthday, s.account AS account, s.password AS password, n.province AS native_name, r.race_name AS race_name, cl.class_id, cl.class_name FROM student AS s, race AS r, native_place AS n, class AS cl where s.class_id=cl.class_id AND r.race_id=s.race_id AND s.native_place_id=n.native_id AND s.number=?"        
 
 #define SQL_GET_STU_INFO_BY_ACCOUT_AND_PW           \
-"SELECT s.student_id AS student_id, s.first_name AS first_name, s.last_name AS last_name, s.account AS account, s.password AS password FROM student AS s WHERE s.account=? AND s.password=?"
+"SELECT s.student_id AS student_id, s.first_name AS first_name, s.last_name AS last_name, s.sex, s.age, s.birthday, s.account AS account, s.password AS password, n.province AS native_name, r.race_name AS race_name FROM student AS s, race AS r, native_place AS n WHERE r.race_id=s.race_id AND s.native_place_id=n.native_id AND s.account=? AND s.password=?"
+
+#define SQL_GET_STU_INFO_BY_ACCOUT                  \
+"SELECT s.number, s.student_id AS student_id, s.first_name AS first_name, s.last_name AS last_name, s.sex, s.age, s.birthday, s.account AS account, s.password AS password, n.province AS native_name, r.race_name AS race_name, cl.class_id, cl.class_name FROM student AS s, race AS r, native_place AS n, class AS cl where s.class_id=cl.class_id AND r.race_id=s.race_id AND s.native_place_id=n.native_id AND s.account=?"        
 
 #define SQL_GET_STU_INFO_BY_NAME                    \
 "SELECT s.student_id AS student_id, s.first_name AS first_name, s.last_name AS last_name, s.account AS account, s.password AS password FROM student AS s WHERE s.first_name=? AND s.last_name=?"
@@ -27,16 +38,16 @@
 
 // 教师表操作SQL
 #define SQL_GET_TEA_INFO_BY_ID                      \
-"SELECT t.teacher_id AS teacher_id, t.last_name AS last_name, t.first_name AS first_name, t.sex AS sex, t.birthday AS birthday, t.account AS account, t.password AS password FROM teacher AS t WHERE t.teacher_id=?"
+"SELECT t.teacher_id AS teacher_id, t.teacher_id AS number, t.last_name AS last_name, t.first_name AS first_name, t.sex AS sex, t.birthday AS birthday, t.age AS age, t.account AS account, t.password AS password, r.race_name AS race_name, n.province AS native_name, s.school_id AS school_id, s.school_name AS school_name FROM teacher AS t, native_place AS n, race AS r, school AS s WHERE r.race_id=t.race_id AND t.native_place_id=n.native_id AND s.school_id=t.school_id AND t.teacher_id=?"
 
 #define SQL_GET_TEA_INFO_BY_NAME                    \
 "SELECT t.teacher_id AS teacher_id, t.last_name AS last_name, t.first_name AS first_name, t.sex AS sex, t.birthday AS birthday, t.account AS account, t.password AS password FROM teacher AS t WHERE t.first_name=? AND t.last_name=?"
 
 #define SQL_GET_TEA_INFO_BY_ACCOUNT                 \
-"SELECT t.teacher_id AS teacher_id, t.last_name AS last_name, t.first_name AS first_name, t.sex AS sex, t.birthday AS birthday, t.account AS account, t.password AS password FROM teacher AS t WHERE t.account=?"
+"SELECT t.teacher_id AS teacher_id, t.last_name AS last_name, t.first_name AS first_name, t.sex AS sex, t.birthday AS birthday, t.age AS age, t.account AS account, t.password AS password, r.race_name AS race_name, n.province AS native_name, s.school_id AS school_id, s.school_name AS school_name FROM teacher AS t, native_place AS n, race AS r, school AS s WHERE r.race_id=t.race_id AND t.native_place_id=n.native_id AND s.school_id=t.school_id AND t.account=?"
 
 #define SQL_GET_TEA_INFO_BY_ACCOUNT_AND_PW          \
-"SELECT t.teacher_id AS teacher_id, t.last_name AS last_name, t.first_name AS first_name, t.sex AS sex, t.birthday AS birthday, t.account AS account, t.password AS password FROM teacher AS t WHERE t.account=? AND t.password=?"
+"SELECT t.teacher_id AS teacher_id, t.last_name AS last_name, t.first_name AS first_name, t.sex AS sex, t.birthday AS birthday, t.age AS age, t.account AS account, t.password AS password, r.race_name AS race_name, n.province AS native_name, s.school_id AS school_id, s.school_name AS school_name FROM teacher AS t, native_place AS n, race AS r, school AS s WHERE r.race_id=t.race_id AND t.native_place_id=n.native_id AND s.school_id=t.school_id AND t.account=? AND t.password=?"
 
 // 课程表操作SQL
 #define SQL_GET_GRADE_COURSE_LIST                   \
@@ -46,7 +57,7 @@
 "SELECT g.grade_name, c.course_name, cg.group_name, c.language, c.art, c.community, c.health, c.science, c.resPath FROM grade AS g, course AS c, course_group as cg, grade_course as gc WHERE g.grade_id=gc.grade_id AND gc.course_id=c.course_id AND c.group_id=cg.group_id AND g.grade_name=?"
 
 #define SQL_GET_COURSE_LIST_BY_GRADE_ID             \
-"SELECT c.course_id, g.grade_name, c.course_name, cg.group_name, c.language, c.art, c.community, c.health, c.science, c.resPath FROM grade AS g, course AS c, course_group as cg, grade_course as gc WHERE g.grade_id=gc.grade_id AND gc.course_id=c.course_id AND c.group_id=cg.group_id AND g.grade_id=?"
+"SELECT c.course_id, g.grade_name, c.course_name, c.course_type_id, ct.course_type_name, cg.group_name, c.language, c.art, c.community, c.health, c.science, c.resPath, c.xmlPath FROM course_type AS ct, grade AS g, course AS c, course_group as cg, grade_course as gc WHERE g.grade_id=gc.grade_id AND gc.course_id=c.course_id AND c.course_type_id=ct.course_type_id AND c.group_id=cg.group_id AND g.grade_id=?"
 
 #define SQL_GET_COURSE_LIST_BY_TYPE                 \
 "SELECT g.grade_name, c.course_name, cg.group_name, c.language, c.art, c.community, c.health, c.science, c.resPath FROM grade AS g, course AS c, course_group as cg, grade_course as gc WHERE g.grade_id=gc.grade_id AND gc.course_id=c.course_id AND c.group_id=cg.group_id AND cg.group_name=?"
@@ -56,6 +67,12 @@
 
 #define SQL_GET_COURSE_BY_GRADE_AND_TYPE            \
 "SELECT g.grade_name, c.course_name, cg.group_name, c.language, c.art, c.community, c.health, c.science, c.resPath FROM grade AS g, course AS c, course_group as cg, grade_course as gc WHERE g.grade_id=gc.grade_id AND gc.course_id=c.course_id AND c.group_id=cg.group_id AND g.grade_name=? AND cg.group_name=?"
+
+#define SQL_GET_COURSE_LIST_BY_AUTHOR_ID_AND_TYPE_PUBLISH    \
+"SELECT ac.course_id AS book_id, g.group_name AS book_type, c.course_name AS book_name, c.resPath AS res_path FROM course AS c, author_course AS ac, course_group AS g WHERE c.course_id=ac.course_id AND c.group_id=g.group_id AND ac.ispublish=1"
+
+#define SQL_GET_COURSE_LIST_BY_AUTHOR_ID_AND_TYPE_PERSONAL   \
+"SELECT ac.course_id AS book_id, g.group_name AS book_type, c.course_name AS book_name, c.resPath AS res_path FROM course AS c, author_course AS ac, course_group AS g WHERE c.course_id=ac.course_id AND c.group_id=g.group_id AND ac.ispublish=0 AND ac.author_id=? AND ac.client_type_id=?"
 
 // 年级和班级操作SQL
 #define SQL_GET_ALL_GRADE_LIST_BY_SCHOOL_ID         \

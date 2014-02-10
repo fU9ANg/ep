@@ -21,49 +21,6 @@ public :
         virtual ~epUser(void);
 
         /**
-         * @name set
-         * @{ */
-        /**
-         * @brief 设置客户端ID。
-         *
-         * @param int[in] 客户端ID。
-         *
-         * @return 设置成功返回TRUE，否则返回FALSE。
-         */
-        virtual bool setId(const int);
-        /**
-         * @brief 设置客户端FD。
-         *
-         * @param int[in] 客户FD。
-         *
-         * @return 设置成功返回TRUE，否则返回FALSE。
-         */
-        bool setFd(const int);
-        /**
-         * @brief 设置帐号。
-         *
-         * @param std::string[in] 指定帐号内容。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        bool setAccount(const std::string&);
-        /**
-         * @brief 设置密码。
-         *
-         * @param std::string[in] 指定密码内容。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        bool setPasswd (const std::string&);
-        /**
-         * @brief 设置该客户的功能类型。
-         *
-         * @param FuncType[in] 功能类型。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        virtual bool setFuncType(const enum FuncType);
-        /**
          * @brief 使用传入的用户名和密码初始化对象。
          *
          * @param std::string[in] 用户名。
@@ -72,54 +29,13 @@ public :
          * @return 成功返回true，否则返回false。
          */
         virtual bool init(const std::string&, const std::string&);
-        /**  @} */
 
-        /**
-         * @name get
-         * @{ */
-        /**
-         * @brief 获取帐号。
-         *
-         * @return 成功返回帐号。
-         */
-        const std::string& getAccount(void) const;
-        /**
-         * @brief 获取密码。
-         *
-         * @return 成功返回密码。
-         */
-        const std::string& getPasswd (void) const;
         /**
          * @brief 获取该客户端类型。
          *
          * @return 相应相应客户端类型。
          */
         virtual const enum LoginType getType(void) const;
-        /**
-         * @brief 获取该客户端ID。
-         *
-         * @return 客户端ID。
-         */
-        virtual const int getId(void) const;
-        /**
-         * @brief 获取该客户端FD。
-         *
-         * @return 客户端FD。
-         */
-        const int getFd(void) const;
-        /**
-         * @brief 获取该客户所选择的功能。
-         *
-         * @return 功能。
-         */
-        enum FuncType getFuncType(void) const;
-        /**
-         * @brief 获取客户端编号（如学生学号）。
-         *
-         * @return 客户端编号。
-         */
-        virtual const std::string getNum(void) = 0;
-        /**  @} */
 
         /**
          * @name Just for debug
@@ -127,13 +43,11 @@ public :
         virtual void dump(void);
         /**  @} */
 
-protected :
+public :
         /**
          * @brief 功能类型。
          */
         enum FuncType funcType_;
-
-private :
         /**
          * @brief 用户ID。
          */
@@ -142,6 +56,10 @@ private :
          * @brief 用户FD。
          */
         int fd_;
+        /**
+         * @brief 记录用户的状态。
+         */
+        enum UserStatus userStatus_;
         /**
          * @brief 存放账号。
          */
