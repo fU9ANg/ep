@@ -16,25 +16,48 @@ void CHandleMessage::handleUpdateMutex (Buf* p) {
 #endif
 
         epGroup* pGroup = const_cast<epGroup*>(EPMANAGER->getGroupByFd(p->getfd()));
-        if (NULL == pGroup) {
-                printf("[DEBUG] CHandleMessage::handleUpdateMutex : NULL == pGroup\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pGroup);
 
         cUpdateMutex cum;
-        if (!unpacket(p, cum)) {
-                printf("[DEBUG] CHandleMessage::handleUpdateMutex : unpacket fail!\n");
-                SINGLE->bufpool.free(p);
-                return;
+        UNPACKET(p, cum);
+
+        bool result = false;
+        sUpdateMutex tmp;
+        Buf* pBuf = NULL;
+        epStudent* p_student = NULL;
+        switch (cum.ms()) {
+        case MS_LOCK :
+                result = pGroup->lock(cum.lock_id());
+                /*
+                if (result) {
+                        tmp.set_result(result);
+                }
+                tmp.set_lock_id(cum.lock_id());
+                printf("[DEBUG] CHandleMessage::handleUpdateMutex : tmp.result() = %d\n", tmp.result());
+                pBuf = packet(ST_UpdateMutex, tmp, p->getfd());
+                CHECK_P(pBuf);
+                SINGLE->sendqueue.enqueue(pBuf);
+                */
+                break;
+        case MS_UNLOCK :
+                result = pGroup->unlock(cum.lock_id());
+                break;
+        case MS_INVALID :
+                result = !(pGroup->isLock(cum.lock_id()));
+                if (result) {
+                        tmp.set_result(result);
+                }
+                tmp.set_lock_id(cum.lock_id());
+                p_student = const_cast<epStudent*>(pGroup->getStudentByFd(p->getfd()));
+                CHECK_P(p_student);
+                tmp.set_student_id(p_student->id_);
+                pBuf = packet(ST_UpdateMutex, tmp, p->getfd());
+                CHECK_P(pBuf);
+                SINGLE->sendqueue.enqueue(pBuf);
+                break;
+        default :
+                break;
         }
 
-        sUpdateMutex tmp;
-        tmp.set_result(pGroup->setLock(cum.lock()) ? TRUE : FALSE);
-        Buf* pBuf = packet(ST_UpdateMutex, tmp, p->getfd());
-        if (NULL != pBuf) {
-                SINGLE->sendqueue.enqueue(pBuf);
-        }
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

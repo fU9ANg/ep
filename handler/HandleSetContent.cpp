@@ -8,6 +8,7 @@
 
 #include "../content/epClassroom.h"
 #include "../content/epManager.h"
+#include "../content/epWhiteBoard.h"
 #include "../netdef.h"
 
 void CHandleMessage::handleSetContent (Buf* p)
@@ -29,54 +30,33 @@ void CHandleMessage::handleSetContent (Buf* p)
 #endif
 
         const epUser* user = EPMANAGER->getUserByFd(p->getfd());
-        if (NULL == user) {
-                printf("[DEBUG] %s : NULL == pUser\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(user);
 
         const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(user);
-        if (NULL == pTeacher) {
-                printf("[DEBUG] %s : NULL == pTeacher\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pTeacher);
 
         cSetContent sc;
-        if (!unpacket(p, sc)) { // 解包失败。
-#ifdef __DEBUG__
-                printf("[DEBUG] %s : unpacket fail!\n", __func__);
-#endif
-                SINGLE->bufpool.free(p);
-                return;
-        }
-        int classroom_id = sc.classroom_id();
+        UNPACKET(p, sc);
 
         sSetContent tmp;
         epClassroom* pClassroom = EPMANAGER->getClassroomById(sc.classroom_id());
         if (NULL != pClassroom) { // 该教室已经占用。
                 printf("[DEBUG] CHandleMessage::handleSetContent : NULL != pClassroom\n");
-                tmp.set_result(FALSE);
                 tmp.set_msg("该教室已经被使用！");
                 Buf* pBuf = packet(ST_SetContent, tmp, p->getfd());
-                if (NULL != pBuf) {
-                        SINGLE->sendqueue.enqueue(pBuf);
-                }
-                SINGLE->bufpool.free(p);
-                return;
+                CHECK_P(pBuf);
+                SINGLE->sendqueue.enqueue(pBuf);
+                RETURN(p);
         }
 
         epClass* pClass = EPMANAGER->getClassById(sc.class_id());
         if (NULL != pClass) { // 该班已经在上课了。
                 printf("[DEBUG] CHandleMessage::handleSetContent : NULL != pClass\n");
-                tmp.set_result(FALSE);
                 tmp.set_msg("该班已经在上课了！");
                 Buf* pBuf = packet(ST_SetContent, tmp, p->getfd());
-                if (NULL != pBuf) {
-                        SINGLE->sendqueue.enqueue(pBuf);
-                }
-                SINGLE->bufpool.free(p);
-                return;
+                CHECK_P(pBuf);
+                SINGLE->sendqueue.enqueue(pBuf);
+                RETURN(p);
         }
 
 
@@ -93,9 +73,22 @@ void CHandleMessage::handleSetContent (Buf* p)
 
         // insert classroom
         pClassroom->id_ = sc.classroom_id();
+        pClassroom->gradeId_ = sc.grade_id();
         EPMANAGER->insertClassroom(pClassroom);
 
-        EPMANAGER->insertStudentFromUserIntoClassroom(classroom_id);
+        // insert whiteboard
+        // TODO :
+        pClassroom->whiteboard_ = new epWhiteBoard();
+        pClassroom->initWhiteboard();
+
+        // 点亮学生端的功能选项的教室。
+        Buf* pBuf_EnableClassroom = packet(ST_EnableClassroom, p->getfd());
+        CHECK_P(pBuf_EnableClassroom);
+        EPMANAGER->sendtoClassFromUser(pBuf_EnableClassroom, sc.class_id());
+        EPMANAGER->sendtoWhiteboardFromUser(pBuf_EnableClassroom, sc.classroom_id());
+
+        EPMANAGER->insertStudentFromUserIntoClassroom(pClassroom);
+        EPMANAGER->insertWhiteboardFromUserIntoClassroom(pClassroom);
 
         /*
         Buf* pBuf_startClass = packet(ST_StartClass, p->getfd());
@@ -104,10 +97,6 @@ void CHandleMessage::handleSetContent (Buf* p)
         }
         */
 
-        // 点亮学生端的功能选项的教室。
-        Buf* pBuf_EnableClassroom = packet(ST_EnableClassroom, p->getfd());
-        CHECK_BUF(pBuf_EnableClassroom, p);
-        EPMANAGER->sendtoClassFromUser(pBuf_EnableClassroom, sc.class_id());
 
         tmp.set_result(true);
         tmp.set_msg("课程设置成功。！");
@@ -117,11 +106,11 @@ void CHandleMessage::handleSetContent (Buf* p)
 
         // 保存课程列表。
         pClassroom->courseList_ = ((char*)p->ptr() + MSG_HEAD_LEN + sizeof(int));
+        pClassroom->classroomStatus_ = CS_WAIT;
 
         Buf* pBuf = packet(ST_SetContent, tmp, p->getfd());
-        CHECK_BUF(pBuf, p);
+        CHECK_P(pBuf);
         SINGLE->sendqueue.enqueue(pBuf);
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

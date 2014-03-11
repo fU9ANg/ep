@@ -24,16 +24,11 @@ void CHandleMessage::handleGetFuncList (Buf* p) {
         cout << "CT_GetFuncList\n";
 #endif
         const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
-        if (NULL == pUser) {
-                printf("[DEBUG] %s : NULL == pUser\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         if (LT_USER == pUser->getType()) {
-                printf("[DEBUG] %s : lt == LT_USER\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
+                DEBUG_INFO;
+                RETURN(p);
         }
 
         sGetFuncList tmp;
@@ -70,9 +65,8 @@ void CHandleMessage::handleGetFuncList (Buf* p) {
         }
 
         Buf* pBuf = packet_list(ST_GetFuncList, tmp, p->getfd());
-        CHECK_BUF(pBuf, p);
+        CHECK_P(pBuf);
         SINGLE->sendqueue.enqueue(pBuf);
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

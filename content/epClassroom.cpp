@@ -3,20 +3,15 @@
 #include "../netdef.h" // for EPCLASSROOM_INVALID_CLASSROOM_ID
 #include "epManager.h"
 
-epClassroom::epClassroom(void)
-          : teacher_()
-          , whiteboard_()
-{
+epClassroom::epClassroom(void) : teacher_(), whiteboard_(), undisplay_(false), class_() {
+        for (int i=0; i<EPCLASSROOM_MAX_COURSEWARE_IDX; ++i) {
+                coursewareVector_.push_back(CS_INVALID);
+        }
 }
 
 epClassroom::~epClassroom(void) {
-        EPCLASS_MAP::iterator it = classMap_.begin();
-        EPCLASS_MAP::const_iterator cie = classMap_.end();
-        for (; cie!=it; ++it) {
-                delete it->second;
-                it->second = NULL;
-                classMap_.erase(it);
-        }
+        delete class_;
+        class_ = NULL;
 
         EPGROUP_MAP::iterator itg = groupMap_.begin();
         EPGROUP_MAP::const_iterator cieg = groupMap_.end();
@@ -26,53 +21,13 @@ epClassroom::~epClassroom(void) {
                 groupMap_.erase(itg);
         }
 
-        /*
-        delete teacher_;
-        teacher_ = NULL;
-        delete whiteboard_;
-        whiteboard_ = NULL;
-        */
-
-        if (NULL != teacher_) {
-                teacher_->funcType_ = FT_INVALID;
-                EPMANAGER->insertUser(teacher_->fd_, teacher_);
-        }
-
-        if (NULL != whiteboard_) {
-                whiteboard_->funcType_ = FT_INVALID;
-                EPMANAGER->insertUser(whiteboard_->fd_, whiteboard_);
-        }
+        MOVE_USER_TO_USER_MAP(teacher_);
+        MOVE_USER_TO_USER_MAP(whiteboard_);
 }
 
 const epStudent*
 epClassroom::getStudentById(const int student_id) {
-        EPCLASS_MAP::iterator it = classMap_.begin();
-        EPCLASS_MAP::const_iterator cie = classMap_.end();
-
-        epStudent* pStudent = NULL;
-        for (; cie!=it; ++it) {
-                pStudent = const_cast<epStudent*>((it->second)->getStudentById(student_id));
-                if (NULL != pStudent) {
-                        return pStudent;
-                }
-        }
-
-        return NULL;
-}
-
-const epStudent*
-epClassroom::getStudentByFd(const int fd) {
-        EPCLASS_MAP::iterator it = classMap_.begin();
-        EPCLASS_MAP::const_iterator cie = classMap_.end();
-        epStudent* pStudent = NULL;
-        for (; cie!=it; ++it) {
-                pStudent = const_cast<epStudent*>((it->second)->getStudentByFd(fd));
-                if (NULL != pStudent) {
-                        return pStudent;
-                }
-        }
-
-        return NULL;
+        return (NULL!=class_) ? class_->getStudentById(student_id) : NULL;
 }
 
 const epUser*
@@ -85,40 +40,21 @@ epClassroom::getUserByFd(const int fd) {
                 return whiteboard_;
         }
 
-        EPCLASS_MAP::iterator it = classMap_.begin();
-        EPCLASS_MAP::const_iterator cie = classMap_.end();
-        epStudent* pStudent = NULL;
-        for (; cie!=it; ++it) {
-                pStudent = const_cast<epStudent*>((it->second)->getStudentByFd(fd));
-                if (NULL != pStudent) {
-                        return pStudent;
-                }
-        }
-
-        return NULL;
+        return class_->getStudentByFd(fd);
 }
 
 const epUser*
-epClassroom::getUserByAccount(const std::string& account) {
-        if (NULL!=teacher_ && account==teacher_->account_) {
+epClassroom::getUserByAccount(const std::string& account, enum LoginType logintype) {
+        if (NULL!=teacher_ && account==teacher_->account_ && logintype == teacher_->getType()) {
                 return teacher_;
         }
 
-        if (NULL!=whiteboard_ && account==whiteboard_->account_) {
+        if (NULL!=whiteboard_ && account==whiteboard_->account_ && logintype == whiteboard_->getType()) {
+                DEBUG_INFO;
                 return whiteboard_;
         }
 
-        EPCLASS_MAP::iterator it = classMap_.begin();
-        EPCLASS_MAP::const_iterator cie = classMap_.end();
-        epUser* pUser = NULL;
-        for (; cie!=it; ++it) {
-                pUser = const_cast<epUser*>((it->second)->getUserByAccount(account));
-                if (NULL != pUser) {
-                        return pUser;
-                }
-        }
-
-        return NULL;
+        return (NULL!=class_) ? const_cast<epUser*>(class_->getUserByAccount(account)) : NULL;
 }
 
 bool
@@ -135,55 +71,43 @@ epClassroom::deleteUserByFd(const int fd) {
                 return true;
         }
 
-        EPCLASS_MAP::iterator it = classMap_.begin();
-        EPCLASS_MAP::const_iterator cie = classMap_.end();
-        for (; cie!=it; ++it) {
-                if ((it->second)->deleteStudentByFd(fd)) {
-                        return true;
-                }
-        }
-
-        return false;
+        return class_->deleteStudentByFd(fd);
 }
 
 bool
 epClassroom::sendtoAllClass(Buf* pBuf, const bool toSelf) {
-        EPCLASS_MAP::iterator it = classMap_.begin();
-        EPCLASS_MAP::const_iterator cie = classMap_.end();
-        Buf* p = NULL;
-        for (; cie!=it; ++it) {
-                CLONE_BUF(p, pBuf);
-                (it->second)->sendtoAllStudent(p, toSelf);
-        }
-
-        SINGLE->bufpool.free(pBuf);
-        return true;
+        return (NULL!=class_) ? class_->sendtoAllStudent(pBuf, toSelf) : false;
 }
 
-bool
+void
 epClassroom::sendtoAll(Buf* pBuf, const bool toSelf) {
         Buf* p1 = NULL;
         Buf* p2 = NULL;
 
         CLONE_BUF(p1, pBuf);
+        sendtoAllClass(p1, toSelf);
         CLONE_BUF(p2, pBuf);
-        return sendtoAllClass(p1, toSelf) && sendtoTeacher(p2, toSelf) && sendtoWhiteBoard(pBuf, toSelf);
+        sendtoTeacher(p2, toSelf); 
+        sendtoWhiteBoard(pBuf, toSelf);
+        return;
 }
 
 bool
 epClassroom::sendtoTeacher(Buf* pBuf, const bool toSelf) {
         /*
-        if (NULL!=pBuf && NULL!=teacher_ && (toSelf || pBuf->getfd()!=teacher_->fd_)) {
-                pBuf->setfd(teacher_->fd_);
-                SINGLE->sendqueue.enqueue(pBuf);
-                return true;
-        } else {
-                SINGLE->bufpool.free(pBuf);
-                return false;
-        }
-        */
+           if (NULL!=pBuf && NULL!=teacher_ && (toSelf || pBuf->getfd()!=teacher_->fd_)) {
+           pBuf->setfd(teacher_->fd_);
+           SINGLE->sendqueue.enqueue(pBuf);
+           return true;
+           } else {
+           SINGLE->bufpool.free(pBuf);
+           return false;
+           }
+           */
 
+        // std::cout << std::hex << std::showbase << "teacher_ = " << teacher_ << ", userStatus_ = " << teacher_->userStatus_ << std::endl;
         if (NULL!=teacher_ && US_ONLINE==teacher_->userStatus_) {
+                printf("[DEBUG] epClassroom::sendtoTeacher : NULL != teacher_, msg_type = %d\n", ((MSG_HEAD*)pBuf->ptr())->cType);
                 pBuf->setfd(teacher_->fd_);
                 SINGLE->sendqueue.enqueue(pBuf);
                 return true;
@@ -196,31 +120,21 @@ epClassroom::sendtoTeacher(Buf* pBuf, const bool toSelf) {
 bool
 epClassroom::sendtoWhiteBoard(Buf* pBuf, const bool toSelf) {
         /*
-        if (NULL!=pBuf && NULL!=teacher_ && (toSelf || pBuf->getfd()!=teacher_->fd_)) {
-                pBuf->setfd(teacher_->fd_);
-                SINGLE->sendqueue.enqueue(pBuf);
-                return true;
-        } else {
-                SINGLE->bufpool.free(pBuf);
-                return false;
-        }
-        */
+           if (NULL!=pBuf && NULL!=teacher_ && (toSelf || pBuf->getfd()!=teacher_->fd_)) {
+           pBuf->setfd(teacher_->fd_);
+           SINGLE->sendqueue.enqueue(pBuf);
+           return true;
+           } else {
+           SINGLE->bufpool.free(pBuf);
+           return false;
+           }
+           */
 
+        // std::cout << std::hex << std::showbase << "whiteboard_ = " << whiteboard_ << ", userStatus_ = " << whiteboard_->userStatus_ << std::endl;
         if (NULL!=whiteboard_ && US_ONLINE==whiteboard_->userStatus_) {
+                printf("[DEBUG] epClassroom::sendtoTeacher : NULL != whiteboard_, msg_type = %d\n", ((MSG_HEAD*)pBuf->ptr())->cType);
                 pBuf->setfd(whiteboard_->fd_);
                 SINGLE->sendqueue.enqueue(pBuf);
-                return true;
-        } else {
-                SINGLE->bufpool.free(pBuf);
-                return false;
-        }
-}
-
-bool
-epClassroom::sendtoClassById(const int class_id, Buf* pBuf, const bool toSelf) {
-        EPCLASS_MAP::iterator it = classMap_.find(class_id);
-        if (classMap_.end() != it) { // found
-                (it->second)->sendtoAllStudent(pBuf, toSelf);
                 return true;
         } else {
                 SINGLE->bufpool.free(pBuf);
@@ -256,46 +170,31 @@ epClassroom::sendtoGroupById(const int group_id, Buf* pBuf, const bool toSelf) {
 
 bool
 epClassroom::insertClass(epClass* obj) {
-        EPCLASS_MAP::iterator it = classMap_.find(obj->id_);
-        if (classMap_.end() != it) { // found
-                return false;
-        } else {
-                classMap_.insert(std::make_pair<int, epClass*>(obj->id_, obj));
+        if (NULL == class_) {
+                class_ = obj;
                 return true;
-        }
+        } else
+                return false;
 }
 
 bool
 epClassroom::insertStudent(const epStudent* obj) {
-        EPCLASS_MAP::iterator it = classMap_.find(obj->classId_);
-        if (classMap_.end() != it) {
-                (it->second)->insertStudent(obj);
-                return true;
-        } else {
-                return false;
-        }
+        return NULL!=class_ && class_->insertStudent(obj);
 }
 
 bool
 epClassroom::removeClassById(const int class_id) {
-        EPCLASS_MAP::iterator it = classMap_.find(class_id);
-        if (classMap_.end() != it) { // found
-                classMap_.erase(it);
+        if (NULL!=class_ && class_id==class_->id_) {
+                delete class_;
+                class_ = NULL;
                 return true;
-        } else {
+        } else
                 return false;
-        }
 }
 
 bool
 epClassroom::moveAllStudentToUser(void) {
-        EPCLASS_MAP::iterator it = classMap_.begin();
-        EPCLASS_MAP::const_iterator cie = classMap_.end();
-        for (; cie!=it; ++it) {
-                (it->second)->moveAllStudentToUser();
-        }
-
-        return true;
+        return class_->moveAllStudentToUser();
 }
 
 bool
@@ -326,30 +225,22 @@ epClassroom::moveTeacherToUser(void) {
 
 epClass*
 epClassroom::getClassById(const int class_id) {
-        EPCLASS_MAP::iterator it = classMap_.find(class_id);
-        if (classMap_.end() != it) { // found
-                return it->second;
-        } else {
-                return NULL;
-        }
+        return class_;
 }
 
 std::vector<epClass*>
 epClassroom::getClassList(void) {
-        std::vector<epClass*> vc;
-        EPCLASS_MAP::iterator it = classMap_.begin();
-        EPCLASS_MAP::const_iterator cie = classMap_.end();
-        for (; cie!=it; ++it) {
-                vc.push_back(it->second);
-        }
-        return vc;
+        std::vector<epClass*> ve;
+        if (NULL != class_)
+                ve.push_back(class_);
+        return ve;
 }
 
 const epGroup*
 epClassroom::getGroupByFd(const int fd) {
         EPGROUP_MAP::iterator it = groupMap_.begin();
         EPGROUP_MAP::const_iterator cie = groupMap_.end();
-        // printf("[DEBUG] epClassroom::getGroupByFd : groupMap_.size() = %ld\n", groupMap_.size());
+        // printf("[DEBUG] epClassroom::getGroupByFd : group_size = %ld\n", groupMap_.size());
         for (; cie!=it; ++it) {
                 if (NULL != (it->second)->getStudentByFd(fd)) {
                         return it->second;
@@ -388,8 +279,12 @@ epClassroom::removeAllGroup(void) {
         for (; cie!=it; ++it) {
                 if (!(it->second)->removeAllStudent()) {
                         return false;
+                } else {
+                        delete it->second;
                 }
         }
+
+        groupMap_.clear();
 
         return true;
 }
@@ -423,7 +318,6 @@ epClassroom::deleteAllGroup(void) {
 epGroup*
 epClassroom::getGroupById(const int group_id) {
         EPGROUP_MAP::iterator it = groupMap_.find(group_id);
-        // printf("[DEBUG] epClassroom::getGroupById : groupMap_.size() = %ld\n", groupMap_.size());
         if (groupMap_.end() != it) { // found
                 return it->second;
         } else {
@@ -435,11 +329,8 @@ void
 epClassroom::dump(void) {
         epBase::dump();
         printf("for class :\n");
-        EPCLASS_MAP::iterator it = classMap_.begin();
-        EPCLASS_MAP::const_iterator cie = classMap_.end();
-        for (; cie!=it; ++it) {
-                (it->second)->dump();
-        }
+        if (NULL != class_)
+                class_->dump();
 
         printf("for group :\n");
         EPGROUP_MAP::iterator it_g = groupMap_.begin();
@@ -457,4 +348,64 @@ epClassroom::dump(void) {
         if (NULL != whiteboard_) {
                 whiteboard_->dump();
         }
+}
+
+int
+epClassroom::getClassId(void) {
+        if (NULL != class_)
+                return class_->id_;
+        return EPCLASS_INVALID_CLASS_ID;
+}
+
+void
+epClassroom::changeCoursewareStatus(int idx, courseware_status cs) {
+
+        /*
+        COURSEWARE_STATUS_MAP::iterator it = coursewareStatusMap_.find(courseware_id);
+        if (coursewareStatusMap_.end() != it) {
+                (it->second) = cs;
+        } else {
+                coursewareStatusMap_.insert(std::make_pair<int, courseware_status>(courseware_id, cs));
+        }
+        */
+
+        if (idx > EPCLASSROOM_MAX_COURSEWARE_IDX)
+                printf("[DEBUG] file=%s : func=%s : line=%d\n", __FILE__, __func__, __LINE__);
+        else
+                coursewareVector_[idx] = cs;
+
+}
+
+/*
+void
+epClassroom::removeCourseware(const int courseware_id) {
+        COURSEWARE_STATUS_MAP::iterator it = coursewareStatusMap_.find(courseware_id);
+        if (coursewareStatusMap_.end() != it) {
+                coursewareStatusMap_.erase(it);
+        }
+}
+*/
+
+std::vector<int> epClassroom::getGroupList(void) {
+    EPGROUP_MAP::iterator it = groupMap_.begin();
+    EPGROUP_MAP::const_iterator cie = groupMap_.end();
+    std::vector<int> vi;
+    for(; it!=cie; ++it){
+        if(it->second != NULL) {
+            vi.push_back(it->first);
+        }
+    }
+    return vi;
+}
+
+bool
+epClassroom::initWhiteboard(void) {
+        // whiteboard_->whiteboardNum_ = ???
+        whiteboard_->id_            = class_->id_;
+        whiteboard_->classroomId_   = id_;
+        whiteboard_->classroomName_ = name_;
+        return whiteboard_->init(teacher_->account_
+                        , teacher_->passwd_
+                        , EPUSER_INVALID_USER_ID
+                        , US_OFFLINE);
 }

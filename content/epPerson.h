@@ -19,6 +19,25 @@ public :
         epPerson (void);
         virtual ~epPerson(void);
 
+        void init(const std::string& first_name
+                        , const std::string& last_name
+                        , const std::string& sex
+                        , const int          age
+                        , const std::string& race
+                        , const std::string& birthday
+                        , const std::string& native
+                        , const std::string& address
+                        ) {
+                firstName_ = first_name;
+                lastName_  = last_name;
+                sex_       = sex;
+                age_       = age;
+                race_      = race;
+                birthday_  = birthday;
+                native_    = native;
+                address_   = address;
+        }
+
         /**
          * @name Just for debug
          * @{ */
@@ -59,6 +78,7 @@ public :
          * @brief 存放国籍，地区。
          */
         std::string native_;
+        std::string address_;
 };
 
 #endif // __EPPERSON_H__

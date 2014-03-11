@@ -33,31 +33,19 @@ void CHandleMessage::handleLogin (Buf* p) {
         bool enter_classroom = false;
 
         cLogin clogin;
-        if (!unpacket(p, clogin)) { // 解包失败。
-#ifdef __DEBUG__
-                printf("[DEBUG] %s : unpacket fail!\n", __func__);
-#endif
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        UNPACKET(p, clogin);
+
 #ifdef __DEBUG__
         printf("clogin.type    = %d\n", clogin.type());
         printf("clogin.account = %s\n", clogin.account().c_str());
         printf("clogin.passwd  = %s\n", clogin.passwd().c_str());
 #endif
 
-        /*
-        epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByAccount(clogin.account()));
+        sLogin slogin;
+        Buf* p_buf = NULL;
+        epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByAccount(clogin.account(), (enum LoginType)clogin.type()));
         if (NULL == pUser) { // 该客户不处于游离状态。
-                pUser = getUserByFdFromClassroom(clogin.account());
-        }
-        // if ((NULL==pUser) ? TRUE : pUser->getType()!=clogin.type()) {
-        */
-
-        // epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFd(p->getfd()));
-        epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByAccount(clogin.account()));
-        if (NULL == pUser) { // 该客户不处于游离状态。
-                pUser = const_cast<epUser*>(EPMANAGER->getUserByAccountFromClassroom(clogin.account()));
+                pUser = const_cast<epUser*>(EPMANAGER->getUserByAccountFromClassroom(clogin.account(), (enum LoginType)clogin.type()));
                 if (NULL == pUser) { // 在教室里找不到。
                         switch (clogin.type()) {
                         case LT_STUDENT :
@@ -72,51 +60,101 @@ void CHandleMessage::handleLogin (Buf* p) {
                         case LT_PARENTS :
                                 // pUser = new epParents();
                                 break;
-                        case LT_WHITEBOARD :
-                                pUser = new epWhiteBoard();
+                        case LT_WHITEBOARD : // 如果通过账号，在教室里没有找到白板，则直接返回失败。
+                                slogin.set_result(false);
+                                slogin.set_enter_classroom(false);
+                                slogin.set_login_type(LT_WHITEBOARD);
+
+                                p_buf = packet(ST_Login, slogin, p->getfd());
+                                CHECK_P(p_buf);
+                                SINGLE->sendqueue.enqueue(p_buf);
+
+                                RETURN(p);
                                 break;
                         default :
                                 break;
                         }
 
                         if (NULL != pUser) { // 登录类型是否超出规定范围。
-                                result = pUser->init(clogin.account(), clogin.passwd());
+                                result = pUser->init(clogin.account(), clogin.passwd(), p->getfd(), US_ONLINE);
                                 if (!result) {
+#ifdef __DEBUG__
                                         printf("[INFO] handleLogin : epUser init fault!\n");
+#endif
                                         result = false;
                                         delete pUser;
                                         pUser = NULL;
                                 } else {
-                                        pUser->fd_         = p->getfd();
-                                        pUser->funcType_   = FT_INVALID;
-                                        pUser->userStatus_ = US_ONLINE;
                                         EPMANAGER->insertUser(p->getfd(), pUser);
                                         result = true;
                                 }
                         }
-                } else {
+                } else { // found
+#ifdef __DEBUG__
                         printf("[DEBUG] CHandleMessage::handleLogin : in Classroom!\n");
-                        Buf* pBuf = NULL;
+#endif
                         epClassroom* pClassroom = NULL;
+                        epClass*     p_class    = NULL;
+                        epStudent*   p_student  = NULL;
+                        std::map<int, time_t>::iterator it;
+
                         switch (pUser->userStatus_) {
-                        case US_ONLINE :
-                                result = false;
-                                break;
                         case US_OFFLINE :
+                                DEBUG_INFO;
                                 result = true;
-                                pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
+                                // pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
+                                pClassroom = EPMANAGER->getClassroomByUserAccount(clogin.account(), (enum LoginType)clogin.type());
                                 if (NULL != pClassroom) {
-                                        pBuf = packet(ST_UpdateGroupStatus, p->getfd());
-                                        CHECK_BUF(pBuf, p);
-                                        pClassroom->sendtoAll(pBuf);
+                                        DEBUG_INFO;
+                                        switch (pUser->getType()) {
+                                        case LT_TEACHER :
+                                                it = DestroyClassroomTask::desMap_.find(pClassroom->id_);
+                                                if (DestroyClassroomTask::desMap_.end() != it) {
+                                                        DestroyClassroomTask::desMap_.erase(it);
+                                                }
+                                                break;
+                                        case LT_STUDENT :
+                                                p_student = dynamic_cast<epStudent*>(pUser);
+                                                if (NULL != p_student) {
+                                                        p_class = pClassroom->getClassById(p_student->classId_);
+                                                        if (NULL != p_class) {
+#ifdef __DEBUG__
+                                                                printf("[DEBUG] CHandleMessage::handleLogin : NULl 1= p_class\n");
+#endif
+                                                                p_class->moveStudentFromListToMapByAccount(p->getfd(), std::string(clogin.account()));
+                                                        }
+                                                }
+                                                break;
+                                        case LT_WHITEBOARD :
+                                        DEBUG_INFO;
+                                                result = pUser->check(clogin.account(), clogin.passwd());
+#ifdef __DEBUG__
+                                                printf("[DEBUG] CHandleMessage::handleLogin : result = %s\n", result ? "true" : "false");
+#endif
+                                                break;
+                                        default :
+                                                break;
+                                        }
+
                                         enter_classroom = true;
                                         pUser->userStatus_ = US_ONLINE;
+                                        pUser->fd_ = p->getfd();
+                                        DEBUG_INFO;
+                                        if (dynamic_cast<epWhiteBoard*>(pUser))
+                                                printf("[DEBUG] CHandleMessage::handleLogin : pUser->fd_ = %d\n", pClassroom->whiteboard_->fd_);
 
-                                        std::map<int, time_t>::iterator it = DestroyClassroomTask::desMap_.find(pClassroom->id_);
-                                        if (DestroyClassroomTask::desMap_.end() != it) {
-                                                DestroyClassroomTask::desMap_.erase(it);
-                                        }
+                                        sUpdateStudentStatus tmp;
+                                        tmp.set_student_id(pUser->id_);
+                                        tmp.set_us(US_ONLINE);
+                                        tmp.set_login_type(pUser->getType());
+
+                                        Buf* p_buf = packet(ST_UpdateStudentStatus, tmp, p->getfd());
+                                        CHECK_P(p_buf);
+                                        pClassroom->sendtoAll(p_buf);
                                 }
+                                break;
+                        case US_ONLINE :
+                                result = false;
                                 break;
                         default :
                                 result = false;
@@ -124,7 +162,9 @@ void CHandleMessage::handleLogin (Buf* p) {
                         }
                 }
         } else {
+#ifdef __DEBUG__
                 printf("[DEBUG] CHandleMessage::handleLogin : NULL != pUser\n");
+#endif
                 result = false;
         }
 
@@ -132,21 +172,30 @@ void CHandleMessage::handleLogin (Buf* p) {
         EPMANAGER->dumpUser();
 #endif
 
-        sLogin slogin;
-        if (result) {
-                slogin.set_result(result);
-        }
-        if (enter_classroom) {
-                slogin.set_enter_classroom(enter_classroom);
-        }
-        if (NULL != dynamic_cast<epStudent*>(pUser)) {
+        if (NULL != pUser) {
+                slogin.set_login_type(pUser->getType());
                 slogin.set_student_id(pUser->id_);
+#ifdef __DEBUG__
+                printf("[DEBUG] CHandleMessage::handleLogin : user_login_type = %d\n", pUser->getType());
+                printf("[DEBUG] CHandleMessage::handleLogin : user_id         = %d\n", pUser->id_);
+#endif
+        } else {
+                slogin.set_login_type(LT_USER);
+                slogin.set_student_id(EPSTUDENT_INVALIED_STUDENT_ID);
         }
 
-        Buf* pBuf = packet(ST_Login, slogin, p->getfd());
-        if (NULL != pBuf) {
-                SINGLE->sendqueue.enqueue(pBuf);
+        if (result) {
+#ifdef __DEBUG__
+                printf("[DEBUG] CHandleMessage::handleLogin : result = true\n");
+#endif
+                slogin.set_result(result);
         }
-        SINGLE->bufpool.free(p);
-        return;
+
+        if (enter_classroom) slogin.set_enter_classroom(enter_classroom);
+
+        Buf* pBuf = packet(ST_Login, slogin, p->getfd());
+        CHECK_P(pBuf);
+        SINGLE->sendqueue.enqueue(pBuf);
+
+        RETURN(p);
 }

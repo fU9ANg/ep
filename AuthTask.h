@@ -26,7 +26,7 @@
 #include "Single.h"
 #include "Buf.h"
 
-#define INTERVAL_TIME   3600
+#define INTERVAL_TIME   1
 
 /**
  * @brief 检测授权线程任务类

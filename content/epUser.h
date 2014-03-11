@@ -11,11 +11,15 @@
 
 #include <iostream>
 #include "../protocol.h"
+#include "../message/proto/protocol.pb.h"
+#include "../Mutex.h"
+#include <map>
+#include "epObject.h"
 
 /**
  * @brief 用户类。
  */
-class epUser {
+class epUser : public epObject {
 public :
         epUser(void);
         virtual ~epUser(void);
@@ -28,7 +32,10 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        virtual bool init(const std::string&, const std::string&);
+        virtual bool init(const std::string&
+                        , const std::string&
+                        , const int
+                        , const enum user_status);
 
         /**
          * @brief 获取该客户端类型。
@@ -43,7 +50,10 @@ public :
         virtual void dump(void);
         /**  @} */
 
-public :
+        bool operator==(const std::string&);
+
+        bool check(const std::string&, const std::string&);
+
         /**
          * @brief 功能类型。
          */
@@ -59,7 +69,7 @@ public :
         /**
          * @brief 记录用户的状态。
          */
-        enum UserStatus userStatus_;
+        enum user_status userStatus_;
         /**
          * @brief 存放账号。
          */
@@ -68,6 +78,11 @@ public :
          * @brief 存放密码。
          */
         std::string passwd_;
+
+protected :
+        MutexLock lock_;
+
+public :
 };
 
 #endif // __EPUSER_H__

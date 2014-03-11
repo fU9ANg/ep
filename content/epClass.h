@@ -11,19 +11,26 @@
 
 #include <map>
 #include <vector>
+#include <list>
 
 #include "epBase.h"
+// #include "epManager.h"
 
 #include "epStudent.h"
 #include "../Buf.h"
 
-typedef std::map<int, epStudent*> EPSTUDENT_MAP;
+#include <../MapT.hpp>
+#include <../ListT.hpp>
 
 /**
  * @brief 班级类。
  */
 class epClass : public epBase {
 public :
+
+typedef MapT<int, epStudent*> EPSTUDENT_MAP;
+typedef ListT<epStudent*>     EPSTUDENT_LIST;
+
         epClass(void);
         ~epClass(void);
 
@@ -120,12 +127,15 @@ public :
         virtual void dump(void);
         /**  @} */
 
+        bool moveStudentFromMapToListByFd(const int);
+        bool moveStudentFromListToMapByAccount(const int, const std::string&);
 
 private :
         /**
          * @brief 学生列表。first为FD，second为学生对象。
          */
-        EPSTUDENT_MAP studentMap_;
+        EPSTUDENT_MAP  studentMap_;
+        EPSTUDENT_LIST offlineStudentList_;
 };
 
 #endif // __EPCLASS_H__

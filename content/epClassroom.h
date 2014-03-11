@@ -17,9 +17,12 @@
 #include "epTeacher.h"
 #include "epWhiteBoard.h"
 #include "epGroup.h"
+#include "../message/proto/protocol.pb.h"
+#include "../netdef.h"
 
 typedef std::map<int, epGroup*> EPGROUP_MAP;
-typedef std::map<int, epClass*> EPCLASS_MAP;
+// typedef std::map<int, epClass*> EPCLASS_MAP;
+typedef std::vector<courseware_status> EPCOURSEWARE_VECTOR;
 
 /**
  * @brief 教室类。
@@ -41,14 +44,6 @@ public :
          */
         const epStudent* getStudentById(const int);
         /**
-         * @brief 根据学生FD获取学生对象指针。
-         *
-         * @param int[in] 指定FD。
-         *
-         * @return 成功返回指向学生对象的指针，否则返回NULL。
-         */
-        const epStudent* getStudentByFd(const int);
-        /**
          * @brief 根据指定FD删除用户（包括教师和白板）。
          *
          * @param int[in] 指定FD。
@@ -64,7 +59,7 @@ public :
          * @return 查找成功返回对象指针，否则返回NULL。
          */
         const epUser* getUserByFd(const int);
-        const epUser* getUserByAccount(const std::string&);
+        const epUser* getUserByAccount(const std::string&, enum LoginType);
         /**  @} */
 
         /**
@@ -87,6 +82,11 @@ public :
         bool deleteGroupById(const int);
         bool deleteAllGroup(void);
         epGroup* getGroupById(const int);
+        std::vector<int> getGroupList(void);
+
+
+        // TODO :
+        int getClassId(void);
 
         /**
          * @name sendto
@@ -106,16 +106,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool sendtoAll(Buf*, const bool toSelf=false);
-        /**
-         * @brief 将指定消息内容发送给在该教室上课的指定班。
-         *
-         * @param int[in] 班级ID。
-         * @param Buf[in] 指定消息内容。
-         *
-         * @return 成功返回true，否则返回false。
-         */
-        bool sendtoClassById(const int, Buf*, const bool toSelf=false);
+        void sendtoAll(Buf*, const bool toSelf=false);
         /**
          * @brief 将指定消息内容发送给所有在该教室上课的分组。
          *
@@ -161,23 +152,40 @@ public :
          * @brief 教师。
          */
         epTeacher* teacher_;
+        int gradeId_;
         /**
          * @brief 白板。
          */
         epWhiteBoard* whiteboard_;
+        bool initWhiteboard(void);
         /**
          * @brief 该教室上课时的课程列表。
          */
         std::string courseList_;
+        int course_idx_;
+        /**
+         * @brief 标记教室的状态。
+         */
+        enum classroom_status classroomStatus_;
+
+        // void courseOver(void);
+        void changeCoursewareStatus(const int, courseware_status);
+        // bool insertCourseware(const int, CoursewareStatus);
+        // void removeCourseware(const int);
+        EPCOURSEWARE_VECTOR& getCoursewareListStatus(void) { return coursewareVector_; }
+
+        bool undisplay_;
+
+        epClass* class_;
 private :
         /**
          * @brief 班列表。
          */
-        EPCLASS_MAP classMap_;
         /**
          * @brief 组列表。
          */
         EPGROUP_MAP groupMap_;
+        EPCOURSEWARE_VECTOR coursewareVector_;
 };
 
 #endif // __EPCLASSROOM_H__

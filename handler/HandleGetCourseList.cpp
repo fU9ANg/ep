@@ -32,27 +32,13 @@ void CHandleMessage::handleGetCourseList (Buf* p)
 #endif
 
         const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
-        if (NULL == pUser) {
-                printf("[DEBUG] %s : NULL == pUser\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);
-        if (NULL == pTeacher) {
-                printf("[DEBUG] %s : NULL == pTeacher\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pTeacher);
 
         cGetCourseList gcl;
-        if (!unpacket(p, gcl)) { // 解包失败。
-#ifdef __DEBUG__
-                printf("[DEBUG] %s : unpacket fail!\n", __func__);
-#endif
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        UNPACKET(p, gcl);
 
         int grade_id = gcl.grade_id();
         sGetCourseList tmp;
@@ -86,9 +72,10 @@ void CHandleMessage::handleGetCourseList (Buf* p)
                         SET_OPTION(cn, Int, community)
                         SET_OPTION(cn, Int, health)
                         SET_OPTION(cn, Int, science)
-                        cn->set_course_type((CourseNode_CourseType)prst->getInt("course_type_id"));
+                        cn->set_course_type((CourseType)prst->getInt("course_type_id"));
                         // cn->set_res_path   (prst->getString("resPath"));
                         cn->set_res_path   ("InvalidPath");
+                        cn->set_icon_path  (prst->getString("iconPath"));
                         /*
                         std::string xml_path = prst->getString("xml_path");
                         if (xml_path.size() > 0) {
@@ -125,6 +112,5 @@ void CHandleMessage::handleGetCourseList (Buf* p)
         CHECK_BUF(pBuf, p);
         SINGLE->sendqueue.enqueue(pBuf);
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

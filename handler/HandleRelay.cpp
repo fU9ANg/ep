@@ -17,34 +17,20 @@ void CHandleMessage::handleRelay(Buf* p)
 #endif
 
         const epUser* pUser = EPMANAGER->getUserByFdFromClassroom(p->getfd());
-        if (NULL == pUser) {
-                printf("[DEBUG] CHandleMessage::handleRelay : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
-        if (NULL == pClassroom) {
-                printf("[DEBUG] CHandleMessage::handleRelay : NULL == pClassroom\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pClassroom);
 
         epGroup* pGroup = const_cast<epGroup*>(pClassroom->getGroupByFd(p->getfd()));
-        if (NULL == pGroup) {
-                printf("[DEBUG] CHandleMessage::handleRelay : NULL == pGroup\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pGroup);
 
         sRelay tmp;
         tmp.set_student_id(pGroup->getNextIdByFd(p->getfd()));
 
         Buf* p_1 = packet(ST_Relay, tmp, p->getfd());
-        if (NULL != p_1) {
-                pClassroom->sendtoAll(p_1);
-        }
+        CHECK_P(p_1);
+        pClassroom->sendtoAll(p_1);
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <string.h>
+#include <arpa/inet.h>
 
 #include "sock.h"
 
@@ -39,7 +40,8 @@ int main (int argc, char** argv)
 
     // fill server address
     server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = htonl (INADDR_ANY);
+    //server_address.sin_addr.s_addr = htonl (INADDR_ANY);
+    server_address.sin_addr.s_addr = inet_addr ("192.168.0.145");
     server_address.sin_port = htons (4231);
     server_len = sizeof (server_address);
 

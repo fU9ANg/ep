@@ -17,7 +17,9 @@
 #include "../protocol.h"
 #include "../Sock.h"
 #include "../message/proto/protocol.pb.h"
-#define SERV_IP "222.186.50.76"
+//#define SERV_IP "222.186.50.76"
+#define SERV_IP "192.168.0.145"
+//#define SERV_PORT 9999 
 #define SERV_PORT 9999 
 
 #define MAX_BUFF_SIZE   8192
@@ -76,6 +78,7 @@ struct numberProto NPARRAY [] =
 	{35,"CT_SetGroup" },
 	{36,"CT_UpdateDrawInfo" },
     {37,"Print_Message_List" },
+    {38,"CT_xxxxx" },
 };
 
 #define ARRAY_SIZE  (sizeof(NPARRAY)/sizeof(NPARRAY[0]))
@@ -89,15 +92,16 @@ char* buffer = buf;
 MSG_HEAD* head = NULL;
 string g_tmp_str;
     
-#if 0
 void recv_data (int sfd, char** buffer)
 {
+    printf ("recv_data.\n");
     int i = recv_v (sfd, (*buffer), sizeof (int));
     if (sizeof (int) != i) {
         cout << "recv head error! actually received len = " << i
             <<", info = "<< strerror (errno)<<endl;
         close (sfd);
     }
+    printf ("recv head len=%d\n", i);
     int *p =  (int*) (*buffer);
     i = recv_v (sfd,  (*buffer) + sizeof(int), *p-sizeof(int));
 
@@ -106,8 +110,12 @@ void recv_data (int sfd, char** buffer)
             <<", info = "<< strerror (errno) <<endl;
         close (sfd);
     }
+
+    printf ("[recv_data] recv message type=%d\n", ((MSG_HEAD *)*buffer)->cType);
+    printf ("[recv_data] recv message size=%d\n", ((MSG_HEAD *)*buffer)->cLen);
 }
 
+#if 0
 void dumpHead (string proto, char* buffer)
 {
     cout << "-------------------" << endl;
@@ -446,6 +454,7 @@ void dumpGetActiveStudentList (string proto, char* buffer)
 	 dumpHead (proto, buffer);
 	 string strGetActiveStudentList;
 	 int count = *(int*) (buffer + MSG_HEAD_LEN);
+     printf ("dumpGetActiveStudentList: count = %d\n", count);
 	 int i = 0;
 	 	
 	 for(; i < count; i++) {
@@ -720,7 +729,7 @@ void handlerLogin()
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
 
-#if 0
+#if 1
     // ST_Login
     recv_data (sfd, &buffer);
     dumpLogin ("ST_Login", buffer);
@@ -826,7 +835,7 @@ void handlerSetFunc()
     MEMCPYSTRTOBUF(buffer);
     send_v (sfd, buffer, head->cLen);
     BUFCLR (buffer);
-#if 0
+#if 1
     // ST_SetFunc
     recv_data (sfd, &buffer);
     dumpSetFunc ("ST_SetFunc", buffer);
@@ -947,7 +956,7 @@ void handlerSetContent ()
     MEMCPYSTRTOBUF(buffer);
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
-#if 0 
+#if 1
     // ST_SetContent
     recv_data (sfd, &buffer);
     dumpSetContent ("ST_SetContent", buffer);
@@ -1224,7 +1233,7 @@ void handlerGetActiveStudentList()
 
     send_v (sfd, buffer, head->cLen);
     BUFCLR(buffer);
-#if 0 
+#if 1
     // ST_GetActiveStudentList
     recv_data (sfd, &buffer);
     dumpGetActiveStudentList ("ST_GetActiveStudentList", buffer);
@@ -1642,7 +1651,9 @@ void* recv_callback (void* data)
     while (1) {
         // ST_Logout
         recv_data (sfd, &buffer);
+        dump();
         switch (((MSG_HEAD*) buffer)->cType) {
+#if 0
             case ST_Login:
                 dumpLogin ("ST_Login", buffer);
                 break;
@@ -1683,6 +1694,7 @@ void* recv_callback (void* data)
                 dumpGetTeacherInfo("ST_GetTeacherInfo", buffer);
                 break;
             case ST_GetActiveStudentList:
+                printf ("dumpGetActiveStudentList enter \n");
                 dumpGetActiveStudentList("ST_GetActiveStudentList", buffer);
                 break;
             case ST_GetPersonalBooksList:
@@ -1754,6 +1766,10 @@ void* recv_callback (void* data)
 			case ST_UpdateDrawInfo:
 				dumpUpdateDrawInfo ("ST_UpdateDrawInfo", buffer);
 				break;
+#endif
+            case ST_GetSchoolAccountList:
+                dump ("ST_GetSchoolAccountList", buffer);
+                break;
         }
         
         //cout << "Input Message Id: ";
@@ -1762,6 +1778,67 @@ void* recv_callback (void* data)
 }
 
 #endif
+
+void handler ()
+{
+	int school_id;
+	string student_list;
+
+	BUFCLR(buffer);
+    head = (MSG_HEAD*) buffer;
+    head->cType = CT_GetSchoolAccountList;
+    head->cLen = SETHEADCLEN(cSetGroup);
+   
+	cout << "school id:";
+	cin >> school_id;
+    cGetSchoolAccountList sl;
+	sl.set_school_id (school_id);
+    g_tmp_str.clear();
+    sl.SerializeToString (&g_tmp_str);
+    MEMCPYSTRTOBUF(buffer);
+
+    send_v (sfd, buffer, head->cLen);
+    BUFCLR(buffer);
+}
+
+void dumpHead (string proto, char* buffer)
+{
+    cout << "-------------------" << endl;
+    cout << proto  << ":" << endl;
+    cout << "message head.cLen=" << ((MSG_HEAD*) buffer)->cLen << endl;
+    cout << "message head.cType=" << ((MSG_HEAD*) buffer)->cType << endl;
+}
+
+void dumpTail (char* buffer)
+{
+    cout << "-------------------" << endl;
+}
+
+void dump (string proto, char* buffer)
+{
+    printf ("dump::\n");
+    dumpHead (proto, buffer);
+    string strGetSchoolAccountList = buffer + MSG_HEAD_LEN + sizeof (int);
+    sGetSchoolAccountList sa;
+    int i = 0;
+    sa.ParseFromString (strGetSchoolAccountList);
+
+    for (int i=0; i<sa.account_list_size(); i++) {
+            const AccountNode& an= sa.account_list (i);
+            cout << "account = " << an.account() << endl;
+            cout << "user_type = " << an.user_type() << endl;
+    }
+    dumpTail (buffer);
+}
+
+void* recv_callback (void* data)
+{
+    while (1) {
+        // ST_Logout
+        recv_data (sfd, &buffer);
+        dump("ST_GetSchoolAccountList", buffer);
+    }
+}
 
 int main (int argc, char** argv)
 {
@@ -1784,9 +1861,16 @@ int main (int argc, char** argv)
         return (-1);
     }
 
-    getchar ();
 #endif
 
+    cout << "Input Message Id: ";
+    while (1) {
+        cin >> strMessageId;
+
+        if (NPARRAY[strMessageId].protocol == "CT_xxxxx") {
+            handler();
+        }
+    }
 #if 1
     //pthread_create(&pid_recv, NULL, recv_callback, NULL);
 

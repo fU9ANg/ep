@@ -17,6 +17,7 @@
 #include "epStudent.h"
 
 typedef std::map<int, epStudent*> STUDENT_MAP;
+typedef std::map<int, mutex_status> LOCK_MAP;
 
 /**
  * @brief 组别类。
@@ -65,6 +66,8 @@ public :
          */
         const epStudent* getStudentByFd(const int);
         int getNextIdByFd(const int);
+        const epStudent* getNextStudentByFd(const int);
+        std::vector<int> getStudentList(void);
         /**  @} */
 
         /**
@@ -77,7 +80,10 @@ public :
         bool sendtoAllStudent(Buf*, const bool toSelf=false);
         bool sendtoStudentByFd(const int, Buf*);
 
-        bool setLock(const int);
+        bool lock(const int);
+        bool unlock(const int);
+        bool isLock(const int);
+        void cleanLock(void);
 
         /**
          * @name Just for debug
@@ -85,6 +91,7 @@ public :
         virtual void dump(void);
         /**  @} */
 
+        int random_;
 
 private :
         /**
@@ -92,9 +99,13 @@ private :
          */
         STUDENT_MAP studentMap_;
         /**
-         * @brief 组内同步锁。
+         * @brief 组内互斥锁。
          */
-        int lock_;
+        LOCK_MAP lockMap_;
+
+        int cur_student_id;
+
+public :
 };
 
 #endif // __EPGROUP_H__

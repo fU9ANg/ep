@@ -24,11 +24,10 @@ int SendTask::work ()
         }
 
         int fd = p->getfd ();
+        // printf("[DEBUG] SendTask::work : msg_type = %d\n", ((MSG_HEAD*)p->ptr())->cType);
 
-        /*
         printf("[DEBUG] SendTask::work : send fd   = %d\n", fd);
         printf("[DEBUG] SendTask::work : send size = %ld\n", p->size());
-        */
 
         if (fd <= 0)
         {

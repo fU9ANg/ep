@@ -27,19 +27,11 @@ void CHandleMessage::handleGetGradeList (Buf* p)
 
         // 必须是处于游离状态的用户才能作用该协议。
         const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
-        if (NULL == pUser) {
-                printf("[DEBUG] %s : NULL == pUser\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         // 必须是教室才能使用该协议。
         const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);
-        if (NULL == pTeacher) {
-                printf("[DEBUG] %s : NULL == pTeacher\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pTeacher);
 
         sGetGradeList tmp;
         ClassListNode* cln;
@@ -71,9 +63,8 @@ void CHandleMessage::handleGetGradeList (Buf* p)
         printf("[DEBUG] CHandleMessage::handleGetGradeList : grade cnt = %d\n", cnt);
 #endif
         Buf* pBuf = packet_list(ST_GetGradeList, tmp, p->getfd());
-        CHECK_BUF(pBuf, p);
+        CHECK_P(pBuf);
         SINGLE->sendqueue.enqueue(pBuf);
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

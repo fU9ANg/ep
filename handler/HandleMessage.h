@@ -58,6 +58,13 @@ public:
                 setHandler(CT_UpdateCollage,       &CHandleMessage::handleUpdateGroupDrawMsg);
                 setHandler(CT_UpdateWord,          &CHandleMessage::handleUpdateGroupDrawMsg);
                 setHandler(CT_UpdateFrame,         &CHandleMessage::handleUpdateGroupDrawMsg);
+                setHandler(CT_UpdateWord,          &CHandleMessage::handleUpdateGroupDrawMsg);
+                setHandler(CT_UpdatePuzzleResult,  &CHandleMessage::handleUpdateGroupDrawMsg);
+
+                setHandler(CT_Reduce,              &CHandleMessage::handleTeacherSendtoWhiteboard);
+                setHandler(CT_unDisplay,           &CHandleMessage::handleTeacherSendtoWhiteboard);
+
+                setHandler(CT_unLock,              &CHandleMessage::handleSendtoAll);
         }
 
         static void setHandler (int iCommandType, handlefunc hHandler)

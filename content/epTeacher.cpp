@@ -14,8 +14,11 @@ epTeacher::getType(void) const {
 }
 
 bool
-epTeacher::init(const std::string& account, const std::string& passwd) {
-        epUser::init(account, passwd);
+epTeacher::init(const std::string& account
+              , const std::string& passwd
+              , const int fd
+              , const enum user_status us) {
+        epUser::init(account, passwd, fd, us);
         bool result = false;
         std::string strpwd;
         try {
@@ -29,13 +32,24 @@ epTeacher::init(const std::string& account, const std::string& passwd) {
                                         && passwd.size() > 0
                                         && strpwd.size() == passwd.size()) {
 
-                                lastName_  = prst->getString("last_name");
-                                firstName_ = prst->getString("first_name");
-                                sex_       = prst->getString("sex");
-                                age_       = prst->getInt   ("age");
-                                race_      = prst->getString("race_name");
+                                epPerson::init(prst->getString("first_name")
+                                             , prst->getString("last_name")
+                                             , prst->getString("sex")
+                                             , prst->getInt   ("age")
+                                             , prst->getString("race_name")
+                                             , prst->getString("birthday")
+                                             , prst->getString("native_name")
+                                             , std::string() // , prst->getString("address")
+                                              );
+                                /*
+                                   lastName_  = prst->getString("last_name");
+                                   firstName_ = prst->getString("first_name");
+                                   sex_       = prst->getString("sex");
+                                   age_       = prst->getInt   ("age");
+                                   race_      = prst->getString("race_name");
                                 // birthday_  = prst->getString("birthday");
                                 native_    = prst->getString("native_name");
+                                */
 
                                 id_        = prst->getInt   ("teacher_id");
                                 teacherNum_= prst->getString("teacher_id");

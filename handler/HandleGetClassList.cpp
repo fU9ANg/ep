@@ -26,28 +26,14 @@ void CHandleMessage::handleGetClassList (Buf* p)
 
         // 必须是处于游离状态的用户才能作用该协议。
         const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
-        if (NULL == pUser) {
-                printf("[DEBUG] CHandleMessage::HandleMessage : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         // 必须是教师才能使用该协议。
         const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);
-        if (NULL == pTeacher) {
-                printf("[DEBUG] CHandleMessage::HandleMessage : NULL == pTeacher\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pTeacher);
 
         cGetClassList gcrl;
-        if (!unpacket(p, gcrl)) { // 解包失败。
-#ifdef __DEBUG__
-                printf("[DEBUG] %s : unpacket fail!\n", __func__);
-#endif
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        UNPACKET(p, gcrl);
 
         sGetClassList tmp;
         ClassListNode* cln;

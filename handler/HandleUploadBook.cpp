@@ -17,18 +17,10 @@ CHandleMessage::handleUploadBook(Buf* p) {
 #endif
 
         cUploadBook cub;
-        if (!unpacket(p, cub)) {
-                printf("[DEBUG] CHandleMessage::handleUploadBook : unpacket fail!\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        UNPACKET(p, cub);
 
         const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
-        if (NULL == pUser) { // 该用户不在线或在上课状态。
-                printf("[DEBUG] CHandleMessage::handleUploadBook : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         //int result = 0;
         try {
@@ -70,9 +62,8 @@ CHandleMessage::handleUploadBook(Buf* p) {
         tmp.set_msg("插入成功！\n");
 
         Buf* pBuf = packet(ST_UploadBook, tmp, p->getfd());
-        if (NULL != pBuf) {
-                SINGLE->sendqueue.enqueue(pBuf);
-        }
-        SINGLE->bufpool.free(p);
-        return;
+        CHECK_P(pBuf);
+        SINGLE->sendqueue.enqueue(pBuf);
+
+        RETURN(p);
 }

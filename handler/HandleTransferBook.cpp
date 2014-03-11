@@ -19,19 +19,11 @@ void CHandleMessage::handleTransferBook(Buf* p)
 #endif
 
         cTransferBook ctb;
-        if (!unpacket(p, ctb)) {
-                printf("[DEBUG] CHandleMessage::handleTransferBook : unpacket fail!\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        UNPACKET(p, ctb);
 
         // 必须是处于游离状态的用户才能作用该协议。
         const epUser* fromUser = EPMANAGER->getUserByFd(p->getfd());
-        if (NULL == fromUser) {
-                printf("[DEBUG] CHandleMessage::handleTransferBook : NULL == fromUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(fromUser);
 
         std::string first_name;
         try {
@@ -86,6 +78,5 @@ void CHandleMessage::handleTransferBook(Buf* p)
         SINGLE->bufpool.free(p);
 #endif
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

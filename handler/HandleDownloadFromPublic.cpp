@@ -14,19 +14,12 @@ void CHandleMessage::handleDownloadFromPublic(Buf* p) {
         cout << "CT_DownloadFromPublic\n";
 #endif
 
+        /*
         cDownloadFromPublic cdfp;
-        if (!unpacket(p, cdfp)) {
-                printf("[DEBUG] CHandleMessage::handleDownloadFromPublic : unpacket fail!\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        UNPACKET(p, cdfp);
 
         const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
-        if (NULL == pUser) {
-                printf("[DEBUG] CHandleMessage::handleDownloadFromPublic : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         sDownloadFromPublic tmp;
         std::string res_path;
@@ -41,9 +34,8 @@ void CHandleMessage::handleDownloadFromPublic(Buf* p) {
                 delete prst;
                 delete pstmt;
         }catch (SQLException e) {
-                printf("[DEBUG] CHandleMessage::handleGetClassList : SQLException = %s\n", e.what());
-                SINGLE->bufpool.free(p);
-                return;
+                PRINT_CATCH(e);
+                RETURN(p);
         }
 
         tmp.set_result((0==res_path.size()) ? true : false);
@@ -52,9 +44,8 @@ void CHandleMessage::handleDownloadFromPublic(Buf* p) {
         tmp.set_down_addr("http://" + CONFIG->download_upload_server_ip + ":" + buf + "/" + res_path);
 
         Buf* pBuf = packet(ST_GetClassList, tmp, p->getfd());
-        if (NULL != pBuf) {
-                SINGLE->sendqueue.enqueue(pBuf);
-        }
-        SINGLE->bufpool.free(p);
-        return;
+        CHECK_P(pBuf);
+        SINGLE->sendqueue.enqueue(pBuf);
+        RETURN(p);
+        */
 }

@@ -38,7 +38,7 @@ int AuthTask::work ()
         {
             m_oldtime = now_time;
             if (Confirm().confirm())
-#ifdef ___DEBUG
+#ifdef _DEBUG
                 cout << "auth success" << endl;
 #endif
             ;

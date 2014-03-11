@@ -18,7 +18,7 @@
 class epTeacher : public epPerson, public epUser {
 public :
         epTeacher(void);
-        ~epTeacher(void);
+       	~epTeacher(void);
 
         /**
          * @brief 通过传入的用户名和密码初始化教师对象。
@@ -28,7 +28,10 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        virtual bool init(const std::string&, const std::string&);
+        virtual bool init(const std::string&
+                        , const std::string&
+                        , const int
+                        , const enum user_status);
 
         /**
          * @brief 获取客户端相应类型。

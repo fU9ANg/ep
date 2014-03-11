@@ -17,36 +17,22 @@ void CHandleMessage::handleClassOver(Buf* p)
 #endif
 
         epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFdFromClassroom(p->getfd()));
-        if (NULL == pUser) {
-                printf("[DEBUG] CHandleMessage::handleClassOver : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         const epTeacher* pTeacher = dynamic_cast<epTeacher*>(pUser);
-        if (NULL == pTeacher) {
-                printf("[DEBUG] CHandleMessage::handleClassOver : not teacher!\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pTeacher);
 
         epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
-        if (NULL == pClassroom) {
-                printf("[DEBUG] CHandleMessage::handleClassOver : NULl == pClassroom\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pClassroom);
 
         Buf* pBuf = packet(ST_ClassOver, p->getfd());
-        CHECK_BUF(pBuf, p);
+        CHECK_P(pBuf);
         Buf* p1 = NULL;
         CLONE_BUF(p1, pBuf);
-        pClassroom->sendtoAllClass(p1);
-        pClassroom->sendtoWhiteBoard(pBuf);
+        pClassroom->sendtoAll(p1);
 
-        delete pClassroom;
+        EPMANAGER->deleteClassroomById(pClassroom->id_);
         pClassroom = NULL;
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

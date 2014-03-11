@@ -28,7 +28,10 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        virtual bool init(const std::string&, const std::string&);
+        virtual bool init(const std::string&
+                        , const std::string&
+                        , const int
+                        , const enum user_status);
         /**
          * @brief 获取客户端类型。
          *

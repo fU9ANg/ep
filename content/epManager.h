@@ -49,6 +49,7 @@ public :
          * @return 移除成功返回true，否则返回false。
          */
         bool removeClassroomById(int);
+        bool moveStudentToUser(const int);
         /**
          * @brief 根据用户FD获取其当前上课教室对象指针。
          *
@@ -57,6 +58,7 @@ public :
          * @return 查找成功返回教室对象指针，否则返回NULL。
          */
         epClassroom* getClassroomByFd(const int);
+        epClassroom* getClassroomByUserAccount(const std::string&, enum LoginType);
         /**
          * @brief 获取指定班级ID所对象的教室。
          *
@@ -99,7 +101,7 @@ public :
          *
          * @return 移除成功返回true, 失败返回 false.
          */
-        bool removeUserByFd(const int);
+        epUser* removeUserByFd(const int);
         /**
          * @brief 根据登录帐号查找处于游离状态的用户。
          *
@@ -107,8 +109,8 @@ public :
          *
          * @return 成功返回指向相应对象的指针，失败返回NULL。
          */
-        const epUser* getUserByAccount(const std::string&);
-        const epUser* getUserByAccountFromClassroom(const std::string&);
+        const epUser* getUserByAccount(const std::string&, enum LoginType);
+        const epUser* getUserByAccountFromClassroom(const std::string&, enum LoginType);
         /**
          * @brief 获取指定FD的对象指针。
          *
@@ -197,7 +199,7 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool insertStudentFromUserIntoClass(const int);
+        bool insertStudentFromUserIntoClass(epClass*);
         /**
          * @brief 从游离列表中将学生加入到刚上课的指定ID的教室中。
          *
@@ -205,7 +207,8 @@ public :
          *
          * @return 成功返回true，否则返回false。
          */
-        bool insertStudentFromUserIntoClassroom(const int);
+        bool insertStudentFromUserIntoClassroom(epClassroom*);
+        bool insertWhiteboardFromUserIntoClassroom(epClassroom*);
         /**
          * @brief 将指定消息内容发送给当前上课的班级。
          *
@@ -224,6 +227,7 @@ public :
          */
         bool sendtoClassroomById(const int, Buf*);
         bool sendtoClassFromUser(Buf*, const int);
+        void sendtoWhiteboardFromUser(Buf*, const int);
         /**
          * @brief 将指定消息内容发送给所有游离用户。
          *
@@ -270,6 +274,22 @@ private :
          * @brief 存入游离的FD，first为FD。
          */
         EPUSER_MAP userMap_;
+};
+
+class is_whiteboard {
+public :
+        is_whiteboard(const int classroom_id) : classroom_id_(classroom_id) {}
+
+        template <typename _M>
+        bool operator() (_M obj) {
+                if (NULL!=obj.second && LT_WHITEBOARD==(obj.second)->getType()) {
+                        epWhiteBoard* p_whiteboard = dynamic_cast<epWhiteBoard*>(obj.second);
+                        return NULL!=p_whiteboard && classroom_id_==p_whiteboard->classroomId_;
+                } else
+                        return false;
+        }
+private :
+        const int classroom_id_;
 };
 
 #define EPMANAGER       (epManager::instance())

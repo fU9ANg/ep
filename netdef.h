@@ -47,6 +47,10 @@
 #       define EPCLASSROOM_INVALID_CLASSROOM_ID (-1)
 #endif
 
+#ifndef EPCLASSROOM_MAX_COURSEWARE_IDX
+#       define EPCLASSROOM_MAX_COURSEWARE_IDX (32)
+#endif
+
 // for epPerson.h
 #ifndef EPPERSON_INVALID_PERSON_AGE
 #       define EPPERSON_INVALID_PERSON_AGE      (-1)
@@ -93,12 +97,18 @@
 #       define FALSE   (2)
 #endif
 
+#define DEBUG_INFO printf("[DEBUG] file=%s : func=%s : line=%d\n", __FILE__, __func__, __LINE__);
+#define RETURN(_p) SINGLE->bufpool.free(_p); return
+#define CHECK_P(_p) if (NULL == _p) { DEBUG_INFO; RETURN(p); }
+#define UNPACKET(_p, tmp) if (!unpacket(_p, tmp)) { DEBUG_INFO; RETURN(_p); }
+
 // for handler
 #define CHECK_BUF(dist, src) \
         if (NULL == dist) { \
-                printf("[DEBUG] %s : NULL Buf\n", __func__); \
+                DEBUG_INFO; \
                 SINGLE->bufpool.free(src); \
         }
+
 
 #define CLONE_BUF(dist, src) \
         dist = SINGLE->bufpool.malloc(); \
@@ -108,8 +118,21 @@
         memcpy(dist->ptr(), src->ptr(), dist->size())
 
 #define SET_OPTION(cn, type, obj) \
-                        if (0 != prst->get##type(#obj)) { \
-                                cn->set_##obj(prst->get##type(#obj)); \
-                        }
+        if (0 != prst->get##type(#obj)) { \
+                cn->set_##obj(prst->get##type(#obj)); \
+        }
+
+#define MOVE_USER_TO_USER_MAP(p_user) \
+        if (NULL != p_user) { \
+                if (US_OFFLINE == p_user->userStatus_) { \
+                        delete p_user; \
+                        p_user = NULL; \
+                } else { \
+                        p_user->funcType_ = FT_INVALID; \
+                        EPMANAGER->insertUser(p_user->fd_, p_user); \
+                } \
+        }
+
+#define PRINT_CATCH(obj) printf("[DEBUG] file=%s : func=%s : line=%d, exception = %s\n", __FILE__, __func__, __LINE__, obj.what());
 
 #endif // __NETDEF_H__

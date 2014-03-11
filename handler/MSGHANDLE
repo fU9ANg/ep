@@ -8,36 +8,63 @@ MSGNAME(CT_Logout, handleLogout);
 MSGNAME(CT_GetFuncList, handleGetFuncList);
 MSGNAME(CT_SetFunc, handleSetFunc);
 MSGNAME(CT_EnableClassroom, handleEnableClassroom);
+MSGNAME(CT_GetSchoolAccountList, handleGetSchoolAccountList);
 MSGNAME(CT_GetGradeList, handleGetGradeList);
 MSGNAME(CT_GetCourseList, handleGetCourseList);
 MSGNAME(CT_GetClassList, handleGetClassList);
 MSGNAME(CT_GetClassRoomList, handleGetClassRoomList);
 MSGNAME(CT_SetContent, handleSetContent);
 MSGNAME(CT_GetActiveStudentList, handleGetActiveStudentList);
-MSGNAME(CT_GetActiveStudentList_1, handleGetActiveStudentList_1);
+MSGNAME(CT_GetGroupStudentList, handleGetGroupStudentList);
 MSGNAME(CT_GetContent, handleGetContent);
 
 // 上课。
 MSGNAME(CT_StartClass, handleStartClass);
+MSGNAME(CT_GetClassroomStatus, handleGetClassroomStatus);
+MSGNAME(CT_GetClassroomInfo, handleGetClassroomInfo);
 MSGNAME(CT_Courseware, handleCourseware);
+MSGNAME(CT_UpdateCourseware, handleUpdateCourseware);
+MSGNAME(CT_GetCoursewareListStatus, handleGetCoursewareListStatus);
+MSGNAME(CT_CourseOver, handleCourseOver);
+MSGNAME(CT_LeaveEarly, handleLeaveEarly);
 MSGNAME(CT_ClassOver, handleClassOver);
 MSGNAME(CT_GetStudentList, handleGetStudentList);
 MSGNAME(CT_GetStudentInfo, handleGetStudentInfo);
+MSGNAME(CT_GetWhiteboardInfo, handleGetWhiteboardInfo);
+MSGNAME(CT_GetClassInfo, handleGetClassInfo);
 MSGNAME(CT_GetTeacherInfo, handleGetTeacherInfo);
 MSGNAME(CT_SetGroup, handleSetGroup);
 MSGNAME(CT_Relay, handleRelay);
+MSGNAME(CT_GetGroupList, handleGetGroupList);
+MSGNAME(CT_GetGroupInfo, handleGetGroupInfo);
+MSGNAME(CT_Display, handleDisplay);
 
 // 绘本
-MSGNAME(CT_GetPersonalBooksList,        handleGetPersonalBooksList);
-MSGNAME(CT_GetPublicBooksList,          handleGetPublicBooksList);
-MSGNAME(CT_GetServerAddr,               handleGetServerAddr);
-MSGNAME(CT_UploadBook,                  handleUploadBook);
-MSGNAME(CT_DownloadFromPersonal,        handleDownloadFromPersonal);
-MSGNAME(CT_DownloadFromPublic,          handleDownloadFromPublic);
-MSGNAME(CT_TransferBook,                handleTransferBook);
-MSGNAME(CT_Publish,                     handlePublish);
+MSGNAME(CT_GetPublicBooksList, handleGetPublicBooksList);
+MSGNAME(CT_StoreUp,            handleStoreUp);
+MSGNAME(CT_GetStoreBooksList,  handleGetStoreBooksList);
+MSGNAME(CT_GetServerAddr,      handleGetServerAddr);
+MSGNAME(CT_DownloadFromPublic, handleDownloadFromPublic);
+MSGNAME(CT_Publish,            handlePublish);
+
+MSGNAME(CT_UpdatePublic,       handleUpdatePublic);
+MSGNAME(CT_Purchase,           handlePurchase);
+MSGNAME(CT_Sell,               handleSell);
+MSGNAME(CT_Assignment,         handleAssignment);
+MSGNAME(CT_Largess,            handleLargess);
 
 // 绘画
 MSGNAME(CT_UpdateDrawSet, handleUpdateDrawSet);
+MSGNAME(CT_UpdateConn, handleUpdateConn);
+MSGNAME(CT_LockConn, handleLockConn);
 MSGNAME(CT_UpdateMutex, handleUpdateMutex);
 MSGNAME(CT_UpdateBackground, handleUpdateGroupDrawMsg);
+MSGNAME(CT_GetStudentDrawLog, handleGetStudentDrawLog);
+MSGNAME(CT_GetNextStudent, handleGetNextStudent);
+
+// 由教师转发给白板端。
+MSGNAME(CT_Enlarge, handleTeacherSendtoWhiteboard);
+
+// Lock
+MSGNAME(CT_Lock, handleSendtoAll);
+MSGNAME(CT_GetPuzzleInfo, handleGetPuzzleInfo);

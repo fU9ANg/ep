@@ -1,0 +1,615 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+$	HandleLogin.o	/^/;"	v
+$	tags	/^handleGetStoreBooksList	HandleGetStoreBooksList.cpp	\/^void CHandleMessage::handleGetStoreBooksList (Buf *p) {$\/;"	f	class:CHandleMessage	signature:(Buf *p)$/;"	m	class:__anon1::__anon2::__anon3	file:	access:private
+$	tags	/^handleSetFunc	HandleSetFunc.cpp	\/^void CHandleMessage::handleSetFunc (Buf* p) {$\/;"	f	class:CHandleMessage	signature:(Buf* p)$/;"	m	class:__anon1::__anon2	file:	access:private
+$	tags	/^handleSetGroup	HandleSetGroup.cpp	\/^void CHandleMessage::handleSetGroup (Buf* p) {$\/;"	f	class:CHandleMessage	signature:(Buf* p)$/;"	m	class:__anon1	file:	access:private
+Account	HandleGetStudentInfo.cpp	/^                string Account;$/;"	l
+CHECK_USER	HandleGetCourseList.cpp	15;"	d	file:
+CHandleMessage	HandleMessage.h	/^class CHandleMessage$/;"	c
+CHandleMessage::getHandler	HandleMessage.h	/^        static handlefunc getHandler (int iCommandType)$/;"	f	class:CHandleMessage	access:public	signature:(int iCommandType)
+CHandleMessage::handleAssignment	HandleAssignment.cpp	/^CHandleMessage::handleAssignment(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleAuth	HandleSystem.cpp	/^void CHandleMessage::handleAuth (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleClassOver	HandleClassOver.cpp	/^void CHandleMessage::handleClassOver(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleCourseOver	HandleCourseOver.cpp	/^void CHandleMessage::handleCourseOver(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleCourseware	HandleCourseware.cpp	/^void CHandleMessage::handleCourseware(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleDisplay	HandleDisplay.cpp	/^void CHandleMessage::handleDisplay(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleDownloadFromPersonal	HandleDownloadFromPersonal.cpp	/^void CHandleMessage::handleDownloadFromPersonal (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleDownloadFromPublic	HandleDownloadFromPublic.cpp	/^void CHandleMessage::handleDownloadFromPublic(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleEnableClassroom	HandleEnableClassroom.cpp	/^void CHandleMessage::handleEnableClassroom(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetActiveStudentList	HandleGetActiveStudentList.cpp	/^void CHandleMessage::handleGetActiveStudentList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetClassInfo	HandleGetClassInfo.cpp	/^void CHandleMessage::handleGetClassInfo(Buf* p) $/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetClassList	HandleGetClassList.cpp	/^void CHandleMessage::handleGetClassList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetClassRoomList	HandleGetClassRoomList.cpp	/^void CHandleMessage::handleGetClassRoomList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetClassroomInfo	HandleGetClassroomInfo.cpp	/^void CHandleMessage::handleGetClassroomInfo(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetClassroomStatus	HandleGetClassroomStatus.cpp	/^void CHandleMessage::handleGetClassroomStatus(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetContent	HandleGetContent.cpp	/^void CHandleMessage::handleGetContent (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetCourseList	HandleGetCourseList.cpp	/^void CHandleMessage::handleGetCourseList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetCoursewareListStatus	HandleGetCoursewareListStatus.cpp	/^void CHandleMessage::handleGetCoursewareListStatus(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetFuncList	HandleGetFuncList.cpp	/^void CHandleMessage::handleGetFuncList (Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetGradeList	HandleGetGradeList.cpp	/^void CHandleMessage::handleGetGradeList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetGroupInfo	HandleGetGroupInfo.cpp	/^void CHandleMessage::handleGetGroupInfo (Buf* p) $/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetGroupList	HandleGetGroupList.cpp	/^void CHandleMessage::handleGetGroupList (Buf* p) $/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetGroupStudentList	HandleGetGroupStudentList.cpp	/^void CHandleMessage::handleGetGroupStudentList(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetNextStudent	HandleGetNextStudent.cpp	/^void CHandleMessage::handleGetNextStudent(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetPublicBooksList	HandleGetPublicBooksList.cpp	/^void CHandleMessage::handleGetPublicBooksList (Buf *p) $/;"	f	class:CHandleMessage	signature:(Buf *p)
+CHandleMessage::handleGetPuzzleInfo	HandleGetPuzzleInfo.cpp	/^void CHandleMessage::handleGetPuzzleInfo(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetSchoolAccountList	HandleGetSchoolAccountList.cpp	/^void CHandleMessage::handleGetSchoolAccountList(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetServerAddr	HandleGetServerAddr.cpp	/^CHandleMessage::handleGetServerAddr(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetStoreBooksList	HandleGetStoreBooksList.cpp	/^void CHandleMessage::handleGetStoreBooksList (Buf *p) {$/;"	f	class:CHandleMessage	signature:(Buf *p)
+CHandleMessage::handleGetStudentDrawLog	HandleGetStudentDrawLog.cpp	/^void CHandleMessage::handleGetStudentDrawLog(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetStudentInfo	HandleGetStudentInfo.cpp	/^void CHandleMessage::handleGetStudentInfo (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetStudentList	HandleGetStudentList.cpp	/^void CHandleMessage::handleGetStudentList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetTeacherInfo	HandleGetTeacherInfo.cpp	/^void CHandleMessage::handleGetTeacherInfo (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleGetWhiteboardInfo	HandleGetWhiteboardInfo.cpp	/^void CHandleMessage::handleGetWhiteboardInfo(Buf* p) $/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleHeart	HandleSystem.cpp	/^void CHandleMessage::handleHeart (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleLargess	HandleLargess.cpp	/^CHandleMessage::handleLargess(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleLeaveEarly	HandleLeaveEarly.cpp	/^void CHandleMessage::handleLeaveEarly(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleLockConn	HandleLockConn.cpp	/^void CHandleMessage::handleLockConn(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleLogin	HandleLogin.cpp	/^void CHandleMessage::handleLogin (Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleLogout	HandleLogout.cpp	/^void CHandleMessage::handleLogout (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handlePublish	HandlePublish.cpp	/^CHandleMessage::handlePublish(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handlePurchase	HandlePurchase.cpp	/^CHandleMessage::handlePurchase(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleRelay	HandleRelay.cpp	/^void CHandleMessage::handleRelay(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleSendtoAll	HandleSendtoAll.cpp	/^void CHandleMessage::handleSendtoAll(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleSetContent	HandleSetContent.cpp	/^void CHandleMessage::handleSetContent (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleSetFunc	HandleSetFunc.cpp	/^void CHandleMessage::handleSetFunc (Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleSetGroup	HandleSetGroup.cpp	/^void CHandleMessage::handleSetGroup (Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleStartClass	HandleStartClass.cpp	/^void CHandleMessage::handleStartClass (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleTeacherSendtoWhiteboard	HandleTeacherSendtoWhiteboard.cpp	/^void CHandleMessage::handleTeacherSendtoWhiteboard(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleTest	HandleSystem.cpp	/^void CHandleMessage::handleTest (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleTransferBook	HandleTransferBook.cpp	/^void CHandleMessage::handleTransferBook(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleUpdateConn	HandleUpdateConn.cpp	/^void CHandleMessage::handleUpdateConn(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleUpdateDrawSet	HandleUpdateDrawSet.cpp	/^void CHandleMessage::handleUpdateDrawSet(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleUpdateGroupDrawMsg	HandleUpdateGroupDrawMsg.cpp	/^void CHandleMessage::handleUpdateGroupDrawMsg(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleUpdateMutex	HandleUpdateMutex.cpp	/^void CHandleMessage::handleUpdateMutex (Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleUpdatePublic	HandleUpdatePublic.cpp	/^CHandleMessage::handleUpdatePublic(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::handleUploadBook	HandleUploadBook.cpp	/^CHandleMessage::handleUploadBook(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+CHandleMessage::initHandlers	HandleMessage.h	/^        static void initHandlers (void)$/;"	f	class:CHandleMessage	access:public	signature:(void)
+CHandleMessage::it	HandleMessage.h	/^                HANDLEMAP::iterator it = CHandleMessage::m_HandleMap.find(iCommandType);$/;"	l
+CHandleMessage::m_HandleMap	HandleMessage.cpp	/^HANDLEMAP CHandleMessage::m_HandleMap;$/;"	m	class:CHandleMessage	file:
+CHandleMessage::m_HandleMap	HandleMessage.h	/^        static HANDLEMAP m_HandleMap;$/;"	m	class:CHandleMessage	access:private
+CHandleMessage::pair	HandleMessage.h	/^                        m_HandleMap.insert (std::pair<int, handlefunc>(iCommandType, hHandler));$/;"	p	signature:(iCommandType, hHandler)
+CHandleMessage::postMessage	HandleMessage.cpp	/^bool CHandleMessage::postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen)$/;"	f	class:CHandleMessage	signature:(Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen)
+CHandleMessage::postMessage	HandleMessage.h	/^        static bool postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen);$/;"	p	class:CHandleMessage	access:private	signature:(Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen)
+CHandleMessage::setHandler	HandleMessage.h	/^        static void setHandler (int iCommandType, handlefunc hHandler)$/;"	f	class:CHandleMessage	access:public	signature:(int iCommandType, handlefunc hHandler)
+HANDLEMAP	HandleMessage.h	/^typedef map<int, handlefunc> HANDLEMAP;$/;"	t
+J	HandleGetCoursewareListStatus.o	/^/;"	v
+MSGNAME	HandleMessage.h	33;"	d
+MSGNAME	HandleMessage.h	35;"	d
+MSGNAME	HandleMessage.h	49;"	d
+MSGNAME	HandleMessage.h	52;"	d
+X	HandleLogin.o	/^/;"	v
+_	HandleLogin.o	/^/;"	v
+_EXECUTE_	HandleMessage.h	24;"	d
+_HANDLE_MESSAGE_H	HandleMessage.h	7;"	d
+__anon1::$	tags	/^handleSetGroup	HandleSetGroup.cpp	\/^void CHandleMessage::handleSetGroup (Buf* p) {$\/;"	f	class:CHandleMessage	signature:(Buf* p)$/;"	m	class:__anon1	file:	access:private
+__anon1::__anon2::$	tags	/^handleSetFunc	HandleSetFunc.cpp	\/^void CHandleMessage::handleSetFunc (Buf* p) {$\/;"	f	class:CHandleMessage	signature:(Buf* p)$/;"	m	class:__anon1::__anon2	file:	access:private
+__anon1::__anon2::__anon3::$	tags	/^handleGetStoreBooksList	HandleGetStoreBooksList.cpp	\/^void CHandleMessage::handleGetStoreBooksList (Buf *p) {$\/;"	f	class:CHandleMessage	signature:(Buf *p)$/;"	m	class:__anon1::__anon2::__anon3	file:	access:private
+add_group_list	HandleGetGroupList.cpp	/^        tmp.add_group_list(vi[i]);$/;"	p	file:	signature:(vi[i])
+add_student_list	HandleGetActiveStudentList.cpp	/^                tmp.add_student_list(vi[i]);$/;"	p	file:	signature:(vi[i])
+add_student_list	HandleGetGroupStudentList.cpp	/^                tmp.add_student_list(vi[i]);$/;"	p	file:	signature:(vi[i])
+addr	HandleGetServerAddr.cpp	/^        std::string addr = CONFIG->download_upload_server_ip;$/;"	l
+an	HandleGetSchoolAccountList.cpp	/^        AccountNode* an;$/;"	l
+b	HandleLogin.o	/^/;"	v
+book_list	HandleGetPublicBooksList.cpp	/^        bookList book_list;$/;"	l
+book_list	HandleGetStoreBooksList.cpp	/^        bookList book_list;$/;"	l
+book_node	HandleGetPublicBooksList.cpp	/^        bookNode* book_node;$/;"	l
+book_node	HandleGetStoreBooksList.cpp	/^        bookNode* book_node;$/;"	l
+buf	HandleDownloadFromPersonal.cpp	/^        char buf[128] = {0};$/;"	l
+casl	HandleGetActiveStudentList.cpp	/^        cGetActiveStudentList casl;$/;"	l
+cco	HandleCourseOver.cpp	/^        cCourseOver cco;$/;"	l
+cdfp	HandleDownloadFromPersonal.cpp	/^        cDownloadFromPublic cdfp;$/;"	l
+cggsl	HandleGetGroupStudentList.cpp	/^        cGetGroupStudentList cggsl;$/;"	l
+cgsdl	HandleGetStudentDrawLog.cpp	/^        cGetStudentDrawLog cgsdl;$/;"	l
+changeCoursewareStatus	HandleCourseOver.cpp	/^        pClassroom->changeCoursewareStatus(idx, CS_OVER);$/;"	p	file:	signature:(idx, CS_OVER)
+changeCoursewareStatus	HandleCourseware.cpp	/^        pClassroom->changeCoursewareStatus(idx, tmp.cs());$/;"	p	file:	signature:(idx, tmp.cs())
+cie	HandleGetCoursewareListStatus.cpp	/^        EPCOURSEWARE_VECTOR::const_iterator cie = cs.end();$/;"	l
+class_id	HandleGetStudentList.cpp	/^        int class_id = gfl.class_id();$/;"	l
+cleanLock	HandleGetGroupStudentList.cpp	/^        p_group->cleanLock();$/;"	p	file:	signature:()
+cln	HandleGetClassList.cpp	/^        ClassListNode* cln;$/;"	l
+cln	HandleGetClassRoomList.cpp	/^        ClassListNode* cln;$/;"	l
+cln	HandleGetGradeList.cpp	/^        ClassListNode* cln;$/;"	l
+clogin	HandleLogin.cpp	/^        cLogin clogin;$/;"	l
+cn	HandleGetContent.cpp	/^        ContentNode cn;$/;"	l
+cn	HandleGetCourseList.cpp	/^                        cn->set_course_type((CourseNode_CourseType)prst->getInt("course_type_id"));$/;"	p	file:	signature:(CourseNode_CourseType)prst->getInt(�)
+cn	HandleGetCourseList.cpp	/^        CourseNode* cn;$/;"	l
+cn1	HandleGetCourseList.cpp	/^        CourseNode cn1;$/;"	l
+cnt	HandleGetGradeList.cpp	/^        int cnt = 0;$/;"	l
+cnt	HandleGetStudentList.cpp	/^                int cnt = 0;$/;"	l
+cs	HandleGetCoursewareListStatus.cpp	/^        EPCOURSEWARE_VECTOR cs = p_classroom->getCoursewareListStatus();$/;"	l
+csg	HandleSetGroup.cpp	/^        cSetGroup csg;$/;"	l
+csn	HandleGetCoursewareListStatus.cpp	/^        CoursewareStatusNode* csn;$/;"	l
+ctb	HandleTransferBook.cpp	/^        cTransferBook ctb;$/;"	l
+cub	HandleUploadBook.cpp	/^        cUploadBook cub;$/;"	l
+cucip	HandleUpdateGroupDrawMsg.cpp	/^        cUpdateCopyIntoPaint cucip;$/;"	l
+cum	HandleLockConn.cpp	/^        cUpdateMutex cum;$/;"	l
+cum	HandleUpdateMutex.cpp	/^        cUpdateMutex cum;$/;"	l
+cupa	HandleUpdateGroupDrawMsg.cpp	/^        cUpdatePenAnderaser cupa;$/;"	l
+d	HandleLogin.o	/^/;"	v
+deleteAllGroup	HandleSetGroup.cpp	/^                pClassroom->deleteAllGroup();$/;"	p	file:	signature:()
+dl	cscope.out	/^�dl$/;"	m	class:std	file:
+dumpClassroom	HandleLogout.cpp	/^        EPMANAGER->dumpClassroom();$/;"	p	file:	signature:()
+dumpClassroom	HandleSetContent.cpp	/^        EPMANAGER->dumpClassroom();$/;"	p	file:	signature:()
+dumpClassroom	HandleSetFunc.cpp	/^        EPMANAGER->dumpClassroom();$/;"	p	file:	signature:()
+dumpUser	HandleLogin.cpp	/^        EPMANAGER->dumpUser();$/;"	p	file:	signature:()
+endl	HandleAssignment.cpp	/^        std::cout << "CT_Assignment" << std::endl;$/;"	m	class:std	file:
+endl	HandleGetPublicBooksList.cpp	/^	cout << "CT_GetPublicBooksList" << endl;$/;"	l
+endl	HandleGetServerAddr.cpp	/^        std::cout << "CT_GetServerAddr" << std::endl;$/;"	m	class:std	file:
+endl	HandleGetStoreBooksList.cpp	/^	cout << "CT_GetStoreBooksList" << endl;$/;"	l
+endl	HandleLargess.cpp	/^        std::cout << "CT_Largess" << std::endl;$/;"	m	class:std	file:
+endl	HandlePublish.cpp	/^        std::cout << "CT_Publish" << std::endl;$/;"	m	class:std	file:
+endl	HandlePurchase.cpp	/^        std::cout << "CT_Purchase" << std::endl;$/;"	m	class:std	file:
+endl	HandleUpdateGroupDrawMsg.cpp	/^                std::cout << "CT_UpdatePuzzleResult" << std::endl;$/;"	m	class:std	file:
+endl	HandleUpdatePublic.cpp	/^        std::cout << "CT_UpdatePublic" << std::endl;$/;"	m	class:std	file:
+enqueue	HandleDownloadFromPersonal.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleEnableClassroom.cpp	/^        SINGLE->sendqueue.enqueue(pBuf_EnableClassroom);$/;"	p	file:	signature:(pBuf_EnableClassroom)
+enqueue	HandleGetActiveStudentList.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetClassInfo.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetClassList.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetClassRoomList.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetClassroomInfo.cpp	/^        SINGLE->sendqueue.enqueue(p_buf);$/;"	p	file:	signature:(p_buf)
+enqueue	HandleGetClassroomStatus.cpp	/^        SINGLE->sendqueue.enqueue(p_buf);$/;"	p	file:	signature:(p_buf)
+enqueue	HandleGetContent.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetCourseList.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetCoursewareListStatus.cpp	/^        SINGLE->sendqueue.enqueue(p_buf);$/;"	p	file:	signature:(p_buf)
+enqueue	HandleGetFuncList.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetGradeList.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetGroupInfo.cpp	/^    SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetGroupList.cpp	/^    SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetGroupStudentList.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetNextStudent.cpp	/^        SINGLE->sendqueue.enqueue(p_buf);$/;"	p	file:	signature:(p_buf)
+enqueue	HandleGetPublicBooksList.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetPuzzleInfo.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetSchoolAccountList.cpp	/^        SINGLE->sendqueue.enqueue(p_buf);$/;"	p	file:	signature:(p_buf)
+enqueue	HandleGetServerAddr.cpp	/^        SINGLE->sendqueue.enqueue(p_buf);$/;"	p	file:	signature:(p_buf)
+enqueue	HandleGetStoreBooksList.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetStudentDrawLog.cpp	/^                SINGLE->sendqueue.enqueue(p_buf);$/;"	p	file:	signature:(p_buf)
+enqueue	HandleGetStudentInfo.cpp	/^                SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetStudentList.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetTeacherInfo.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleGetWhiteboardInfo.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleLeaveEarly.cpp	/^        SINGLE->sendqueue.enqueue(p_buf_1);$/;"	p	file:	signature:(p_buf_1)
+enqueue	HandleLogin.cpp	/^                                SINGLE->sendqueue.enqueue(p_buf);$/;"	p	file:	signature:(p_buf)
+enqueue	HandleLogin.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleMessage.cpp	/^    SINGLE->sendqueue.enqueue (p);$/;"	p	file:	signature:(p)
+enqueue	HandleSetContent.cpp	/^                SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleSetContent.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleSetFunc.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleSetGroup.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleUpdateMutex.cpp	/^                SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enqueue	HandleUploadBook.cpp	/^        SINGLE->sendqueue.enqueue(pBuf);$/;"	p	file:	signature:(pBuf)
+enter_classroom	HandleLogin.cpp	/^        bool enter_classroom = false;$/;"	l
+erase	HandleLogin.cpp	/^                                                        DestroyClassroomTask::desMap_.erase(it);$/;"	p	file:	signature:(it)
+execute	HandleUploadBook.cpp	/^                pstmt->execute ();$/;"	p	file:	signature:()
+first_name	HandleTransferBook.cpp	/^        std::string first_name;$/;"	l
+fn	HandleGetFuncList.cpp	/^        FuncNode* fn;$/;"	l
+format	tags	/^!_TAG_FILE_FORMAT	2	\/extended format; --format=1 will not append ;" to lines\/$/;"	v
+free	HandleGetClassList.cpp	/^        SINGLE->bufpool.free(p);$/;"	p	file:	signature:(p)
+free	HandleGetClassroomInfo.cpp	/^                SINGLE->bufpool.free(p);$/;"	p	file:	signature:(p)
+free	HandleGetClassroomInfo.cpp	/^        SINGLE->bufpool.free(p);$/;"	p	file:	signature:(p)
+free	HandleUpdateGroupDrawMsg.cpp	/^                SINGLE->bufpool.free(p);$/;"	p	file:	signature:(p)
+from	HandleGetNextStudent.cpp	/^        cGetNextStudent from;$/;"	l
+fromUser	HandleTransferBook.cpp	/^        const epUser* fromUser = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+g	HandleLogin.o	/^W�/;"	v
+gcl	HandleGetCourseList.cpp	/^        cGetCourseList gcl;$/;"	l
+gcls	HandleGetCoursewareListStatus.cpp	/^        sGetCoursewareListStatus gcls;$/;"	l
+gcrl	HandleGetClassList.cpp	/^        cGetClassList gcrl;$/;"	l
+getHandler	HandleMessage.h	/^        static handlefunc getHandler (int iCommandType)$/;"	f	class:CHandleMessage	access:public	signature:(int iCommandType)
+gfl	HandleGetStudentList.cpp	/^        cGetStudentList gfl;$/;"	l
+gn	HandleGetGroupInfo.cpp	/^    group_node gn;$/;"	l
+grade_id	HandleGetCourseList.cpp	/^        int grade_id = gcl.grade_id();$/;"	l
+gsal	HandleGetSchoolAccountList.cpp	/^        cGetSchoolAccountList gsal;$/;"	l
+gsi	HandleGetStudentInfo.cpp	/^        cGetStudentInfo gsi;$/;"	l
+gti	HandleGetTeacherInfo.cpp	/^        cGetTeacherInfo gti;$/;"	l
+handleAssignment	HandleAssignment.cpp	/^CHandleMessage::handleAssignment(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleAuth	HandleSystem.cpp	/^void CHandleMessage::handleAuth (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleClassOver	HandleClassOver.cpp	/^void CHandleMessage::handleClassOver(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleCourseOver	HandleCourseOver.cpp	/^void CHandleMessage::handleCourseOver(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleCourseware	HandleCourseware.cpp	/^void CHandleMessage::handleCourseware(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleDisplay	HandleDisplay.cpp	/^void CHandleMessage::handleDisplay(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleDownloadFromPersonal	HandleDownloadFromPersonal.cpp	/^void CHandleMessage::handleDownloadFromPersonal (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleDownloadFromPublic	HandleDownloadFromPublic.cpp	/^void CHandleMessage::handleDownloadFromPublic(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleEnableClassroom	HandleEnableClassroom.cpp	/^void CHandleMessage::handleEnableClassroom(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetActiveStudentList	HandleGetActiveStudentList.cpp	/^void CHandleMessage::handleGetActiveStudentList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetClassInfo	HandleGetClassInfo.cpp	/^void CHandleMessage::handleGetClassInfo(Buf* p) $/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetClassList	HandleGetClassList.cpp	/^void CHandleMessage::handleGetClassList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetClassRoomList	HandleGetClassRoomList.cpp	/^void CHandleMessage::handleGetClassRoomList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetClassroomInfo	HandleGetClassroomInfo.cpp	/^void CHandleMessage::handleGetClassroomInfo(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetClassroomStatus	HandleGetClassroomStatus.cpp	/^void CHandleMessage::handleGetClassroomStatus(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetContent	HandleGetContent.cpp	/^void CHandleMessage::handleGetContent (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetCourseList	HandleGetCourseList.cpp	/^void CHandleMessage::handleGetCourseList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetCoursewareListStatus	HandleGetCoursewareListStatus.cpp	/^void CHandleMessage::handleGetCoursewareListStatus(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetFuncList	HandleGetFuncList.cpp	/^void CHandleMessage::handleGetFuncList (Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetGradeList	HandleGetGradeList.cpp	/^void CHandleMessage::handleGetGradeList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetGroupInfo	HandleGetGroupInfo.cpp	/^void CHandleMessage::handleGetGroupInfo (Buf* p) $/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetGroupList	HandleGetGroupList.cpp	/^void CHandleMessage::handleGetGroupList (Buf* p) $/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetGroupStudentList	HandleGetGroupStudentList.cpp	/^void CHandleMessage::handleGetGroupStudentList(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetNextStudent	HandleGetNextStudent.cpp	/^void CHandleMessage::handleGetNextStudent(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetPublicBooksList	HandleGetPublicBooksList.cpp	/^void CHandleMessage::handleGetPublicBooksList (Buf *p) $/;"	f	class:CHandleMessage	signature:(Buf *p)
+handleGetPuzzleInfo	HandleGetPuzzleInfo.cpp	/^void CHandleMessage::handleGetPuzzleInfo(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetSchoolAccountList	HandleGetSchoolAccountList.cpp	/^void CHandleMessage::handleGetSchoolAccountList(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetServerAddr	HandleGetServerAddr.cpp	/^CHandleMessage::handleGetServerAddr(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetStoreBooksList	HandleGetStoreBooksList.cpp	/^void CHandleMessage::handleGetStoreBooksList (Buf *p) {$/;"	f	class:CHandleMessage	signature:(Buf *p)
+handleGetStudentDrawLog	HandleGetStudentDrawLog.cpp	/^void CHandleMessage::handleGetStudentDrawLog(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetStudentInfo	HandleGetStudentInfo.cpp	/^void CHandleMessage::handleGetStudentInfo (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetStudentList	HandleGetStudentList.cpp	/^void CHandleMessage::handleGetStudentList (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetTeacherInfo	HandleGetTeacherInfo.cpp	/^void CHandleMessage::handleGetTeacherInfo (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleGetWhiteboardInfo	HandleGetWhiteboardInfo.cpp	/^void CHandleMessage::handleGetWhiteboardInfo(Buf* p) $/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleHeart	HandleSystem.cpp	/^void CHandleMessage::handleHeart (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleLargess	HandleLargess.cpp	/^CHandleMessage::handleLargess(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleLeaveEarly	HandleLeaveEarly.cpp	/^void CHandleMessage::handleLeaveEarly(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleLockConn	HandleLockConn.cpp	/^void CHandleMessage::handleLockConn(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleLogin	HandleLogin.cpp	/^void CHandleMessage::handleLogin (Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleLogout	HandleLogout.cpp	/^void CHandleMessage::handleLogout (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handlePublish	HandlePublish.cpp	/^CHandleMessage::handlePublish(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handlePurchase	HandlePurchase.cpp	/^CHandleMessage::handlePurchase(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleRelay	HandleRelay.cpp	/^void CHandleMessage::handleRelay(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleSendtoAll	HandleSendtoAll.cpp	/^void CHandleMessage::handleSendtoAll(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleSetContent	HandleSetContent.cpp	/^void CHandleMessage::handleSetContent (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleSetFunc	HandleSetFunc.cpp	/^void CHandleMessage::handleSetFunc (Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleSetGroup	HandleSetGroup.cpp	/^void CHandleMessage::handleSetGroup (Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleStartClass	HandleStartClass.cpp	/^void CHandleMessage::handleStartClass (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleTeacherSendtoWhiteboard	HandleTeacherSendtoWhiteboard.cpp	/^void CHandleMessage::handleTeacherSendtoWhiteboard(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleTest	HandleSystem.cpp	/^void CHandleMessage::handleTest (Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleTransferBook	HandleTransferBook.cpp	/^void CHandleMessage::handleTransferBook(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleUpdateConn	HandleUpdateConn.cpp	/^void CHandleMessage::handleUpdateConn(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleUpdateDrawSet	HandleUpdateDrawSet.cpp	/^void CHandleMessage::handleUpdateDrawSet(Buf* p)$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleUpdateGroupDrawMsg	HandleUpdateGroupDrawMsg.cpp	/^void CHandleMessage::handleUpdateGroupDrawMsg(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleUpdateMutex	HandleUpdateMutex.cpp	/^void CHandleMessage::handleUpdateMutex (Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleUpdatePublic	HandleUpdatePublic.cpp	/^CHandleMessage::handleUpdatePublic(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handleUploadBook	HandleUploadBook.cpp	/^CHandleMessage::handleUploadBook(Buf* p) {$/;"	f	class:CHandleMessage	signature:(Buf* p)
+handlefunc	HandleMessage.h	/^typedef void (*handlefunc)(Buf*);$/;"	t
+idx	HandleCourseOver.cpp	/^        int idx = 0;$/;"	l
+idx	HandleCourseware.cpp	/^        int idx = 0;$/;"	l
+initHandlers	HandleMessage.h	/^        static void initHandlers (void)$/;"	f	class:CHandleMessage	access:public	signature:(void)
+initWhiteboard	HandleSetContent.cpp	/^        pClassroom->initWhiteboard();$/;"	p	file:	signature:()
+insertClass	HandleSetContent.cpp	/^        pClassroom->insertClass(pClass);$/;"	p	file:	signature:(pClass)
+insertClassroom	HandleSetContent.cpp	/^        EPMANAGER->insertClassroom(pClassroom);$/;"	p	file:	signature:(pClassroom)
+insertGroup	HandleSetGroup.cpp	/^        pClassroom->insertGroup(pGroup);$/;"	p	file:	signature:(pGroup)
+insertStudentFromUserIntoClassroom	HandleSetContent.cpp	/^        EPMANAGER->insertStudentFromUserIntoClassroom(pClassroom);$/;"	p	file:	signature:(pClassroom)
+insertWhiteboardFromUserIntoClassroom	HandleSetContent.cpp	/^        EPMANAGER->insertWhiteboardFromUserIntoClassroom(pClassroom);$/;"	p	file:	signature:(pClassroom)
+isvalue	HandleGetStudentList.cpp	/^        bool isvalue = false;$/;"	l
+it	HandleGetCoursewareListStatus.cpp	/^        EPCOURSEWARE_VECTOR::iterator it = cs.begin();$/;"	l
+it	HandleLogin.cpp	/^                        std::map<int, time_t>::iterator it;$/;"	l
+it	HandleMessage.h	/^                HANDLEMAP::iterator it = CHandleMessage::m_HandleMap.find(iCommandType);$/;"	l
+j	HandleLogin.o	/^/;"	v
+m_HandleMap	HandleMessage.cpp	/^HANDLEMAP CHandleMessage::m_HandleMap;$/;"	m	class:CHandleMessage	file:
+m_HandleMap	HandleMessage.h	/^        static HANDLEMAP m_HandleMap;$/;"	m	class:CHandleMessage	access:private
+memcpy	HandleMessage.cpp	/^        (void) memcpy ((char*)p->ptr() + sizeof (MSG_HEAD), (char*)data, iLen);$/;"	p	file:	signature:(char*)p->ptr() + sizeof (MSG_HEAD), (char*)data, iLen
+moveStudentToUser	HandleLeaveEarly.cpp	/^        EPMANAGER->moveStudentToUser(tmp.student_id());$/;"	p	file:	signature:(tmp.student_id())
+msg	HandleSetGroup.cpp	/^        std::string msg = "success!";$/;"	l
+msg	HandleTransferBook.cpp	/^        std::string msg;$/;"	l
+p1	HandleClassOver.cpp	/^        Buf* p1 = NULL;$/;"	l
+p1	HandleLogout.cpp	/^        Buf* p1 = NULL;$/;"	l
+p1	HandleSetFunc.cpp	/^        Buf* p1 = NULL;$/;"	l
+p1	HandleUpdateDrawSet.cpp	/^        Buf* p1 = NULL;$/;"	l
+p2	HandleLogout.cpp	/^        Buf* p2 = NULL;$/;"	l
+pBuf	HandleClassOver.cpp	/^        Buf* pBuf = packet(ST_ClassOver, p->getfd());$/;"	l
+pBuf	HandleCourseOver.cpp	/^        Buf* pBuf = NULL;$/;"	l
+pBuf	HandleCourseware.cpp	/^        Buf* pBuf = NULL;$/;"	l
+pBuf	HandleDownloadFromPersonal.cpp	/^        Buf* pBuf = packet(ST_DownloadFromPersonal, tmp, p->getfd());$/;"	l
+pBuf	HandleGetActiveStudentList.cpp	/^        Buf* pBuf = packet_list(ST_GetActiveStudentList, tmp, p->getfd());$/;"	l
+pBuf	HandleGetClassInfo.cpp	/^        Buf* pBuf = packet(ST_GetClassInfo, tmp, p->getfd());$/;"	l
+pBuf	HandleGetClassList.cpp	/^        Buf* pBuf = packet_list(ST_GetClassList, tmp, p->getfd());$/;"	l
+pBuf	HandleGetClassRoomList.cpp	/^        Buf* pBuf = packet_list(ST_GetClassRoomList, tmp, p->getfd());$/;"	l
+pBuf	HandleGetContent.cpp	/^        Buf* pBuf = SINGLE->bufpool.malloc();$/;"	l
+pBuf	HandleGetContent.cpp	/^        pBuf->setsize(((MSG_HEAD*)pBuf->ptr())->cLen);$/;"	p	file:	signature:((MSG_HEAD*)pBuf->ptr())->cLen
+pBuf	HandleGetCourseList.cpp	/^        Buf* pBuf = packet_list(ST_GetCourseList, tmp, p->getfd());$/;"	l
+pBuf	HandleGetFuncList.cpp	/^        Buf* pBuf = packet_list(ST_GetFuncList, tmp, p->getfd());$/;"	l
+pBuf	HandleGetGradeList.cpp	/^        Buf* pBuf = packet_list(ST_GetGradeList, tmp, p->getfd());$/;"	l
+pBuf	HandleGetGroupInfo.cpp	/^    Buf* pBuf = packet_list(ST_GetGroupInfo, tmp, p->getfd());$/;"	l
+pBuf	HandleGetGroupList.cpp	/^    Buf* pBuf = packet_list(ST_GetGroupList, tmp, p->getfd());$/;"	l
+pBuf	HandleGetGroupStudentList.cpp	/^        Buf* pBuf = packet_list(ST_GetGroupStudentList, tmp, p->getfd());$/;"	l
+pBuf	HandleGetPublicBooksList.cpp	/^        Buf* pBuf = packet_list(ST_GetPublicBooksList, book_list, p->getfd());$/;"	l
+pBuf	HandleGetPuzzleInfo.cpp	/^        Buf* pBuf = packet(ST_GetPuzzleInfo, tmp, p->getfd());$/;"	l
+pBuf	HandleGetStoreBooksList.cpp	/^        Buf* pBuf = packet_list(ST_GetStoreBooksList, book_list, p->getfd());$/;"	l
+pBuf	HandleGetStudentInfo.cpp	/^        Buf* pBuf = packet(ST_GetStudentInfo, tmp, p->getfd());$/;"	l
+pBuf	HandleGetStudentList.cpp	/^        Buf* pBuf = packet_list(ST_GetStudentList, tmp, p->getfd());$/;"	l
+pBuf	HandleGetTeacherInfo.cpp	/^        Buf* pBuf = packet(ST_GetTeacherInfo, tmp, p->getfd());$/;"	l
+pBuf	HandleGetWhiteboardInfo.cpp	/^        Buf* pBuf = packet(ST_GetWhiteboardInfo, tmp, p->getfd());$/;"	l
+pBuf	HandleLogin.cpp	/^        Buf* pBuf = packet(ST_Login, slogin, p->getfd());$/;"	l
+pBuf	HandleLogout.cpp	/^        Buf* pBuf = packet(ST_Logout, tmp, p->getfd());$/;"	l
+pBuf	HandleSetContent.cpp	/^                Buf* pBuf = packet(ST_SetContent, tmp, p->getfd());$/;"	l
+pBuf	HandleSetContent.cpp	/^        Buf* pBuf = packet(ST_SetContent, tmp, p->getfd());$/;"	l
+pBuf	HandleSetFunc.cpp	/^        Buf* pBuf = packet(ST_SetFunc, tmp, p->getfd());$/;"	l
+pBuf	HandleSetGroup.cpp	/^        Buf* pBuf = packet(ST_SetGroup, tmp, p->getfd());$/;"	l
+pBuf	HandleUpdateMutex.cpp	/^        Buf* pBuf = NULL;$/;"	l
+pBuf	HandleUploadBook.cpp	/^        Buf* pBuf = packet(ST_UploadBook, tmp, p->getfd());$/;"	l
+pBuf1	HandleStartClass.cpp	/^        Buf* pBuf1 = packet(ST_StartClass, p->getfd());$/;"	l
+pBuf2	HandleStartClass.cpp	/^        Buf* pBuf2 = packet(ST_StartClass, p->getfd());$/;"	l
+pBuf_EnableClassroom	HandleEnableClassroom.cpp	/^        Buf* pBuf_EnableClassroom = packet(ST_EnableClassroom, p->getfd());$/;"	l
+pBuf_EnableClassroom	HandleSetContent.cpp	/^        Buf* pBuf_EnableClassroom = packet(ST_EnableClassroom, p->getfd());$/;"	l
+pClass	HandleSetContent.cpp	/^        epClass* pClass = EPMANAGER->getClassById(sc.class_id());$/;"	l
+pClassroom	HandleClassOver.cpp	/^        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleCourseOver.cpp	/^        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleCourseware.cpp	/^        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleDisplay.cpp	/^    epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleEnableClassroom.cpp	/^                epClassroom* pClassroom = EPMANAGER->getClassroomByClassId(pStudent->classId_);$/;"	l
+pClassroom	HandleEnableClassroom.cpp	/^                epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleGetContent.cpp	/^        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleGetFuncList.cpp	/^                epClassroom* pClassroom = EPMANAGER->getClassroomByClassId(pStudent->classId_);$/;"	l
+pClassroom	HandleGetGroupInfo.cpp	/^    const epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleGetGroupList.cpp	/^    epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleGetNextStudent.cpp	/^        epClassroom* pClassroom = const_cast<epClassroom*>(EPMANAGER->getClassroomByFd(p->getfd()));$/;"	l
+pClassroom	HandleLogin.cpp	/^                        epClassroom* pClassroom = NULL;$/;"	l
+pClassroom	HandleLogout.cpp	/^        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleRelay.cpp	/^        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleSetContent.cpp	/^        epClassroom* pClassroom = EPMANAGER->getClassroomById(sc.classroom_id());$/;"	l
+pClassroom	HandleSetFunc.cpp	/^        epClassroom*  pClassroom   = NULL;$/;"	l
+pClassroom	HandleSetGroup.cpp	/^        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleStartClass.cpp	/^        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleUpdateDrawSet.cpp	/^        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pClassroom	HandleUpdateGroupDrawMsg.cpp	/^        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+pGroup	HandleGetNextStudent.cpp	/^	epGroup* pGroup = const_cast<epGroup*>(EPMANAGER->getGroupByFd(p->getfd()));$/;"	l
+pGroup	HandleRelay.cpp	/^        epGroup* pGroup = const_cast<epGroup*>(pClassroom->getGroupByFd(p->getfd()));$/;"	l
+pGroup	HandleSetGroup.cpp	/^        epGroup* pGroup = new epGroup();$/;"	l
+pGroup	HandleUpdateGroupDrawMsg.cpp	/^        epGroup* pGroup = const_cast<epGroup*>(EPMANAGER->getGroupByFd(p->getfd()));$/;"	l
+pGroup	HandleUpdateMutex.cpp	/^        epGroup* pGroup = const_cast<epGroup*>(EPMANAGER->getGroupByFd(p->getfd()));$/;"	l
+pStudent	HandleEnableClassroom.cpp	/^                epStudent* pStudent = dynamic_cast<epStudent*>(pUser);$/;"	l
+pStudent	HandleGetFuncList.cpp	/^        epStudent* pStudent = dynamic_cast<epStudent*>(const_cast<epUser*>(pUser));$/;"	l
+pStudent	HandleGetStudentInfo.cpp	/^        const epStudent* pStudent = EPMANAGER->getStudentById(gsi.id());$/;"	l
+pStudent	HandleSetFunc.cpp	/^        epStudent*    pStudent     = NULL;$/;"	l
+pStudent	HandleSetGroup.cpp	/^        epStudent* pStudent = NULL;$/;"	l
+pTeacher	HandleClassOver.cpp	/^        const epTeacher* pTeacher = dynamic_cast<epTeacher*>(pUser);$/;"	l
+pTeacher	HandleGetClassList.cpp	/^        const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);$/;"	l
+pTeacher	HandleGetClassRoomList.cpp	/^        const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);$/;"	l
+pTeacher	HandleGetCourseList.cpp	/^        const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);$/;"	l
+pTeacher	HandleGetGradeList.cpp	/^        const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);$/;"	l
+pTeacher	HandleSetContent.cpp	/^        const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(user);$/;"	l
+pUser	HandleClassOver.cpp	/^        epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFdFromClassroom(p->getfd()));$/;"	l
+pUser	HandleCourseOver.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFdFromClassroom(p->getfd());$/;"	l
+pUser	HandleCourseware.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFdFromClassroom(p->getfd());$/;"	l
+pUser	HandleDownloadFromPersonal.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+pUser	HandleEnableClassroom.cpp	/^        epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFd(p->getfd()));$/;"	l
+pUser	HandleGetClassList.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+pUser	HandleGetClassRoomList.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+pUser	HandleGetCourseList.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+pUser	HandleGetFuncList.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+pUser	HandleGetGradeList.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+pUser	HandleGetPublicBooksList.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+pUser	HandleGetStoreBooksList.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+pUser	HandleLogin.cpp	/^        epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByAccount(clogin.account(), (enum LoginType)clogin.type()));$/;"	l
+pUser	HandleLogout.cpp	/^        epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFd(p->getfd()));$/;"	l
+pUser	HandleRelay.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFdFromClassroom(p->getfd());$/;"	l
+pUser	HandleSetFunc.cpp	/^        epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFd(p->getfd()));$/;"	l
+pUser	HandleStartClass.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFdFromClassroom(p->getfd());$/;"	l
+pUser	HandleUpdateDrawSet.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFdFromClassroom(p->getfd());$/;"	l
+pUser	HandleUpdateGroupDrawMsg.cpp	/^        epUser* pUser = NULL;$/;"	l
+pUser	HandleUploadBook.cpp	/^        const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+p_1	HandleRelay.cpp	/^        Buf* p_1 = packet(ST_Relay, tmp, p->getfd());$/;"	l
+p_buf	.HandleLockConn.cpp.swp	/^/;"	v
+p_buf	HandleGetClassroomInfo.cpp	/^        Buf* p_buf = packet(ST_GetClassroomInfo, tmp, p->getfd());$/;"	l
+p_buf	HandleGetClassroomStatus.cpp	/^        Buf* p_buf = packet(ST_GetClassroomStatus, tmp, p->getfd());$/;"	l
+p_buf	HandleGetCoursewareListStatus.cpp	/^        Buf* p_buf = packet(ST_GetCoursewareListStatus, gcls, p->getfd());$/;"	l
+p_buf	HandleGetNextStudent.cpp	/^        Buf* p_buf = packet(ST_GetNextStudent, to, p_student->fd_);$/;"	l
+p_buf	HandleGetSchoolAccountList.cpp	/^        Buf* p_buf = packet(ST_GetSchoolAccountList, tmp, p->getfd());$/;"	l
+p_buf	HandleGetServerAddr.cpp	/^        Buf* p_buf = packet(CT_GetServerAddr, tmp, p->getfd());$/;"	l
+p_buf	HandleGetStudentDrawLog.cpp	/^                p_buf->setsize(((MSG_HEAD*)str.c_str())->cLen);$/;"	p	file:	signature:((MSG_HEAD*)str.c_str())->cLen
+p_buf	HandleGetStudentDrawLog.cpp	/^        Buf* p_buf = NULL;$/;"	l
+p_buf	HandleLeaveEarly.cpp	/^        Buf* p_buf = packet(ST_UpdateStudentStatus, suss, p->getfd());$/;"	l
+p_buf	HandleLockConn.cpp	/^        Buf* p_buf = packet(ST_LockConn, tmp, p->getfd());$/;"	l
+p_buf	HandleLogin.cpp	/^                                        Buf* p_buf = packet(ST_UpdateStudentStatus, tmp, p->getfd());$/;"	l
+p_buf	HandleLogin.cpp	/^        Buf* p_buf = NULL;$/;"	l
+p_buf	HandleSendtoAll.cpp	/^        Buf* p_buf = NULL;$/;"	l
+p_buf	HandleUpdateConn.cpp	/^        Buf* p_buf = packet(ST_UpdateConn, tmp, p->getfd());$/;"	l
+p_buf	HandleUpdateGroupDrawMsg.cpp	/^                Buf* p_buf = NULL;$/;"	l
+p_buf_1	HandleGetNextStudent.cpp	/^        Buf* p_buf_1 = packet(ST_GetNextStudent, to, 0);$/;"	l
+p_buf_1	HandleLeaveEarly.cpp	/^        Buf* p_buf_1 = packet(ST_LeaveEarly, p_student->fd_);$/;"	l
+p_buf_1	HandleUpdateConn.cpp	/^        Buf* p_buf_1 = NULL;$/;"	l
+p_buf_1	HandleUpdateGroupDrawMsg.cpp	/^                Buf* p_buf_1 = NULL;$/;"	l
+p_buf_2	HandleGetNextStudent.cpp	/^        Buf* p_buf_2 = packet(ST_GetNextStudent, to, 0);$/;"	l
+p_buf_2	HandleUpdateConn.cpp	/^        Buf* p_buf_2 = NULL;$/;"	l
+p_class	HandleGetClassInfo.cpp	/^        epClass* p_class = p_classroom->class_;$/;"	l
+p_class	HandleLogin.cpp	/^                        epClass*     p_class    = NULL;$/;"	l
+p_class	HandleLogout.cpp	/^        epClass*   p_class = NULL;$/;"	l
+p_classroom	HandleGetClassInfo.cpp	/^	epClassroom* p_classroom = const_cast<epClassroom*>(EPMANAGER->getClassroomByFd(p->getfd()));$/;"	l
+p_classroom	HandleGetClassroomInfo.cpp	/^        epClassroom* p_classroom = const_cast<epClassroom*>(EPMANAGER->getClassroomByFd(p->getfd()));$/;"	l
+p_classroom	HandleGetClassroomStatus.cpp	/^        epClassroom* p_classroom = const_cast<epClassroom*>(EPMANAGER->getClassroomByFd(p->getfd()));$/;"	l
+p_classroom	HandleGetCoursewareListStatus.cpp	/^        epClassroom* p_classroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+p_classroom	HandleGetGroupStudentList.cpp	/^        epClassroom* p_classroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+p_classroom	HandleGetPuzzleInfo.cpp	/^        epClassroom* p_classroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+p_classroom	HandleGetStudentList.cpp	/^                epClassroom* p_classroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+p_classroom	HandleGetTeacherInfo.cpp	/^                epClassroom* p_classroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+p_classroom	HandleGetWhiteboardInfo.cpp	/^                epClassroom* p_classroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+p_classroom	HandleLeaveEarly.cpp	/^        epClassroom* p_classroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+p_classroom	HandleLockConn.cpp	/^        epClassroom* p_classroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+p_classroom	HandleTeacherSendtoWhiteboard.cpp	/^        epClassroom* p_classroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+p_classroom	HandleUpdateConn.cpp	/^        epClassroom* p_classroom = EPMANAGER->getClassroomByFd(p->getfd());$/;"	l
+p_group	HandleGetGroupInfo.cpp	/^    const epGroup* p_group = gn.has_group_id()$/;"	l
+p_group	HandleGetGroupStudentList.cpp	/^        epGroup* p_group = NULL;$/;"	l
+p_group	HandleGetPuzzleInfo.cpp	/^        const epGroup* p_group = pi.has_group_id()$/;"	l
+p_group	HandleLockConn.cpp	/^        epGroup* p_group = const_cast<epGroup*>(p_classroom->getGroupByFd(p->getfd()));$/;"	l
+p_group	HandleUpdateConn.cpp	/^        epGroup* p_group = const_cast<epGroup*>(p_classroom->getGroupByFd(p->getfd()));$/;"	l
+p_student	HandleGetNextStudent.cpp	/^        const epStudent* p_student = pGroup->getNextStudentByFd(p->getfd());$/;"	l
+p_student	HandleGetStudentDrawLog.cpp	/^        epStudent* p_student = const_cast<epStudent*>(EPMANAGER->getStudentById(cgsdl.student_id()));$/;"	l
+p_student	HandleLeaveEarly.cpp	/^        const epStudent* p_student = EPMANAGER->getStudentByIdFromClassroom(tmp.student_id());$/;"	l
+p_student	HandleLogin.cpp	/^                        epStudent*   p_student  = NULL;$/;"	l
+p_student	HandleLogout.cpp	/^        epStudent* p_student = NULL;$/;"	l
+p_student	HandleUpdateMutex.cpp	/^        epStudent* p_student = NULL;$/;"	l
+p_teacher	HandleLeaveEarly.cpp	/^        epTeacher* p_teacher = const_cast<epTeacher*>(EPMANAGER->getTeacherByFd(p->getfd()));$/;"	l
+p_user	HandleGetServerAddr.cpp	/^        const epUser* p_user = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+p_whiteboard	HandleGetWhiteboardInfo.cpp	/^        epWhiteBoard* p_whiteboard = dynamic_cast<epWhiteBoard*>(const_cast<epUser*>(EPMANAGER->getUserByFd(p->getfd())));$/;"	l
+p_whiteboard	HandleSetFunc.cpp	/^        epWhiteBoard* p_whiteboard = NULL;$/;"	l
+pair	HandleMessage.h	/^                        m_HandleMap.insert (std::pair<int, handlefunc>(iCommandType, hHandler));$/;"	p	signature:(iCommandType, hHandler)
+pg	HandleSetGroup.cpp	/^        PeerGroup pg;$/;"	l
+pi	HandleGetPuzzleInfo.cpp	/^        PuzzleInfo pi;$/;"	l
+port	HandleGetServerAddr.cpp	/^        int port = CONFIG->download_upload_server_port;$/;"	l
+postMessage	HandleMessage.cpp	/^bool CHandleMessage::postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen)$/;"	f	class:CHandleMessage	signature:(Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen)
+postMessage	HandleMessage.h	/^        static bool postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen);$/;"	p	class:CHandleMessage	access:private	signature:(Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen)
+prst	HandleDownloadFromPersonal.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleGetClassList.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleGetClassRoomList.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleGetCourseList.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleGetFuncList.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleGetGradeList.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleGetPublicBooksList.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleGetSchoolAccountList.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleGetStoreBooksList.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleGetStudentInfo.cpp	/^                        ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleGetStudentList.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleGetTeacherInfo.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+prst	HandleTransferBook.cpp	/^                ResultSet* prst = pstmt->executeQuery ();$/;"	l
+pstmt	HandleDownloadFromPersonal.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (XXX);$/;"	l
+pstmt	HandleGetClassList.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_CLASS_LIST_BY_GRADE_ID);$/;"	l
+pstmt	HandleGetClassRoomList.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_CLASSROOM_LIST_BY_SCHOOL_ID);$/;"	l
+pstmt	HandleGetCourseList.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_COURSE_LIST_BY_GRADE_ID);$/;"	l
+pstmt	HandleGetFuncList.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_FUNC_LIST_BY_TYPE);$/;"	l
+pstmt	HandleGetGradeList.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_ALL_GRADE_LIST_BY_SCHOOL_ID);$/;"	l
+pstmt	HandleGetPublicBooksList.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_COURSE_LIST_BY_AUTHOR_ID_AND_TYPE_PUBLISH);$/;"	l
+pstmt	HandleGetSchoolAccountList.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_SCHOOL_ACCOUNT_LIST_BY_SCHOOL_ID);$/;"	l
+pstmt	HandleGetStoreBooksList.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (XXX);$/;"	l
+pstmt	HandleGetStudentInfo.cpp	/^                        PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_STU_INFO_BY_ID);$/;"	l
+pstmt	HandleGetStudentList.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_STU_LIST_BY_CLASSID);$/;"	l
+pstmt	HandleGetTeacherInfo.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (SQL_GET_TEA_INFO_BY_ID);$/;"	l
+pstmt	HandleTransferBook.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement (XXX);$/;"	l
+pstmt	HandleUploadBook.cpp	/^                PreparedStatement* pstmt = DATABASE->preStatement \\$/;"	l
+removeAllGroup	HandleCourseOver.cpp	/^        pClassroom->removeAllGroup();$/;"	p	file:	signature:()
+res_path	HandleDownloadFromPersonal.cpp	/^        std::string res_path;$/;"	l
+result	HandleLockConn.cpp	/^        bool result = false;$/;"	l
+result	HandleLogin.cpp	/^        bool result = false;$/;"	l
+result	HandleSetGroup.cpp	/^        int result = TRUE;$/;"	l
+result	HandleUpdateMutex.cpp	/^        bool result = false;$/;"	l
+sc	HandleSetContent.cpp	/^        cSetContent sc;$/;"	l
+school_id	HandleGetClassRoomList.cpp	/^        int school_id = pTeacher->schoolId_;$/;"	l
+sendtoAll	HandleClassOver.cpp	/^        pClassroom->sendtoAll(p1);$/;"	p	file:	signature:(p1)
+sendtoAll	HandleLeaveEarly.cpp	/^        p_classroom->sendtoAll(p_buf);$/;"	p	file:	signature:(p_buf)
+sendtoAll	HandleLogin.cpp	/^                                        pClassroom->sendtoAll(p_buf);$/;"	p	file:	signature:(p_buf)
+sendtoAll	HandleLogout.cpp	/^                pClassroom->sendtoAll(p1, false); \/\/ 不发送给自己。:$/;"	p	file:	signature:(p1, false)
+sendtoAll	HandleRelay.cpp	/^        pClassroom->sendtoAll(p_1);$/;"	p	file:	signature:(p_1)
+sendtoAll	HandleSetFunc.cpp	/^                        pClassroom->sendtoAll(p1);$/;"	p	file:	signature:(p1)
+sendtoAllClass	HandleCourseOver.cpp	/^        pClassroom->sendtoAllClass(pBuf);$/;"	p	file:	signature:(pBuf)
+sendtoAllClass	HandleCourseware.cpp	/^        pClassroom->sendtoAllClass(pBuf);$/;"	p	file:	signature:(pBuf)
+sendtoAllClass	HandleLogout.cpp	/^                pClassroom->sendtoAllClass(p1); \/\/ 不发送给自己。$/;"	p	file:	signature:(p1)
+sendtoAllClass	HandleLogout.cpp	/^                pClassroom->sendtoAllClass(p1);$/;"	p	file:	signature:(p1)
+sendtoAllClass	HandleStartClass.cpp	/^        pClassroom->sendtoAllClass(pBuf1);$/;"	p	file:	signature:(pBuf1)
+sendtoAllClass	HandleUpdateDrawSet.cpp	/^        pClassroom->sendtoAllClass(p1, true);$/;"	p	file:	signature:(p1, true)
+sendtoAllClassroom	HandleSendtoAll.cpp	/^        EPMANAGER->sendtoAllClassroom(p_buf);$/;"	p	file:	signature:(p_buf)
+sendtoAllStudent	.HandleLockConn.cpp.swp	/^/;"	p	file:	signature:(p_buf)
+sendtoAllStudent	HandleLockConn.cpp	/^        p_group->sendtoAllStudent(p_buf);$/;"	p	file:	signature:(p_buf)
+sendtoAllStudent	HandleUpdateConn.cpp	/^        p_group->sendtoAllStudent(p_buf);$/;"	p	file:	signature:(p_buf)
+sendtoAllStudent	HandleUpdateGroupDrawMsg.cpp	/^                pGroup->sendtoAllStudent(p, true);$/;"	p	file:	signature:(p, true)
+sendtoAllUser	HandleSendtoAll.cpp	/^        EPMANAGER->sendtoAllUser(p);$/;"	p	file:	signature:(p)
+sendtoClassFromUser	HandleSetContent.cpp	/^        EPMANAGER->sendtoClassFromUser(pBuf_EnableClassroom, sc.class_id());$/;"	p	file:	signature:(pBuf_EnableClassroom, sc.class_id())
+sendtoTeacher	HandleGetNextStudent.cpp	/^        pClassroom->sendtoTeacher(p_buf_1);$/;"	p	file:	signature:(p_buf_1)
+sendtoTeacher	HandleLogout.cpp	/^                pClassroom->sendtoTeacher(p2);$/;"	p	file:	signature:(p2)
+sendtoTeacher	HandleUpdateConn.cpp	/^        p_classroom->sendtoTeacher(p_buf_1);$/;"	p	file:	signature:(p_buf_1)
+sendtoTeacher	HandleUpdateGroupDrawMsg.cpp	/^                        pClassroom->sendtoTeacher(p_buf_1);$/;"	p	file:	signature:(p_buf_1)
+sendtoTeacher	HandleUpdateGroupDrawMsg.cpp	/^                pClassroom->sendtoTeacher(p);$/;"	p	file:	signature:(p)
+sendtoWhiteBoard	HandleCourseOver.cpp	/^        pClassroom->sendtoWhiteBoard(p);$/;"	p	file:	signature:(p)
+sendtoWhiteBoard	HandleCourseware.cpp	/^        pClassroom->sendtoWhiteBoard(p);$/;"	p	file:	signature:(p)
+sendtoWhiteBoard	HandleDisplay.cpp	/^    pClassroom->sendtoWhiteBoard(p);$/;"	p	file:	signature:(p)
+sendtoWhiteBoard	HandleGetNextStudent.cpp	/^        pClassroom->sendtoWhiteBoard(p_buf_2);$/;"	p	file:	signature:(p_buf_2)
+sendtoWhiteBoard	HandleLogout.cpp	/^                pClassroom->sendtoWhiteBoard(p2);$/;"	p	file:	signature:(p2)
+sendtoWhiteBoard	HandleStartClass.cpp	/^        pClassroom->sendtoWhiteBoard(pBuf2);$/;"	p	file:	signature:(pBuf2)
+sendtoWhiteBoard	HandleTeacherSendtoWhiteboard.cpp	/^        p_classroom->sendtoWhiteBoard(p);$/;"	p	file:	signature:(p)
+sendtoWhiteBoard	HandleUpdateConn.cpp	/^        p_classroom->sendtoWhiteBoard(p_buf_2);$/;"	p	file:	signature:(p_buf_2)
+sendtoWhiteBoard	HandleUpdateDrawSet.cpp	/^        pClassroom->sendtoWhiteBoard(p);$/;"	p	file:	signature:(p)
+sendtoWhiteBoard	HandleUpdateGroupDrawMsg.cpp	/^                pClassroom->sendtoWhiteBoard(p_buf);$/;"	p	file:	signature:(p_buf)
+sendtoWhiteboardFromUser	HandleSetContent.cpp	/^        EPMANAGER->sendtoWhiteboardFromUser(pBuf_EnableClassroom, sc.classroom_id());$/;"	p	file:	signature:(pBuf_EnableClassroom, sc.classroom_id())
+setFunc	HandleSetFunc.cpp	/^        cSetFunc setFunc;$/;"	l
+setHandler	HandleMessage.h	/^        static void setHandler (int iCommandType, handlefunc hHandler)$/;"	f	class:CHandleMessage	access:public	signature:(int iCommandType, handlefunc hHandler)
+set_enter_classroom	HandleLogin.cpp	/^                                slogin.set_enter_classroom(false);$/;"	p	file:	signature:(false)
+set_enter_classroom	HandleLogin.cpp	/^        if (enter_classroom) slogin.set_enter_classroom(enter_classroom);$/;"	p	file:	signature:(enter_classroom)
+set_grade_id	HandleGetCourseList.cpp	/^                        cn->set_grade_id   (grade_id);$/;"	p	file:	signature:(grade_id)
+set_group_id	HandleGetGroupStudentList.cpp	/^        tmp.set_group_id(cggsl.group_id());$/;"	p	file:	signature:(cggsl.group_id())
+set_id	HandleGetFuncList.cpp	/^                        fn->set_id      (FT_SCHOOL);$/;"	p	file:	signature:(FT_SCHOOL)
+set_idx	HandleGetCoursewareListStatus.cpp	/^                        csn->set_idx(i);$/;"	p	file:	signature:(i)
+set_lock_id	.HandleLockConn.cpp.swp	/^/;"	p	file:	signature:(cum.lock_id())
+set_lock_id	HandleLockConn.cpp	/^        tmp.set_lock_id(cum.lock_id());$/;"	p	file:	signature:(cum.lock_id())
+set_lock_id	HandleUpdateMutex.cpp	/^                tmp.set_lock_id(cum.lock_id());$/;"	p	file:	signature:(cum.lock_id())
+set_login_type	HandleLeaveEarly.cpp	/^        suss.set_login_type(LT_STUDENT);$/;"	p	file:	signature:(LT_STUDENT)
+set_login_type	HandleLogin.cpp	/^                                slogin.set_login_type(LT_WHITEBOARD);$/;"	p	file:	signature:(LT_WHITEBOARD)
+set_login_type	HandleLogin.cpp	/^                slogin.set_login_type(LT_USER);$/;"	p	file:	signature:(LT_USER)
+set_login_type	HandleLogout.cpp	/^        tmp.set_login_type(type);$/;"	p	file:	signature:(type)
+set_msg	HandleSetGroup.cpp	/^        tmp.set_msg(msg);$/;"	p	file:	signature:(msg)
+set_opt	HandleGetNextStudent.cpp	/^        to.set_opt        (from.opt());$/;"	p	file:	signature:(from.opt())
+set_pos_x	HandleGetNextStudent.cpp	/^        to.set_pos_x      (from.pos_x());$/;"	p	file:	signature:(from.pos_x())
+set_pos_y	HandleGetNextStudent.cpp	/^        to.set_pos_y      (from.pos_y());$/;"	p	file:	signature:(from.pos_y())
+set_result	.HandleLockConn.cpp.swp	/^/;"	p	file:	signature:(result)
+set_result	HandleLockConn.cpp	/^                tmp.set_result(result);$/;"	p	file:	signature:(result)
+set_result	HandleLogin.cpp	/^                                slogin.set_result(false);$/;"	p	file:	signature:(false)
+set_result	HandleLogin.cpp	/^                slogin.set_result(result);$/;"	p	file:	signature:(result)
+set_result	HandleSetContent.cpp	/^        tmp.set_result(true);$/;"	p	file:	signature:(true)
+set_result	HandleSetFunc.cpp	/^        tmp.set_result(true);$/;"	p	file:	signature:(true)
+set_result	HandleSetGroup.cpp	/^        tmp.set_result(result);$/;"	p	file:	signature:(result)
+set_result	HandleUpdateMutex.cpp	/^                        tmp.set_result(result);$/;"	p	file:	signature:(result)
+set_result	HandleUploadBook.cpp	/^        tmp.set_result(TRUE);$/;"	p	file:	signature:(TRUE)
+set_server_addr	HandleGetServerAddr.cpp	/^                tmp.set_server_addr(addr);$/;"	p	file:	signature:(addr)
+set_server_port	HandleGetServerAddr.cpp	/^                tmp.set_server_port(port);$/;"	p	file:	signature:(port)
+set_student_id	.HandleLockConn.cpp.swp	/^/;"	p	file:	signature:(cum.student_id())
+set_student_id	HandleLeaveEarly.cpp	/^        suss.set_student_id(tmp.student_id());$/;"	p	file:	signature:(tmp.student_id())
+set_student_id	HandleLockConn.cpp	/^        tmp.set_student_id(cum.student_id());$/;"	p	file:	signature:(cum.student_id())
+set_student_id	HandleLogin.cpp	/^                slogin.set_student_id(EPSTUDENT_INVALIED_STUDENT_ID);$/;"	p	file:	signature:(EPSTUDENT_INVALIED_STUDENT_ID)
+set_us	HandleLeaveEarly.cpp	/^        suss.set_us(US_OFFLINE);$/;"	p	file:	signature:(US_OFFLINE)
+set_us	HandleLogin.cpp	/^                                        tmp.set_us(US_ONLINE);$/;"	p	file:	signature:(US_ONLINE)
+set_us	HandleSetFunc.cpp	/^                        suss.set_us(US_ONLINE);$/;"	p	file:	signature:(US_ONLINE)
+sgc	HandleGetContent.cpp	/^        sGetContent sgc;$/;"	l
+slogin	HandleLogin.cpp	/^        sLogin slogin;$/;"	l
+sn	HandleGetStudentList.cpp	/^        StudentListNode* sn;$/;"	l
+std::dl	cscope.out	/^�dl$/;"	m	class:std	file:
+std::endl	HandleAssignment.cpp	/^        std::cout << "CT_Assignment" << std::endl;$/;"	m	class:std	file:
+std::endl	HandleGetServerAddr.cpp	/^        std::cout << "CT_GetServerAddr" << std::endl;$/;"	m	class:std	file:
+std::endl	HandleLargess.cpp	/^        std::cout << "CT_Largess" << std::endl;$/;"	m	class:std	file:
+std::endl	HandlePublish.cpp	/^        std::cout << "CT_Publish" << std::endl;$/;"	m	class:std	file:
+std::endl	HandlePurchase.cpp	/^        std::cout << "CT_Purchase" << std::endl;$/;"	m	class:std	file:
+std::endl	HandleUpdateGroupDrawMsg.cpp	/^                std::cout << "CT_UpdatePuzzleResult" << std::endl;$/;"	m	class:std	file:
+std::endl	HandleUpdatePublic.cpp	/^        std::cout << "CT_UpdatePublic" << std::endl;$/;"	m	class:std	file:
+str	HandleGetStudentDrawLog.cpp	/^        std::string str;$/;"	l
+strpwd	HandleGetStudentInfo.cpp	/^                string strpwd;$/;"	l
+student_id	HandleSetGroup.cpp	/^                int student_id = pg.student_id();$/;"	l
+suss	HandleLeaveEarly.cpp	/^        sUpdateStudentStatus suss;$/;"	l
+suss	HandleSetFunc.cpp	/^        sUpdateStudentStatus suss;$/;"	l
+t	cscope.out	/^	$h�d�Assignm�t$/;"	f	signature:( Buf * p )
+teacher_id	HandleGetTeacherInfo.cpp	/^        int teacher_id = gti.id();$/;"	l
+tmp	.HandleLockConn.cpp.swp	/^/;"	v
+tmp	HandleCourseware.cpp	/^        sCourseware tmp;$/;"	l
+tmp	HandleDownloadFromPersonal.cpp	/^        sDownloadFromPublic tmp;$/;"	l
+tmp	HandleDownloadFromPersonal.cpp	/^        tmp.set_result   ((0==res_path.size()) ? true : false);$/;"	p	file:	signature:(0==res_path.size()) ? true : false
+tmp	HandleGetActiveStudentList.cpp	/^        sGetActiveStudentList tmp;$/;"	l
+tmp	HandleGetClassInfo.cpp	/^	sGetClassInfo tmp;$/;"	l
+tmp	HandleGetClassList.cpp	/^        sGetClassList tmp;$/;"	l
+tmp	HandleGetClassRoomList.cpp	/^        sGetClassRoomList tmp;$/;"	l
+tmp	HandleGetClassroomInfo.cpp	/^        sGetClassroomInfo tmp;$/;"	l
+tmp	HandleGetClassroomStatus.cpp	/^        sGetClassroomStatus tmp;$/;"	l
+tmp	HandleGetContent.cpp	/^        sGetContent tmp;$/;"	l
+tmp	HandleGetCourseList.cpp	/^        sGetCourseList tmp;$/;"	l
+tmp	HandleGetFuncList.cpp	/^        sGetFuncList tmp;$/;"	l
+tmp	HandleGetGradeList.cpp	/^        sGetGradeList tmp;$/;"	l
+tmp	HandleGetGroupInfo.cpp	/^    group_node tmp;$/;"	l
+tmp	HandleGetGroupList.cpp	/^    sGetGroupList tmp;$/;"	l
+tmp	HandleGetGroupStudentList.cpp	/^        sGetGroupStudentList tmp;$/;"	l
+tmp	HandleGetPuzzleInfo.cpp	/^        PuzzleInfo tmp;$/;"	l
+tmp	HandleGetSchoolAccountList.cpp	/^        sGetSchoolAccountList tmp;$/;"	l
+tmp	HandleGetServerAddr.cpp	/^        serverInfoNode tmp;$/;"	l
+tmp	HandleGetStudentInfo.cpp	/^        sGetStudentInfo tmp;$/;"	l
+tmp	HandleGetStudentList.cpp	/^        sGetStudentList tmp;$/;"	l
+tmp	HandleGetTeacherInfo.cpp	/^        sGetTeacherInfo tmp;$/;"	l
+tmp	HandleGetWhiteboardInfo.cpp	/^        sGetWhiteboardInfo tmp;$/;"	l
+tmp	HandleLeaveEarly.cpp	/^        cLeaveEarly tmp;$/;"	l
+tmp	HandleLockConn.cpp	/^        sUpdateMutex tmp;$/;"	l
+tmp	HandleLogin.cpp	/^                                        sUpdateStudentStatus tmp;$/;"	l
+tmp	HandleLogout.cpp	/^        sLogout tmp;$/;"	l
+tmp	HandleRelay.cpp	/^        sRelay tmp;$/;"	l
+tmp	HandleSetContent.cpp	/^        sSetContent tmp;$/;"	l
+tmp	HandleSetFunc.cpp	/^        sSetFunc tmp;$/;"	l
+tmp	HandleSetGroup.cpp	/^        sSetGroup tmp;$/;"	l
+tmp	HandleUpdateConn.cpp	/^        UpdateConn tmp;$/;"	l
+tmp	HandleUpdateMutex.cpp	/^        sUpdateMutex tmp;$/;"	l
+tmp	HandleUploadBook.cpp	/^        sUploadBook tmp;$/;"	l
+to	HandleGetNextStudent.cpp	/^        sGetNextStudent to;$/;"	l
+type	HandleLogout.cpp	/^        enum LoginType type = pUser->getType();$/;"	l
+type	HandleSendtoAll.cpp	/^        enum CommandType type = ((MSG_HEAD*)p->ptr())->cType;$/;"	l
+type	HandleTeacherSendtoWhiteboard.cpp	/^        enum CommandType type = ((MSG_HEAD*)p->ptr())->cType;$/;"	l
+type	HandleUpdateGroupDrawMsg.cpp	/^        enum CommandType type = ((MSG_HEAD*)p->ptr())->cType;$/;"	l
+upr	HandleUpdateGroupDrawMsg.cpp	/^        UpdatePuzzleResult upr;$/;"	l
+user	HandleSetContent.cpp	/^        const epUser* user = EPMANAGER->getUserByFd(p->getfd());$/;"	l
+vi	HandleGetActiveStudentList.cpp	/^        std::vector<int> vi = EPMANAGER->getActiveStudentListFromClass(casl.class_id());$/;"	l
+vi	HandleGetGroupList.cpp	/^    std::vector<int> vi = pClassroom->getGroupList();$/;"	l
+vi	HandleGetGroupStudentList.cpp	/^        std::vector<int> vi = p_group->getStudentList();$/;"	l
+x	HandleLargess.o	/^ELF/;"	v
+x	HandlePublish.o	/^ELF/;"	v

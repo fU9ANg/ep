@@ -156,9 +156,10 @@ CREATE TABLE `course` (
         `community` int (11) NOT NULL,
         `health` int (11) NOT NULL,
         `science` int (11) NOT NULL,
-        `course_date` char (32) NOT NULL,
-        `resPath` char (128) NOT NULL,
-        `xmlPath` char (128) NOT NULL,
+        `course_date` char (32)  NOT NULL,
+        `resPath`     char (128) NOT NULL,
+        `iconPath`    char (128) NOT NULL,
+        `xmlPath`     char (128) NOT NULL,
         PRIMARY KEY (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -167,12 +168,17 @@ CREATE TABLE `course` (
 #
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (1,'连线1',3,2,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/connect/lianxian1.png', '/mnt/sdcard/EduPlatform/production/connect/lianxian1.xml');
-INSERT INTO `course` VALUES (2,'连线2',3,2,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/connect/lianxian2.png', '/mnt/sdcard/EduPlatform/production/connect/lianxian2.xml');
-INSERT INTO `course` VALUES (3,'连线3',3,3,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/connect/lianxian3.png', '/mnt/sdcard/EduPlatform/production/connect/lianxian3.xml');
-INSERT INTO `course` VALUES (4,'拼图1',4,3,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/puzzle/jiaocai2.png',   '/mnt/sdcard/EduPlatform/production/puzzle/jiaocai2.xml');
-INSERT INTO `course` VALUES (5,'拼图2',4,4,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/puzzle/puzzle1.png',    '/mnt/sdcard/EduPlatform/production/puzzle/puzzle2.xml');
-INSERT INTO `course` VALUES (6,'拼图3',4,4,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/puzzle/puzzle2.png',    '/mnt/sdcard/EduPlatform/production/puzzle/puzzle3.xml');
+INSERT INTO `course` VALUES (1 ,'连线1',3,2,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/connect/lianxian1.png', 'general/pic/ui/icon/Icon_officeset_conns.png',   '/mnt/sdcard/EduPlatform/production/connect/lianxian1.xml');
+INSERT INTO `course` VALUES (2 ,'连线2',3,2,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/connect/lianxian2.png', 'general/pic/ui/icon/Icon_officeset_conns.png',   '/mnt/sdcard/EduPlatform/production/connect/lianxian2.xml');
+INSERT INTO `course` VALUES (3 ,'连线3',3,3,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/connect/lianxian3.png', 'general/pic/ui/icon/Icon_officeset_conns.png',   '/mnt/sdcard/EduPlatform/production/connect/lianxian3.xml');
+INSERT INTO `course` VALUES (4 ,'拼图1',4,3,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/puzzle/jiaocai2.png',   'general/pic/ui/icon/Icon_officeset_puzzles.png', '/mnt/sdcard/EduPlatform/production/puzzle/jiaocai2.xml');
+INSERT INTO `course` VALUES (5 ,'拼图2',4,4,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/puzzle/puzzle2.png',    'general/pic/ui/icon/Icon_officeset_puzzles.png', '/mnt/sdcard/EduPlatform/production/puzzle/puzzle2.xml');
+INSERT INTO `course` VALUES (6 ,'拼图3',4,4,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/puzzle/puzzle3.png',    'general/pic/ui/icon/Icon_officeset_puzzles.png', '/mnt/sdcard/EduPlatform/production/puzzle/puzzle3.xml');
+
+INSERT INTO `course` VALUES (7 ,'画图1',3,2,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/picture/picture1.png',  'general/pic/ui/icon/Icon_offictset_pictures.png', '/mnt/sdcard/EduPlatform/production/picture/picture1.xml');
+INSERT INTO `course` VALUES (8 ,'画图2',3,2,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/picture/picture2.png',  'general/pic/ui/icon/Icon_offictset_pictures.png', '/mnt/sdcard/EduPlatform/production/picture/picture2.xml');
+INSERT INTO `course` VALUES (9 ,'画图3',3,3,1,1,1,1,1, '2013/1/14', '/mnt/sdcard/EduPlatform/production/picture/picture3.png',  'general/pic/ui/icon/Icon_offictset_pictures.png', '/mnt/sdcard/EduPlatform/production/picture/picture3.xml');
+INSERT INTO `course` VALUES (10,'画图4',4,3,1,1,1,1,1, '2014/1/14', '/mnt/sdcard/EduPlatform/production/picture/picture4.png',  'general/pic/ui/icon/Icon_offictset_pictures.png', '/mnt/sdcard/EduPlatform/production/picture/picture4.xml');
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,11 +190,13 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `author_course`;
 CREATE TABLE `author_course` (
         `author_course_id` int (11) NOT NULL AUTO_INCREMENT,
-        `author_id` int (11) NOT NULL,
-        `client_type_id` int (11) NOT NULL,
-        `course_id` int (11) NOT NULL,
-        `ispublish` int (2) NOT NULL,
-        `owner` int(11) NOT NULL,
+        `author_id`        int (11) NOT NULL,
+        `client_type_id`   int (11) NOT NULL,
+        `course_id`        int (11) NOT NULL,
+        `issell`           int (2)  NOT NULL,
+        `owner`            int (11) NOT NULL,
+        `owner_type_id`    int (11) NOT NULL,
+        `flag`             int (2)  NOT NULL,
         PRIMARY KEY (`author_course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -197,18 +205,18 @@ CREATE TABLE `author_course` (
 #
 LOCK TABLES `author_course` WRITE;
 /*!40000 ALTER TABLE `author_course` DISABLE KEYS */;
-INSERT INTO `author_course` VALUES (1 ,1,2,1,1,1);
-INSERT INTO `author_course` VALUES (2 ,1,2,2,1,1);
-INSERT INTO `author_course` VALUES (3 ,1,2,3,1,1);
-INSERT INTO `author_course` VALUES (4 ,1,2,4,0,1);
+INSERT INTO `author_course` VALUES (1 ,1,2,1,1, 1,2, 0);
+INSERT INTO `author_course` VALUES (2 ,1,2,2,1, 1,2, 0);
+INSERT INTO `author_course` VALUES (3 ,1,2,3,1, 1,2, 0);
+INSERT INTO `author_course` VALUES (4 ,1,2,4,0, 1,2, 0);
 
-INSERT INTO `author_course` VALUES (5 ,2,2,1,1,2);
-INSERT INTO `author_course` VALUES (6 ,2,2,2,1,2);
-INSERT INTO `author_course` VALUES (7 ,2,2,3,0,2);
+INSERT INTO `author_course` VALUES (5 ,2,2,1,1, 2,2, 0);
+INSERT INTO `author_course` VALUES (6 ,2,2,2,1, 2,2, 0);
+INSERT INTO `author_course` VALUES (7 ,2,2,3,0, 2,2, 0);
 
-INSERT INTO `author_course` VALUES (8 ,3,2,2,1,3);
-INSERT INTO `author_course` VALUES (9 ,3,2,3,1,3);
-INSERT INTO `author_course` VALUES (10,3,2,4,0,3);
+INSERT INTO `author_course` VALUES (8 ,3,2,2,1, 3,2, 0);
+INSERT INTO `author_course` VALUES (9 ,3,2,3,1, 3,2, 0);
+INSERT INTO `author_course` VALUES (10,3,2,4,0, 3,2, 0);
 /*!40000 ALTER TABLE `author_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,13 +241,17 @@ INSERT INTO `grade_course` VALUES (1,1,1);
 INSERT INTO `grade_course` VALUES (2,1,2);
 INSERT INTO `grade_course` VALUES (3,1,3);
 INSERT INTO `grade_course` VALUES (4,1,4);
+INSERT INTO `grade_course` VALUES (5,1,7);
+INSERT INTO `grade_course` VALUES (6,1,10);
 
-INSERT INTO `grade_course` VALUES (5,2,1);
-INSERT INTO `grade_course` VALUES (6,2,3);
+INSERT INTO `grade_course` VALUES (7,2,1);
+INSERT INTO `grade_course` VALUES (8,2,3);
+INSERT INTO `grade_course` VALUES (9,2,8);
 
-INSERT INTO `grade_course` VALUES (7,3,2);
-INSERT INTO `grade_course` VALUES (8,3,3);
-INSERT INTO `grade_course` VALUES (9,3,4);
+INSERT INTO `grade_course` VALUES (10,3,2);
+INSERT INTO `grade_course` VALUES (11,3,3);
+INSERT INTO `grade_course` VALUES (12,3,4);
+INSERT INTO `grade_course` VALUES (13,3,9);
 /*!40000 ALTER TABLE `grade_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,6 +266,25 @@ CREATE TABLE `resource_type` (
         PRIMARY KEY (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#
+# Dumping data for table resource_type
+#
+LOCK TABLES `resource_type` WRITE;
+/*!40000 ALTER TABLE `resource_type` DISABLE KEYS */;
+INSERT INTO `resource_type` VALUES (1, '学生头像资源');
+INSERT INTO `resource_type` VALUES (2, '教师头像资源');
+INSERT INTO `resource_type` VALUES (3, '学生头像资源');
+INSERT INTO `resource_type` VALUES (4, '学生头像资源');
+
+INSERT INTO `resource_type` VALUES (5, '学生头像资源');
+INSERT INTO `resource_type` VALUES (6, '学生头像资源');
+
+INSERT INTO `resource_type` VALUES (7, '学生头像资源');
+INSERT INTO `resource_type` VALUES (8, '学生头像资源');
+INSERT INTO `resource_type` VALUES (9, '学生头像资源');
+/*!40000 ALTER TABLE `resource_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
 # ======================================================
 #
 # Source for table resource (资源表)
@@ -266,6 +297,60 @@ CREATE TABLE `resource` (
         `img_path`      char(128)       NOT NULL,
         PRIMARY KEY (`resource_id`, `type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Dumping data for table resource
+#
+LOCK TABLES `resource` WRITE;
+/*!40000 ALTER TABLE `resource` DISABLE KEYS */;
+INSERT INTO `resource` VALUES ( 1,1,'学生头像1', '/material/profile/student01.png');
+INSERT INTO `resource` VALUES ( 2,1,'学生头像2', '/material/profile/student02.png');
+INSERT INTO `resource` VALUES ( 3,1,'学生头像3', '/material/profile/student03.png');
+INSERT INTO `resource` VALUES ( 4,1,'学生头像4', '/material/profile/student04.png');
+INSERT INTO `resource` VALUES ( 5,1,'学生头像5', '/material/profile/student05.png');
+INSERT INTO `resource` VALUES ( 6,1,'学生头像6', '/material/profile/student06.png');
+INSERT INTO `resource` VALUES ( 7,1,'学生头像7', '/material/profile/student07.png');
+INSERT INTO `resource` VALUES ( 8,1,'学生头像8', '/material/profile/student08.png');
+INSERT INTO `resource` VALUES ( 9,1,'学生头像9', '/material/profile/student09.png');
+INSERT INTO `resource` VALUES (10,1,'学生头像10','/material/profile/student10.png');
+INSERT INTO `resource` VALUES (11,1,'学生头像11','/material/profile/student11.png');
+INSERT INTO `resource` VALUES (12,1,'学生头像12','/material/profile/student12.png');
+INSERT INTO `resource` VALUES (13,1,'学生头像13','/material/profile/student13.png');
+INSERT INTO `resource` VALUES (14,1,'学生头像14','/material/profile/student14.png');
+INSERT INTO `resource` VALUES (15,1,'学生头像15','/material/profile/student15.png');
+INSERT INTO `resource` VALUES (16,1,'学生头像16','/material/profile/student16.png');
+INSERT INTO `resource` VALUES (17,1,'学生头像17','/material/profile/student17.png');
+INSERT INTO `resource` VALUES (18,1,'学生头像18','/material/profile/student18.png');
+INSERT INTO `resource` VALUES (19,1,'学生头像19','/material/profile/student19.png');
+INSERT INTO `resource` VALUES (20,1,'学生头像20','/material/profile/student20.png');
+INSERT INTO `resource` VALUES (21,1,'学生头像21','/material/profile/student21.png');
+INSERT INTO `resource` VALUES (22,1,'学生头像22','/material/profile/student22.png');
+INSERT INTO `resource` VALUES (23,1,'学生头像23','/material/profile/student23.png');
+INSERT INTO `resource` VALUES (24,1,'学生头像24','/material/profile/student24.png');
+INSERT INTO `resource` VALUES (25,1,'学生头像25','/material/profile/student25.png');
+INSERT INTO `resource` VALUES (26,1,'学生头像26','/material/profile/student26.png');
+INSERT INTO `resource` VALUES (27,1,'学生头像27','/material/profile/student27.png');
+INSERT INTO `resource` VALUES (28,1,'学生头像28','/material/profile/student28.png');
+INSERT INTO `resource` VALUES (29,1,'学生头像29','/material/profile/student29.png');
+INSERT INTO `resource` VALUES (30,1,'学生头像30','/material/profile/student30.png');
+INSERT INTO `resource` VALUES (31,1,'学生头像31','/material/profile/student31.png');
+INSERT INTO `resource` VALUES (32,1,'学生头像32','/material/profile/student32.png');
+INSERT INTO `resource` VALUES (33,1,'学生头像33','/material/profile/student33.png');
+INSERT INTO `resource` VALUES (34,1,'学生头像34','/material/profile/student34.png');
+INSERT INTO `resource` VALUES (35,1,'学生头像35','/material/profile/student35.png');
+
+INSERT INTO `resource` VALUES (36,1,'学生头像36','/material/profile/student16.png');
+INSERT INTO `resource` VALUES (37,1,'学生头像37','/material/profile/student17.png');
+INSERT INTO `resource` VALUES (38,1,'学生头像38','/material/profile/student18.png');
+INSERT INTO `resource` VALUES (39,1,'学生头像39','/material/profile/student19.png');
+
+INSERT INTO `resource` VALUES (40,2,'教师头像1' ,'/material/profile/teacher01.png');
+INSERT INTO `resource` VALUES (41,2,'教师头像2' ,'/material/profile/teacher02.png');
+INSERT INTO `resource` VALUES (42,2,'教师头像3' ,'/material/profile/teacher03.png');
+INSERT INTO `resource` VALUES (43,2,'教师头像4' ,'/material/profile/teacher01.png');
+INSERT INTO `resource` VALUES (44,2,'教师头像5' ,'/material/profile/teacher02.png');
+/*!40000 ALTER TABLE `resource` ENABLE KEYS */;
+UNLOCK TABLES;
 
 # ======================================================
 #
@@ -488,11 +573,11 @@ CREATE TABLE `teacher` (
 
 LOCK TABLES `teacher` WRITE;
 /*!40000 ALTER TABLE `teacher` DISABLE KEYS */;
-INSERT INTO `teacher` VALUES (1,'赵','一','女',1,1,'1989-12-30','T1','T',2001,1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
-INSERT INTO `teacher` VALUES (2,'钱','二','男',1,1,'1989-12-30','T2','T',2001,1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
-INSERT INTO `teacher` VALUES (3,'孙','三','男',1,1,'1989-12-30','T3','T',2001,1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
-INSERT INTO `teacher` VALUES (4,'李','四','男',1,1,'1989-12-30','T4','T',2001,1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
-INSERT INTO `teacher` VALUES (5,'周','五','男',1,1,'1989-12-30','T5','T',2001,1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `teacher` VALUES (1,'赵','一','女',1,1,'1989-12-30','T1','T',40, 1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `teacher` VALUES (2,'钱','二','男',1,1,'1989-12-30','T2','T',41, 1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `teacher` VALUES (3,'孙','三','男',1,1,'1989-12-30','T3','T',42, 1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `teacher` VALUES (4,'李','四','男',1,1,'1989-12-30','T4','T',43, 1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `teacher` VALUES (5,'周','五','男',1,1,'1989-12-30','T5','T',44, 1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
 /*!40000 ALTER TABLE `teacher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -530,11 +615,45 @@ CREATE TABLE `parents` (
 
 LOCK TABLES `parents` WRITE;
 /*!40000 ALTER TABLE `parents` DISABLE KEYS */;
-INSERT INTO `parents` VALUES (1,'家长','一','女',1,1,'1989-12-30','P1','P',2001,1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
-INSERT INTO `parents` VALUES (2,'家长','二','男',1,1,'1989-12-30','P2','P',2001,1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
-INSERT INTO `parents` VALUES (3,'家长','三','男',1,1,'1989-12-30','P3','P',2001,1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
-INSERT INTO `parents` VALUES (4,'家长','四','男',1,1,'1989-12-30','P4','P',2001,1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
-INSERT INTO `parents` VALUES (5,'家长','五','男',1,1,'1989-12-30','P5','P',2001,1,1,1,2,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (1 ,'家长','1' ,'女',1,1,'1989-12-30','P1','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (2 ,'家长','2' ,'男',1,1,'1989-12-30','P2','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (3 ,'家长','3' ,'男',1,1,'1989-12-30','P3','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (4 ,'家长','4' ,'男',1,1,'1989-12-30','P4','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (5 ,'家长','5' ,'男',1,1,'1989-12-30','P5','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (6 ,'家长','6' ,'女',1,1,'1989-12-30','P1','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (7 ,'家长','7' ,'男',1,1,'1989-12-30','P2','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (8 ,'家长','8' ,'男',1,1,'1989-12-30','P3','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (9 ,'家长','9' ,'男',1,1,'1989-12-30','P4','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (10,'家长','10','男',1,1,'1989-12-30','P5','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (11,'家长','11','女',1,1,'1989-12-30','P1','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (12,'家长','12','男',1,1,'1989-12-30','P2','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (13,'家长','13','男',1,1,'1989-12-30','P3','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (14,'家长','14','男',1,1,'1989-12-30','P4','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (15,'家长','15','男',1,1,'1989-12-30','P5','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (16,'家长','16','女',1,1,'1989-12-30','P1','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (17,'家长','17','男',1,1,'1989-12-30','P2','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (18,'家长','18','男',1,1,'1989-12-30','P3','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (19,'家长','19','男',1,1,'1989-12-30','P4','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (20,'家长','20','男',1,1,'1989-12-30','P5','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (21,'家长','21','女',1,1,'1989-12-30','P1','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (22,'家长','22','男',1,1,'1989-12-30','P2','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (23,'家长','23','男',1,1,'1989-12-30','P3','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (24,'家长','24','男',1,1,'1989-12-30','P4','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (25,'家长','25','男',1,1,'1989-12-30','P5','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (26,'家长','26','女',1,1,'1989-12-30','P1','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (27,'家长','27','男',1,1,'1989-12-30','P2','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (28,'家长','28','男',1,1,'1989-12-30','P3','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (29,'家长','29','男',1,1,'1989-12-30','P4','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (30,'家长','30','男',1,1,'1989-12-30','P5','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (31,'家长','31','女',1,1,'1989-12-30','P1','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (32,'家长','32','男',1,1,'1989-12-30','P2','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (33,'家长','33','男',1,1,'1989-12-30','P3','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (34,'家长','34','男',1,1,'1989-12-30','P4','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (35,'家长','35','男',1,1,'1989-12-30','P5','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (36,'家长','36','女',1,1,'1989-12-30','P1','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (37,'家长','37','男',1,1,'1989-12-30','P2','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (38,'家长','38','男',1,1,'1989-12-30','P3','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
+INSERT INTO `parents` VALUES (39,'家长','39','男',1,1,'1989-12-30','P4','P',2001,1,1,1,3,'在职','13528254451','58456213','585456325987451236','成都市');
 /*!40000 ALTER TABLE `parents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -551,6 +670,7 @@ CREATE TABLE `headmaster` (
         `sex`                   char(2)         DEFAULT '男',
         `age`                   int(11)         NOT NULL DEFAULT '0',
         `race_id`               int(11)         NOT NULL,
+        `school_id`             int(11)         NOT NULL,
         `birthday`              date            NOT NULL,
         `account`               char(100)       NOT NULL,
         `password`              char(34)        NOT NULL,
@@ -569,11 +689,11 @@ CREATE TABLE `headmaster` (
 
 LOCK TABLES `headmaster` WRITE;
 /*!40000 ALTER TABLE `headmaster` DISABLE KEYS */;
-INSERT INTO `headmaster` VALUES (1 ,'10000001','yang','c1' ,'男',1,1,'2000-01-01','H1','H',1,1,1,1001,1,'在职');
-INSERT INTO `headmaster` VALUES (2 ,'10000002','yang','c2' ,'男',1,1,'2000-01-01','H2','H',1,1,1,1002,1,'在职');
-INSERT INTO `headmaster` VALUES (3 ,'10000003','yang','c3' ,'女',1,1,'2000-01-01','H3','H',1,1,1,1003,1,'在职');
-INSERT INTO `headmaster` VALUES (4 ,'10000004','yang','c4' ,'女',1,1,'2000-01-01','H4','H',1,1,1,1004,1,'在职');
-INSERT INTO `headmaster` VALUES (5 ,'10000005','yang','c5' ,'女',1,1,'2000-01-01','H5','H',1,1,1,1005,1,'在职');
+INSERT INTO `headmaster` VALUES (1 ,'10000001','yang','c1' ,'男',1,1,1,'2000-01-01','H1','H',1,1,1,1001,1,'在职');
+INSERT INTO `headmaster` VALUES (2 ,'10000002','yang','c2' ,'男',1,1,1,'2000-01-01','H2','H',1,1,1,1002,1,'在职');
+INSERT INTO `headmaster` VALUES (3 ,'10000003','yang','c3' ,'女',1,1,1,'2000-01-01','H3','H',1,1,1,1003,1,'在职');
+INSERT INTO `headmaster` VALUES (4 ,'10000004','yang','c4' ,'女',1,1,1,'2000-01-01','H4','H',1,1,1,1004,1,'在职');
+INSERT INTO `headmaster` VALUES (5 ,'10000005','yang','c5' ,'女',1,1,1,'2000-01-01','H5','H',1,1,1,1005,1,'在职');
 /*!40000 ALTER TABLE `headmaster` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -590,7 +710,7 @@ CREATE TABLE `student` (
         `sex`                   char(2)         DEFAULT '男',
         `age`                   int(11)         NOT NULL DEFAULT '0',
         `race_id`               int(11)         NOT NULL,
-        `birthday`              date            NOT NULL,
+        `birthday`              char(15)        NOT NULL,
         `account`               char(100)       NOT NULL,
         `password`              char(34)        NOT NULL,
         `country_id`            int(11)         DEFAULT '1',
@@ -598,10 +718,11 @@ CREATE TABLE `student` (
         `class_id`              int(11)         NOT NULL,
         `picture_id`            int(11)         NOT NULL,
         `city_id`               int(11)         NOT NULL,
+        `school_id`             int(11)         NOT NULL,
         `client_type_id`        int(11)         DEFAULT 4,
         `status`                char(32)        NOT NULL,
-        `guardian1ID`           char(64)        NOT NULL,
-        `guardian2ID`           char(64)        NOT NULL,
+        `parents1_id`           int(11)         NOT NULL,
+        `parents2_id`           int(11)         NOT NULL,
         `address`               char(254)       NOT NULL,
         PRIMARY KEY (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -612,46 +733,46 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (1 ,'10000001','yang','c1' ,'男',1,1,'2000-01-01','S1' ,'S',1,1,1,1001,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (2 ,'10000002','yang','c2' ,'男',1,1,'2000-01-01','S2' ,'S',1,1,1,1002,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (3 ,'10000003','yang','c3' ,'女',1,1,'2000-01-01','S3' ,'S',1,1,1,1003,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (4 ,'10000004','yang','c4' ,'女',1,1,'2000-01-01','S4' ,'S',1,1,1,1004,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (5 ,'10000005','yang','c5' ,'女',1,1,'2000-01-01','S5' ,'S',1,1,1,1005,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (6 ,'10000006','yang','c6' ,'男',1,1,'2000-01-01','S6' ,'S',1,1,1,1006,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (7 ,'10000007','yang','c7' ,'女',1,1,'2000-01-01','S7' ,'S',1,1,1,1007,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (8 ,'10000008','yang','c8' ,'女',1,1,'2000-01-01','S8' ,'S',1,1,1,1008,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (9 ,'10000009','yang','c9' ,'男',1,1,'2000-01-01','S9' ,'S',1,1,1,1009,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (10,'10000010','yang','c10','女',1,1,'2000-01-01','S10','S',1,1,1,1010,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (11,'10000011','yang','c11','女',1,1,'2000-01-01','S11','S',1,1,1,1011,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (12,'10000012','yang','c12','女',1,1,'2000-01-01','S12','S',1,1,1,1012,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (13,'10000013','yang','c13','女',1,1,'2000-01-01','S13','S',1,1,1,1013,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (14,'10000014','yang','c14','女',1,1,'2000-01-01','S14','S',1,1,1,1014,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (15,'10000015','yang','c15','女',1,1,'2000-01-01','S15','S',1,1,1,1015,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (16,'10000016','yang','c16','男',1,1,'2000-01-01','S16','S',1,1,1,1016,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (17,'10000017','yang','c17','女',1,1,'2000-01-01','S17','S',1,1,1,1017,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (18,'10000018','yang','c18','女',1,1,'2000-01-01','S18','S',1,1,1,1018,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (19,'10000019','yang','c19','女',1,1,'2000-01-01','S19','S',1,1,1,1019,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (20,'10000020','yang','c20','女',1,1,'2000-01-01','S20','S',1,1,1,1020,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (21,'10000021','yang','c21','男',1,1,'2000-01-01','S21','S',1,1,1,1021,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (22,'10000022','yang','c22','女',1,1,'2000-01-01','S22','S',1,1,1,1022,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (23,'10000023','yang','c23','女',1,1,'2000-01-01','S23','S',1,1,1,1023,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (24,'10000024','yang','c24','男',1,1,'2000-01-01','S24','S',1,1,1,1024,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (25,'10000025','yang','c25','女',1,1,'2000-01-01','S25','S',1,1,1,1025,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (26,'10000026','yang','c26','男',1,1,'2000-01-01','S26','S',1,1,1,1026,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (27,'10000027','yang','c27','女',1,1,'2000-01-01','S27','S',1,1,1,1027,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (28,'10000028','yang','c28','男',1,1,'2000-01-01','S28','S',1,1,1,1028,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (29,'10000029','yang','c29','女',1,1,'2000-01-01','S29','S',1,1,1,1029,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (30,'10000030','yang','c30','男',1,1,'2000-01-01','S30','S',1,1,1,1030,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (31,'10000031','yang','c31','女',1,1,'2000-01-01','S31','S',1,1,1,1031,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (32,'10000032','yang','c32','女',1,1,'2000-01-01','S32','S',1,1,1,1032,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (33,'10000033','yang','c33','女',1,1,'2000-01-01','S33','S',1,1,1,1033,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (34,'10000034','yang','c34','女',1,1,'2000-01-01','S34','S',1,1,1,1034,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (35,'10000035','yang','c35','男',1,1,'2000-01-01','S35','S',1,1,1,1035,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-
-INSERT INTO `student` VALUES (36,'10000036','yang','c36','男',1,1,'2000-01-01','S36','S',1,1,3,1036,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (37,'10000037','yang','c37','男',1,1,'2000-01-01','S37','S',1,1,3,1037,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (38,'10000038','yang','c38','女',1,1,'2000-01-01','S38','S',1,1,2,1038,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
-INSERT INTO `student` VALUES (39,'10000039','yang','c39','女',1,1,'2000-01-01','S39','S',1,1,2,1039,1,4,'在校','监护人1','监护人2','成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (1 ,'10000001','yang','c1' ,'男',1,1,'2000-01-01','S1' ,'S',1,1,1, 1,1,1,4,'在校',1 ,1 ,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (2 ,'10000002','yang','c2' ,'男',1,1,'2000-01-01','S2' ,'S',1,1,1, 2,1,1,4,'在校',2 ,2 ,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (3 ,'10000003','yang','c3' ,'女',1,1,'2000-01-01','S3' ,'S',1,1,1, 3,1,1,4,'在校',3 ,3 ,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (4 ,'10000004','yang','c4' ,'女',1,1,'2000-01-01','S4' ,'S',1,1,1, 4,1,1,4,'在校',4 ,4 ,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (5 ,'10000005','yang','c5' ,'女',1,1,'2000-01-01','S5' ,'S',1,1,1, 5,1,1,4,'在校',5 ,5 ,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (6 ,'10000006','yang','c6' ,'男',1,1,'2000-01-01','S6' ,'S',1,1,1, 6,1,1,4,'在校',6 ,6 ,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (7 ,'10000007','yang','c7' ,'女',1,1,'2000-01-01','S7' ,'S',1,1,1, 7,1,1,4,'在校',7 ,7 ,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (8 ,'10000008','yang','c8' ,'女',1,1,'2000-01-01','S8' ,'S',1,1,1, 8,1,1,4,'在校',8 ,8 ,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (9 ,'10000009','yang','c9' ,'男',1,1,'2000-01-01','S9' ,'S',1,1,1, 9,1,1,4,'在校',9 ,9 ,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (10,'10000010','yang','c10','女',1,1,'2000-01-01','S10','S',1,1,1,10,1,1,4,'在校',10,10,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (11,'10000011','yang','c11','女',1,1,'2000-01-01','S11','S',1,1,1,11,1,1,4,'在校',11,11,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (12,'10000012','yang','c12','女',1,1,'2000-01-01','S12','S',1,1,1,12,1,1,4,'在校',12,12,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (13,'10000013','yang','c13','女',1,1,'2000-01-01','S13','S',1,1,1,13,1,1,4,'在校',13,13,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (14,'10000014','yang','c14','女',1,1,'2000-01-01','S14','S',1,1,1,14,1,1,4,'在校',14,14,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (15,'10000015','yang','c15','女',1,1,'2000-01-01','S15','S',1,1,1,15,1,1,4,'在校',15,15,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (16,'10000016','yang','c16','男',1,1,'2000-01-01','S16','S',1,1,1,16,1,1,4,'在校',16,16,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (17,'10000017','yang','c17','女',1,1,'2000-01-01','S17','S',1,1,1,17,1,1,4,'在校',17,17,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (18,'10000018','yang','c18','女',1,1,'2000-01-01','S18','S',1,1,1,18,1,1,4,'在校',18,18,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (19,'10000019','yang','c19','女',1,1,'2000-01-01','S19','S',1,1,1,19,1,1,4,'在校',19,19,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (20,'10000020','yang','c20','女',1,1,'2000-01-01','S20','S',1,1,1,20,1,1,4,'在校',20,20,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (21,'10000021','yang','c21','男',1,1,'2000-01-01','S21','S',1,1,1,21,1,1,4,'在校',21,21,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (22,'10000022','yang','c22','女',1,1,'2000-01-01','S22','S',1,1,1,22,1,1,4,'在校',22,22,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (23,'10000023','yang','c23','女',1,1,'2000-01-01','S23','S',1,1,1,23,1,1,4,'在校',23,23,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (24,'10000024','yang','c24','男',1,1,'2000-01-01','S24','S',1,1,1,24,1,1,4,'在校',24,24,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (25,'10000025','yang','c25','女',1,1,'2000-01-01','S25','S',1,1,1,25,1,1,4,'在校',25,25,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (26,'10000026','yang','c26','男',1,1,'2000-01-01','S26','S',1,1,1,26,1,1,4,'在校',26,26,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (27,'10000027','yang','c27','女',1,1,'2000-01-01','S27','S',1,1,1,27,1,1,4,'在校',27,27,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (28,'10000028','yang','c28','男',1,1,'2000-01-01','S28','S',1,1,1,28,1,1,4,'在校',28,28,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (29,'10000029','yang','c29','女',1,1,'2000-01-01','S29','S',1,1,1,29,1,1,4,'在校',29,29,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (30,'10000030','yang','c30','男',1,1,'2000-01-01','S30','S',1,1,1,30,1,1,4,'在校',30,30,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (31,'10000031','yang','c31','女',1,1,'2000-01-01','S31','S',1,1,1,31,1,1,4,'在校',31,31,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (32,'10000032','yang','c32','女',1,1,'2000-01-01','S32','S',1,1,1,32,1,1,4,'在校',32,32,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (33,'10000033','yang','c33','女',1,1,'2000-01-01','S33','S',1,1,1,33,1,1,4,'在校',33,33,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (34,'10000034','yang','c34','女',1,1,'2000-01-01','S34','S',1,1,1,34,1,1,4,'在校',34,34,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (35,'10000035','yang','c35','男',1,1,'2000-01-01','S35','S',1,1,1,35,1,1,4,'在校',35,35,'成都市旺旺大厦4号');
+                                                                                                                    
+INSERT INTO `student` VALUES (36,'10000036','yang','c36','男',1,1,'2000-01-01','S36','S',1,1,3,36,1,1,4,'在校',36,36,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (37,'10000037','yang','c37','男',1,1,'2000-01-01','S37','S',1,1,3,37,1,1,4,'在校',37,37,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (38,'10000038','yang','c38','女',1,1,'2000-01-01','S38','S',1,1,2,38,1,1,4,'在校',38,38,'成都市旺旺大厦4号');
+INSERT INTO `student` VALUES (39,'10000039','yang','c39','女',1,1,'2000-01-01','S39','S',1,1,2,39,1,1,4,'在校',39,39,'成都市旺旺大厦4号');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 

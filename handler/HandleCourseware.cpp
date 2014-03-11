@@ -17,18 +17,19 @@ void CHandleMessage::handleCourseware(Buf* p)
 #endif
 
         const epUser* pUser = EPMANAGER->getUserByFdFromClassroom(p->getfd());
-        if (NULL == pUser) {
-                printf("[DEBUG] CHandleMessage::handleCourseware : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
-        if (NULL == pClassroom) {
-                printf("[DEBUG] CHandleMessage::handleCourseware : NULL == pClassroom\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pClassroom);
+
+        sCourseware tmp;
+        UNPACKET(p, tmp);
+
+        int idx = 0;
+        if (tmp.has_idx())
+                idx = tmp.idx();
+        pClassroom->changeCoursewareStatus(idx, tmp.cs());
+        printf("[DEBUG] CHandleMessage::handleCourseware ：course_id = %d\n", tmp.course_id());
 
         ((MSG_HEAD*)p->ptr())->cType = ST_Courseware;
         Buf* pBuf = NULL;

@@ -20,7 +20,7 @@
 */
 ProcessManager::ProcessManager()
 {
-    m_thrpool = new ThreadPool (5);
+    m_thrpool = new ThreadPool (7);
     m_lockfd = 0;
 }
 

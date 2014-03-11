@@ -28,40 +28,31 @@ void CHandleMessage::handleSetFunc (Buf* p) {
         // TODO:
 
         cSetFunc setFunc;
-        if (!unpacket(p, setFunc)) { // 解包失败。
-#ifdef __DEBUG__
-                printf("[DEBUG] %s : unpacket fail!\n", __func__);
-#endif
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        UNPACKET(p, setFunc);
 
         sSetFunc tmp;
         epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFd(p->getfd()));
-        if (NULL == pUser) {
-                printf("[DEBUG] CHandleMessage::handleSetFunc : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         printf("[DEBUG] CHandleMessage::handleSetFunc : setFunc.func_type() = %d\n", setFunc.func_type());
         pUser->funcType_ = (enum FuncType)setFunc.func_type();
         tmp.set_result(true);
         Buf* pBuf = packet(ST_SetFunc, tmp, p->getfd());
-        CHECK_BUF(pBuf, p);
+        CHECK_P(pBuf);
         SINGLE->sendqueue.enqueue(pBuf);
 
-        epStudent*   pStudent   = NULL;
-        epClassroom* pClassroom = NULL;
+        epStudent*    pStudent     = NULL;
+        epClassroom*  pClassroom   = NULL;
+        epWhiteBoard* p_whiteboard = NULL;
         Buf* p1 = NULL;
         sUpdateStudentStatus suss;
+        suss.set_login_type(pUser->getType());
         switch (pUser->getType()) {
         case LT_STUDENT :
                 pStudent = dynamic_cast<epStudent*>(pUser);
                 if (NULL == pStudent) {
                         printf("[DEBUG] %s : NULL == pStudent\n", __func__);
-                        SINGLE->bufpool.free(p);
-                        return;
+                        RETURN(p);
                 }
 
                 switch (setFunc.func_type()) {
@@ -70,20 +61,39 @@ void CHandleMessage::handleSetFunc (Buf* p) {
                         pClassroom = EPMANAGER->getClassroomByClassId(pStudent->classId_);
                         if (NULL == pClassroom) {
                                 printf("[DEBUG] %s : NULL == pClassroom\n", __func__);
-                                SINGLE->bufpool.free(p);
-                                return;
+                                RETURN(p);
                         }
 
                         suss.set_student_id(pStudent->id_);
+                        suss.set_us(US_ONLINE);
 
                         printf("[DEBUG] CHandleMessage::handleSetFunc : send ST_UpdateStudentStatus\n");
                         p1 = packet(ST_UpdateStudentStatus, suss, p->getfd());
-                        CHECK_BUF(p1, p);
+                        CHECK_P(p1);
                         pClassroom->sendtoAll(p1);
 
                         // 将学生由游离状态加入该班级。
-                        pClassroom->insertStudent(pStudent);
+                        if (pClassroom->insertStudent(pStudent))
+                                printf("[DEBUG] CHandleMessage::handleSetFunc : insert success!\n");
+                        else
+                                printf("[DEBUG] CHandleMessage::handleSetFunc : insert fail!\n");
                         // 将该学生从游离列表移除。
+                        EPMANAGER->removeUserByFd(p->getfd());
+                        break;
+                default :
+                        break;
+                }
+                break;
+        case LT_WHITEBOARD :
+                p_whiteboard = dynamic_cast<epWhiteBoard*>(pUser);
+                CHECK_P(p_whiteboard);
+
+                switch (setFunc.func_type()) {
+                case FT_SCHOOL :
+                        pClassroom = EPMANAGER->getClassroomById(p_whiteboard->classroomId_);
+                        CHECK_P(pClassroom);
+
+                        pClassroom->whiteboard_ = p_whiteboard;
                         EPMANAGER->removeUserByFd(p->getfd());
                         break;
                 default :
@@ -98,6 +108,5 @@ void CHandleMessage::handleSetFunc (Buf* p) {
         EPMANAGER->dumpClassroom();
 #endif
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

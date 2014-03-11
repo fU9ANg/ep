@@ -9,11 +9,12 @@
 #define __EPBASE_H__
 
 #include <iostream>
+#include "epObject.h"
 
 /**
  * @brief 管理基类。
  */
-class epBase {
+class epBase : public epObject {
 public :
         epBase(void);
         virtual ~epBase(void);

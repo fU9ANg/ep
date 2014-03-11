@@ -25,14 +25,10 @@ void CHandleMessage::handleGetContent (Buf* p)
 
         sGetContent tmp;
         epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
-        if (NULL == pClassroom) {
-                printf("[DEBUG] %s : NULL == pClassroom\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pClassroom);
 
         Buf* pBuf = SINGLE->bufpool.malloc();
-        CHECK_BUF(pBuf, p);
+        CHECK_P(pBuf);
         ((MSG_HEAD*)pBuf->ptr())->cType = ST_GetContent;
         ((MSG_HEAD*)pBuf->ptr())->cLen  = MSG_HEAD_LEN + sizeof(int) + pClassroom->courseList_.size();
         *(int*)((char*)pBuf->ptr()+MSG_HEAD_LEN) = 1;
@@ -41,7 +37,6 @@ void CHandleMessage::handleGetContent (Buf* p)
         pBuf->setfd(p->getfd());
         pBuf->setsize(((MSG_HEAD*)pBuf->ptr())->cLen);
 
-        /*
         sGetContent sgc;
         ContentNode cn;
         unpacket(pBuf, sgc);
@@ -50,10 +45,8 @@ void CHandleMessage::handleGetContent (Buf* p)
                 printf("[DEBUG] CHandleMessage::handleGetContent : course id       = %d\n", cn.course_id());
                 printf("[DEBUG] CHandleMessage::handleGetContent : course xml path = %s\n", cn.course_xml().c_str());
         }
-        */
 
         SINGLE->sendqueue.enqueue(pBuf);
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

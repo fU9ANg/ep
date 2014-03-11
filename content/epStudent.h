@@ -29,7 +29,10 @@ public :
          *
          * @return 设置成功返回true，否则返回false。
          */
-        virtual bool init(const std::string&, const std::string&);
+        virtual bool init(const std::string&
+                        , const std::string&
+                        , const int
+                        , const enum user_status);
 
         /**
          * @brief 获取客户端类型。
@@ -42,20 +45,45 @@ public :
          * @name Just for debug
          * @{ */
         virtual void dump(void);
+
         /**  @} */
 
         /**
          * @brief 学号。
          */
         std::string studentNum_;
+
         /**
          * @brief 存放所属班名称。
          */
         std::string className_;
+
         /**
          * @brief 所属班级ID。
          */
         int classId_;
+
+        /**
+        * @brief 监护人名字
+        */
+        std::string guardian_;
+
+        std::string guardian_phone_;
+
+        /**
+        * @brief 所属年纪ID
+        */
+        int gradeId_;
+
+        /**
+        * @brief 所属年纪名字
+        */
+        std::string gradeName_;
+
+        inline bool operator==(const std::string& account) {
+                return epUser::operator==(account);
+        }
+        inline bool operator==(const int student_id) { return id_ == student_id; }
 };
 
 #endif // __EPSTUDENT_H__

@@ -28,47 +28,52 @@ void CHandleMessage::handleLogout (Buf* p)
                 EPMANAGER->removeUserByFd(p->getfd());
                 delete pUser;
                 pUser = NULL;
-                SINGLE->bufpool.free(p);
-                return;
+                RETURN(p);
         }
 
         // 该客户端正处于上课状态。
         sLogout tmp;
         pUser = const_cast<epUser*>(EPMANAGER->getUserByFdFromClassroom(p->getfd()));
-        if (NULL == pUser) {
-                printf("[DEBUG] %s : not in classroom\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
-        if (NULL == pClassroom) {
+        if (NULL == pClassroom) { // 处于游离状态，但没有上课。
                 printf("[DEBUG] %s : NULL == pClassroom\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
+                delete EPMANAGER->removeUserByFd(p->getfd());
+                RETURN(p);
         }
 
         enum LoginType type = pUser->getType();
         tmp.set_login_type(type);
         tmp.set_id(pUser->id_);
         Buf* pBuf = packet(ST_Logout, tmp, p->getfd());
-        CHECK_BUF(pBuf, p);
+        CHECK_P(pBuf);
 
         Buf* p1 = NULL;
         Buf* p2 = NULL;
 
         // epGroup* pGroup = NULL;
+        epStudent* p_student = NULL;
+        epClass*   p_class = NULL;
         switch (type) {
         case LT_STUDENT :
                 CLONE_BUF(p1, pBuf);
                 pClassroom->sendtoAll(p1, false); // 不发送给自己。:
 
-                /*
-                pGroup = const_cast<epGroup*>(pClassroom->getGroupByFd(p->getfd()));
-                if (NULL != pGroup) {
-                        pGroup->removeStudentByFd(p->getfd());
+                p_student = dynamic_cast<epStudent*>(pUser);
+                if (NULL != p_student) {
+                        p_class = pClassroom->getClassById(p_student->classId_);
+                        if (NULL != p_class) {
+                                printf("[DEBUG] CHandleMessage::handleLogout : NULL != p_class\n");
+                                p_class->moveStudentFromMapToListByFd(p->getfd());
+                        }
                 }
-                */
+                /*
+                   pGroup = const_cast<epGroup*>(pClassroom->getGroupByFd(p->getfd()));
+                   if (NULL != pGroup) {
+                   pGroup->removeStudentByFd(p->getfd());
+                   }
+                   */
                 break;
         case LT_TEACHER :
                 CLONE_BUF(p1, pBuf);
@@ -77,6 +82,7 @@ void CHandleMessage::handleLogout (Buf* p)
                 CLONE_BUF(p2, pBuf);
                 pClassroom->sendtoWhiteBoard(p2);
 
+                // printf("[DEBUG] insert : %s\n", (DestroyClassroomTask::desMap_.insert(std::make_pair<int, time_t>(pClassroom->id_, time(NULL)))).second ? "true" : "false");
                 DestroyClassroomTask::desMap_.insert(std::make_pair<int, time_t>(pClassroom->id_, time(NULL)));
                 break;
         case LT_WHITEBOARD :
@@ -96,6 +102,5 @@ void CHandleMessage::handleLogout (Buf* p)
         EPMANAGER->dumpClassroom();
 #endif
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

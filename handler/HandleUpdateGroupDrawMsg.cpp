@@ -15,14 +15,12 @@ void CHandleMessage::handleUpdateGroupDrawMsg(Buf* p) {
         epUser* pUser = NULL;
         pUser = const_cast<epUser*>(EPMANAGER->getUserByFdFromClassroom(p->getfd()));
         //epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFd(p->getfd()));
-        if (NULL == pUser) {
-                printf("[DEBUG] CHandleMessage::handleUpdateGroupDrawMsg : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
+
         enum CommandType type = ((MSG_HEAD*)p->ptr())->cType;
         cUpdateCopyIntoPaint cucip;
         cUpdatePenAnderaser cupa;
+        UpdatePuzzleResult upr;
 
         switch (type) {
         case CT_UpdateBackground :
@@ -65,7 +63,7 @@ void CHandleMessage::handleUpdateGroupDrawMsg(Buf* p) {
                 cout << "CT_UpdateFilling\n";
 #endif
 #ifdef __DEBUG__
-                printf("[DEBUG] CHandleMessage::handleUpdateGroupDrawMsg : CT_UpdateFilling pt_x    = %f\n", atof(cupa.pt_x().c_str()));
+                // printf("[DEBUG] CHandleMessage::handleUpdateGroupDrawMsg : CT_UpdateFilling pt_x    = %f\n", atof(cupa.pt_x().c_str()));
 #endif
                 type = ST_UpdateFilling;
                 break;
@@ -99,6 +97,18 @@ void CHandleMessage::handleUpdateGroupDrawMsg(Buf* p) {
 #endif
                 type = ST_UpdateFrame;
                 break;
+        case CT_UpdatePuzzleResult :
+#ifdef __DEBUG_HANDLE_HEAD_
+                std::cout << "CT_UpdatePuzzleResult" << std::endl;
+#endif
+                type = ST_UpdatePuzzleResult;
+                UNPACKET(p, upr);
+                // printf("[DEBUG] CHandleMessage::handleUpdateGroupDrawMsg : group = %d\n", (upr.group_info()).group_id());
+                /*
+                printf("[DEBUG] CHandleMessage::handleUpdateGroupDrawMsg : x = %f\n", atof((upr.point()).pt_x().c_str()));
+                printf("[DEBUG] CHandleMessage::handleUpdateGroupDrawMsg : y = %f\n", atof((upr.point()).pt_y().c_str()));
+                */
+                break;
         default :
 #ifdef __DEBUG_HANDLE_HEAD_
                 cout << "CT_UpdateGroupMsg : defualt\n";
@@ -108,13 +118,26 @@ void CHandleMessage::handleUpdateGroupDrawMsg(Buf* p) {
 
         ((MSG_HEAD*)p->ptr())->cType = type;
 
+        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
+        CHECK_P(pClassroom);
+
         if (LT_TEACHER == pUser->getType()) {
-                epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
-                if (NULL != pClassroom) {
-                        pClassroom->sendtoTeacher(p);
-                }
+                Buf* p_buf = NULL;
+                CLONE_BUF(p_buf, p);
+                pClassroom->sendtoWhiteBoard(p_buf);
+
+                pClassroom->sendtoTeacher(p);
                 return;
         }
+
+        /*
+        if (LT_WHITEBOARD == pUser->getType()) {
+                epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
+                CHECK_P(pClassroom);
+                pClassroom->sendtoWhiteBoard(p);
+                return;
+        }
+        */
 
         epGroup* pGroup = const_cast<epGroup*>(EPMANAGER->getGroupByFd(p->getfd()));
         if (NULL == pGroup) { // 该学生不在上课。
@@ -122,26 +145,36 @@ void CHandleMessage::handleUpdateGroupDrawMsg(Buf* p) {
                 SINGLE->bufpool.free(p);
                 return;
         } else {
+                Buf* p_buf = NULL;
+                CLONE_BUF(p_buf, p);
+                pClassroom->sendtoWhiteBoard(p_buf);
+
+                Buf* p_buf_1 = NULL;
+                CLONE_BUF(p_buf_1, p);
+                // if (pClassroom->undisplay_)
+                pClassroom->sendtoTeacher(p_buf_1);
+
                 pGroup->sendtoAllStudent(p, true);
         }
 
         /*
-        epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
-        if (NULL == pClassroom) {
-                printf("[DEBUG] CHandleMessage::handleUpdateGroupDrawMsg : NULL == pClassroom\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+           epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
+           if (NULL == pClassroom) {
+           printf("[DEBUG] CHandleMessage::handleUpdateGroupDrawMsg : NULL == pClassroom\n");
+           SINGLE->bufpool.free(p);
+           return;
+           }
 
-        Buf* pBuf_1 = NULL;
-        CLONE_BUF(pBuf_1, p);
-        pClassroom->sendtoAllClass(pBuf_1, true);
+           Buf* pBuf_1 = NULL;
+           CLONE_BUF(pBuf_1, p);
+           pClassroom->sendtoAllClass(pBuf_1, true);
 
-        Buf* pBuf_2 = NULL;
-        CLONE_BUF(pBuf_2, p);
-        pClassroom->sendtoWhiteBoard(pBuf_2);
+           Buf* pBuf_2 = NULL;
+           CLONE_BUF(pBuf_2, p);
+           pClassroom->sendtoWhiteBoard(pBuf_2);
 
-        SINGLE->bufpool.free(p);
-        */
+           SINGLE->bufpool.free(p);
+           */
+
         return;
 }

@@ -24,18 +24,10 @@ void CHandleMessage::handleGetClassRoomList (Buf* p)
         cout << "CT_GetClassRoomList\n";
 #endif
         const epUser* pUser = EPMANAGER->getUserByFd(p->getfd());
-        if (NULL == pUser) {
-                printf("[DEBUG] CHandleMessage::handleGetClassRoomList : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         const epTeacher* pTeacher = dynamic_cast<const epTeacher*>(pUser);
-        if (NULL == pTeacher) {
-                printf("[DEBUG] CHandleMessage::handleGetClassRoomList : NULL == pTeacher\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pTeacher);
 
         int school_id = pTeacher->schoolId_;
 
@@ -60,9 +52,8 @@ void CHandleMessage::handleGetClassRoomList (Buf* p)
         }
 
         Buf* pBuf = packet_list(ST_GetClassRoomList, tmp, p->getfd());
-        CHECK_BUF(pBuf, p);
+        CHECK_P(pBuf);
         SINGLE->sendqueue.enqueue(pBuf);
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

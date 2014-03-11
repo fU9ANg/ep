@@ -17,28 +17,18 @@ void CHandleMessage::handleUpdateDrawSet(Buf* p)
 #endif
 
         const epUser* pUser = EPMANAGER->getUserByFdFromClassroom(p->getfd());
-        if (NULL == pUser) {
-                printf("[DEBUG] CHandleMessage::handleUpdateDrawSet : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
-        if (NULL == pClassroom) {
-                printf("[DEBUG] CHandleMessage::handleUpdateDrawSet : NULl == pClassroom\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pClassroom);
 
         ((MSG_HEAD*)p->ptr())->cType = ST_UpdateDrawSet;
 
-        Buf* pBuf = SINGLE->bufpool.malloc();
-        CHECK_BUF(pBuf, p);
         Buf* p1 = NULL;
-        CLONE_BUF(p1, pBuf);
-        pClassroom->sendtoAllClass(p1, true);
-        pClassroom->sendtoWhiteBoard(pBuf);
+        CLONE_BUF(p1, p);
 
-        SINGLE->bufpool.free(p);
+        pClassroom->sendtoAllClass(p1, true);
+        pClassroom->sendtoWhiteBoard(p);
+
         return;
 }

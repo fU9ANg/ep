@@ -18,11 +18,7 @@ void CHandleMessage::handleSetGroup (Buf* p) {
 
         // 该FD必须处于上课状态。
         epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
-        if (NULL == pClassroom) {
-                printf("[DEBUG] %s : NULL == pClassroom\n", __func__);
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pClassroom);
 
         int result = TRUE;
         std::string msg = "success!";
@@ -32,8 +28,7 @@ void CHandleMessage::handleSetGroup (Buf* p) {
                 printf("[DEBUG] %s : NULL == pGroup\n", __func__);
                 result = FALSE;
                 msg = "fail!";
-                SINGLE->bufpool.free(p);
-                return;
+                RETURN(p);
         }
 
         /*
@@ -68,8 +63,10 @@ void CHandleMessage::handleSetGroup (Buf* p) {
         pGroup->id_ = csg.group_id();
         printf("[DEBUG] CHandleMessage::handleSetGroup : group id = %d\n", pGroup->id_);
         pGroup->name_ = csg.group_name();
+
         PeerGroup pg;
         epStudent* pStudent = NULL;
+        printf("[DEBUG] CHandleMessage::handleSetGroup : student_list_size = %d\n", csg.student_list_size());
         for (int i=0; i<csg.student_list_size(); ++i) {
                 pg = csg.student_list(i);
                 int student_id = pg.student_id();
@@ -77,7 +74,11 @@ void CHandleMessage::handleSetGroup (Buf* p) {
                 pStudent = const_cast<epStudent*>(pClassroom->getStudentById(student_id));
                 if (NULL != pStudent){
                         printf("[DEBUG] CHandleMessage::handleSetGroup : NULL != pStudent\n");
-                        pGroup->insertStudent(pStudent->fd_, pStudent);
+                        if (pGroup->insertStudent(pStudent->fd_, pStudent)) {
+                                printf("[DEBUG] CHandleMessage::handleSetGroup : SetGroup success!\n");
+                        } else {
+                                printf("[DEBUG] CHandleMessage::handleSetGroup : SetGroup fail!\n");
+                        }
                 } else {
                         printf("[DEBUG] CHandleMessage::handleSetGroup : NULL == pStudent\n");
                         result = FALSE;
@@ -99,9 +100,8 @@ void CHandleMessage::handleSetGroup (Buf* p) {
         tmp.set_msg(msg);
 
         Buf* pBuf = packet(ST_SetGroup, tmp, p->getfd());
-        if (NULL != pBuf) {
-                SINGLE->sendqueue.enqueue(pBuf);
-        }
-        SINGLE->bufpool.free(p);
-        return;
+        CHECK_P(pBuf);
+        SINGLE->sendqueue.enqueue(pBuf);
+
+        RETURN(p);
 }

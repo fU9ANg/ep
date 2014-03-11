@@ -15,29 +15,20 @@ void CHandleMessage::handleStartClass (Buf* p)
 #endif
 
         const epUser* pUser = EPMANAGER->getUserByFdFromClassroom(p->getfd());
-        if (NULL == pUser) { // 该教师不在上课。
-                printf("[DEBUG] CHandleMessage::handleStartClass : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
 
         epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
-        if (NULL == pClassroom) {
-                printf("[DEBUG] CHandleMessage::handleStartClass : NULL == pClassroom\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+        CHECK_P(pUser);
+
+        pClassroom->classroomStatus_ = CS_START_CLASS;
 
         Buf* pBuf1 = packet(ST_StartClass, p->getfd());
-        if (NULL != pBuf1) {
-                pClassroom->sendtoAllClass(pBuf1);
-        }
+        CHECK_P(pBuf1);
+        pClassroom->sendtoAllClass(pBuf1);
 
         Buf* pBuf2 = packet(ST_StartClass, p->getfd());
-        if (NULL != pBuf2) {
-                pClassroom->sendtoWhiteBoard(pBuf2);
-        }
+        CHECK_P(pBuf2);
+        pClassroom->sendtoWhiteBoard(pBuf2);
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

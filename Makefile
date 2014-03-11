@@ -19,8 +19,8 @@ CFLAGS  = -Wall -Werror
 
 # flags of buildhouse
 BHFLAGS	= \
-	  -D__DEBUG_DUMP__ \
 	  -D__DEBUG_HANDLE_HEAD_ \
+	  -D__DEBUG_DUMP__ \
 	  -D__DEBUG__
 
 #-D_BUILD_HOUSE_GMAE
@@ -76,6 +76,7 @@ OBJS    = 	main.o \
 		handler/HandleSetContent.o \
 		handler/HandleGetClassList.o \
 		handler/HandleGetGradeList.o \
+		handler/HandleGetSchoolAccountList.o \
 		handler/HandleGetCourseList.o \
 		handler/HandleGetStudentList.o \
 		handler/HandleGetClassRoomList.o \
@@ -84,28 +85,50 @@ OBJS    = 	main.o \
 		handler/HandleGetTeacherInfo.o \
 		handler/HandleStartClass.o \
 		handler/HandleGetActiveStudentList.o \
-		handler/HandleGetActiveStudentList_1.o \
+		handler/HandleGetGroupStudentList.o \
 		handler/HandleGetContent.o \
 		handler/HandleSetGroup.o \
 		handler/HandleRelay.o \
-		handler/HandleGetPersonalBooksList.o \
 		handler/HandleGetPublicBooksList.o \
 		handler/HandleGetServerAddr.o \
-		handler/HandleUploadBook.o \
-		handler/HandleDownloadFromPersonal.o \
 		handler/HandleDownloadFromPublic.o \
-		handler/HandleTransferBook.o \
 		handler/HandlePublish.o \
 		handler/HandleUpdateMutex.o \
 		handler/HandleUpdateGroupDrawMsg.o \
+		handler/HandleGetCoursewareListStatus.o \
 		handler/HandleClassOver.o \
 		handler/HandleCourseware.o \
+		handler/HandleCourseOver.o \
 		handler/HandleUpdateDrawSet.o \
+		handler/HandleLeaveEarly.o \
+		handler/HandleGetClassroomStatus.o \
+		handler/HandleGetClassroomInfo.o \
+		handler/HandleGetStudentDrawLog.o \
+		handler/HandleGetNextStudent.o \
+		handler/HandleGetClassInfo.o \
+		handler/HandleGetWhiteboardInfo.o \
+		handler/HandleGetGroupList.o \
+		handler/HandleDisplay.o \
+		handler/HandleTeacherSendtoWhiteboard.o \
+		handler/HandleGetStoreBooksList.o \
+		handler/HandleUpdatePublic.o \
+		handler/HandlePurchase.o \
+		handler/HandleAssignment.o \
+		handler/HandleLargess.o \
+		handler/HandleSendtoAll.o \
+		handler/HandleGetPuzzleInfo.o \
+		handler/HandleGetGroupInfo.o \
+		handler/HandleUpdateConn.o \
+		handler/HandleLockConn.o \
+		handler/HandleStoreUp.o \
+		handler/HandleSell.o \
+		handler/HandleUpdateCourseware.o \
 		\
 		message/proto/protocol.pb.o
 
-RMOBJS	= cscope.* \
-	  tags
+RMOBJS	=
+# cscope.* \
+	#	  tags
 
 # binary
 BIN	    = epServer
@@ -114,9 +137,10 @@ BIN	    = epServer
 INC	    = -I. -I./includes -I./handler -I./content -I./message
 
 # for Linker
-LINK        = libs/libev.a libs/libglog.a libs/liblua52.so libs/libmysqlcppconn.so -lprotobuf
+#LINK        = libs/libev.a libs/libglog.a libs/liblua52.so libs/libmysqlcppconn.so -lprotobuf
 #LINK        = libs/libev.a libs/libglog.a libs/libmysqlcppconn.so -lprotobuf -llua
-#LINK        = -lev -lglog -lmysqlcppconn -llua52 -lprotobuf -lpthread
+LINK        = -lev -lglog libs/libmysqlcppconn.so -llua5.2 -lprotobuf -lpthread
+#LINK        = -lev -lglog -lmysqlcppconn -llua5.2 -lprotobuf -lpthread
 # rock..
 all	: precompile_protobuf $(BIN)
 
@@ -125,7 +149,7 @@ precompile_protobuf	:
 
 # how to compiling programs
 $(BIN):$(OBJS)
-#	$(CPP) $(CFLAGS) $(CDEBUG) -o $@ $(OBJS)
+	#	$(CPP) $(CFLAGS) $(CDEBUG) -o $@ $(OBJS)
 	$(CPP) $(CFLAGS) $(CDEBUG) $(BHFLAGS) $(CMACRO) -o $@ $(OBJS) $(LINK)
 %.o:%.cpp
 	$(CPP) $(CFLAGS) $(CDEBUG) $(BHFLAGS) $(CMACRO) $(INC) -o $@ -c $<

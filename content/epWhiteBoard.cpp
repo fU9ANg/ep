@@ -8,10 +8,18 @@ epWhiteBoard::~epWhiteBoard(void) { }
 bool
 epWhiteBoard::init(const std::string& account
                  , const std::string& passwd
+                 , const int fd
+                 , const enum user_status us
                  ) {
-        epUser::init(account, passwd);
-        // TODO :
-        return true;
+        return epUser::init(account, passwd, fd, us);
+
+        /*
+        id_;
+        fd_;
+        whiteboardNum_;
+        classroomName_;
+        classroomId_;
+        */
 }
 
 const enum LoginType

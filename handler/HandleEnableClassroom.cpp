@@ -17,32 +17,14 @@ void CHandleMessage::handleEnableClassroom(Buf* p)
 #endif
         epUser* pUser = const_cast<epUser*>(EPMANAGER->getUserByFd(p->getfd()));
         if (NULL == pUser) {
-                printf("[DEBUG] CHandleMessage::handleEnableClassroom : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
+                epClassroom* pClassroom = EPMANAGER->getClassroomByFd(p->getfd());
+                CHECK_P(pClassroom);
+        } else {
+                epStudent* pStudent = dynamic_cast<epStudent*>(pUser);
+                CHECK_P(pStudent);
 
-        /*
-        pUser = const_cast<epUser*>(EPMANAGER->getUserByFdFromClassroom(p->getfd()));
-        if (NULL == pUser) { // not in classroom
-                printf("[DEBUG] CHandleMessage::handleEnableClassroom : NULL == pUser\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
-        */
-
-        epStudent* pStudent = dynamic_cast<epStudent*>(pUser);
-        if (NULL == pStudent) {
-                printf("[DEBUG] CHandleMessage::handleEnableClassroom : NULL == pStudent\n");
-                SINGLE->bufpool.free(p);
-                return;
-        }
-
-        epClassroom* pClassroom = EPMANAGER->getClassroomByClassId(pStudent->classId_);
-        if (NULL == pClassroom) {
-                printf("[DEBUG] CHandleMessage::handleEnableClassroom : NULL == pClassroom\n");
-                SINGLE->bufpool.free(p);
-                return;
+                epClassroom* pClassroom = EPMANAGER->getClassroomByClassId(pStudent->classId_);
+                CHECK_P(pClassroom);
         }
 
         // 如果该学生所在班级正在上课，则将功能选择的教室按钮点亮。
@@ -50,6 +32,5 @@ void CHandleMessage::handleEnableClassroom(Buf* p)
         CHECK_BUF(pBuf_EnableClassroom, p);
         SINGLE->sendqueue.enqueue(pBuf_EnableClassroom);
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }

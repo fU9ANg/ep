@@ -14,17 +14,9 @@ void CHandleMessage::handleGetActiveStudentList (Buf* p)
 #ifdef __DEBUG_HANDLE_HEAD_
         cout << "CT_GetActiveStudentList fd = " << p->getfd() << endl;
 #endif
-        // TODO:
 
         cGetActiveStudentList casl;
-        if (!unpacket(p, casl)) { // 解包失败。
-#ifdef __DEBUG__
-                printf("[DEBUG] %s : unpacket fail!\n", __func__);
-#endif
-                SINGLE->bufpool.free(p);
-                return;
-        }
-
+        UNPACKET(p, casl);
 
         // const epUser* pUser = EPMANAGER->getUserByFdFromClassroom(p->getfd());
         std::vector<int> vi = EPMANAGER->getActiveStudentListFromClass(casl.class_id());
@@ -36,14 +28,8 @@ void CHandleMessage::handleGetActiveStudentList (Buf* p)
         }
 
         Buf* pBuf = packet_list(ST_GetActiveStudentList, tmp, p->getfd());
-        if (NULL != pBuf) {
-                /*
-                printf ("[debug] CHandleMessage::handleGetActiveStudentList fd[%d], studnet idx=%d, %d\n",
-                    pBuf->getfd(), *(int*) ((char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof (int)), *(int*) ((char*)pBuf->ptr() + MSG_HEAD_LEN + sizeof (int) + sizeof (int)));
-                    */
-                SINGLE->sendqueue.enqueue(pBuf);
-        }
+        CHECK_P(pBuf);
+        SINGLE->sendqueue.enqueue(pBuf);
 
-        SINGLE->bufpool.free(p);
-        return;
+        RETURN(p);
 }
